@@ -1,5 +1,0 @@
-//hihi
-
-function hi() {
-    console.log('hello');
-}
