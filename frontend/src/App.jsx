@@ -1,51 +1,45 @@
 import React, {useState, useCallback, useEffect} from "react";
+import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
 import Axios from "axios";
 
-const App = () => {
-  const [district, setDistrict]  = useState('대구 달서을');
-  const [name, setName] = useState('');
-  const [party, setParty] = useState('');
-  const [email, setEmail] = useState('');
-  const [birth, setBirth] = useState('');
-  const [phone, setPhone] = useState('');
+import Lawmaker from "./pages/Lawmaker"
+import Profile from "./pages/Profile";
+import Community from "./pages/Community";
+import EmptyPage from "./pages/EmptyPage";
+import Nav from "./components/Nav";
 
-  useEffect(() => {
-    Axios.get('https://jsonplaceholder.typicode.com/users')
-      .then(response => {
-        setName(response.data[0].name)
-        setParty(response.data[0].username)
-        setEmail(response.data[0].email)
-        setBirth(response.data[0].address.street)
-        setPhone(response.data[0].address.zipcode)
-      })
-  })
+const App = () => {
+  const [login, setLogin] = useState(false);
   // 로그인 여부 체크
   // if 로그인 -> 지역 체크 -> 지역 번호 데이터 요청 -> 받고 화면 뿌려주기(?)
+  // page 값 Lawmaker
   // else 로그아웃 -> 기본값 (서울 송파구을 배현진ㅋ) 요청 -> 받고 화면 뿌려주기
 
   return (
-    <>
+    <BrowserRouter>
 
-      <div>
-        <h6>2020/06~2024/06</h6>
-        <h2>{district}</h2>
-        <div>사진</div>
-        <h3>{name}</h3>
-        <h4>{party}</h4>
-        <div>
-          <p>{email}</p>
-          <p>{birth}</p>
-          <p>{phone}</p>
-        </div>
-      </div>
+      <Switch>
+        {/*페이지*/}
+        <Route exact path="/" component={Lawmaker} />
+        <Route exact path="/community" component={Community} />
+        <Route exact path="/profile" component={Profile} />
+        {/*추가해야할 페이지 :
+          로그인
+          회원가입
+          회원정보 수정
+          설정
+          FAQ
+          글쓰기
+          글 내용보기
+        */}
+        {/*빈 페이지*/}
+        <Route component={EmptyPage} />
+      </Switch>
 
-      <div>
-        <a href="#">홈</a>
-        <a href="#">게시판</a>
-        <a href="#">내정보</a>
-      </div>
+      {/*하단 네비게이션 (로그인 props 전달 해야하나?)*/}
+      <Nav />
 
-    </>
+    </BrowserRouter>
   )
 };
 
