@@ -1,20 +1,11 @@
 import React, {useState, useCallback, useEffect} from "react";
 import { useParams } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
+import Nav from "../components/Nav";
 
-const Lawmaker = () => {
-  const [loading, setLoading]  = useState(true);
-  const [list, setList] = useState([]);
+const Lawmaker = (props) => {
+  // APP 에서 데이터 받아와야함 props 로 데이터 내려주는 방식으로 / app 의 장점이 데이터를 처음에 다 받아오는건데 페이지 옮길때마다 로딩하면 안좋지않을까?
 
-  useEffect(() => {
-    Axios.get('https://jsonplaceholder.typicode.com/users')
-      .then(response => {
-        setList(response.data);
-        setLoading(false);
-      })
-  }, []);
-
-  console.log(list);
 
   return (
     <>
@@ -31,8 +22,10 @@ const Lawmaker = () => {
           </div>
         </div>
       )}
+
+      <Nav />
     </>
   )
 };
 
-export default Lawmaker
+export default Lawmaker;

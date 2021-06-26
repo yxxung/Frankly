@@ -1,20 +1,34 @@
 import React, {useState, useCallback, useEffect} from "react";
 import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 
 import Lawmaker from "./pages/Lawmaker"
 import Profile from "./pages/Profile";
 import Community from "./pages/Community";
 import EmptyPage from "./pages/EmptyPage";
-import Nav from "./components/Nav";
+
+const fetchData = () => {
+  return axios.get('https://jsonplaceholder.typicode.com/users')
+    .then(res => {
+      console.log(res.data)
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
 
 const App = () => {
   const [login, setLogin] = useState(false);
-  // 로그인 여부 체크
-  // if 로그인 -> 지역 체크 -> 지역 번호 데이터 요청 -> 받고 화면 뿌려주기(?)
-  // page 값 Lawmaker
-  // else 로그아웃 -> 기본값 (서울 송파구을 배현진ㅋ) 요청 -> 받고 화면 뿌려주기
+  const [list, setList] = useState([]);
+  const [loading, setLoading]  = useState(true);
 
+  useEffect(() => {
+    fetchData().then(lawmakerList => {
+      setList(lawmakerList);
+      setLoading(false);
+    })
+  }, []);
   return (
     <BrowserRouter>
 
@@ -32,12 +46,9 @@ const App = () => {
           글쓰기
           글 내용보기
         */}
-        {/*빈 페이지*/}
+        {/*빈 페이지 / 다른 좋은방법 찾아보기*/}
         <Route component={EmptyPage} />
       </Switch>
-
-      {/*하단 네비게이션 (로그인 props 전달 해야하나?)*/}
-      <Nav />
 
     </BrowserRouter>
   )

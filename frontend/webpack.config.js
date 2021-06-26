@@ -31,7 +31,7 @@ module.exports = {
           '@babel/preset-react'
         ],
         plugins: [
-          "@babel/plugin-transform-runtime", // asinc / await 문제 해결하려고 설치 (미해결)
+          // "@babel/plugin-transform-runtime", // asinc / await 문제 해결하려고 설치 (미해결)
           '@babel/plugin-proposal-class-properties',
           'react-refresh/babel', // 설치를 안해도 리로딩되지만 핫리로딩이랑 리로딩은 다르다. -> 브라우저 새로고침되면 기존 데이터가 다 날라간다.
         ],
@@ -52,4 +52,3 @@ module.exports = {
   },
 }
 
-// 결과적으론  index.js 를 찾아서 app.js 로 만들어 준다.
