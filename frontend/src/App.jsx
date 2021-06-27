@@ -10,7 +10,7 @@ import EmptyPage from "./pages/EmptyPage";
 const fetchData = () => {
   return axios.get('https://jsonplaceholder.typicode.com/users')
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       return res.data;
     })
     .catch((err) => {
@@ -20,7 +20,7 @@ const fetchData = () => {
 
 const App = () => {
   const [login, setLogin] = useState(false);
-  const [list, setList] = useState([]);
+  const [lawmakerList, setList] = useState([]);
   const [loading, setLoading]  = useState(true);
 
   useEffect(() => {
@@ -29,12 +29,13 @@ const App = () => {
       setLoading(false);
     })
   }, []);
+
   return (
     <BrowserRouter>
-
+      {loading ? ("loading...") : (
       <Switch>
         {/*페이지*/}
-        <Route exact path="/" component={Lawmaker} />
+        <Route exact path="/" render={(props) => (<Lawmaker list={lawmakerList} />)} />
         <Route exact path="/community" component={Community} />
         <Route exact path="/profile" component={Profile} />
         {/*추가해야할 페이지 :
@@ -49,7 +50,7 @@ const App = () => {
         {/*빈 페이지 / 다른 좋은방법 찾아보기*/}
         <Route component={EmptyPage} />
       </Switch>
-
+      )}
     </BrowserRouter>
   )
 };
