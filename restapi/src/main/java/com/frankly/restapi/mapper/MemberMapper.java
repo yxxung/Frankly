@@ -23,5 +23,7 @@ public interface MemberMapper {
 
     public void deleteMember(MemberDTO member) throws Exception;
 
+    public void selectAllMemeber(MemberDTO memeber) throws Exception;
+
     public List<MemberDTO> memberList() throws Exception;
 }
