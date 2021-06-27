@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.MemberMapper">
+
+<!--    <sql id="memberTable">-->
+<!--         name-->
+<!--        ,hanName-->
+<!--        ,engName-->
+<!--        ,lunar-->
+<!--        ,birthday-->
+<!--        ,party-->
+<!--        ,district-->
+<!--        ,selectNumber-->
+<!--        ,selectinfo-->
+<!--        ,sex-->
+<!--        ,contact-->
+<!--        ,office-->
+<!--        ,email-->
+<!--        ,homepage-->
+<!--        ,aide-->
+<!--        ,secretary-->
+<!--        ,personalAssistant-->
+<!--    </sql>-->
+
+    <select id="memberList" resultType="com.frankly.restapi.domain.MemberDTO">
+        SELECT *
+        FROM member_info.memberinfo
+    </select>
+
+    <insert id="insertMember">
+        INSERT INTO member_info.memberinfo( name
+            ,hanName
+            ,engName
+            ,lunar
+            ,birthday
+            ,party
+            ,district
+            ,selectNumber
+            ,selectinfo
+            ,sex
+            ,contact
+            ,office
+            ,email
+            ,homepage
+            ,aide
+            ,secretary
+            ,personalAssistant)
+            VALUES (#{name}
+            , #{hanName}
+            , #{engName}
+            , #{lunar}
+            , #{birthday}
+            , #{party}
+            , #{district}
+            , #{selectNumber}
+            , #{selectinfo}
+            , #{sex}
+            , #{contact}
+            , #{office}
+            , #{email}
+            , #{homepage}
+            , #{aide}
+            , #{secretary}
+            , #{personallAssitant})
+
+    </insert>
+
+</mapper>
