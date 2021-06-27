@@ -1,6 +1,7 @@
 const path = require('path');
 const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   name: 'frankly-app',
@@ -10,17 +11,18 @@ module.exports = {
   },
 
   entry: {
-    app: './index.js',
+    app: './src/index.js',
   },
 
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'app.js',
-    publicPath: '/dist/',
+    path: path.join(__dirname, 'public'),
+    // publicPath: '/', // 배포할때 publicPath 주소(?)
+    filename: '[name].js',
   },
 
   module: {
-    rules: [{
+    rules: [
+      {
       test: /\.jsx?$/,
       exclude: ['/node_modules'],
       loader: 'babel-loader',
@@ -36,28 +38,39 @@ module.exports = {
         ],
         plugins: [
           '@babel/plugin-proposal-class-properties',
-          'react-refresh/babel',
-        ],
+          'react-refresh/babel', // 배포할때 주석
+        ]},
       },
-    },
       {
         test: /\.html$/,
         use: [
           {
-            loader: 'html-loader',
-            options: {
-              minimize: true,
-            },
-          },
-        ],
-      }],
+            loader: "html-loader",
+            options: { minimize: true }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+      }
+    ],
   },
 
   plugins: [
     new RefreshWebpackPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: './public/index.html',
-    // })
+    new HtmlWebPackPlugin({
+      template: './src/index.html',
+      filename: './index.html',
+      showErrors: true,
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'style.css'
+    })
   ],
 }
 

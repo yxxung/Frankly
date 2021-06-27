@@ -1,11 +1,11 @@
+#Frankly app
 ##명령어
 ###$ npm install
 * package.json 설치  
 ###$ npm run dev
-* 웹팩 서버에서 핫리로더로 실시간 개발환경
-* 배포용 명령어는 아직 없음
+###$ npm run build
 
-##package.json
+##node_modules
 ### webpack webpack-cli
 * 웹팩
 ### @babel/core @babel/preset-env

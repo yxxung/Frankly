@@ -1,6 +1,7 @@
 import React, {useState, useCallback, useEffect} from "react";
 import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from "axios";
+import "./assets/scss/App.scss"
 
 import Lawmaker from "./pages/Lawmaker"
 import Profile from "./pages/Profile";
@@ -47,8 +48,6 @@ const App = () => {
           글쓰기
           글 내용보기
         */}
-        {/*빈 페이지 / 다른 좋은방법 찾아보기*/}
-        <Route component={EmptyPage} />
       </Switch>
       )}
     </BrowserRouter>
