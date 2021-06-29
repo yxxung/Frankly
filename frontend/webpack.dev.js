@@ -2,7 +2,7 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 module.exports = merge(common, {
   mode: 'development',
@@ -14,5 +14,11 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, "public"),
     port: port,
     hot: true,
+    // proxy: {
+    //   '/api/': {
+    //     target: '백엔드주소',
+    //     changeOrigin: true,
+    //   }
+    // }
   },
 });

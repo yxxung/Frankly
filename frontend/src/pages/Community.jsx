@@ -1,13 +1,12 @@
 import React from "react";
-import Nav from "../components/Nav";
-import styles from "./Community.scss";
+import Nav from "../components/Nav/Nav";
 
 const Community = () => {
 
   return (
     <>
-      <h1>게시판 화면</h1>
       <Nav />
+      <h1>게시판 화면</h1>
     </>
   )
 };

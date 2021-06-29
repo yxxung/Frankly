@@ -1,7 +1,6 @@
 import React, {useState, useCallback, useEffect} from "react";
-import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import axios from "axios";
-import "./assets/scss/App.scss"
 
 import Lawmaker from "./pages/Lawmaker"
 import Profile from "./pages/Profile";
@@ -21,21 +20,20 @@ const fetchData = () => {
 
 const App = () => {
   const [login, setLogin] = useState(false);
-  const [lawmakerList, setList] = useState([]);
+  const [lawmakerList, setLawmakerList] = useState([]);
   const [loading, setLoading]  = useState(true);
 
   useEffect(() => {
     fetchData().then(lawmakerList => {
-      setList(lawmakerList);
+      setLawmakerList(lawmakerList);
       setLoading(false);
     })
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
       {loading ? ("loading...") : (
       <Switch>
-        {/*페이지*/}
         <Route exact path="/" render={(props) => (<Lawmaker list={lawmakerList} />)} />
         <Route exact path="/community" component={Community} />
         <Route exact path="/profile" component={Profile} />
@@ -50,7 +48,7 @@ const App = () => {
         */}
       </Switch>
       )}
-    </BrowserRouter>
+    </>
   )
 };
 
