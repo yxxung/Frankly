@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import Community from "./pages/Community";
 import EmptyPage from "./pages/EmptyPage";
 import Nav from "./components/Nav";
+import Content from "./components/Content";
 
 const App = () => {
   const [login, setLogin] = useState(false);
@@ -35,6 +36,7 @@ const App = () => {
         {/*빈 페이지*/}
         <Route component={EmptyPage} />
       </Switch>
+        <Content/>
 
       {/*하단 네비게이션 (로그인 props 전달 해야하나?)*/}
       <Nav />

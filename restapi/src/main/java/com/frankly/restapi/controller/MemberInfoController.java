@@ -15,14 +15,18 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/infos")
+@RequestMapping("/api")
 public class MemberInfoController {
 
     private final MemeberService memeberService;
 
-    @PostMapping("/all")
+    @PostMapping("/infos/all")
     public ResponseEntity<List<MemberDTO>>memberList()throws Exception{
+
     return new ResponseEntity<>(memeberService.memberList(), HttpStatus.OK);
+
+
     }
+
 
 }
