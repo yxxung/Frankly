@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from 'react-redux';
-import { fetchLawmaker } from "../redux";
-import Nav from "../components/Nav/Nav";
+import { fetchLawmaker } from "../../redux";
+import { Nav } from "../../components";
 
 const Lawmaker = ({items, fetchLawmaker, loading}) => {
   useEffect(() => {
@@ -22,6 +22,7 @@ const Lawmaker = ({items, fetchLawmaker, loading}) => {
     <>
       <Nav />
       <div>
+        <h1>국회의원 화면</h1>
         <h6>2020/06~2024/06</h6>
         <h2>대구 달서을</h2>
         <div>사진</div>

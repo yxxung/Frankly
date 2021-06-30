@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { addSubscriber, addView } from "../redux";
-import Nav from "../components/Nav/Nav";
+import { addSubscriber, addView } from "../../redux";
+import { Nav } from "../../components";
 
 const Community = ({ count, view, addSubscriber, addView }) => {
   const [number, setNumber] = useState(1)
