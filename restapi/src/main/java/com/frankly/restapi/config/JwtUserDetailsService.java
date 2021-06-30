@@ -23,9 +23,8 @@ public class JwtUserDetailsService implements UserDetailsService {
          * https://www.javainuse.com/onlineBcrypt 에서 user_pw를 Bcrypt화할 수 있습니다.
          * 우선 임시조치
          */
-        if("userId".equals(userName)){
-            return new User("user_id",
-                    "$2a$10$PYns.5sevT9QZFMY89Z7QefMCj50spLfA75WwjOPu0RDhdbeZEhfu", //Bcrypt화 된 password
+        if ("user_id".equals(userName)) {
+            return new User("user_id", "$2a$10$jCvWm3NXDRFs/EfuI4h4.u0ZxNocv.ZkgEy6qbjVXrfQ5.KzLfhAe",
                     new ArrayList<>());
         }else{
                 throw new UsernameNotFoundException("유저 이름을 찾을 수 없습니다. 유저이름 : " + userName);
