@@ -1,0 +1,3 @@
+export const ADD_SUBSCRIBER = 'ADD_SUBSCRIBER'
+export const REMOVE_SUBSCRIBER = 'REMOVE_SUBSCRIBER'
+export const ADD_VIEW = 'ADD_VIEW'

@@ -1,12 +1,22 @@
-import React, {useState, useCallback, useEffect} from "react";
-import { connect } from 'react-redux'
-
-// components
+import React, { useEffect } from "react";
+import { connect } from 'react-redux';
+import { fetchLawmaker } from "../redux";
 import Nav from "../components/Nav/Nav";
 
-const Lawmaker = (props) => {
-
-  console.log(props);
+const Lawmaker = ({items, fetchLawmaker, loading}) => {
+  useEffect(() => {
+    fetchLawmaker()
+  }, [])
+// 51:54
+  const lawmakerList = loading ? (<div>is loading...</div>) : (
+    items.map(item => (
+      <div key={item.id}>
+        <h3>{item.name}</h3>
+        <p>{item.email}</p>
+        <p>{item.body}</p>
+      </div>
+    ))
+  )
 
   return (
     <>
@@ -15,15 +25,22 @@ const Lawmaker = (props) => {
         <h6>2020/06~2024/06</h6>
         <h2>대구 달서을</h2>
         <div>사진</div>
-        <h3>{props.list[0].name}</h3>
-        <h4>{props.list[0].id}</h4>
         <div>
-          <p>{props.list[0].email}</p>
-          <p>{props.list[0].phone}</p>
+          {lawmakerList}
         </div>
       </div>
     </>
   )
 };
+// state 값 불러오기
+const mapStateToProps = (state) => {
+  return {
+    items: state.lawmaker.items
+  }
+}
+// dispatch
+const mapDispatchToProps = {
+  fetchLawmaker
+}
 
-export default connect()(Lawmaker);
+export default connect(mapStateToProps, mapDispatchToProps)(Lawmaker);

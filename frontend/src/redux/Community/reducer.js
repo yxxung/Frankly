@@ -1,8 +1,11 @@
-const ADD_SUBSCRIBER = 'ADD_SUBSCRIBER'
-const REMOVE_SUBSCRIBER = 'REMOVE_SUBSCRIBER'
+import {
+  ADD_SUBSCRIBER,
+  REMOVE_SUBSCRIBER,
+  ADD_VIEW, } from "./types";
 
 const initialState = {
   count: 370,
+  view: 0,
 }
 
 const subscribersReducer = (state=initialState, action) => {
@@ -16,6 +19,11 @@ const subscribersReducer = (state=initialState, action) => {
       return {
         ...state,
         count: state.count - 1
+      }
+    case ADD_VIEW:
+      return {
+        ...state,
+        view: state.view + action.payload
       }
     default: return state
   }

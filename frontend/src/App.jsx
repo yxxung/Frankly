@@ -7,34 +7,34 @@ import Profile from "./pages/Profile";
 import Community from "./pages/Community";
 import EmptyPage from "./pages/EmptyPage";
 
-const fetchData = () => {
-  return axios.get('https://jsonplaceholder.typicode.com/users')
-    .then(res => {
-      // console.log(res.data)
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-}
+// const fetchData = () => {
+//   return axios.get('https://jsonplaceholder.typicode.com/users')
+//     .then(res => {
+//       return res.data;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     })
+// }
 
 const App = () => {
-  const [login, setLogin] = useState(false);
-  const [lawmakerList, setLawmakerList] = useState([]);
-  const [loading, setLoading]  = useState(true);
+  // const [login, setLogin] = useState(false);
+  // const [lawmakerList, setLawmakerList] = useState([]);
+  // const [loading, setLoading]  = useState(true);
 
-  useEffect(() => {
-    fetchData().then(lawmakerList => {
-      setLawmakerList(lawmakerList);
-      setLoading(false);
-    })
-  }, []);
+  // useEffect(() => {
+  //   fetchData().then(lawmakerList => {
+  //     setLawmakerList(lawmakerList);
+  //     setLoading(false);
+  //   })
+  // }, []);
 
   return (
     <>
       {loading ? ("loading...") : (
       <Switch>
-        <Route exact path="/" render={(props) => (<Lawmaker list={lawmakerList} />)} />
+        {/*<Route exact path="/" render={(props) => (<Lawmaker list={lawmakerList} />)} />*/}
+        <Route exact path="/"  component={Lawmaker} />)} />
         <Route exact path="/community" component={Community} />
         <Route exact path="/profile" component={Profile} />
         {/*추가해야할 페이지 :
