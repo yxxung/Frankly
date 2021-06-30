@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @Slf4j
 public class JwtAuthenticationController {
 
@@ -29,7 +29,7 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
-    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authRequest)
             throws Exception {
 
