@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 한 유저 테스트기 때문에 CSRF 미적용 추후 수정.
         http.csrf().disable()
                 //특정 request에는 auth 필요없음.
-                .authorizeRequests().antMatchers("/authenticate").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 //다른 모든 request에는 auth작업 해주어야함.
                 .anyRequest().authenticated().and()
                 //restful api 는 stateless해야하므로, statless로 바꾸어줌. 유저 state 저장안함.
