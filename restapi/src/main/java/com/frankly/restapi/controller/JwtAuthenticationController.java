@@ -4,7 +4,6 @@ import com.frankly.restapi.config.JwtTokenUtil;
 import com.frankly.restapi.config.JwtUserDetailsService;
 import com.frankly.restapi.domain.JwtRequest;
 import com.frankly.restapi.domain.JwtResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,12 +11,14 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
-@Slf4j
 public class JwtAuthenticationController {
 
     @Autowired
@@ -29,30 +30,25 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
-    @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authRequest)
-            throws Exception {
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        auth(authRequest.getUserName(), authRequest.getPassword());
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authRequest.getUserName());
+                .loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtResponse(token));
-
     }
-
-    private void auth(String userName, String password) throws Exception{
-        try{
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
-        } catch (DisabledException e){
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e){
-            throw new Exception("INVALID_CREDENTIAL", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
-
-
 }
