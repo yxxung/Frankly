@@ -9,7 +9,7 @@ import java.util.List;
  * @author 최제현
  * @date 2021/06/25
  * mybatis 프레임워크
- * mapper interface
+ * Member mapper interface
  */
 
 @Mapper

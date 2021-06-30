@@ -1,4 +1,4 @@
-package com.frankly.restapi.config;
+package com.frankly.restapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-//DB에서 UserDetail 받아온다. 여기서.
+//DDB에서 UserDetail 받아오는 Service
 
 //로직 처리 : @Service (서비스 레이어, 내부에서 자바 로직을 처리함)
 @Service

@@ -1,7 +1,7 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.config.JwtTokenUtil;
-import com.frankly.restapi.config.JwtUserDetailsService;
+import com.frankly.restapi.service.JwtUserDetailsService;
 import com.frankly.restapi.domain.JwtRequest;
 import com.frankly.restapi.domain.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;

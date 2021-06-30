@@ -29,23 +29,7 @@
     </select>
 
     <insert id="insertMember">
-        INSERT INTO member_info.memberinfo( name
-            ,hanName
-            ,engName
-            ,lunar
-            ,birthday
-            ,party
-            ,district
-            ,selectNumber
-            ,selectinfo
-            ,sex
-            ,contact
-            ,office
-            ,email
-            ,homepage
-            ,aide
-            ,secretary
-            ,personalAssistant)
+        INSERT INTO member_info.memberinfo
             VALUES (#{name}
             , #{hanName}
             , #{engName}

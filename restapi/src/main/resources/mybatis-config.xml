@@ -3,4 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <typeAliases>
+        <typeAlias type="com.frankly.restapi.domain.UserDTO" alias="UserDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.MemberDTO" alias="MemberDTO"/>
+    </typeAliases>
+
 </configuration>
