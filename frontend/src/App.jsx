@@ -1,14 +1,7 @@
-import React, {useState, useCallback, useEffect} from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import {
-  Community,
-  Lawmaker,
-  Profile,
-  SignIn,
-  SignUp,
-  EmptyPage
-} from "./pages"
+import { Community, Lawmaker, Profile, SignIn, SignUp, EmptyPage } from "./pages"
 
 const App = () => {
 

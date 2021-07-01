@@ -1,8 +1,8 @@
-import Community from "./communityPage/Community"
-import Lawmaker from "./lawmakerPage/Lawmaker"
-import Profile from "./userPage/Profile"
-import SignIn from "./userPage/SignIn"
-import SignUp from "./userPage/SignUp"
+import Community from "./communityPages/Community"
+import Lawmaker from "./lawmakerPages/Lawmaker"
+import Profile from "./userPages/Profile"
+import SignIn from "./userPages/SignIn"
+import SignUp from "./userPages/SignUp"
 import EmptyPage from "./EmptyPage"
 
 export {

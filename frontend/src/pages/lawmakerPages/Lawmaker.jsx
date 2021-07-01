@@ -7,7 +7,7 @@ const Lawmaker = ({items, fetchLawmaker, loading}) => {
   useEffect(() => {
     fetchLawmaker()
   }, [])
-// 51:54
+
   const lawmakerList = loading ? (<div>is loading...</div>) : (
     items.map(item => (
       <div key={item.id}>
