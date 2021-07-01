@@ -1,6 +1,9 @@
 package com.frankly.restapi.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
@@ -13,6 +16,8 @@ public class JwtResponse implements Serializable {
     private final String jwttoken;
     private final String userEmail;
     private final String auth;
+
+
 
     public JwtResponse(String jwttoken, String userEmail, String auth) {
 
