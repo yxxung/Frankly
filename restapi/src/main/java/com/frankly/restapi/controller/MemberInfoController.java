@@ -6,23 +6,29 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/infos")
+@RequestMapping("/api")
 public class MemberInfoController {
 
     private final MemeberService memeberService;
 
-    @PostMapping("/all")
+    @PostMapping("/infos/all")
     public ResponseEntity<List<MemberDTO>>memberList()throws Exception{
+
     return new ResponseEntity<>(memeberService.memberList(), HttpStatus.OK);
+
+
     }
+
 
 }
