@@ -23,10 +23,10 @@ export const fetchLawmakerFailure = (err) => {
   }
 }
 
-export const fetchLawmaker = () => {
+export const fetchLawmaker = (id) => {
   return (dispatch) => {
     dispatch(fetchLawmakerRequest())
-    fetch("https://jsonplaceholder.typicode.com/comments")
+    fetch(`http://frankly.kro.kr:8081/api/infos/${id}`)
       .then(res => res.json())
       .then(list =>
         dispatch(fetchLawmakerSuccess(list)))

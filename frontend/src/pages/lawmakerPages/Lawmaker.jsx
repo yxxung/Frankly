@@ -1,34 +1,36 @@
 import React, { useEffect } from "react";
 import { connect } from 'react-redux';
 import { fetchLawmaker } from "../../redux";
-import { Nav } from "../../components";
+import { Nav, Header } from "../../components";
 
 const Lawmaker = ({items, fetchLawmaker, loading}) => {
+
   useEffect(() => {
-    fetchLawmaker()
+    fetchLawmaker(122)
   }, [])
 
   const lawmakerList = loading ? (<div>is loading...</div>) : (
-    items.map(item => (
-      <div key={item.id}>
-        <h3>{item.name}</h3>
-        <p>{item.email}</p>
-        <p>{item.body}</p>
-      </div>
-    ))
+    <div key={122}>
+      <h6>2020/06~2024/06</h6>
+      <h2>{items.district}</h2>
+      <div>사진</div>
+      <h3>{items.name}</h3>
+      <p>{items.hanName}</p>
+      <p>{items.engName}</p>
+      <p>{items.birthday}</p>
+      <p>{items.selectNumber}</p>
+      <p>{items.contact}</p>
+      <p>{items.email}</p>
+      <p>사무실 : {items.office}</p>
+    </div>
   )
 
   return (
     <>
+      <Header />
       <Nav />
       <div>
-        <h1>국회의원 화면</h1>
-        <h6>2020/06~2024/06</h6>
-        <h2>대구 달서을</h2>
-        <div>사진</div>
-        <div>
-          {lawmakerList}
-        </div>
+        {lawmakerList}
       </div>
     </>
   )
