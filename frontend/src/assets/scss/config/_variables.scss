@@ -1,0 +1,11 @@
+/* color */
+$primary: #66B3F6;
+$primary-hover: #6391f6;
+$dark: #515151;
+
+:root {
+  --main-bg: #ffffff;
+}
+body.dark-mode {
+  --main-bg: #353535;
+}
