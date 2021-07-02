@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.lang.management.LockInfo;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,4 +22,9 @@ public class MemeberService implements MemberServiceInterface {
         return mapper.memberList();
     }
 
+    @Override
+    public MemberDTO getMemberById(Long id) throws Exception {
+        log.info("getMember id:" + id.toString());
+        return mapper.readMember(id);
+    }
 }

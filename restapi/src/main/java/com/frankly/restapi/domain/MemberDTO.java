@@ -12,6 +12,9 @@ import lombok.Data;
 @Data
 public class MemberDTO {
 
+    //id
+    private Long id;
+
     //이름
     private String name;
     //한자명
@@ -29,7 +32,7 @@ public class MemberDTO {
     //재선횟수
     private String selectNumber;
     //당선
-    private String select;
+    private String selectInfo;
     //성별
     private String sex;
     //전화번호
@@ -46,6 +49,7 @@ public class MemberDTO {
     private String secretary;
     //비서
     private String personalAssistant;
+
 
     //나머지 Lombok으로 자동생성.
 

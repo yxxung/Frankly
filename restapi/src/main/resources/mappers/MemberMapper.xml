@@ -3,31 +3,37 @@
 
 <mapper namespace="com.frankly.restapi.mapper.MemberMapper">
 
-<!--    <sql id="memberTable">-->
-<!--         name-->
-<!--        ,hanName-->
-<!--        ,engName-->
-<!--        ,lunar-->
-<!--        ,birthday-->
-<!--        ,party-->
-<!--        ,district-->
-<!--        ,selectNumber-->
-<!--        ,selectinfo-->
-<!--        ,sex-->
-<!--        ,contact-->
-<!--        ,office-->
-<!--        ,email-->
-<!--        ,homepage-->
-<!--        ,aide-->
-<!--        ,secretary-->
-<!--        ,personalAssistant-->
-<!--    </sql>-->
+    <resultMap type="MemberDTO" id = "memberResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="hanName" property="hanName"/>
+        <result column="engName" property="engName"/>
+        <result column="lunar" property="lunar"/>
+        <result column="birthday" property="birthday"/>
+        <result column="party" property="party"/>
+        <result column="district" property="district"/>
+        <result column="selectNumber" property="selectNumber"/>
+        <result column="selectInfo" property="selectInfo"/>
+        <result column="sex" property="sex"/>
+        <result column="contact" property="contact"/>
+        <result column="office" property="office"/>
+        <result column="email" property="email"/>
+        <result column="homepage" property="homepage"/>
+        <result column="aide" property="aide"/>
+        <result column="secretary" property="secretary"/>
+        <result column="personalAssistant" property="personalAssistant"/>
+    </resultMap>
 
-    <select id="memberList" resultType="com.frankly.restapi.domain.MemberDTO">
+    <select id="memberList" resultMap="memberResultMap">
         SELECT *
         FROM member_info.memberinfo
     </select>
 
+
+    <select id="memberList" resultMap="memberResultMap">
+        SELECT * FROM member_info.memberinfo
+        WHERE id = #{.id}
+    </select>
     <insert id="insertMember">
         INSERT INTO member_info.memberinfo
             VALUES (#{name}
@@ -38,7 +44,7 @@
             , #{party}
             , #{district}
             , #{selectNumber}
-            , #{selectinfo}
+            , #{selectInfo}
             , #{sex}
             , #{contact}
             , #{office}
@@ -46,8 +52,8 @@
             , #{homepage}
             , #{aide}
             , #{secretary}
-            , #{personallAssitant})
-
+            , #{personallAssitant}
+            , #{id})
     </insert>
 
 </mapper>

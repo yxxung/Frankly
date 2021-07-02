@@ -17,13 +17,11 @@ public interface MemberMapper {
 
     public void createMember(MemberDTO member) throws Exception;
 
-    public MemberDTO readMember(String district) throws Exception;
+    public MemberDTO readMember(Long id) throws Exception;
 
     public void updateMember(MemberDTO member) throws Exception;
 
     public void deleteMember(MemberDTO member) throws Exception;
-
-    public void selectAllMemeber(MemberDTO memeber) throws Exception;
 
     public List<MemberDTO> memberList() throws Exception;
 }

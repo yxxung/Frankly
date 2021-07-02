@@ -7,4 +7,6 @@ import java.util.List;
 public interface MemberServiceInterface {
 
     public List<MemberDTO> memberList() throws Exception;
+
+    public MemberDTO getMemberById(Long id) throws Exception;
 }
