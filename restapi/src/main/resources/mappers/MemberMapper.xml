@@ -4,7 +4,7 @@
 <mapper namespace="com.frankly.restapi.mapper.MemberMapper">
 
     <resultMap type="MemberDTO" id = "memberResultMap">
-        <id column="id" property="id"/>
+    <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="hanName" property="hanName"/>
         <result column="engName" property="engName"/>
@@ -35,8 +35,6 @@
         SELECT * FROM member_info.memberinfo
         WHERE id = #{id}
     </select>
-
-
 
     <insert id="insertMember">
         INSERT INTO member_info.memberinfo
