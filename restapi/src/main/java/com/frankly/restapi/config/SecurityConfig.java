@@ -35,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         /**
-         * Auth manager가 어디서 load되는지 알 수 있도록 설정
+         * Authenticationmanager가 어디서 load되는지 알 수 있도록 설정\
+         * jwtUserDetailsService에서 사용하겠다!
          * .credentials 일치하는 유저
          * .BcryptPasswordEncoder 사용.
          */
@@ -56,15 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 한 유저 테스트기 때문에 CSRF 미적용 추후 수정.
         http.csrf().disable()
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
-//                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/user").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/infos/**").permitAll()
                 //개발용 설정
-                                .authorizeRequests().antMatchers("/api/**", "/api/users/user").permitAll()
+//                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin").permitAll()
                 //다른 모든 request에는 auth작업 해주어야함.
                 .anyRequest().authenticated().and()
                 //restful api 는 stateless해야하므로, statless로 바꾸어줌. 유저 state 저장안함.

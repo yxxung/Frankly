@@ -27,4 +27,5 @@ public class MemeberService implements MemberServiceInterface {
         log.info("getMember id:" + id.toString());
         return mapper.readMember(id);
     }
+
 }

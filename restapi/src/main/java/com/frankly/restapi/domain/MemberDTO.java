@@ -14,7 +14,6 @@ public class MemberDTO {
 
     //id
     private Long id;
-
     //이름
     private String name;
     //한자명
