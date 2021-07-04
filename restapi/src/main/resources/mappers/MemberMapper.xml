@@ -30,7 +30,8 @@
     </select>
 
 
-    <select id="getMemberById" resultMap="memberResultMap">
+<!--    Mapper 매서드 이름과 Mapping-->
+    <select id="readMember" resultMap="memberResultMap">
         SELECT * FROM member_info.memberinfo
         WHERE id = #{id}
     </select>
