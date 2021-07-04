@@ -25,6 +25,12 @@
         WHERE id = #{id}
     </select>
 
+    <select id="getUserByEmail" resultMap="userResultMap">
+        SELECT email,password,auth FROM member_info.userinfo
+        WHERE email = #{email}
+
+    </select>
+
     <insert id="createUser" parameterType="UserDTO">
         INSERT INTO member_info.userinfo(email, name, password, district, sex, auth, contact)
         VALUES(#{email},
