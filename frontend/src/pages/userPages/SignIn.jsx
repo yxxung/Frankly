@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { } from "../../components";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import axios from "axios";
 
 const SignIn = () => {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [saveId, setSaveId] = useState(false);
 
   const onIdHandler = (e) => {
-    setId(e.currentTarget.value);
+    setEmail(e.currentTarget.value);
   };
 
   const onPasswordHandler = (e) => {
@@ -21,10 +23,26 @@ const SignIn = () => {
   // 로그인 버튼
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (id === "" || pw === "") {
+    if (email === "" || pw === "") {
       window.alert("아이디와 비밀번호를 입력해주세요.");
     }
   };
+
+  const postSignIn = (e) => {
+    e.preventDefault();
+    axios.post('http://frankly.kro.kr:8081/api/auth/signin', {
+      username: email,
+      password: pw,
+    })
+      .then(function (response) {
+        console.log(response);
+        // 로컬스토리지에 토큰
+        window.localStorage.setItem("jwttoken", response.data.jwttoken);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   return (
     <>
@@ -32,9 +50,9 @@ const SignIn = () => {
           <div className="title">
             <h2>Frankly</h2>
           </div>
-          <form onSubmit={onSubmitHandler} className="form">
+          <form onSubmit={postSignIn} className="form">
             <label>
-              <input type="text" value={id} onChange={onIdHandler} placeholder="아이디" />
+              <input type="text" value={email} onChange={onIdHandler} placeholder="아이디" />
               <input type="password" value={pw} onChange={onPasswordHandler} placeholder="비밀번호" />
             </label>
             <div className="check">

@@ -6,11 +6,11 @@ import { Nav, Header } from "../../components";
 const Lawmaker = ({items, fetchLawmaker, loading}) => {
 
   useEffect(() => {
-    fetchLawmaker(122)
+    fetchLawmaker(1)
   }, [])
 
   const lawmakerList = loading ? (<div>is loading...</div>) : (
-    <div key={122}>
+    <div key={1}>
       <h6>2020/06~2024/06</h6>
       <h2>{items.district}</h2>
       <div>사진</div>
