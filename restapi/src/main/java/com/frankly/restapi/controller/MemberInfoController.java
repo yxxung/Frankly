@@ -15,18 +15,18 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/infos")
 public class MemberInfoController {
 
     private final MemeberService memeberService;
 
-    @GetMapping("/infos/all")
+    @GetMapping("/all")
     public ResponseEntity<List<MemberDTO>>memberList()throws Exception{
 
     return new ResponseEntity<>(memeberService.memberList(), HttpStatus.OK);
     }
 
-    @GetMapping("/infos/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<MemberDTO> getMemberById(@PathVariable("id")Long id) throws Exception{
 
         MemberDTO memberDTO = memeberService.getMemberById(id);

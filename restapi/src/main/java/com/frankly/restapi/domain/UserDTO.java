@@ -29,6 +29,7 @@ public class UserDTO implements UserDetails {
     private String district;
     private String sex;
     private String userAuth;
+    private Set<GrantedAuthority> authorities;
 
 
     /**
@@ -51,7 +52,6 @@ public class UserDTO implements UserDetails {
         this.district = district;
         this.sex = sex;
         this.userAuth = userAuth;
-
     }
 
     // 해당 유저의 권한을 컬렉션 형태로 반환
@@ -59,7 +59,7 @@ public class UserDTO implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> userAuths = new HashSet<>();
-        for(String auth : userAuth.split(",")){
+        for(String auth : this.userAuth.split(",")){
             userAuths.add(new SimpleGrantedAuthority(auth));
         }
         return userAuths;

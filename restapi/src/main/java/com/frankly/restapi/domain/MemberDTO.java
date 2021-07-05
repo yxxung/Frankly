@@ -4,7 +4,7 @@ import lombok.Data;
 
 
 /**
- * @author hanpaa
+ * @author 최제현
  * @date 2021/06/24
  * 국회의원 DTO
  * 추후 나눌 필요가 있어보임.
@@ -14,7 +14,6 @@ public class MemberDTO {
 
     //id
     private Long id;
-
     //이름
     private String name;
     //한자명

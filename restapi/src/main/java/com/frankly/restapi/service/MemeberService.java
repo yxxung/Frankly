@@ -1,6 +1,7 @@
 package com.frankly.restapi.service;
 
 import com.frankly.restapi.domain.MemberDTO;
+import com.frankly.restapi.domain.RegionNumberDTO;
 import com.frankly.restapi.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,4 +28,5 @@ public class MemeberService implements MemberServiceInterface {
         log.info("getMember id:" + id.toString());
         return mapper.readMember(id);
     }
+
 }

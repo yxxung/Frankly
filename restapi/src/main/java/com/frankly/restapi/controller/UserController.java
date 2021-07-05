@@ -23,7 +23,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUser(@PathVariable("userId") Long userId)
             throws Exception{
         log.info("read" + userId);
@@ -33,7 +33,7 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/user")
+    @PostMapping("/signup")
     public ResponseEntity<UserDTO> registerUser(@Validated @RequestBody UserDTO userDTO)
             throws Exception{
         log.info("create User" + userDTO.getEmail());
