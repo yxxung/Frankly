@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const Nav = () => {
 
@@ -7,15 +7,15 @@ const Nav = () => {
     <>
       <nav className="bottom_nav">
         <div className="bottom_nav_area">
-          <Link to="/">
+          <NavLink exact to="/" activeClassName="selected">
             <p>홈</p>
-          </Link>
-          <Link to="/community">
+          </NavLink>
+          <NavLink to="/community" activeClassName="selected">
             <p>게시판</p>
-          </Link>
-          <Link to="/profile">
+          </NavLink>
+          <NavLink to="/profile" activeClassName="selected">
             <p>내 정보</p>
-          </Link>
+          </NavLink>
         </div>
       </nav>
     </>

@@ -36,8 +36,6 @@ const SignUp = () => {
     setContact(e.currentTarget.value);
   };
 
-
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (email === "" || pw === "") {
