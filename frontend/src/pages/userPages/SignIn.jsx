@@ -1,47 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Header } from "../../components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
-const SignIn = () => {
+const SignIn = memo(({ history }) => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [saveId, setSaveId] = useState(false);
   // 아이디
   const onIdHandler = (e) => {
+    console.log('onIdHandler')
     setEmail(e.currentTarget.value);
   };
   // 패스워드
   const onPasswordHandler = (e) => {
+    console.log('onPasswordHandler');
     setPw(e.currentTarget.value);
   };
   // 아이디 저장 체크박스
   const checkHandler = (e) => {
+    console.log('checkHandler');
     setSaveId(!saveId);
   };
   // 로그인 버튼
-  const onSubmitHandler = (e) => {
+  const postSignIn = (e) => {
+    console.log('postSignIn');
     e.preventDefault();
     if (email === "" || pw === "") {
       window.alert("아이디와 비밀번호를 입력해주세요.");
-    }
-  };
-
-  const postSignIn = (e) => {
-    e.preventDefault();
-    axios.post('http://frankly.kro.kr:8081/api/auth/signin', {
-      username: email,
-      password: pw,
-    })
-      .then(function (response) {
-        console.log(response);
-        // 로컬스토리지에 토큰
-        window.localStorage.setItem("jwttoken", response.data.jwttoken);
+    } else {
+      // POST 로그인 api
+      axios.post('http://frankly.kro.kr:8081/api/auth/signin', {
+        username: email,
+        password: pw,
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          console.log(response);
+          // 로컬스토리지에 토큰
+          window.localStorage.setItem("jwttoken", response.data.jwttoken);
+        })
+        .catch(function (error) {
+          // 로그인 오류
+          alert('아이디 혹은 비밀번호가 잘못되었습니다.')
+          console.log(error);
+        });
+    }
+
   }
 
   return (
@@ -49,6 +54,7 @@ const SignIn = () => {
       <Header
         title="로그인"
         btn="back"
+        history={history}
       />
       <div className="signIn">
         <div className="title">
@@ -72,6 +78,6 @@ const SignIn = () => {
       </div>
     </>
   )
-}
+})
 
 export default SignIn

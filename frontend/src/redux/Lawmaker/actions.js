@@ -31,5 +31,6 @@ export const fetchLawmaker = (id) => {
       .then(list =>
         dispatch(fetchLawmakerSuccess(list)))
       .catch(err => fetchLawmakerFailure(err))
+  // 만약 10초이상 loading 중이면 "서버와의 연결이 원활하지 않습니다. 다시 시도해주세요..."
   }
 }

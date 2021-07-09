@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchLawmaker } from "../../redux";
 import { Nav, Header } from "../../components";
 
-const Lawmaker = ({items, fetchLawmaker, loading}) => {
+const Lawmaker = () => {
+  const items = useSelector(store => store.lawmaker.items);
+  const loading = useSelector(store => store.lawmaker.loading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchLawmaker(1)
+    dispatch(fetchLawmaker(1));
   }, [])
 
   const lawmakerList = loading ? (<div>is loading...</div>) : (
@@ -37,15 +40,5 @@ const Lawmaker = ({items, fetchLawmaker, loading}) => {
     </>
   )
 };
-// state 값 불러오기
-const mapStateToProps = (state) => {
-  return {
-    items: state.lawmaker.items
-  }
-}
-// dispatch
-const mapDispatchToProps = {
-  fetchLawmaker
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Lawmaker);
+export default Lawmaker;

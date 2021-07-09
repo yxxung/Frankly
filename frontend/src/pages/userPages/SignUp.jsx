@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { } from "../../components";
+import {Header} from "../../components";
 import axios from "axios";
 import {Link} from "react-router-dom";
 
-const SignUp = () => {
+const SignUp = ({ history }) => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [name, setName] = useState("");
@@ -64,7 +64,11 @@ const SignUp = () => {
 
   return (
     <>
-      <h1>회원가입 화면</h1>
+      <Header
+        title="회원가입"
+        btn="back"
+        history={history}
+      />
       <div className="signIn">
         <div className="title">
           <h2>Frankly</h2>

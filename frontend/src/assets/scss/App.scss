@@ -17,51 +17,37 @@ body {
     background-color: var(--main-bg);
 }
 
-//// input Box
-//
-//input[type=text], input[type=password] {
-//    margin-bottom: 8px;
-//    padding: 0 8px;
-//    width: 100%;
-//    height: 40px;
-//    box-sizing: border-box;
-//    // color
-//    color: #000000;
-//    border: 1px solid #CBCBCB;
-//    background-color: #FFFFFF;
-//    &:hover {
-//        border: 1px solid #ABABAB;
-//    }
-//    &:focus {
-//        border: 1px solid $main-color;
-//        outline: 1px solid $main-color;
-//    }
-//}
-//
-//input[type=checkbox] {
-//    margin: 0 8px 0 0;
-//    width: 16px;
-//    height: 16px;
-//    appearance: checkbox;
-//    box-sizing: border-box;
-//    border: 1px solid #CBCBCB;
-//}
-//
-//button {
-//    margin: 28px 0 10px 0;
-//    height: 40px;
-//    display: flex;
-//    justify-content: center;
-//    align-items: center;
-//    border-radius: 40px;
-//    color: #FFFFFF;
-//    background-color: $main-color;
-//    cursor: pointer;
-//    &:hover {
-//        background-color: $main-color-hover;
-//    }
-//}
-@import "../../components/Nav/Nav";
+// input Box
+
+input[type=text], input[type=password] {
+    margin-bottom: 8px;
+    padding: 0 8px;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    // color
+    color: #000000;
+    border: 1px solid #CBCBCB;
+    background-color: #FFFFFF;
+    &:hover {
+        border: 1px solid #ABABAB;
+    }
+    &:focus {
+        border: 1px solid $main-color;
+        outline: 1px solid $main-color;
+    }
+}
+
+input[type=checkbox] {
+    margin: 0 8px 0 0;
+    width: 16px;
+    height: 16px;
+    appearance: checkbox;
+    box-sizing: border-box;
+    border: 1px solid #CBCBCB;
+}
+
+//@import "../../components/Nav/Nav";
 @import "../../components/Header/Header";
 
 @import "../../pages/userPages/SignIn"; // 로그인
