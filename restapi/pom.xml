@@ -12,6 +12,7 @@
     <artifactId>restapi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>restapi</name>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
@@ -116,6 +117,13 @@
             <version>2.9.2</version>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>2.4.8</version>
+        </dependency>
 
 
 
