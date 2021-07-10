@@ -31,22 +31,20 @@ const SignIn = memo(({ history }) => {
       window.alert("아이디와 비밀번호를 입력해주세요.");
     } else {
       // POST 로그인 api
-      axios.post('http://frankly.kro.kr:8081/api/auth/signin', {
+      axios.post('http://220.122.5.95:8081/api/auth/signin', {
         username: email,
         password: pw,
       })
         .then(function (response) {
-          console.log(response);
           // 로컬스토리지에 토큰
           window.localStorage.setItem("jwttoken", response.data.jwttoken);
+          // todo 홈으로 이동
         })
         .catch(function (error) {
           // 로그인 오류
           alert('아이디 혹은 비밀번호가 잘못되었습니다.')
-          console.log(error);
         });
     }
-
   }
 
   return (

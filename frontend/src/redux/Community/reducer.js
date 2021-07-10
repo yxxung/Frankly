@@ -1,3 +1,5 @@
+// 테스트 코드
+
 import {
   ADD_SUBSCRIBER,
   REMOVE_SUBSCRIBER,
@@ -8,8 +10,9 @@ const initialState = {
   view: 0,
 }
 
-const subscribersReducer = (state=initialState, action) => {
+const communityReducer = (state=initialState, action) => {
   switch(action.type){
+
     case ADD_SUBSCRIBER:
       return {
         ...state,
@@ -29,4 +32,4 @@ const subscribersReducer = (state=initialState, action) => {
   }
 }
 
-export default subscribersReducer
+export default communityReducer

@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Route, Switch } from "react-router-dom";
-
 import { Community, Lawmaker, Profile, SignIn, SignUp, EmptyPage } from "./pages"
+import { useDispatch } from "react-redux";
+import { getUser } from "./redux";
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser(1)) // 토큰으로 유저정보 가져오기 / id 값
+  }, [])
 
   return (
     <>
@@ -13,7 +18,7 @@ const App = () => {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/signIn" component={SignIn} />
         <Route exact path="/signUp" component={SignUp} />
-        {/*추가해야할 페이지 :
+        {/*todo 추가해야할 페이지 :
           회원정보 수정
           설정
           FAQ

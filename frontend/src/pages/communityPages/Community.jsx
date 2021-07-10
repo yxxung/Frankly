@@ -6,8 +6,8 @@ import { Nav } from "../../components";
 const Community = () => {
   const [number, setNumber] = useState(1)
 
-  const count = useSelector(state => state.subscribers.count);
-  const view = useSelector(state => state.subscribers.view);
+  const count = useSelector(state => state.community.count);
+  const view = useSelector(state => state.community.view);
   const dispatch = useDispatch();
 
   const viewChange = (e) => {

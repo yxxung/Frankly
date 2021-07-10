@@ -1,4 +1,6 @@
-import { GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE } from "./types";
+import {
+  GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE,
+  LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE } from "./types";
 import axios from "axios";
 
 export const getUserRequest = () => {
@@ -20,7 +22,7 @@ export const getUserFailure = (err) => {
     payload: err
   }
 }
-
+// 앱 실행 시 유저 로그인 여부 요청
 export const getUser = (id) => {
   // jwt 토큰 불러오기
   let jwttoken = localStorage.getItem("jwttoken");
@@ -31,7 +33,6 @@ export const getUser = (id) => {
       'Content-Type': 'application/json'
     }
   }
-  console.log(jwttoken);
 
   return (dispatch) => {
     dispatch(getUserRequest())
@@ -41,6 +42,6 @@ export const getUser = (id) => {
       })
       .catch(function (err) {
         dispatch(getUserFailure(err))
-      });
+      })
   }
 }
