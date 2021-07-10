@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
-import subscribersReducer from "./Community/reducer";
-import lawmakerReducer from "./Lawmaker/reducer";
 import userReducer from "./User/reducer";
+import lawmakerReducer from "./Lawmaker/reducer";
+import communityReducer from "./Community/reducer";
 
 const rootReducer = combineReducers({
-  subscribers: subscribersReducer,
-  lawmaker: lawmakerReducer,
-  user: userReducer,
+  user: userReducer, // 유저 정보
+  lawmaker: lawmakerReducer, // 국회의원 정보
+  community: communityReducer, // 커뮤니티
 })
 
 export default rootReducer

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Nav } from "../../components";
 
@@ -11,11 +10,7 @@ const Profile = () => {
   const loading = useSelector(store => store.user.loading);
   console.log(userInfo);
   console.log(loading);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUser(1)) // id 값
-  }, [])
 
   return (
     <>
