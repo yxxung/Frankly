@@ -46,10 +46,19 @@ input[type=checkbox] {
     box-sizing: border-box;
     border: 1px solid #CBCBCB;
 }
-
-//@import "../../components/Nav/Nav";
+// NAV 선택
+.selected {
+    span {
+        color: #0d6efd !important;
+    }
+    p {
+        color: #0d6efd !important;
+    }
+}
 @import "../../components/Header/Header";
 
 @import "../../pages/userPages/SignIn"; // 로그인
 @import "../../pages/lawmakerPages/Lawmaker"; // 국회의원
 @import "../../pages/communityPages/Community"; // 커뮤니티
+
+@import '../../../node_modules/material-design-icons/iconfont/material-icons.css'; // 구글 아이콘

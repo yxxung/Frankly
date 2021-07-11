@@ -24,21 +24,59 @@ export const getUserFailure = (err) => {
 }
 // 앱 실행 시 유저 로그인 여부 요청
 export const getUser = (id) => {
-  // jwt 토큰 불러오기
-  let jwttoken = localStorage.getItem("jwttoken");
-  let yourConfig = {
+  // // jwt 토큰 불러오기
+  // const jwttoken = localStorage.getItem("jwttoken");
+  // const bodyParameters = {
+  //   key: "value"
+  // };
+  // const yourConfig = {
+  //   headers: {
+  //     // "Access-Control-Allow-Origin": "http://frankly.kro.kr:8081",
+  //     // "Access-Control-Allow-Credentials": "true",
+  //     'Authorization': `Bearer ${jwttoken}`,
+  //     'Accept' : 'application/json',
+  //     "Content-type": "Application/json",
+  //     // "credentials": "include",
+  //
+  //   }
+  // }
+  //
+  // return (dispatch) => {
+  //   dispatch(getUserRequest())
+  //   axios.defaults.headers.common["Authorization"] = `Bearer ${jwttoken}`
+  //   axios.get('http://frankly.kro.kr:8081/api/users/1',
+  //     // bodyParameters,
+  //     yourConfig,
+  //     { withCredentials: true }
+  //   )
+  //     .then(function (response) {
+  //       dispatch(getUserSuccess(response))
+  //     })
+  //     .catch(function (err) {
+  //       dispatch(getUserFailure(err))
+  //     })
+  // }
+
+  const jwttoken = localStorage.getItem("jwttoken");
+  const httpInstance = axios.create({
+    baseURL: "http://frankly.kro.kr:8081/api/users/",
+    timeout: 180000,
     headers: {
-      'Authorization': `Bearer ${jwttoken}`,
-      'Accept' : 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }
+      Authorization: `Bearer ${localStorage.getItem("jwttoken")}`,
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  });
+
+  // httpInstance.defaults.headers.common.Authorization = `Bearer ${jwttoken}`;
 
   return (dispatch) => {
     dispatch(getUserRequest())
-    axios.get('http://frankly.kro.kr:8081/api/users/1', yourConfig)
+    httpInstance.get(
+      `http://frankly.kro.kr:8081/api/users/${id}`,
+    )
       .then(function (response) {
-        dispatch(getUserSuccess(response))
+        dispatch(getUserSuccess(response.data))
       })
       .catch(function (err) {
         dispatch(getUserFailure(err))
