@@ -45,7 +45,7 @@ const SignUp = ({ history }) => {
 
   const postSignUp = (e) => {
     e.preventDefault();
-    axios.post('http://frankly.kro.kr:8081/api/users/signup', {
+    axios.post('http://220.122.5.95:8081/api/users/signup', {
       email: email,
       password: pw,
       name: name,

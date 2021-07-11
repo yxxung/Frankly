@@ -31,7 +31,7 @@ const SignIn = memo(({ history }) => {
       window.alert("아이디와 비밀번호를 입력해주세요.");
     } else {
       // POST 로그인 api
-      axios.post('http://frankly.kro.kr:8081/api/auth/signin', {
+      axios.post('http://220.122.5.95:8081/api/auth/signin', {
         username: email,
         password: pw,
       })
