@@ -24,7 +24,7 @@ module.exports = merge(common, {
       '/api': {
         target: 'http://frankly.kro.kr:8081',
         changeOrigin: true,
-        pathRewrite: { '^api': '' },
+        pathRewrite: { '^/api': '' },
       }
     },
   },
