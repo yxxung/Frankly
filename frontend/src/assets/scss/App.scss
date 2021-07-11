@@ -1,8 +1,10 @@
 @import "config/reset";
+@import "config/variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 $main-color: #d52a6f;
 $main-color-hover: #bf195c;
+$header-height: 60px;
 
 html {
     font-size: 10px;
@@ -15,6 +17,10 @@ body {
     font-size: 1.6rem;
     overflow-x: hidden;
     background-color: var(--main-bg);
+}
+
+.contents {
+    margin-top: $header-height;
 }
 
 // input Box

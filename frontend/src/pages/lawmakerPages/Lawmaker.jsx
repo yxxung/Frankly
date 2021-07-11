@@ -15,6 +15,7 @@ const Lawmaker = () => {
   const lawmakerList = loading ? (<div>is loading...</div>) : (
     <div key={1}>
       <h6>2020/06~2024/06</h6>
+      <h1>{items.district}</h1>
       <div>사진</div>
       <h3>{items.name}</h3>
       <p>{items.hanName}</p>
@@ -28,16 +29,14 @@ const Lawmaker = () => {
   )
 
   return (
-    <>
+    <div className="contents">
       {/*처음 로딩시 지역이름 안뜨는 문제*/}
-      <Header
-        title={items.district}
-      />
+      <Header />
       <Nav />
       <div className="lawmaker">
         {lawmakerList}
       </div>
-    </>
+    </div>
   )
 };
 

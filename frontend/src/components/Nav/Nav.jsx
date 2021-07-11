@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Nav.module.scss";
 
-const Nav = memo(() => {
+export const Nav = memo(() => {
 
   return (
     <>
@@ -25,5 +25,3 @@ const Nav = memo(() => {
     </>
   )
 });
-
-export default Nav

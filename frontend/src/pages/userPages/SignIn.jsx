@@ -1,13 +1,16 @@
-import React, { useState, memo } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { Header } from "../../components";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
+import {authUser, logIn} from "../../redux";
 import axios from "axios";
 
 const SignIn = memo(({ history }) => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [saveId, setSaveId] = useState(false);
+  const dispatch = useDispatch();
+  const loginSuccess = useSelector(store => store.user.loginSuccess);
   // 아이디
   const onIdHandler = (e) => {
     console.log('onIdHandler')
@@ -23,29 +26,23 @@ const SignIn = memo(({ history }) => {
     console.log('checkHandler');
     setSaveId(!saveId);
   };
+
   // 로그인 버튼
-  const postSignIn = (e) => {
-    console.log('postSignIn');
+  const onClickLogIn = (e) => {
     e.preventDefault();
-    if (email === "" || pw === "") {
-      window.alert("아이디와 비밀번호를 입력해주세요.");
-    } else {
-      // POST 로그인 api
-      axios.post('http://frankly.kro.kr:8081/api/auth/signin', {
-        username: email,
-        password: pw,
-      })
-        .then(function (response) {
-          // 로컬스토리지에 토큰
-          window.localStorage.setItem("jwttoken", response.data.jwttoken);
-          // todo 홈으로 이동
-        })
-        .catch(function (error) {
-          // 로그인 오류
-          alert('아이디 혹은 비밀번호가 잘못되었습니다.')
-        });
+    const user = {
+      username: email,
+      password: pw,
     }
+    dispatch(logIn(user));
   }
+
+  useEffect(() => {
+    if (loginSuccess) {
+      history.push("/");
+    }
+  }, []);
+
 
   return (
     <>
@@ -58,7 +55,7 @@ const SignIn = memo(({ history }) => {
         <div className="title">
           <h2>Frankly</h2>
         </div>
-        <form onSubmit={postSignIn} className="form">
+        <form onSubmit={onClickLogIn} className="form">
           <label>
             <input type="text" value={email} onChange={onIdHandler} placeholder="아이디" />
             <input type="password" value={pw} onChange={onPasswordHandler} placeholder="비밀번호" />
