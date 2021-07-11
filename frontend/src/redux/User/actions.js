@@ -37,7 +37,7 @@ export const getUser = (id) => {
 
   return (dispatch) => {
     dispatch(getUserRequest())
-    axios.get('http://220.122.5.95:8081/api/users/1', yourConfig)
+    axios.get('http://frankly.kro.kr:8081/api/users/1', yourConfig)
       .then(function (response) {
         dispatch(getUserSuccess(response))
       })

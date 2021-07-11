@@ -22,7 +22,7 @@ module.exports = merge(common, {
     // CORS 에러
     proxy: {
       '/api': {
-        target: 'http://220.122.5.95:8081',
+        target: 'http://frankly.kro.kr:8081',
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       }
