@@ -15,6 +15,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Slf4j
 //이 어노테이션은?
@@ -66,6 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
                 .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/infos/**").permitAll()
+                //cors 예외처리
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 //개발용 설정
 //                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
                 //다른 모든 request에는 auth작업 해주어야함.
@@ -76,5 +82,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //모든 request를 validate 하기위해 필터 추가.
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+
+
+        configuration.addAllowedOrigin("http://220.122.5.95:8081, http://220.122.5.95:3000");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+
     }
 }
