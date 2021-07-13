@@ -32,6 +32,7 @@ const SignIn = memo(({ history }) => {
     } else {
       // POST 로그인 api
       axios.post('http://frankly.kro.kr:8081/api/auth/signin', {
+      // axios.post('http://220.122.5.95:8081/api/auth/signin', {
         username: email,
         password: pw,
       })

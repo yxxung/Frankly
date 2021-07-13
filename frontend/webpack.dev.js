@@ -14,15 +14,15 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, "public"),
     port: port,
     hot: true,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Accept, content-type, Authorization"
-      // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-    },
+    // headers: {
+    //   "Access-Control-Allow-Origin": "*",
+    //   "Access-Control-Allow-Headers": "Accept, content-type, Authorization"
+    //   // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    // },
     // CORS 에러
     proxy: {
       '/api': {
-        target: 'http://frankly.kro.kr:8081',
+        target: 'http://220.122.5.95:8081',
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       }

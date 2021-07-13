@@ -28,7 +28,7 @@ export const getUser = (id) => {
   let jwttoken = localStorage.getItem("jwttoken");
   let yourConfig = {
     headers: {
-      'Acess-Control-Allow-Origin': '*',
+      // 'Acess-Control-Allow-Origin': '*',
       'Authorization': `Bearer ${jwttoken}`,
       'Accept' : 'application/json',
       'Content-Type': 'application/json'
@@ -38,6 +38,7 @@ export const getUser = (id) => {
   return (dispatch) => {
     dispatch(getUserRequest())
     axios.get('http://frankly.kro.kr:8081/api/users/1', yourConfig)
+    // axios.get('http://220.122.5.95:8081/api/users/1', yourConfig)
       .then(function (response) {
         dispatch(getUserSuccess(response))
       })
