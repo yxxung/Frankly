@@ -1,6 +1,7 @@
 @import "config/reset";
 @import "config/variables";
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+//@import "~bootstrap/scss/bootstrap";
+@import "../fonts/font.css";
 
 $main-color: #d52a6f;
 $main-color-hover: #bf195c;
@@ -67,4 +68,4 @@ input[type=checkbox] {
 @import "../../pages/lawmakerPages/Lawmaker"; // 국회의원
 @import "../../pages/communityPages/Community"; // 커뮤니티
 
-@import '../../../node_modules/material-design-icons/iconfont/material-icons.css'; // 구글 아이콘
+@import '~material-design-icons/iconfont/material-icons.css'; // 구글 아이콘
