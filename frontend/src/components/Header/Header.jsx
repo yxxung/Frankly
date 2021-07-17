@@ -24,9 +24,9 @@ export const Header = memo((props) => {
                     <button className="leftBox" onClick={goBack}>
                       <span className="material-icons">arrow_back</span>
                     </button>
-                    <div>
-                      <h1>{title}</h1>
-                    </div>
+                    {/*<div>*/}
+                    {/*  <h1>{title}</h1>*/}
+                    {/*</div>*/}
                   </>
                 )
               } else if (props.btn === "home") { // 홈
