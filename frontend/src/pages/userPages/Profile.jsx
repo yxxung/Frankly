@@ -26,7 +26,7 @@ const Profile = (props) => {
       <Nav />
       <h1>내정보 화면</h1>
       <p>이름 : {}</p>
-      <Link to="/signUp">
+      <Link to="/signup">
         <p>회원가입</p>
       </Link>
 
@@ -36,7 +36,7 @@ const Profile = (props) => {
               <p>로그아웃</p>
             </a>
           ) : (
-            <Link to="/signIn">
+            <Link to="/login">
               <p>로그인</p>
             </Link>
           )

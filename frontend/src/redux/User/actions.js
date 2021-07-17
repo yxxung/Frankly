@@ -82,6 +82,7 @@ export const logIn = (user) => {
       .catch(function (err) {
         dispatch(loginFailure(err));
         alert('아이디 혹은 비밀번호가 잘못되었습니다.');
+        // todo input 비우기
       });
   }
 }

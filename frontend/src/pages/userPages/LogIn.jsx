@@ -2,15 +2,25 @@ import React, { useState, useEffect, memo } from "react";
 import { Header } from "../../components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import {authUser, logIn} from "../../redux";
-import axios from "axios";
+import { authUser, logIn } from "../../redux";
 
-const SignIn = memo(({ history }) => {
+const checkEmail = (str) => {
+  let reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  if(!reg_email.test(str)) {
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+const LogIn = memo(({ history }) => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [saveId, setSaveId] = useState(false);
   const dispatch = useDispatch();
   const loginSuccess = useSelector(store => store.user.loginSuccess);
+
   // 아이디
   const onIdHandler = (e) => {
     console.log('onIdHandler')
@@ -30,11 +40,18 @@ const SignIn = memo(({ history }) => {
   // 로그인 버튼
   const onClickLogIn = (e) => {
     e.preventDefault();
-    const user = {
-      username: email,
-      password: pw,
+    // 이메일 양식, 비밀번호 8자리 체크
+    if (!checkEmail(email)) {
+      alert('이메일 양식에 맞게 넣어주세요');
+    } else if (pw.length < 8) {
+      alert('비밀번호는 8자리 이상입니다');
+    } else {
+      const user = {
+        username: email,
+        password: pw,
+      }
+      dispatch(logIn(user));
     }
-    dispatch(logIn(user));
   }
 
   useEffect(() => {
@@ -75,4 +92,4 @@ const SignIn = memo(({ history }) => {
   )
 })
 
-export default SignIn
+export default LogIn
