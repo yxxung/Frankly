@@ -37,16 +37,12 @@ export const authUser = (id) => {
   }
 
   return (dispatch) => {
-<<<<<<< HEAD
-    dispatch(getUserRequest())
-    axios.get('http://frankly.kro.kr:8081/api/users/1', yourConfig)
-    // axios.get('http://220.122.5.95:8081/api/users/1', yourConfig)
-=======
+
     dispatch(authUserRequest());
+    // axios.get('http://220.122.5.95:8081/api/users/1', yourConfig),
     axios.get(`http://frankly.kro.kr:8081/api/users/${id}`,
       yourConfig
     )
->>>>>>> 71033eabed834b09bc8463e9c690b527e801a927
       .then(function (response) {
         dispatch(authUserSuccess(response.data));
       })
@@ -55,8 +51,6 @@ export const authUser = (id) => {
       })
   }
 }
-<<<<<<< HEAD
-=======
 
 // 로그인
 const loginRequest = () => {
@@ -103,4 +97,3 @@ export const logOut = () => {
     payload: ''
   }
 }
->>>>>>> 71033eabed834b09bc8463e9c690b527e801a927

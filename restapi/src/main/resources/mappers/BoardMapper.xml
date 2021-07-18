@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.BoardMapper">
+
+<!--    resultmap 복습필요.-->
+    <resultMap type="" id="boardResultMap">
+        <id column="id" property="id"/>
+        <result column="author" property="author"/>
+        <result column="regDate" property="regDate"/>
+        <result column="marked" property="marked"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <insert id="createBoard">
+
+    </insert>
+
+
+
+</mapper>
