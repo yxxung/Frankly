@@ -19,14 +19,14 @@
       align-items: center;
       text-decoration: none;
     }
+    span {
+      color: #B5B5B5;
+    }
     p {
-      margin-top: 7px;
+      margin: 4px 0 2px 0;
       font-size: 0.8rem;
       color: #B5B5B5;
     }
-  }
-  .selected {
-    color: #0d3197;
   }
 }
 

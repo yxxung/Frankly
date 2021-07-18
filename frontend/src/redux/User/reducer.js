@@ -1,9 +1,11 @@
 import {
-  GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE,
-  LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE } from "./types";
+  AUTH_USER_REQUEST, AUTH_USER_SUCCESS, AUTH_USER_FAILURE,
+  LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE,
+  LOG_OUT } from "./types";
 
 const initialState = {
   userInfo: {},
+  loginSuccess: false,
   loading: false,
   err: null
 }
@@ -11,20 +13,21 @@ const initialState = {
 const userReducer = (state=initialState, action) => {
   switch(action.type){
       // 앱 실행 시 유저 로그인 여부 요청
-    case GET_USER_REQUEST:
+    case AUTH_USER_REQUEST:
       return {
         ...state,
         loading: true,
       }
-      // 유저 정보 성공
-    case GET_USER_SUCCESS:
+      // 유저 정보 인증 성공
+    case AUTH_USER_SUCCESS:
       return {
         ...state,
         userInfo: action.payload,
+        loginSuccess: true,
         loading: false,
       }
-      // 유저 정보 실패
-    case GET_USER_FAILURE:
+      // 유저 정보 인증 실패
+    case AUTH_USER_FAILURE:
       return {
         ...state,
         err: action.payload,
@@ -40,7 +43,6 @@ const userReducer = (state=initialState, action) => {
     case LOG_IN_SUCCESS:
       return {
         ...state,
-        userInfo: action.payload,
         loading: false,
       }
       // 로그인 실패
@@ -48,7 +50,12 @@ const userReducer = (state=initialState, action) => {
       return {
         ...state,
         err: action.payload,
+        loginSuccess: false,
         loading: false,
+      }
+    case LOG_OUT:
+      return {
+        initialState,
       }
     default: return state
   }

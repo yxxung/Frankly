@@ -1,49 +1,106 @@
 import {
-  GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE,
-  LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE } from "./types";
+  AUTH_USER_REQUEST, AUTH_USER_SUCCESS, AUTH_USER_FAILURE,
+  LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE,
+  LOG_OUT } from "./types";
 import axios from "axios";
 
-export const getUserRequest = () => {
+const authUserRequest = () => {
   return {
-    type: GET_USER_REQUEST
+    type: AUTH_USER_REQUEST
   }
 }
 
-export const getUserSuccess = (user) => {
+const authUserSuccess = (user) => {
   return {
-    type: GET_USER_SUCCESS,
+    type: AUTH_USER_SUCCESS,
     payload: user
   }
 }
 
-export const getUserFailure = (err) => {
+const authUserFailure = (err) => {
   return {
-    type: GET_USER_FAILURE,
+    type: AUTH_USER_FAILURE,
     payload: err
   }
 }
 // 앱 실행 시 유저 로그인 여부 요청
-export const getUser = (id) => {
+export const authUser = (id) => {
   // jwt 토큰 불러오기
-  let jwttoken = localStorage.getItem("jwttoken");
-  let yourConfig = {
+  const jwttoken = localStorage.getItem("jwttoken");
+  const yourConfig = {
     headers: {
       // 'Acess-Control-Allow-Origin': '*',
       'Authorization': `Bearer ${jwttoken}`,
       'Accept' : 'application/json',
-      'Content-Type': 'application/json'
+      "Content-type": "Application/json",
     }
   }
 
   return (dispatch) => {
+<<<<<<< HEAD
     dispatch(getUserRequest())
     axios.get('http://frankly.kro.kr:8081/api/users/1', yourConfig)
     // axios.get('http://220.122.5.95:8081/api/users/1', yourConfig)
+=======
+    dispatch(authUserRequest());
+    axios.get(`http://frankly.kro.kr:8081/api/users/${id}`,
+      yourConfig
+    )
+>>>>>>> 71033eabed834b09bc8463e9c690b527e801a927
       .then(function (response) {
-        dispatch(getUserSuccess(response))
+        dispatch(authUserSuccess(response.data));
       })
       .catch(function (err) {
-        dispatch(getUserFailure(err))
+        dispatch(authUserFailure(err));
       })
   }
 }
+<<<<<<< HEAD
+=======
+
+// 로그인
+const loginRequest = () => {
+  return {
+    type: AUTH_USER_REQUEST
+  }
+}
+
+const loginSuccess = () => {
+  return {
+    type: AUTH_USER_SUCCESS
+  }
+}
+
+const loginFailure = (err) => {
+  return {
+    type: AUTH_USER_FAILURE,
+    payload: err
+  }
+}
+
+export const logIn = (user) => {
+  return (dispatch) => {
+    dispatch(loginRequest());
+    axios.post('http://frankly.kro.kr:8081/api/auth/signin', user)
+      .then(function (response) {
+        // 로컬스토리지에 토큰
+        dispatch(loginSuccess());
+        window.localStorage.setItem("jwttoken", response.data.jwttoken);
+        // todo 토큰 인증
+      })
+      .catch(function (err) {
+        dispatch(loginFailure(err));
+        alert('아이디 혹은 비밀번호가 잘못되었습니다.');
+        // todo input 비우기
+      });
+  }
+}
+
+// 로그아웃
+export const logOut = () => {
+  return {
+    type: LOG_OUT,
+    payload: ''
+  }
+}
+>>>>>>> 71033eabed834b09bc8463e9c690b527e801a927

@@ -1,8 +1,11 @@
 @import "config/reset";
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "config/variables";
+//@import "~bootstrap/scss/bootstrap";
+@import "../fonts/font.css";
 
 $main-color: #d52a6f;
 $main-color-hover: #bf195c;
+$header-height: 60px;
 
 html {
     font-size: 10px;
@@ -15,6 +18,10 @@ body {
     font-size: 1.6rem;
     overflow-x: hidden;
     background-color: var(--main-bg);
+}
+
+.contents {
+    margin-top: $header-height;
 }
 
 // input Box
@@ -46,10 +53,20 @@ input[type=checkbox] {
     box-sizing: border-box;
     border: 1px solid #CBCBCB;
 }
-
-//@import "../../components/Nav/Nav";
+// NAV 선택
+.selected {
+    span {
+        color: #0d6efd !important;
+    }
+    p {
+        color: #0d6efd !important;
+    }
+}
 @import "../../components/Header/Header";
+@import "../../components/Nav/Nav";
 
-@import "../../pages/userPages/SignIn"; // 로그인
+@import "../../pages/userPages/LogIn"; // 로그인
 @import "../../pages/lawmakerPages/Lawmaker"; // 국회의원
 @import "../../pages/communityPages/Community"; // 커뮤니티
+
+@import '~material-design-icons/iconfont/material-icons.css'; // 구글 아이콘

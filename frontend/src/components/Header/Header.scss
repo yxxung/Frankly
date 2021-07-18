@@ -1,11 +1,10 @@
-$headerHeight: 60px;
-$gnb-small-h: 50px;
+$header-height: 60px;
 
 .header {
   top: 0;
   position: fixed;
   width: 100vw;
-  height: $headerHeight;
+  height: $header-height;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,8 +20,8 @@ $gnb-small-h: 50px;
     flex-direction: row;
     align-items: center;
     .leftBox {
-      width: $headerHeight;
-      height: $headerHeight;
+      width: $header-height;
+      height: $header-height;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -34,6 +33,7 @@ $gnb-small-h: 50px;
       }
     }
     h1 {
+      margin: 0;
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 1.8rem;
       font-weight: 600;

@@ -34,7 +34,6 @@ export const fetchLawmaker = (id) => {
       //   dispatch(fetchLawmakerSuccess(list)))
       // .catch(err => fetchLawmakerFailure(err))
       .then(function (response) {
-        console.log(response)
         dispatch(fetchLawmakerSuccess(response.data))
       })
       .catch(function (err) {
