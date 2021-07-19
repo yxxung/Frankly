@@ -14,7 +14,13 @@
     </resultMap>
 
     <insert id="createBoard">
-
+    INSERT INTO member_info.board VALUES
+        (#{author}
+        ,#{regDate}
+        ,#{marked}
+        ,#{title}
+        ,#{content}
+        ,#{region})
     </insert>
 
 
