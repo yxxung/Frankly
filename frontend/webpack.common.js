@@ -33,6 +33,8 @@ module.exports = {
               browsers: ['> 1% in KR',] // 지원할 브라우저 설정 https://github.com/browserslist/browserslist
             },
             debug: true,
+            // "useBuiltIns": "usage",
+            // "corejs":3,
           }],
           '@babel/preset-react'
         ],

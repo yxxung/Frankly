@@ -9,8 +9,14 @@ const Lawmaker = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // 로그인 되어있으면 유저 정보에서 지역 값
+    // 로그아웃이면 기본 값
     dispatch(fetchLawmaker(1));
   }, [])
+
+  const changeLawmaker = () => {
+    // 지역구 변경
+  }
 
   const lawmakerList = loading ? (<div>is loading...</div>) : (
     <div key={1}>
