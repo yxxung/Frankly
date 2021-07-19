@@ -4,7 +4,7 @@
 <mapper namespace="com.frankly.restapi.mapper.BoardMapper">
 
 <!--    resultmap 복습필요.-->
-    <resultMap type="" id="boardResultMap">
+    <resultMap type="BoardDTO" id="boardResultMap">
         <id column="id" property="id"/>
         <result column="author" property="author"/>
         <result column="regDate" property="regDate"/>
@@ -13,9 +13,9 @@
         <result column="content" property="content"/>
     </resultMap>
 
-    <insert id="createBoard">
-    INSERT INTO member_info.board VALUES
-        (#{author}
+    <insert id="createBoard" parameterType="BoardDTO">
+    INSERT INTO member_info.board(author, regDate, marked, title, content, region)
+    VALUES(#{author}
         ,#{regDate}
         ,#{marked}
         ,#{title}

@@ -27,7 +27,7 @@ public interface UserMapper {
 
     public UserDTO getUserByEmail(String userEmail) throws Exception;
 
-//    public void selectAllUser(UserDTO userDTO) throws Exception;
+    public void selectAllUser(UserDTO userDTO) throws Exception;
 
     public List<UserDTO> userList() throws Exception;
 }

@@ -42,10 +42,10 @@
                #{contact})
     </insert>
 
-    <insert id="deleteUser" parameterType="Long">
+    <delete id="deleteUser" parameterType="Long">
         DELETE FROM member_info.userinfo
         WHERE id = #{id}
-    </insert>
+    </delete>
 
     <update id="updateUser" parameterType="UserDTO">
         UPDATE member_info.userinfo
