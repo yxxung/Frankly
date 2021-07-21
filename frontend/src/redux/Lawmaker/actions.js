@@ -27,8 +27,9 @@ export const fetchLawmakerFailure = (err) => {
 export const fetchLawmaker = (id) => {
   return (dispatch) => {
     dispatch(fetchLawmakerRequest())
-    axios.get(`http://frankly.kro.kr:8081/api/infos/${id}`)
-        // axios.get(`http://220.122.5.95:8081/api/infos/${id}`)
+
+    // axios.get(`http://frankly.kro.kr:8081/api/infos/${id}`)
+        axios.get(`http://211.117.185.149:8081/api/infos/${id}`)
       // .then(res => res.json())
       // .then(list =>
       //   dispatch(fetchLawmakerSuccess(list)))

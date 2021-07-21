@@ -3,6 +3,7 @@ package com.frankly.restapi.controller;
 import com.frankly.restapi.domain.BoardDTO;
 import com.frankly.restapi.domain.UserDTO;
 import com.frankly.restapi.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,12 @@ import java.util.List;
 @Slf4j
 @CrossOrigin
 @RequestMapping("/api/boards")
+@RequiredArgsConstructor
 public class BoardController {
 
 
-    BoardService boardService;
+    private final BoardService boardService;
+
     //지역마다 DB분리 필요할수도
     //create board이름 변경
     //DB 분리 고려..

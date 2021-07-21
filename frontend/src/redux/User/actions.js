@@ -75,7 +75,8 @@ const loginFailure = (err) => {
 export const logIn = (user) => {
   return (dispatch) => {
     dispatch(loginRequest());
-    axios.post('http://frankly.kro.kr:8081/api/auth/signin', user)
+    axios.post('http://211.117.185.149:8081/api/auth/signin', user)
+    // axios.post('http://frankly.kro.kr:8081/api/auth/signin', user)
       .then(function (response) {
         // 로컬스토리지에 토큰
         dispatch(loginSuccess());

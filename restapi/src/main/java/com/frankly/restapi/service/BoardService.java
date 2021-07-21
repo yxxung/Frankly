@@ -2,12 +2,18 @@ package com.frankly.restapi.service;
 
 import com.frankly.restapi.domain.BoardDTO;
 import com.frankly.restapi.mapper.BoardMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@Slf4j
+@RequiredArgsConstructor
 public class BoardService implements BoardServiceInterface {
 
-    BoardMapper boardMapper;
+    private final BoardMapper boardMapper;
 
     @Override
     public void createBoard(BoardDTO boardDTO) throws Exception {
