@@ -5,6 +5,7 @@ import store from './redux/store'
 import App from './App'
 import "./assets/scss/App.scss"
 
+
 const Root = () => {
   return (
     <Provider store={store}>

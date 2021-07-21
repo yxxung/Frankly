@@ -1,4 +1,11 @@
-//@import "config/reset";
+@import "config/reset";
+@import "config/variables";
+//@import "~bootstrap/scss/bootstrap";
+@import "../fonts/font.css";
+
+$main-color: #d52a6f;
+$main-color-hover: #bf195c;
+$header-height: 60px;
 
 html {
     font-size: 10px;
@@ -13,5 +20,53 @@ body {
     background-color: var(--main-bg);
 }
 
-@import "../../components/Nav/Nav";
+.contents {
+    margin-top: $header-height;
+}
+
+// input Box
+
+input[type=text], input[type=password] {
+    margin-bottom: 8px;
+    padding: 0 8px;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    // color
+    color: #000000;
+    border: 1px solid #CBCBCB;
+    background-color: #FFFFFF;
+    &:hover {
+        border: 1px solid #ABABAB;
+    }
+    &:focus {
+        border: 1px solid $main-color;
+        outline: 1px solid $main-color;
+    }
+}
+
+input[type=checkbox] {
+    margin: 0 8px 0 0;
+    width: 16px;
+    height: 16px;
+    appearance: checkbox;
+    box-sizing: border-box;
+    border: 1px solid #CBCBCB;
+}
+// NAV 선택
+.selected {
+    span {
+        color: #0d6efd !important;
+    }
+    p {
+        color: #0d6efd !important;
+    }
+}
 @import "../../components/Header/Header";
+@import "../../components/Nav/Nav";
+
+@import "../../pages/userPages/LogIn"; // 로그인
+@import "../../pages/lawmakerPages/Lawmaker"; // 국회의원
+@import "../../pages/communityPages/Community"; // 커뮤니티
+
+@import '~material-design-icons/iconfont/material-icons.css'; // 구글 아이콘

@@ -1,0 +1,66 @@
+.signIn {
+  margin: auto;
+  padding: 88px 16px 0;
+  max-width: 310px;
+  // 타이틀
+  >.title {
+    >h2 {
+      margin-bottom: 36px;
+      font-size: 2.8rem;
+      font-weight: 500;
+      color: $main-color;
+    }
+  }
+  // 폼 스타일
+  >.form {
+    // 로그인 버튼 스타일
+    >.signInBtn {
+      margin: 28px 0 10px 0;
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #FFFFFF;
+      background-color: $main-color;
+      cursor: pointer;
+      &:hover {
+        background-color: $main-color-hover;
+      }
+    }
+    // 아이디 저장
+    >.check {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.4rem;
+      color: #515151;
+    }
+  }
+
+  // 링크 스타일
+  >.signUpLink {
+    display: flex;
+    justify-content: space-around;
+    >a {
+      padding: 6px 0;
+      display: block;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #767676;
+      &:hover {
+        color: #b2b2b2;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+

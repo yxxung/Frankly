@@ -14,11 +14,13 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, "public"),
     port: port,
     hot: true,
-    // proxy: {
-    //   '/api/': {
-    //     target: '백엔드주소',
-    //     changeOrigin: true,
-    //   }
-    // }
+    // CORS 에러
+    proxy: {
+      '/api': {
+        target: 'http://frankly.kro.kr:8081',
+        changeOrigin: true,
+        pathRewrite: { '^/api': '' },
+      }
+    },
   },
 });

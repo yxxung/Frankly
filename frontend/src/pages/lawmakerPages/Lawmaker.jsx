@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchLawmaker } from "../../redux";
 import { Nav, Header } from "../../components";
 
-const Lawmaker = ({items, fetchLawmaker, loading}) => {
+const Lawmaker = () => {
+  const items = useSelector(store => store.lawmaker.items);
+  const loading = useSelector(store => store.lawmaker.loading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchLawmaker(122)
+    dispatch(fetchLawmaker(1));
   }, [])
 
   const lawmakerList = loading ? (<div>is loading...</div>) : (
-    <div key={122}>
+    <div key={1}>
       <h6>2020/06~2024/06</h6>
-      <h2>{items.district}</h2>
+      <h1>{items.district}</h1>
       <div>사진</div>
       <h3>{items.name}</h3>
       <p>{items.hanName}</p>
@@ -26,24 +29,15 @@ const Lawmaker = ({items, fetchLawmaker, loading}) => {
   )
 
   return (
-    <>
+    <div className="contents">
+      {/*처음 로딩시 지역이름 안뜨는 문제*/}
       <Header />
       <Nav />
-      <div>
+      <div className="lawmaker">
         {lawmakerList}
       </div>
-    </>
+    </div>
   )
 };
-// state 값 불러오기
-const mapStateToProps = (state) => {
-  return {
-    items: state.lawmaker.items
-  }
-}
-// dispatch
-const mapDispatchToProps = {
-  fetchLawmaker
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Lawmaker);
+export default Lawmaker;

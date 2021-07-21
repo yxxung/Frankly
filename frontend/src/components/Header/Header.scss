@@ -1,5 +1,43 @@
+$header-height: 60px;
+
 .header {
-  width: 100%;
-  height: 66px;
-  background-color: #7b7b7b;
+  top: 0;
+  position: fixed;
+  width: 100vw;
+  height: $header-height;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  background-color: #FFFFFF;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  > .header_container {
+    width: 100vw;
+    max-width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .leftBox {
+      width: $header-height;
+      height: $header-height;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        path {
+          // 뒤로가기 아이콘 컬러
+          fill: #000000;
+        }
+      }
+    }
+    h1 {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--main-title-h2);
+    }
+  }
 }

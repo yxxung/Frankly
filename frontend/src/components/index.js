@@ -1,4 +1,2 @@
-import Nav from "./Nav/Nav"
-import Header from "./Header/Header"
-
-export { Nav, Header }
+export { Nav } from "./Nav/Nav"
+export { Header } from "./Header/Header"

@@ -52,12 +52,38 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [
+          // MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true, // CSS module
+            }
+          }
+        ],
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
-      }
+        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader']
+      },
+      {
+        test: /\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader',
+        options: {
+          name: '[hash].[ext]',
+          limit: 10000,
+        }
+      },
+      {
+        test: /\.(svg|png|jpe?g|gif)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash].[ext]',
+            // esModule: false,
+          },
+        },
+      },
     ],
   },
 
@@ -68,9 +94,9 @@ module.exports = {
       filename: './index.html',
       showErrors: true,
     }),
-    new MiniCssExtractPlugin({
-      filename: 'style.css'
-    })
+    // new MiniCssExtractPlugin({
+    //   filename: 'style.css'
+    // })
   ],
 }
 
