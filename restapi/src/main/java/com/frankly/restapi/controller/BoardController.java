@@ -31,6 +31,7 @@ public class BoardController {
       log.info("게시물 생성" + boardDTO.getAuthor());
       boardDTO.setRegion(region);
       boardService.createBoard(boardDTO);
+      log.info("time: " + boardDTO.getRegDate());
 
       return new ResponseEntity<>(boardDTO, HttpStatus.OK);
   }
