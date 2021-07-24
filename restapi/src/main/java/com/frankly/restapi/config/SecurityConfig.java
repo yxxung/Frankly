@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
 
 
-        configuration.addAllowedOrigin("http://220.122.5.95:8081");
+        configuration.addAllowedOrigin("http:/frankly.kro.kr:8081");
 //        configuration.addAllowedOrigin("http://220.122.5.95:3000");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
