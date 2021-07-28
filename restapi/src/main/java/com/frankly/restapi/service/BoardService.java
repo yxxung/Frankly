@@ -29,6 +29,9 @@ public class BoardService implements BoardServiceInterface {
 
     @Override
     public void updateBoard(BoardDTO boardDTO) throws Exception {
+
+
+
     }
 
     @Override
@@ -37,8 +40,8 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public BoardDTO readBoard(Long id) throws Exception {
-        return null;
+    public BoardDTO readBoard(int region,Long id) throws Exception {
+        return boardMapper.readBoard(region, id);
     }
 
     @Override

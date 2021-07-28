@@ -37,4 +37,29 @@ public class BoardController {
   }
 
 
+  //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
+  @PutMapping("/{region}/{id}")
+    public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
+                                         @PathVariable("region") int region,
+                                         @PathVariable("id")Long id)throws Exception{
+
+      log.info("개시물 수정 수정자 :" + boardDTO.getAuthor());
+
+      return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @GetMapping("/{region}/{id}")
+    public ResponseEntity<BoardDTO> getBoardById(@PathVariable int region,
+                                                 @PathVariable Long id) throws Exception{
+
+      log.info("게시물 불러오기 : " + id);
+      BoardDTO boardDTO = boardService.readBoard(region, id);
+
+
+      return new ResponseEntity<>(boardDTO, HttpStatus.OK);
+
+
+  }
+
+
 }
