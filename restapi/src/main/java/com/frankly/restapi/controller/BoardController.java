@@ -62,4 +62,13 @@ public class BoardController {
   }
 
 
+  @GetMapping("/{region}/{start}")
+    public ResponseEntity<BoardDTO> getBoardList(@PathVariable Long start) throws Exception{
+
+      log.info("게시글 리스트 불러오기 +  "  + start);
+      BoardDTO boardDTO = boardService.pageNumberBoardList(start)
+
+  }
+
+
 }

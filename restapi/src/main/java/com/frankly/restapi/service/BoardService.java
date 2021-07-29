@@ -50,7 +50,7 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public List<BoardDTO> pageNumberBoardList(Long pageNumber) throws Exception {
-        return null;
+    public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
+        return boardMapper;
     }
 }
