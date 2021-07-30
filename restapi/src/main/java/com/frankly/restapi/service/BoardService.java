@@ -34,6 +34,8 @@ public class BoardService implements BoardServiceInterface {
         BoardDTO targetBoard = boardMapper.readBoard(region, targetId);
         if(targetBoard.getAuthor().equals(boardDTO.getAuthor())){
             try{
+                boardDTO.setId(targetId);
+                boardDTO.setRegion(region);
                 boardMapper.updateBoard(boardDTO);
             }catch(SQLException e){
                 System.out.println(e);

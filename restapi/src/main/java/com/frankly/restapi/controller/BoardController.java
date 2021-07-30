@@ -27,7 +27,7 @@ public class BoardController {
     //DB 분리 고려..
   @PostMapping("/{region}/create")
   public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                              @PathVariable("region") String region) throws Exception{
+                                              @PathVariable("region") int region) throws Exception{
       log.info("게시물 생성" + boardDTO.getAuthor());
       boardDTO.setRegion(region);
       boardService.createBoard(boardDTO);

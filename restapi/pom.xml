@@ -17,12 +17,12 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
-<!--        템플릿 엔진 타임리프, 정적 웹 만들때 사-->
+        <!--        템플릿 엔진 타임리프, 정적 웹 만들때 사-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-<!--        스프링 MVC 등 웹개발에 필요한 의존성-->
+        <!--        스프링 MVC 등 웹개발에 필요한 의존성-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -34,7 +34,7 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-<!--        getter, setter자동생성 등 DTO 편하게 만들 수 있게해줌-->
+        <!--        getter, setter자동생성 등 DTO 편하게 만들 수 있게해줌-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -45,17 +45,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
-<!--            <artifactId>jackson-databind</artifactId>-->
-<!--            <version>2.12.3</version>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+        <!--            <artifactId>jackson-databind</artifactId>-->
+        <!--            <version>2.12.3</version>-->
+        <!--        </dependency>-->
 
 
-<!--        mybatis-->
+        <!--        mybatis-->
 
-<!--        쿼리문을 좀더 편하게-->
+        <!--        쿼리문을 좀더 편하게-->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -92,7 +92,7 @@
             <version>2.4.8</version>
         </dependency>
 
-<!--        JWT 토큰 의존성-->
+        <!--        JWT 토큰 의존성-->
 
         <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
         <dependency>
@@ -101,7 +101,7 @@
             <version>0.9.1</version>
         </dependency>
 
-<!--        spring fox API문서-->
+        <!--        spring fox API문서-->
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -124,7 +124,12 @@
             <version>2.4.8</version>
         </dependency>
 
-
+        <!-- DB Logback -->
+        <dependency>
+            <groupId>org.bgee.log4jdbc-log4j2</groupId>
+            <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+            <version>1.16</version>
+        </dependency>
 
 
     </dependencies>

@@ -22,7 +22,7 @@ public class BoardDTO {
 
     private String content;
 
-    private String region;
+    private int region;
 
 
 }
