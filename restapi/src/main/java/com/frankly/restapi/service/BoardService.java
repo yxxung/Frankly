@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,12 +29,24 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public void updateBoard(BoardDTO boardDTO) throws Exception {
+    public void updateBoard(BoardDTO boardDTO,int region, Long targetId) throws Exception {
+
+        BoardDTO targetBoard = boardMapper.readBoard(region, targetId);
+        if(targetBoard.getAuthor().equals(boardDTO.getAuthor())){
+            try{
+                boardMapper.updateBoard(boardDTO);
+            }catch(SQLException e){
+                System.out.println(e);
+                e.printStackTrace();
+            }
+
+        }else{
+            throw new Exception("author is different");
+        }
 
 
 
     }
-
     @Override
     public void deleteBoard(BoardDTO boardDTO) throws Exception {
 
@@ -51,6 +64,6 @@ public class BoardService implements BoardServiceInterface {
 
     @Override
     public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
-        return boardMapper;
+        return null;
     }
 }

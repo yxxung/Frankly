@@ -43,8 +43,8 @@ public class BoardController {
                                          @PathVariable("region") int region,
                                          @PathVariable("id")Long id)throws Exception{
 
-      log.info("개시물 수정 수정자 :" + boardDTO.getAuthor());
-
+      log.info("개시물 수정 수정자 :"  + boardDTO.getAuthor());
+      boardService.updateBoard(boardDTO, region, id);
       return new ResponseEntity<>(HttpStatus.OK);
   }
 
@@ -53,22 +53,25 @@ public class BoardController {
                                                  @PathVariable Long id) throws Exception{
 
       log.info("게시물 불러오기 : " + id);
-      BoardDTO boardDTO = boardService.readBoard(region, id);
-
-
-      return new ResponseEntity<>(boardDTO, HttpStatus.OK);
+      try{
+          BoardDTO boardDTO = boardService.readBoard(region, id);
+          return new ResponseEntity<>(boardDTO, HttpStatus.OK);
+      }catch (Exception e){
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
 
 
   }
-
 
   @GetMapping("/{region}/{start}")
     public ResponseEntity<BoardDTO> getBoardList(@PathVariable Long start) throws Exception{
 
       log.info("게시글 리스트 불러오기 +  "  + start);
-      BoardDTO boardDTO = boardService.pageNumberBoardList(start)
+//      BoardDTO boardDTO = boardService.pageNumberBoardList(start);
 
+      return new ResponseEntity<>(HttpStatus.OK);
   }
+
 
 
 }

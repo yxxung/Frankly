@@ -28,6 +28,14 @@
         WHERE id = #{id} AND region = #{region}
     </select>
 
+    <update id="updateBoard" parameterType="BoardDTO">
+        UPDATE member_info.board
+        SET marked = #{marked},
+            title = #{title},
+            content = #{content}
+        WHERE id = #{id} AND region = #{region}
+    </update>
+
 
 
 </mapper>
