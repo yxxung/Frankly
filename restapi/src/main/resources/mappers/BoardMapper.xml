@@ -37,5 +37,12 @@
     </update>
 
 
+    <delete id="deleteBoard" parameterType="BoardDTO">
+        DELETE FROM member_info.board
+        WHERE id = #{id} AND region = #{region}
+
+    </delete>
+
+
 
 </mapper>

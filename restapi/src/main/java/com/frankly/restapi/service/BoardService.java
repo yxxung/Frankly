@@ -51,7 +51,7 @@ public class BoardService implements BoardServiceInterface {
     }
     @Override
     public void deleteBoard(BoardDTO boardDTO) throws Exception {
-
+        boardMapper.deleteBoard(boardDTO);
     }
 
     @Override

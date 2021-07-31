@@ -72,6 +72,21 @@ public class BoardController {
       return new ResponseEntity<>(HttpStatus.OK);
   }
 
+  @DeleteMapping("/{region}/{id}")
+    public ResponseEntity<?> deleteBoard(@PathVariable("region") int region,
+                                         @PathVariable("id") Long id) throws Exception{
+
+      BoardDTO boardDTO = new BoardDTO();
+      boardDTO.setId(id);
+      boardDTO.setRegion(region);
+
+      log.info(id + "게시글 삭제");
+      boardService.deleteBoard(boardDTO);
+
+      return new ResponseEntity<>(HttpStatus.OK);
+
+  }
+
 
 
 }

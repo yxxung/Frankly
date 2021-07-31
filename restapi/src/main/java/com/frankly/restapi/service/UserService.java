@@ -38,11 +38,12 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public void updateUser(UserDTO userDTO) throws Exception {
-
+        userMapper.updateUser(userDTO);
     }
 
     @Override
     public void deleteUser(Long userId) throws Exception {
+        userMapper.deleteUser(userId);
 
     }
 
