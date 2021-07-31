@@ -23,7 +23,7 @@ public interface UserMapper {
 
     public void updateUser(UserDTO userDTO) throws Exception;
 
-    public void deleteUser(UserDTO userDTO) throws Exception;
+    public void deleteUser(Long userId) throws Exception;
 
     public UserDTO getUserByEmail(String userEmail) throws Exception;
 

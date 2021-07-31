@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logOut } from "../../redux";
@@ -19,6 +19,18 @@ const Profile = (props) => {
     window.localStorage.removeItem("jwttoken");
     props.history.push("/");
   }
+
+  useEffect(() => {
+    const async = async () => {
+      return "test";
+    }
+
+    console.log(async());
+    async().then((data) => {
+      console.log(data);
+    })
+  }, []);
+  
 
   return (
     <div className="contents">

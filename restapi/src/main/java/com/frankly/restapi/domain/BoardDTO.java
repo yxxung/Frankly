@@ -5,9 +5,9 @@ import lombok.*;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoardDTO {
 
     private Long id;
@@ -22,7 +22,30 @@ public class BoardDTO {
 
     private String content;
 
-    private String region;
+    private int region;
+
+
+
+//
+//    @Builder
+//    public BoardDTO(Long id, String author, Date regDate,
+//                    Boolean marked, String title, String content
+//                    ,int region){
+//        this.id = id;
+//        this.author = author;
+//        this.regDate = regDate;
+//        this.marked = marked;
+//        this.title = title;
+//        this.content = content;
+//        this.region = region;
+//    }
+//
+//
+//    @Builder
+//    public BoardDTO(Long id, int region){
+//        this.id = id;
+//        this.region = region;
+//    }
 
 
 }

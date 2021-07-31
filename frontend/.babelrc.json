@@ -1,4 +1,8 @@
 {
   "presets": [["@babel/preset-env",{"target": {"ie": 11}}], ["@babel/preset-react"]],
   "plugins": [["@babel/plugin-transform-runtime",{"corejs":3}]]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 43db1e34b7f3838b1ab8abccb83d307e57d47f16

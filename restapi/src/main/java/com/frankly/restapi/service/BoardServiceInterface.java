@@ -8,11 +8,11 @@ public interface BoardServiceInterface {
 
     public void createBoard(BoardDTO boardDTO) throws Exception;
 
-    public void updateBoard(BoardDTO boardDTO) throws Exception;
+    public void updateBoard(BoardDTO boardDTO, int region, Long id) throws Exception;
 
     public void deleteBoard(BoardDTO boardDTO) throws Exception;
 
-    public BoardDTO readBoard(Long id)throws Exception;
+    public BoardDTO readBoard(int region, Long id)throws Exception;
 
     public List<BoardDTO> allBoardList() throws  Exception;
 

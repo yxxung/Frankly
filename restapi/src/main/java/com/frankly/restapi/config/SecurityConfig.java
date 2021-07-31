@@ -22,6 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Slf4j
 //이 어노테이션은?
+//@EnableWebSecurity(debug = true)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -70,10 +71,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
                 .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/infos/**").permitAll()
-                //cors 예외처리
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 //개발용 설정
 //                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
+                //cors 예외처리
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 //다른 모든 request에는 auth작업 해주어야함.
                 .anyRequest().authenticated().and()
                 //restful api 는 stateless해야하므로, statless로 바꾸어줌. 유저 state 저장안함.

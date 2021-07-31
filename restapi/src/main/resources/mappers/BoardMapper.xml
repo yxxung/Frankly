@@ -23,6 +23,26 @@
         ,#{region})
     </insert>
 
+    <select id="readBoard" resultMap="boardResultMap">
+        SELECT * FROM member_info.board
+        WHERE id = #{id} AND region = #{region}
+    </select>
+
+    <update id="updateBoard" parameterType="BoardDTO">
+        UPDATE member_info.board
+        SET marked = #{marked},
+            title = #{title},
+            content = #{content}
+        WHERE id = #{id} AND region = #{region}
+    </update>
+
+
+    <delete id="deleteBoard" parameterType="BoardDTO">
+        DELETE FROM member_info.board
+        WHERE id = #{id} AND region = #{region}
+
+    </delete>
+
 
 
 </mapper>
