@@ -70,9 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
-//                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/infos/**").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/infos/**").permitAll()
                 //개발용 설정
-                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
+//                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
                 //cors 예외처리
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 //다른 모든 request에는 auth작업 해주어야함.
