@@ -1,9 +1,3 @@
-'''
-@Author 최제현
-@Date 21/1/8
-
-'''
-
 class Politician:
     __name = None
     __belong = None

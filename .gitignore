@@ -23,3 +23,16 @@
 hs_err_pid*
 .idea/
 
+pdfParser/money.pdf
+pdfParser/money2.csv
+pdfParser/money2.pdf
+pdfParser/money3.csv
+pdfParser/money3.pdf
+pdfParser/parsed.txt
+restapi/out/production/pdfParser/money.pdf
+restapi/out/production/pdfParser/money2.csv
+restapi/out/production/pdfParser/money2.pdf
+restapi/out/production/pdfParser/money3.csv
+restapi/out/production/pdfParser/money3.pdf
+restapi/out/production/pdfParser/parsed.txt
+restapi/out/production/pdfParser/parser.py
