@@ -5,14 +5,18 @@
 @Date 21/1/8
 
 '''
+from PropertyClasses.MainParser import MainParser
+
 
 def main():
     filePath = './parsed.txt'
     try:
-        file = open(filePath, 'r', encoding = 'utf-8')
 
-    except:
-        print('file open error!')
+        parser = MainParser(filePath)
+        parser.parse()
+
+    except Exception as e:
+        print(e)
         exit(99)
 
 
