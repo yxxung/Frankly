@@ -5,7 +5,7 @@
 @Date 21/1/8
 
 '''
-from PropertyClasses.MainParser import MainParser
+from PropertyClasses.Parsers.ParserController import MainParser
 
 
 def main():

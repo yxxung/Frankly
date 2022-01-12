@@ -3,32 +3,40 @@
 @Date 21/1/8
 
 '''
+from PropertyClasses.Parsers.PoliticianPropertyParser import PoliticianPropertyParser
 from PropertyClasses.PoliticianClass import Politician
 
 
 class MainParser:
-    __filePath = None
-    __file = None
+    filePath = None
+    file = None
     __filePos = 0
     __fileBeforePos = 0;
     __fileSize = 0
     # __politicianPosition = None
-    __politicianList = None
+    politicianList = None
+    politicianParser = None
 
 
 
     def __init__(self, filePath):
-        self.__file = open(filePath, 'r', encoding = 'utf-8')
-        self.__file.seek(0, 2)
-        self.__fileSize = self.__file.tell()
-        self.__file.seek(0)
+        self.file = open(filePath, 'r', encoding = 'utf-8')
+        self.file.seek(0, 2)
+        self.__fileSize = self.file.tell()
+        self.file.seek(0)
         # self.__politicianPosition = {}
-        self.__politicianList = []
+        self.politicianList = []
+        self.politicianParser = PoliticianPropertyParser()
 
 
 
     def parse(self):
         self.checkPoliticianPosition()
+
+        for Politician in self.politicianList :
+            self.politicianParser.setPolitican(Politician)
+            self.politicianParser.parse()
+
         print("test")
 
 
@@ -51,22 +59,26 @@ class MainParser:
         tokenList = string.split()
         politicianListLen = len(self.__politicianList)
         if len(tokenList) > 3 :
-            if tokenList[1] == "국회" :
-                # 국회의원 정보 시작
-                # 각 국회의원들 블록 지정
+            self.checkPoliticianDivide(tokenList, politicianListLen)
+
+
+    def checkPoliticianDivide(self, tokenList, politicianListLen):
+
+        if tokenList[1] == "국회" :
+            # 국회의원 정보 시작
+            # 각 국회의원들 블록 지정
+            if politicianListLen > 0 :
+                self.addPoliticianFileEndPosition(politicianListLen)
+            self.addPolitician(tokenList, 1)
+            # print(tokenList[5], " add OK")
+
+        else :
+
+            if tokenList[2] == "국회" :
                 if politicianListLen > 0 :
                     self.addPoliticianFileEndPosition(politicianListLen)
-                self.addPolitician(tokenList, 1)
-                # print(tokenList[5], " add OK")
-
-
-            else :
-
-                if tokenList[2] == "국회" :
-                    if politicianListLen > 0 :
-                        self.addPoliticianFileEndPosition(politicianListLen)
-                    self.addPolitician(tokenList, 2)
-                    # print(tokenList[6], " add OK")
+                self.addPolitician(tokenList, 2)
+                # print(tokenList[6], " add OK")
 
 
 

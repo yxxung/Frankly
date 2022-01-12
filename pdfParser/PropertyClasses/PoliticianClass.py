@@ -33,6 +33,10 @@ class Politician:
     def setland(self, Land):
         self.__Land = Land
 
+    @property
+    def getPoliticianFilePoisition(self):
+        return self.__filePoistion
+
 
     @property
     def getPoliticianFileEndPosition(self):
