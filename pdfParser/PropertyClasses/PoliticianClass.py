@@ -23,20 +23,17 @@ class Politician:
         self.__position = position
         self.__filePoistion = filePosition
 
-
+    @property
+    def getPoliticianName(self):
+        return self.__name
 
     @property
-    def getLand(self):
-        return self.__Land
-
-    @getLand.setter
-    def setland(self, Land):
-        self.__Land = Land
-
-    @property
-    def getPoliticianFilePoisition(self):
+    def getPoliticianFilePosition(self):
         return self.__filePoistion
 
+    @getPoliticianFilePosition.setter
+    def setPoliticianFilePosition(self, pos):
+        self.__filePoistion = pos
 
     @property
     def getPoliticianFileEndPosition(self):
@@ -46,3 +43,51 @@ class Politician:
     def setPoliticianFileEndPosition(self, pos):
         self.__fileEndPosition = pos
 
+    @property
+    def getPoliticianLandProperty(self):
+        return self.__Land
+
+    @getPoliticianLandProperty.setter
+    def setPoliticianLandProperty(self, land):
+        self.__Land = land
+
+    @property
+    def getPoliticianRealEstate(self):
+        return self.__RealEstate
+
+    @getPoliticianRealEstate.setter
+    def setPoliticianRealEstate(self, re):
+        self.__RealEstate = re
+
+    @property
+    def getPoliticianRealRight(self):
+        return self.__RealRight
+
+    @getPoliticianRealRight.setter
+    def setPoliticianRealRight(self, rr):
+        self.__RealRight = rr
+
+    @property
+    def getPoliticianDeposit(self):
+        return self.__Deposit
+
+    @getPoliticianDeposit.setter
+    def setPoliticianDeposit(self, deposit):
+        self.__Deposit = deposit
+
+    @property
+    def getPoliticianPoliticDeposit(self):
+        return self.__Deposit
+
+    @getPoliticianPoliticDeposit.setter
+    def setPoliticianPoliticDeposit(self, deposit):
+        self.__PoliticDeposit = deposit
+
+
+    @property
+    def getPoliticianDebt(self):
+        return self.__Debt
+
+    @getPoliticianDebt.setter
+    def setPoliticianDebt(self, debt):
+        self.__Debt = debt

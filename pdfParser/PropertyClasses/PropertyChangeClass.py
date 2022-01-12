@@ -6,8 +6,8 @@
 
 
 class PropertyChange:
-    __fileStartPos = 0
-    __fileEndPos = 0
+    fileStartPos = 0
+    fileEndPos = 0
     __totalIncrease = 0
     __totalDecrease = 0
     __presentValue = 0
@@ -63,16 +63,16 @@ class PropertyChange:
 
     @property
     def getFileStartPosition(self):
-        return self.__fileStartPos
+        return self.fileStartPos
 
     @getFileStartPosition.setter
     def setFileStartPosition(self, pos):
-        self.__fileStartPos = pos
+        self.fileStartPos = pos
 
     @property
     def getFileEndPoisition(self):
-        return self.__fileEndPos
+        return self.fileEndPos
 
     @getFileEndPoisition.setter
-    def setFileEndPosition(self):
-        return self.__fileEndPos
+    def setFileEndPosition(self, pos):
+        self.fileEndPos = pos

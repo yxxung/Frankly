@@ -7,7 +7,7 @@
 from PropertyClasses.PropertyChangeClass import PropertyChange
 
 
-class LandProperty(PropertyChange):
+class RealRight(PropertyChange):
     __DescriptionList = None
     __error = 0
 

@@ -5,7 +5,9 @@
 @Date 21/1/8
 
 '''
-from PropertyClasses.PropertyMainParser import PropertyMainParser
+import traceback
+
+from PropertyClasses.Parsers.PropertyMainParser import PropertyMainParser
 
 
 def main():
@@ -16,7 +18,7 @@ def main():
         parser.parse()
 
     except Exception as e:
-        print(e)
+        traceback.print_exc()
         exit(99)
 
 

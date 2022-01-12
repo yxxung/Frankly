@@ -3,10 +3,8 @@
 @Date 21/1/8
 
 '''
-from PropertyClasses.PropertyMainParser import PropertyMainParser
 
-
-class LandParser(PropertyMainParser):
+class LandParser():
     __LandPos = 0;
 
     def __init__(self):

@@ -1,13 +1,13 @@
 '''
 @Author 최제현
-@Date 21/1/8
+@Date 21/1/11
 
 '''
 # -*- coding: utf-8 -*-
 from PropertyClasses.PropertyChangeClass import PropertyChange
 
 
-class LandProperty(PropertyChange):
+class Deposit(PropertyChange):
     __DescriptionList = None
     __error = 0
 
