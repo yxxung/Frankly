@@ -1,8 +1,8 @@
-from PropertyClasses.Parsers.LandParser import LandParser
-from PropertyClasses.Parsers.ParserController import MainParser
+from PropertyClasses.Land import LandParser
+from PropertyClasses.PropertyMainParser import PropertyMainParser
 
 
-class PoliticianPropertyParser(MainParser):
+class PoliticianPropertyParser(PropertyMainParser):
 
     __politician = None
     __landParser = None

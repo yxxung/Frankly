@@ -5,7 +5,6 @@
 '''
 
 
-# noinspection PyPropertyDefinition
 class PropertyChange:
     __fileStartPos = 0
     __fileEndPos = 0

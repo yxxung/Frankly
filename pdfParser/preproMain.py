@@ -5,14 +5,14 @@
 @Date 21/1/8
 
 '''
-from PropertyClasses.Parsers.ParserController import MainParser
+from PropertyClasses.PropertyMainParser import PropertyMainParser
 
 
 def main():
     filePath = './parsed.txt'
     try:
 
-        parser = MainParser(filePath)
+        parser = PropertyMainParser(filePath)
         parser.parse()
 
     except Exception as e:

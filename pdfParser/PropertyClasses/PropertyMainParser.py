@@ -3,11 +3,11 @@
 @Date 21/1/8
 
 '''
-from PropertyClasses.Parsers.PoliticianPropertyParser import PoliticianPropertyParser
+from PropertyClasses.Property import PoliticianPropertyParser
 from PropertyClasses.PoliticianClass import Politician
 
 
-class MainParser:
+class PropertyMainParser:
     filePath = None
     file = None
     __filePos = 0
@@ -33,9 +33,9 @@ class MainParser:
     def parse(self):
         self.checkPoliticianPosition()
 
-        for Politician in self.politicianList :
-            self.politicianParser.setPolitican(Politician)
-            self.politicianParser.parse()
+        # for Politician in self.politicianList :
+        #     self.politicianParser.setPolitican(Politician)
+        #     self.politicianParser.parse()
 
         print("test")
 
@@ -44,20 +44,21 @@ class MainParser:
         # for i in range(0, self.__fileSize):
         statement = True
         while statement:
-            self.__fileBeforePos = self.__file.tell()
-            string = self.__file.readline()
-            if string != None :
+            self.__fileBeforePos = self.file.tell()
+            string = self.file.readline()
+            if string != '' :
                 # print("pos : ", self.__file.tell() , " O K")
                 self.checkDivide(string)
             else:
-                self.__file.seek(0)
+                print("siiok")
+                self.file.seek(0)
                 break
 
 
 
     def checkDivide(self, string):
         tokenList = string.split()
-        politicianListLen = len(self.__politicianList)
+        politicianListLen = len(self.politicianList)
         if len(tokenList) > 3 :
             self.checkPoliticianDivide(tokenList, politicianListLen)
 
@@ -90,10 +91,10 @@ class MainParser:
                 name = tokenList[startPos + 4],
                 belong = tokenList[startPos],
                 position = tokenList[startPos + 2],
-                filePosition= self.__file.tell()
+                filePosition= self.file.tell()
             )
-            self.__politicianList.append(politician)
+            self.politicianList.append(politician)
 
     def addPoliticianFileEndPosition(self, len):
-        politician = self.__politicianList[len-1]
+        politician = self.politicianList[len-1]
         politician.setPoliticianFileEndPosition = self.__fileBeforePos
