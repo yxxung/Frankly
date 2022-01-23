@@ -129,43 +129,42 @@ class PropertyMainParser:
 
             getProperty = politician.getPoliticianLandProperty
             if getProperty != None:
-                newFile.write("\n국회의원 토지: ")
+                newFile.write("\n\n국회의원 토지: ")
                 self.records(newFile, getProperty)
 
 
             getProperty = politician.getPoliticianRealEstate
             if getProperty != None:
-                newFile.write("\n국회의원 건물: ")
+                newFile.write("\n\n국회의원 건물: ")
                 self.records(newFile, getProperty)
 
             getProperty = politician.getPoliticianRealRight
             if getProperty != None:
-                newFile.write("\n국회의원 부동산: ")
+                newFile.write("\n\n국회의원 부동산: ")
                 self.records(newFile, getProperty)
 
 
             getProperty = politician.getPoliticianDeposit
             if getProperty != None:
-                newFile.write("\n국회의원 예금: ")
+                newFile.write("\n\n국회의원 예금: ")
                 self.records(newFile, getProperty)
 
             getProperty = politician.getPoliticianPoliticDeposit
             if getProperty != None:
-                newFile.write("\n국회의원 정치예금: ")
+                newFile.write("\n\n국회의원 정치예금: ")
                 self.records(newFile, getProperty)
 
 
             getProperty = politician.getPoliticianDebt
             if getProperty != None:
-                newFile.write("\n국회의원 빚: ")
+                newFile.write("\n\n국회의원 빚: ")
                 self.records(newFile, getProperty)
 
         newFile.write("\n국회의원끝: ")
         newFile.write(str(politician.getPoliticianFileEndPosition))
 
     def records(self, newFile, getProperty):
-        if getProperty != None:
-            newFile.write("시작: ")
+            newFile.write("\n시작: ")
             newFile.write(str(getProperty.getFileStartPosition))
             newFile.write("\n종전가액: ")
             newFile.write(getProperty.getPreviousValue)

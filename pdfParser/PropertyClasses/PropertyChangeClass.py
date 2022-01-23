@@ -6,6 +6,8 @@
 
 
 class PropertyChange:
+    # 단위액
+    plusNum = ",000"
     fileStartPos = 0
     fileEndPos = 0
     __totalIncrease = 0
@@ -30,7 +32,12 @@ class PropertyChange:
 
     @getPreviousValue.setter
     def setPreviousValue(self, preValue):
-        self.__previousValue = preValue
+        if preValue != '0':
+            self.__previousValue = preValue + self.plusNum
+        elif preValue == '0':
+            self.__previousValue = preValue
+        else:
+            print(self.fileStartPos + "error")
 
     @property
     def getPresentValue(self):
@@ -41,27 +48,51 @@ class PropertyChange:
 
     @getPresentValue.setter
     def setPresentValue(self, nowValue):
-        self.__presentValue = nowValue
+        if nowValue != '0':
+            self.__presentValue = nowValue + self.plusNum
+        elif nowValue == '0':
+            self.__presentValue= nowValue
+        else:
+            print(self.fileStartPos + "error")
 
     @property
     def getTotalIncrease(self):
-        return self.__totalIncrease
+        if self.__totalIncrease != None:
+            return self.__totalIncrease
+        else:
+            return "NaN"
 
     @getTotalIncrease.setter
     def setTotalIncrease(self, increase):
-        self.__totalIncrease = increase
+        if increase != '0':
+            self.__totalIncrease = increase + self.plusNum
+        elif increase == '0':
+            self.__totalIncrease = increase
+        else:
+            print(self.fileStartPos + "error")
 
     @property
     def getTotalDecresase(self):
-        return self.__totalDecrease
+        if self.__totalDecrease != None:
+            return self.__totalDecrease
+        else:
+            return "NaN"
 
     @getTotalDecresase.setter
     def setTotalDecrease(self,decrease):
-        self.__totalDecrease = decrease
+        if decrease != '0':
+            self.__totalDecrease = decrease + self.plusNum
+        elif decrease == '0':
+            self.__totalDecrease = decrease
+        else:
+            print(self.fileStartPos + "error")
 
     @property
     def getReason(self):
-        return self.__reason
+        if self.__reason != None:
+            return self.__reason
+        else:
+            return "NaN"
 
     @getReason.setter
     def setReason(self, reason):
@@ -69,7 +100,10 @@ class PropertyChange:
 
     @property
     def getFileStartPosition(self):
-        return self.fileStartPos
+        if self.fileStartPos != None:
+            return self.fileStartPos
+        else:
+            return "NaN"
 
     @getFileStartPosition.setter
     def setFileStartPosition(self, pos):
@@ -77,8 +111,10 @@ class PropertyChange:
 
     @property
     def getFileEndPoisition(self):
-        return self.fileEndPos
-
+        if self.fileEndPos != None:
+            return self.fileEndPos
+        else:
+            return "NaN"
     @getFileEndPoisition.setter
     def setFileEndPosition(self, pos):
         self.fileEndPos = pos
