@@ -17,6 +17,8 @@ class Politician:
     __PoliticDeposit = None
     __Debt = None
 
+
+
     def __init__(self, name, belong, position, filePosition):
         self.__name = name
         self.__belong = belong

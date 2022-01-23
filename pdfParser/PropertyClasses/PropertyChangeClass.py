@@ -14,16 +14,19 @@ class PropertyChange:
     __previousValue = 0
     __reason = None
 
-    def __init__(self, preValue, nowValue, increase, decrease):
-        self.__previousValue = preValue
-        self.__presentValue = nowValue
-        self.__totalIncrease = increase
-        self.__totalDecrease = decrease
+    def __init__(self):
+        self.__previousValue = None
+        self.__presentValue = None
+        self.__totalIncrease = None
+        self.__totalDecrease = None
 
 
     @property
     def getPreviousValue(self):
-        return self.__previousValue
+        if self.__previousValue != None:
+            return self.__previousValue
+        else:
+            return "NaN"
 
     @getPreviousValue.setter
     def setPreviousValue(self, preValue):
@@ -31,7 +34,10 @@ class PropertyChange:
 
     @property
     def getPresentValue(self):
-        return self.__presentValue
+        if self.__presentValue != None:
+            return self.__presentValue
+        else:
+            return "NaN"
 
     @getPresentValue.setter
     def setPresentValue(self, nowValue):

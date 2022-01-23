@@ -11,8 +11,8 @@ class Debt(PropertyChange):
     __DescriptionList = None
     __error = 0
 
-    def __init__(self, increase, decrease, preValue, nowValue):
-        super().__init__(preValue, nowValue, increase, decrease)
+    def __init__(self):
+        super().__init__()
         self.__DescriptionList = []
 
     def appendDescription(self, Description):

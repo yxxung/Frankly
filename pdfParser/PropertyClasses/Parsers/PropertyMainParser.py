@@ -157,14 +157,14 @@ class PropertyMainParser:
 
             getProperty = politician.getPoliticianDebt
             if getProperty != None:
-                newFile.write("국회의원 빚: ")
+                newFile.write("\n국회의원 빚: ")
                 self.records(newFile, getProperty)
 
         newFile.write("\n국회의원끝: ")
         newFile.write(str(politician.getPoliticianFileEndPosition))
 
     def records(self, newFile, getProperty):
-        if getProperty.getPreviousValue != None:
+        if getProperty != None:
             newFile.write("시작: ")
             newFile.write(str(getProperty.getFileStartPosition))
             newFile.write("\n종전가액: ")

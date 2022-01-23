@@ -99,22 +99,19 @@ class PoliticianPropertyParser():
     def addLandProperty(self,tokenList):
 
         if len(tokenList) <= 6 :
-            land = LandProperty(
-            preValue = tokenList[2],
-            increase = tokenList[3],
-            decrease = tokenList[4],
-            nowValue = tokenList[5]
-            )
+            pos = 2
+            land = LandProperty()
+
+            land.setpreValue = tokenList[pos]
+            land.setTotalIncrease = tokenList[pos+1]
+            land.setTotalDecrease = tokenList[pos+2]
+            land.setPresentValue = tokenList[pos+3]
+
             land.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianLandProperty = land
         else :
             # LandProperty.error()
-            land = LandProperty(
-                preValue = None,
-                increase = None,
-                decrease = None,
-                nowValue = None
-            )
+            land = LandProperty()
             land.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianLandProperty = land
             print(self.__politician.getPoliticianName + " Land Error")
@@ -123,21 +120,18 @@ class PoliticianPropertyParser():
     def addRealEstate(self, tokenList):
 
         if len(tokenList) <= 6 :
-            realEstate = RealEstate(
-                preValue = tokenList[2],
-                increase = tokenList[3],
-                decrease = tokenList[4],
-                nowValue = tokenList[5]
-            )
+            pos = 2
+            realEstate = RealEstate()
+
+            realEstate.setpreValue = tokenList[pos]
+            realEstate.setTotalIncrease = tokenList[pos+1]
+            realEstate.setTotalDecrease = tokenList[pos+2]
+            realEstate.setPresentValue = tokenList[pos+3]
+
             realEstate.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianRealEstate = realEstate
         else :
-            realEstate = RealEstate(
-                preValue = None,
-                increase = None,
-                decrease = None,
-                nowValue = None
-            )
+            realEstate = RealEstate( )
             realEstate.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianRealEstate = realEstate
             print(self.__politician.getPoliticianName + " realestate Error")
@@ -145,21 +139,18 @@ class PoliticianPropertyParser():
     def addRealRight(self, tokenList):
 
         if len(tokenList) <= 13 :
-            realRight = RealRight(
-                preValue = tokenList[9],
-                increase = tokenList[10],
-                decrease = tokenList[11],
-                nowValue = tokenList[12]
-            )
+            pos = 9
+            realRight = RealRight()
+
+            realRight.setpreValue = tokenList[pos]
+            realRight.setTotalIncrease = tokenList[pos+1]
+            realRight.setTotalDecrease = tokenList[pos+2]
+            realRight.setPresentValue = tokenList[pos+3]
+
             realRight.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianRealRight = realRight
         else :
-            realRight = RealRight(
-                preValue = None,
-                increase = None,
-                decrease = None,
-                nowValue = None
-            )
+            realRight = RealRight()
             realRight.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianRealRight = realRight
             print(self.__politician.getPoliticianName + " realright Error")
@@ -167,21 +158,19 @@ class PoliticianPropertyParser():
     def addDeposit(self, tokenList):
 
         if len(tokenList) <= 6 :
-            deposit = Deposit(
-                preValue = tokenList[2],
-                increase = tokenList[3],
-                decrease = tokenList[4],
-                nowValue = tokenList[5]
-            )
+            pos = 2
+            deposit = Deposit()
+
+            deposit.setpreValue = tokenList[pos]
+            deposit.setTotalIncrease = tokenList[pos+1]
+            deposit.setTotalDecrease = tokenList[pos+2]
+            deposit.setPresentValue = tokenList[pos+3]
+
             deposit.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianDeposit = deposit
         else :
-            deposit = Deposit(
-                preValue = None,
-                increase = None,
-                decrease = None,
-                nowValue = None
-            )
+            deposit = Deposit()
+
             deposit.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianDeposit = deposit
             print(self.__politician.getPoliticianName + " deposit Error")
@@ -189,21 +178,19 @@ class PoliticianPropertyParser():
     def addPoliticDeposit(self, tokenList):
 
         if len(tokenList) <= 14 :
-            politicDeposit = PoliticDeposit(
-                preValue = tokenList[10],
-                increase = tokenList[11],
-                decrease = tokenList[12],
-                nowValue = tokenList[13]
-            )
+            pos = 10
+            politicDeposit = PoliticDeposit()
+
+            politicDeposit.setpreValue = tokenList[pos]
+            politicDeposit.setTotalIncrease = tokenList[pos+1]
+            politicDeposit.setTotalDecrease = tokenList[pos+2]
+            politicDeposit.setPresentValue = tokenList[pos+3]
+
             politicDeposit.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianPoliticDeposit = politicDeposit
         else :
-            politicDeposit = PoliticDeposit(
-                preValue = None,
-                increase = None,
-                decrease = None,
-                nowValue = None
-            )
+            politicDeposit = PoliticDeposit()
+
             politicDeposit.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianPoliticDeposit = politicDeposit
             print(self.__politician.getPoliticianName + " politicDeposit Error")
@@ -211,21 +198,20 @@ class PoliticianPropertyParser():
     def addDebt(self, tokenList):
 
         if len(tokenList) <= 6 :
-            debt = Debt(
-                preValue = tokenList[2],
-                increase = tokenList[3],
-                decrease = tokenList[4],
-                nowValue = tokenList[5]
-            )
+            pos = 2
+            debt = Debt()
+
+            debt.setpreValue = tokenList[pos]
+            debt.setTotalIncrease = tokenList[pos+1]
+            debt.setTotalDecrease = tokenList[pos+2]
+            debt.setPresentValue = tokenList[pos+3]
             debt.setFileStartPosition = self.__fileBeforePos
+
             self.__politician.setPoliticianDebt = debt
+
         else :
-            debt = Debt(
-                preValue = None,
-                increase = None,
-                decrease = None,
-                nowValue = None
-            )
+            debt = Debt()
+
             debt.setFileStartPosition = self.__fileBeforePos
             self.__politician.setPoliticianDebt = debt
             print(self.__politician.getPoliticianName + " debt Error")
