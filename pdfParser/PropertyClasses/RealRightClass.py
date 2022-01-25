@@ -24,6 +24,5 @@ class RealRight(PropertyChange):
         else:
             del self.__DescriptionList[position]
 
-
     def error(self):
         self.__error = 1

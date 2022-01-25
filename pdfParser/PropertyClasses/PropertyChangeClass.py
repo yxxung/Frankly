@@ -33,6 +33,7 @@ class PropertyChange:
     @getPreviousValue.setter
     def setPreviousValue(self, preValue):
         if preValue != '0':
+            # self.__previousValue = (preValue + self.plusNum).replace(",","")
             self.__previousValue = preValue + self.plusNum
         elif preValue == '0':
             self.__previousValue = preValue
@@ -49,6 +50,7 @@ class PropertyChange:
     @getPresentValue.setter
     def setPresentValue(self, nowValue):
         if nowValue != '0':
+            # self.__presentValue = (nowValue + self.plusNum).replace(",","")
             self.__presentValue = nowValue + self.plusNum
         elif nowValue == '0':
             self.__presentValue= nowValue
@@ -65,6 +67,7 @@ class PropertyChange:
     @getTotalIncrease.setter
     def setTotalIncrease(self, increase):
         if increase != '0':
+            # self.__totalIncrease = (increase + self.plusNum).replace(",","")
             self.__totalIncrease = increase + self.plusNum
         elif increase == '0':
             self.__totalIncrease = increase
@@ -81,6 +84,7 @@ class PropertyChange:
     @getTotalDecresase.setter
     def setTotalDecrease(self,decrease):
         if decrease != '0':
+            # self.__totalDecrease = (decrease + self.plusNum).replace(",","")
             self.__totalDecrease = decrease + self.plusNum
         elif decrease == '0':
             self.__totalDecrease = decrease
