@@ -9,11 +9,11 @@ import pickle
 
 
 class PropertyMainParser:
-    __filePath = None
-    __file = None
-    __filePos = 0
-    __fileBeforePos = 0;
-    __fileSize = 0
+    filePath = None
+    file = None
+    filePos = 0
+    fileBeforePos = 0;
+    fileSize = 0
     # __politicianPosition = None
     politicianList = None
     politicianParser = None
@@ -21,13 +21,13 @@ class PropertyMainParser:
 
 
     def __init__(self, filePath):
-        self.__file = open(filePath, 'r', encoding ='utf-8')
-        self.__file.seek(0, 2)
-        self.__fileSize = self.__file.tell()
-        self.__file.seek(0)
+        self.file = open(filePath, 'r', encoding ='utf-8')
+        self.file.seek(0, 2)
+        self.fileSize = self.file.tell()
+        self.file.seek(0)
         # self.__politicianPosition = {}
         self.politicianList = []
-        self.politicianParser = PoliticianPropertyParser(self.__file)
+        self.politicianParser = PoliticianPropertyParser(self.file)
 
 
 
@@ -57,22 +57,22 @@ class PropertyMainParser:
         # for i in range(0, self.__fileSize):
         statement = True
         while statement:
-            self.__fileBeforePos = self.__file.tell()
-            string = self.__file.readline()
-            self.__filePos = self.__file.tell()
+            self.fileBeforePos = self.file.tell()
+            string = self.file.readline()
+            self.filePos = self.file.tell()
             if string != '' :
                 # print("pos : ", self.__file.tell() , " O K")
                 self.checkDivide(string)
             else:
                 self.politicianList[len(self.politicianList)-1].\
-                    setPoliticianFileEndPosition = self.__fileBeforePos
-                self.__file.seek(0)
+                    setPoliticianFileEndPosition = self.fileBeforePos
+                self.file.seek(0)
                 statement = False
 
 
 
     def checkDivide(self, string):
-        tokenList = string.split()
+        tokenList = string.split("|")
         if len(tokenList) > 3 :
             politicianListLen = len(self.politicianList)
             self.checkPoliticianDivide(tokenList, politicianListLen)
@@ -106,13 +106,13 @@ class PropertyMainParser:
                 name = tokenList[startPos + 4],
                 belong = tokenList[startPos],
                 position = tokenList[startPos + 2],
-                filePosition= self.__file.tell()
+                filePosition= self.file.tell()
             )
             self.politicianList.append(politician)
 
     def addPoliticianFileEndPosition(self, len):
         politician = self.politicianList[len-1]
-        politician.setPoliticianFileEndPosition = self.__fileBeforePos
+        politician.setPoliticianFileEndPosition = self.fileBeforePos
 
 
     def recordPolitician(self):

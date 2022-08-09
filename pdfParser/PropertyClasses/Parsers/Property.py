@@ -4,27 +4,28 @@ from PropertyClasses.DepositClass import Deposit
 from PropertyClasses.LandPropertyClass import LandProperty
 from PropertyClasses.Parsers.Land import LandParser
 from PropertyClasses.PoliticDepositClass import PoliticDeposit
+from PropertyClasses.PropertyChangeClass import PropertyChange
 from PropertyClasses.RealEstateClass import RealEstate
 from PropertyClasses.RealRightClass import RealRight
 
 
 class PoliticianPropertyParser():
-    __file = None
-    __filePos = 0
-    __fileBeforePos = 0;
-    __politician = None
-    __landParser = None
+    file = None
+    filePos = 0
+    fileBeforePos = 0;
+    politician = None
+    landParser = None
 
     def __init__(self, file):
         print("Politician Property parse")
-        self.__file = file
-        self.__landParser = LandParser()
+        self.file = file
+        self.landParser = LandParser()
 
     def setPolitican(self,politican):
-        self.__politician = politican
+        self.politician = politican
 
     def parse(self):
-        self.__file.seek(self.__politician.getPoliticianFilePosition)
+        self.file.seek(self.politician.getPoliticianFilePosition)
         self.checkPropertyPosition()
         # return self.__politician
 
@@ -34,10 +35,10 @@ class PoliticianPropertyParser():
         # for i in range(0, self.__fileSize):
         statement = True
         while statement:
-            self.__fileBeforePos = self.__file.tell()
-            string = self.__file.readline()
-            self.__filePos = self.__file.tell()
-            if self.__file.tell() < self.__politician.getPoliticianFileEndPosition:
+            self.fileBeforePos = self.file.tell()
+            string = self.file.readline()
+            self.filePos = self.file.tell()
+            if self.file.tell() < self.politician.getPoliticianFileEndPosition:
                 # print("pos : ", self.__file.tell() , " O K")
                 self.checkDivide(string)
             else:
@@ -46,56 +47,51 @@ class PoliticianPropertyParser():
 
 
     def checkDivide(self, string):
-        tokenList = string.split()
+        tokenList = string.split("|")
         if len(tokenList) > 1 :
             self.checkPropertyDivide(tokenList)
 
 
     def checkPropertyDivide(self, tokenList):
-        if tokenList[0] == "▶" :
-            if tokenList[1] == "토지(소계)" :
-                self.addLandProperty(tokenList)
+        if tokenList[0] == "▶ 토지(소계)" :
+            # self.addLandProperty(tokenList)
+            self.addPropertyChange(tokenList, "landtotal")
+        elif tokenList[0] == "▶ 건물(소계)" :
+            # getProperty = self.politician.getPoliticianLandProperty
+            # if getProperty != None :
+            #     getProperty.setFileEndPosition =  self.fileBeforePos
+            #
+            # self.addRealEstate(tokenList)
+            self.addPropertyChange(tokenList, "buildingtotal")
+        elif tokenList[0].startswith("▶ 부동산에") :
+            # getProperty = self.politician.getPoliticianRealEstate
+            # if getProperty != None :
+            #     getProperty.setFileEndPosition =  self.fileBeforePos
+            #
+            # self.addRealRight(tokenList)
+            self.addPropertyChange(tokenList, "realtotal")
+        elif tokenList[0] == "▶ 예금(소계)" :
+            # getProperty = self.politician.getPoliticianRealRight
+            # if getProperty != None :
+            #     getProperty.setFileEndPosition =  self.fileBeforePos
 
-            elif tokenList[1] == "건물(소계)" :
-                getProperty = self.__politician.getPoliticianLandProperty
-                if getProperty != None :
-                    getProperty.setFileEndPosition =  self.__fileBeforePos
+            # self.addDeposit(tokenList)
+            self.addPropertyChange(tokenList, "deposittotal")
+        elif tokenList[0].startswith("▶ 정치자금법에") :
+            # getProperty = self.politician.getPoliticianDeposit
+            # if getProperty != None :
+            #     getProperty.setFileEndPosition =  self.fileBeforePos
+            #
+            # self.addPoliticDeposit(tokenList)
+            self.addPropertyChange(tokenList, "politicDepoisittotal")
+        elif tokenList[0] == "▶ 채무(소계)" :
+            # getProperty = self.politician.getPoliticianPoliticDeposit
+            # if getProperty != None :
+            #     getProperty.setFileEndPosition =  self.fileBeforePos
+            #
+            # self.addDebt(tokenList)
+            self.addPropertyChange(tokenList, "debttotal")
 
-                self.addRealEstate(tokenList)
-
-            elif tokenList[1] == "부동산에" :
-                getProperty = self.__politician.getPoliticianRealEstate
-                if getProperty != None :
-                    getProperty.setFileEndPosition =  self.__fileBeforePos
-
-                self.addRealRight(tokenList)
-            elif tokenList[1] == "예금(소계)" :
-                getProperty = self.__politician.getPoliticianRealRight
-                if getProperty != None :
-                    getProperty.setFileEndPosition =  self.__fileBeforePos
-
-                self.addDeposit(tokenList)
-            elif tokenList[1] == "정치자금법에" :
-                getProperty = self.__politician.getPoliticianDeposit
-                if getProperty != None :
-                    getProperty.setFileEndPosition =  self.__fileBeforePos
-
-                self.addPoliticDeposit(tokenList)
-            elif tokenList[1] == "채무(소계)" :
-                getProperty = self.__politician.getPoliticianPoliticDeposit
-                if getProperty != None :
-                    getProperty.setFileEndPosition =  self.__fileBeforePos
-
-                self.addDebt(tokenList)
-
-    '''
-    텍스트 예시
-    
-    ▶ 토지(소계) 195,579 134,965 0 330,544 
-    
-    token 수가 6보다 많으면 형태 깨져있음.
-    
-    '''
 
     def addLandProperty(self,tokenList):
 
@@ -108,18 +104,18 @@ class PoliticianPropertyParser():
             land.setTotalDecrease = tokenList[pos+2]
             land.setPresentValue = tokenList[pos+3]
 
-            land.setFileStartPosition = self.__fileBeforePos
-            self.__politician.setPoliticianLandProperty = land
+            land.setFileStartPosition = self.fileBeforePos
+            self.politician.setPoliticianLandProperty = land
         else :
             # LandProperty.error()
             land = LandProperty()
 
             if self.numericValidCheck(tokenList, land):
-                land.setFileStartPosition = self.__fileBeforePos
-                self.__politician.setPoliticianLandProperty = land
-                print(self.__politician.getPoliticianName + " land Error but inserted")
+                land.setFileStartPosition = self.fileBeforePos
+                self.politician.setPoliticianLandProperty = land
+                print(self.politician.getPoliticianName + " land Error but inserted")
             else:
-                print(self.__politician.getPoliticianName + " land Error cant insert data")
+                print(self.politician.getPoliticianName + " land Error cant insert data")
 
 
 
@@ -134,17 +130,17 @@ class PoliticianPropertyParser():
             realEstate.setTotalDecrease = tokenList[pos+2]
             realEstate.setPresentValue = tokenList[pos+3]
 
-            realEstate.setFileStartPosition = self.__fileBeforePos
-            self.__politician.setPoliticianRealEstate = realEstate
+            realEstate.setFileStartPosition = self.fileBeforePos
+            self.politician.setPoliticianRealEstate = realEstate
         else :
             realEstate = RealEstate( )
 
             if self.numericValidCheck(tokenList, realEstate):
-                realEstate.setFileStartPosition = self.__fileBeforePos
-                self.__politician.setPoliticianRealEstate = realEstate
-                print(self.__politician.getPoliticianName + " realestate Error but inserted")
+                realEstate.setFileStartPosition = self.fileBeforePos
+                self.politician.setPoliticianRealEstate = realEstate
+                print(self.politician.getPoliticianName + " realestate Error but inserted")
             else:
-                print(self.__politician.getPoliticianName + " realestate Error cant insert data")
+                print(self.politician.getPoliticianName + " realestate Error cant insert data")
 
 
     def addRealRight(self, tokenList):
@@ -158,21 +154,21 @@ class PoliticianPropertyParser():
             realRight.setTotalDecrease = tokenList[pos+2]
             realRight.setPresentValue = tokenList[pos+3]
 
-            realRight.setFileStartPosition = self.__fileBeforePos
-            self.__politician.setPoliticianRealRight = realRight
+            realRight.setFileStartPosition = self.fileBeforePos
+            self.politician.setPoliticianRealRight = realRight
         else :
             realRight = RealRight()
 
             if self.numericValidCheck(tokenList, realRight):
-                realRight.setFileStartPosition = self.__fileBeforePos
-                self.__politician.setPoliticianRealRight = realRight
-                print(self.__politician.getPoliticianName + " realright Error but inserted")
+                realRight.setFileStartPosition = self.fileBeforePos
+                self.politician.setPoliticianRealRight = realRight
+                print(self.politician.getPoliticianName + " realright Error but inserted")
             else:
-                print(self.__politician.getPoliticianName + " realright Error cant insert data")
+                print(self.politician.getPoliticianName + " realright Error cant insert data")
 
 
 
-            print(self.__politician.getPoliticianName + " realright Error")
+            print(self.politician.getPoliticianName + " realright Error")
 
     def addDeposit(self, tokenList):
 
@@ -185,8 +181,8 @@ class PoliticianPropertyParser():
             deposit.setTotalDecrease = tokenList[pos+2]
             deposit.setPresentValue = tokenList[pos+3]
 
-            deposit.setFileStartPosition = self.__fileBeforePos
-            self.__politician.setPoliticianDeposit = deposit
+            deposit.setFileStartPosition = self.fileBeforePos
+            self.politician.setPoliticianDeposit = deposit
         else :
             deposit = Deposit()
 
@@ -195,11 +191,11 @@ class PoliticianPropertyParser():
             # print(self.__politician.getPoliticianName + " deposit Error")
 
             if self.numericValidCheck(tokenList, deposit):
-                deposit.setFileStartPosition = self.__fileBeforePos
-                self.__politician.setPoliticianDeposit = deposit
-                print(self.__politician.getPoliticianName + " deposit Error but inserted")
+                deposit.setFileStartPosition = self.fileBeforePos
+                self.politician.setPoliticianDeposit = deposit
+                print(self.politician.getPoliticianName + " deposit Error but inserted")
             else:
-                print(self.__politician.getPoliticianName + " deposit Error cant insert data")
+                print(self.politician.getPoliticianName + " deposit Error cant insert data")
 
 
     def addPoliticDeposit(self, tokenList):
@@ -213,17 +209,17 @@ class PoliticianPropertyParser():
             politicDeposit.setTotalDecrease = tokenList[pos+2]
             politicDeposit.setPresentValue = tokenList[pos+3]
 
-            politicDeposit.setFileStartPosition = self.__fileBeforePos
-            self.__politician.setPoliticianPoliticDeposit = politicDeposit
+            politicDeposit.setFileStartPosition = self.fileBeforePos
+            self.politician.setPoliticianPoliticDeposit = politicDeposit
         else :
             politicDeposit = PoliticDeposit()
 
             if self.numericValidCheck(tokenList, politicDeposit):
-                politicDeposit.setFileStartPosition = self.__fileBeforePos
-                self.__politician.setPoliticianDeposit = politicDeposit
-                print(self.__politician.getPoliticianName + " politic deposit Error but inserted")
+                politicDeposit.setFileStartPosition = self.fileBeforePos
+                self.politician.setPoliticianDeposit = politicDeposit
+                print(self.politician.getPoliticianName + " politic deposit Error but inserted")
             else:
-                print(self.__politician.getPoliticianName + " politic deposit Error cant insert data")
+                print(self.politician.getPoliticianName + " politic deposit Error cant insert data")
 
     def addDebt(self, tokenList):
 
@@ -235,19 +231,19 @@ class PoliticianPropertyParser():
             debt.setTotalIncrease = tokenList[pos+1]
             debt.setTotalDecrease = tokenList[pos+2]
             debt.setPresentValue = tokenList[pos+3]
-            debt.setFileStartPosition = self.__fileBeforePos
+            debt.setFileStartPosition = self.fileBeforePos
 
-            self.__politician.setPoliticianDebt = debt
+            self.politician.setPoliticianDebt = debt
 
         else :
             debt = Debt()
 
             if self.numericValidCheck(tokenList, debt):
-                debt.setFileStartPosition = self.__fileBeforePos
-                self.__politician.setPoliticianDeposit = debt
-                print(self.__politician.getPoliticianName + " debt Error but inserted")
+                debt.setFileStartPosition = self.fileBeforePos
+                self.politician.setPoliticianDeposit = debt
+                print(self.politician.getPoliticianName + " debt Error but inserted")
             else:
-                print(self.__politician.getPoliticianName + " debt Error cant insert data")
+                print(self.politician.getPoliticianName + " debt Error cant insert data")
 
     def numericValidCheck(self, tokenList, prop):
         count = 0
@@ -261,7 +257,7 @@ class PoliticianPropertyParser():
             if count == 4:
                 break
             elif count > 4:
-                print(self.__politician.getPoliticianName + "numeric valid check Error")
+                print(self.politician.getPoliticianName + "numeric valid check Error")
                 return False
 
 
@@ -283,3 +279,28 @@ class PoliticianPropertyParser():
                 return True
             else :
                 return False
+
+    def addPropertyChange(self, tokenList, section):
+
+        if len(tokenList) <= 6 :
+            pos = 1
+            pc = PropertyChange()
+
+            pc.setPreviousValue = tokenList[pos].replace("\n","")
+            pc.setTotalIncrease = tokenList[pos+1].replace("\n","")
+            pc.setTotalDecrease = tokenList[pos+2].replace("\n","")
+            pc.setPresentValue = tokenList[pos+3].replace("\n","")
+            pc.setFileStartPosition = self.fileBeforePos
+            pc.setCategory = section
+
+            self.politician.setPoliticianPropertyChangeList(pc)
+
+        else :
+            debt = Debt()
+
+            if self.numericValidCheck(tokenList, debt):
+                debt.setFileStartPosition = self.fileBeforePos
+                self.politician.setPoliticianDeposit = debt
+                print(self.politician.getPoliticianName + " debt Error but inserted")
+            else:
+                print(self.politician.getPoliticianName + " debt Error cant insert data")

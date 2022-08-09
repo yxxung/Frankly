@@ -16,6 +16,7 @@ class Politician:
     __Deposit = None
     __PoliticDeposit = None
     __Debt = None
+    propertyChangeList = []
 
 
 
@@ -93,3 +94,13 @@ class Politician:
     @getPoliticianDebt.setter
     def setPoliticianDebt(self, debt):
         self.__Debt = debt
+
+    @property
+    def getPoliticianPropertyChangeList(self):
+        return self.propertyChangeList
+
+
+    @getPoliticianPropertyChangeList.setter
+    def setPoliticianPropertyChangeList(self, propertyChange):
+        changelist = self.getPoliticianPropertyChangeList
+        changelist.append(propertyChange)
