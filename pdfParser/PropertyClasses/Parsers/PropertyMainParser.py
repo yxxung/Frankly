@@ -3,24 +3,31 @@
 @Date 21/1/8
 
 '''
-from PropertyClasses.Parsers.Property import PoliticianPropertyParser
+from PropertyClasses.Parsers.PoliticianPropertyParser import PoliticianPropertyParser
 from PropertyClasses.PoliticianClass import Politician
 import pickle
 
 
 class PropertyMainParser:
-    filePath = None
-    file = None
-    filePos = 0
-    fileBeforePos = 0;
-    fileSize = 0
-    # __politicianPosition = None
-    politicianList = None
-    politicianParser = None
+    # filePath = None
+    # file = None
+    # filePos = 0
+    # fileBeforePos = 0;
+    # fileSize = 0
+    # # __politicianPosition = None
+    # politicianList = None
+    # politicianParser = None
 
 
 
     def __init__(self, filePath):
+        self.file = None
+        self.filePos = None
+        self.fileBeforePos = None
+        self.fileSize = None
+        self.politicianPosition = None
+        self.politicianList = None
+        self.politicianParser = None
         self.file = open(filePath, 'r', encoding ='utf-8')
         self.file.seek(0, 2)
         self.fileSize = self.file.tell()
@@ -29,7 +36,73 @@ class PropertyMainParser:
         self.politicianList = []
         self.politicianParser = PoliticianPropertyParser(self.file)
 
+    @property
+    def getFilePath(self):
+        return self.filePath
+    @getFilePath.setter
+    def setFilePath(self, filepath):
+        self.filePath = filepath
 
+    @property
+    def getFile(self):
+        return self.file
+    @getFile.setter
+    def setFile(self, File):
+        self.setFile = File
+
+    @property
+    def getFilePos(self):
+        return self.filePos
+    @getFilePos.setter
+    def setFilePos(self,filePos):
+        self.filePos = filePos
+
+    @property
+    def getFileBeforePos(self):
+        return self.fileBeforePos
+
+    @getFileBeforePos.setter
+    def setFileBeforePos(self, fileBeforePos):
+        self.fileBeforePos = fileBeforePos
+
+    @property
+    def getFileSize(self):
+        return self.fileSize
+
+    @getFileSize.setter
+    def setFileSize(self, fileSize):
+        self.fileSize = fileSize
+
+    @property
+    def getPoliticinPosition(self):
+        return self.politicianPosition
+
+    @getPoliticinPosition.setter
+    def setPoliticinPosition(self, politicinPosition):
+        self.politicianPosition = politicinPosition
+
+    @property
+    def getPoliticianList(self):
+        return self.politicianList
+
+    @getPoliticianList.setter
+    def setPoliticianList(self, politicianList):
+        self.politicianList = politicianList
+
+    @property
+    def getPoliticianParser(self):
+        return self.politicianParser
+
+    @getPoliticianParser.setter
+    def setPoliticianParser(self, politicianParser):
+        self.politicianParser = politicianParser
+
+
+        # fileBeforePos = 0;
+    # fileSize = 0
+    # # __politicianPosition = None
+    # politicianList = None
+    # politicianParser = None
 
     def parse(self):
         cnt = 0
@@ -42,10 +115,11 @@ class PropertyMainParser:
         #     cnt += 1
         #     print(politician.getPoliticianName, " OK ", cnt)
 
-        for politician in self.politicianList :
-            self.politicianParser.setPolitican(politician)
-            self.politicianParser.parse()
-            print(politician.getPoliticianName, " OK ", cnt)
+        for politician in self.getPoliticianList :
+            parser = self.politicianParser
+            parser.politician = politician
+            parser.parse()
+            print(politician.name, " OK ", cnt)
             cnt += 1
 
 
@@ -65,7 +139,7 @@ class PropertyMainParser:
                 self.checkDivide(string)
             else:
                 self.politicianList[len(self.politicianList)-1].\
-                    setPoliticianFileEndPosition = self.fileBeforePos
+                    fileEndPosition = self.fileBeforePos
                 self.file.seek(0)
                 statement = False
 
@@ -88,14 +162,6 @@ class PropertyMainParser:
             self.addPolitician(tokenList, 1)
             # print(tokenList[5], " add OK")
 
-        else :
-
-            if tokenList[2] == "국회" :
-                if politicianListLen > 0 :
-                    self.addPoliticianFileEndPosition(politicianListLen)
-                self.addPolitician(tokenList, 2)
-                # print(tokenList[6], " add OK")
-
 
 
     def addPolitician(self, tokenList, startPos):
@@ -112,7 +178,7 @@ class PropertyMainParser:
 
     def addPoliticianFileEndPosition(self, len):
         politician = self.politicianList[len-1]
-        politician.setPoliticianFileEndPosition = self.fileBeforePos
+        politician.fileEndPosition = self.fileBeforePos
 
 
     def recordPolitician(self):
@@ -121,58 +187,31 @@ class PropertyMainParser:
             newFile.write("\n-------------------")
 
             newFile.write("\n국회의원 이름: ")
-            newFile.write(politician.getPoliticianName)
+            newFile.write(politician.getName)
 
             newFile.write("\n시작: ")
-            newFile.write(str(politician.getPoliticianFilePosition))
+            newFile.write(str(politician.getFilePosition))
 
 
-            getProperty = politician.getPoliticianLandProperty
-            if getProperty != None:
-                newFile.write("\n\n국회의원 토지: ")
-                self.records(newFile, getProperty)
+            for propertyChange in politician.politicianPropertyChangeList:
+                if propertyChange != None:
+                    newFile.write("\n\n"+propertyChange.category +" :")
+                    self.records(newFile, propertyChange)
+            newFile.write("\n국회의원끝: ")
+            newFile.write(str(politician.fileEndPosition))
 
 
-            getProperty = politician.getPoliticianRealEstate
-            if getProperty != None:
-                newFile.write("\n\n국회의원 건물: ")
-                self.records(newFile, getProperty)
-
-            getProperty = politician.getPoliticianRealRight
-            if getProperty != None:
-                newFile.write("\n\n국회의원 부동산: ")
-                self.records(newFile, getProperty)
-
-
-            getProperty = politician.getPoliticianDeposit
-            if getProperty != None:
-                newFile.write("\n\n국회의원 예금: ")
-                self.records(newFile, getProperty)
-
-            getProperty = politician.getPoliticianPoliticDeposit
-            if getProperty != None:
-                newFile.write("\n\n국회의원 정치예금: ")
-                self.records(newFile, getProperty)
-
-
-            getProperty = politician.getPoliticianDebt
-            if getProperty != None:
-                newFile.write("\n\n국회의원 빚: ")
-                self.records(newFile, getProperty)
-
-        newFile.write("\n국회의원끝: ")
-        newFile.write(str(politician.getPoliticianFileEndPosition))
 
     def records(self, newFile, getProperty):
             newFile.write("\n시작: ")
-            newFile.write(str(getProperty.getFileStartPosition))
+            newFile.write(str(getProperty.fileStartPosition))
             newFile.write("\n종전가액: ")
-            newFile.write(getProperty.getPreviousValue)
+            newFile.write(getProperty.previousValue)
             newFile.write("\n증가액: ")
-            newFile.write(getProperty.getTotalIncrease)
+            newFile.write(getProperty.totalIncrease)
             newFile.write("\n감소액: ")
-            newFile.write(getProperty.getTotalDecresase)
+            newFile.write(getProperty.totalDecrease)
             newFile.write("\n현재가액: ")
-            newFile.write(getProperty.getPresentValue)
+            newFile.write(getProperty.presentValue)
             newFile.write("\n재산끝: ")
-            newFile.write(str(getProperty.getFileEndPoisition))
+            newFile.write(str(getProperty.fileEndPosition))

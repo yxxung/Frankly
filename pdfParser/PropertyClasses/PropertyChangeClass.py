@@ -8,14 +8,14 @@
 class PropertyChange:
     # 단위액
     plusNum = ",000"
-    fileStartPos = 0
-    fileEndPos = 0
-    totalIncrease = 0
-    totalDecrease = 0
-    presentValue = 0
-    previousValue = 0
-    category = None
-    reason = None
+    # fileStartPos = 0
+    # fileEndPos = 0
+    # totalIncrease = 0
+    # totalDecrease = 0
+    # presentValue = 0
+    # previousValue = 0
+    # category = None
+    # reason = None
 
     def __init__(self):
         self.previousValue = None
@@ -39,7 +39,7 @@ class PropertyChange:
         elif preValue == '0':
             self.previousValue = preValue
         else:
-            print(self.fileStartPos + "error")
+            print(self.fileStartPosition + "error")
 
     @property
     def getPresentValue(self):
@@ -56,7 +56,7 @@ class PropertyChange:
         elif nowValue == '0':
             self.presentValue= nowValue
         else:
-            print(self.fileStartPos + "error")
+            print(self.fileStartPosition + "error")
 
     @property
     def getTotalIncrease(self):
@@ -73,7 +73,7 @@ class PropertyChange:
         elif increase == '0':
             self.totalIncrease = increase
         else:
-            print(self.fileStartPos + "error")
+            print(self.fileStartPosition + "error")
 
     @property
     def getTotalDecresase(self):
@@ -90,7 +90,7 @@ class PropertyChange:
         elif decrease == '0':
             self.totalDecrease = decrease
         else:
-            print(self.fileStartPos + "error")
+            print(self.fileStartPosition + "error")
 
     @property
     def getReason(self):
@@ -105,24 +105,19 @@ class PropertyChange:
 
     @property
     def getFileStartPosition(self):
-        if self.fileStartPos != None:
-            return self.fileStartPos
-        else:
-            return "NaN"
+        return self.fileStartPosition
 
     @getFileStartPosition.setter
     def setFileStartPosition(self, pos):
-        self.fileStartPos = pos
+        self.fileStartPosition = pos
 
     @property
-    def getFileEndPoisition(self):
-        if self.fileEndPos != None:
-            return self.fileEndPos
-        else:
-            return "NaN"
-    @getFileEndPoisition.setter
+    def getFileEndPosition(self):
+        return self.fileEndPosition
+
+    @getFileEndPosition.setter
     def setFileEndPosition(self, pos):
-        self.fileEndPos = pos
+        self.fileEndPosition = pos
 
     @property
     def getCategory(self):

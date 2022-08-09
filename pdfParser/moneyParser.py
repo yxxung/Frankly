@@ -8,7 +8,7 @@ table_settings = {
     "horizontal_strategy" : "lines_strict"
 }
 
-with pdfplumber.open(r'./money2.pdf') as pdf:
+with pdfplumber.open(r'./money.pdf') as pdf:
     # page = pdf.pages[1]
     # im = page.to_image(resolution=150)
     # im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")
