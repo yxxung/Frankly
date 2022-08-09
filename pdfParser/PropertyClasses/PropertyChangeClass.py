@@ -23,6 +23,14 @@ class PropertyChange:
         self.totalIncrease = None
         self.totalDecrease = None
 
+    @property
+    def getPropertyDetail(self):
+        return self.propertyDetail
+
+    @getPropertyDetail.setter
+    def setPropertyDetail(self, detail):
+        self.propertyDetail = detail
+
 
     @property
     def getPreviousValue(self):
@@ -125,6 +133,14 @@ class PropertyChange:
     @getCategory.setter
     def setCategory(self, section):
         self.category = section
+
+    @property
+    def getDeepCategory(self):
+        return self.deepCategory
+    @getDeepCategory.setter
+    def setDeepCategory(self, section):
+        self.deepCategory = section
+
 
     # def getFileStartPos(self):
     #     return self.fileStartPos

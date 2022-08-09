@@ -182,36 +182,54 @@ class PropertyMainParser:
 
 
     def recordPolitician(self):
-        newFile = open('./politician.txt', 'w', encoding='utf-8')
+        newFile = open('./politician.json', 'w', encoding='utf-8')
+        newFile.write("[\n")
         for politician in self.politicianList :
-            newFile.write("\n-------------------")
+            newFile.write("{")
 
-            newFile.write("\n국회의원 이름: ")
-            newFile.write(politician.getName)
+            newFile.write("\n\"국회의원 이름\": ")
+            newFile.write("\""+politician.getName.replace("\n","") + "\",\n")
+            newFile.write("\"시작\": ")
+            newFile.write(str(politician.getFilePosition) + ",\n")
+            newFile.write("\"재산변동 total\": [{")
 
-            newFile.write("\n시작: ")
-            newFile.write(str(politician.getFilePosition))
-
-
+            count = 0
             for propertyChange in politician.politicianPropertyChangeList:
+                count += 1
                 if propertyChange != None:
-                    newFile.write("\n\n"+propertyChange.category +" :")
+                    newFile.write("\""+propertyChange.category +"\" :")
                     self.records(newFile, propertyChange)
-            newFile.write("\n국회의원끝: ")
-            newFile.write(str(politician.fileEndPosition))
+                    if(count < len(politician.politicianPropertyChangeList)):
+                        newFile.write("},\n")
+                    else:
+                        newFile.write("}\n")
+            newFile.write("}],\n")
+            newFile.write("\"국회의원끝\": ")
+            newFile.write(str(politician.fileEndPosition) + "}\n,\n")
+        newFile.close()
 
+        # 마지막 콤마 삭제..
+        newFile = open('./politician.json', 'r+', encoding='utf-8')
+        lines = newFile.readlines()
+        newFile.seek(0)
+
+        newFile.truncate()
+        newFile.writelines(lines[:-1])
+
+        newFile.write("]")
+        newFile.close()
 
 
     def records(self, newFile, getProperty):
-            newFile.write("\n시작: ")
-            newFile.write(str(getProperty.fileStartPosition))
-            newFile.write("\n종전가액: ")
-            newFile.write(getProperty.previousValue)
-            newFile.write("\n증가액: ")
-            newFile.write(getProperty.totalIncrease)
-            newFile.write("\n감소액: ")
-            newFile.write(getProperty.totalDecrease)
-            newFile.write("\n현재가액: ")
-            newFile.write(getProperty.presentValue)
-            newFile.write("\n재산끝: ")
+            newFile.write("{\n\t\"시작\": ")
+            newFile.write(str(getProperty.fileStartPosition).replace(",","")+ ",\n")
+            newFile.write("\t\"종전가액\": ")
+            newFile.write(getProperty.previousValue.replace(",","")+ ",\n")
+            newFile.write("\t\"증가액\": ")
+            newFile.write(getProperty.totalIncrease.replace(",","")+ ",\n")
+            newFile.write("\t\"감소액\": ")
+            newFile.write(getProperty.totalDecrease.replace(",","")+ ",\n")
+            newFile.write("\t\"현재가액\": ")
+            newFile.write(getProperty.presentValue.replace(",","")+ ",\n")
+            newFile.write("\t\"재산끝\": ")
             newFile.write(str(getProperty.fileEndPosition))

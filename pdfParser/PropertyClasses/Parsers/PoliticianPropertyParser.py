@@ -1,12 +1,5 @@
 import re
-from PropertyClasses.DebtClass import Debt
-from PropertyClasses.DepositClass import Deposit
-from PropertyClasses.LandPropertyClass import LandProperty
-from PropertyClasses.Parsers.Land import LandParser
-from PropertyClasses.PoliticDepositClass import PoliticDeposit
 from PropertyClasses.PropertyChangeClass import PropertyChange
-from PropertyClasses.RealEstateClass import RealEstate
-from PropertyClasses.RealRightClass import RealRight
 import copy
 
 
@@ -25,16 +18,11 @@ class PoliticianPropertyParser():
         self.fileBeforePos = None
         self.politician= None
         self.propertyChangeList = []
+        self.propertyChangeDetailList = []
         self.file = file
-        self.landParser = LandParser()
 
-    @property
-    def getLandParser(self):
-        return self.landParser
-    @getLandParser.setter
-    def setLandParser(self, landParser):
-        self.landParser = landParser
-
+    # property
+#----------------
     @property
     def getFile(self):
         return self.file
@@ -73,9 +61,22 @@ class PoliticianPropertyParser():
     def setPropertyChangeList(self, propertyChangeList):
         self.propertyChangeList = propertyChangeList
 
+    @property
+    def getPropertyChangeDetailList(self):
+        return self.propertyChangeDetailList
+
+    @getPropertyChangeList.setter
+    def setPropertyChangeDetailList(self, propertyChangeList):
+        self.propertyChangeDetailList = propertyChangeList
+
+
+#----------------------
+
+
     def parse(self):
         self.file.seek(self.politician.filePosition)
         self.checkPropertyPosition()
+        self.checkPropoertyDetail()
         list = self.propertyChangeList
         list[len(list)-1].fileEndPosition = self.fileBeforePos
         self.politician.politicianPropertyChangeList = copy.deepcopy(self.propertyChangeList)
@@ -83,6 +84,42 @@ class PoliticianPropertyParser():
         # return self.__politician
 
 
+    def checkPropoertyDetail(self):
+        print("stub")
+        for propertyChange in self.propertyChangeList:
+            self.file.seek(propertyChange.fileStartPosition)
+            self.fileBeforePos = self.file.tell()
+            # 첫라인 패스
+            self.file.readline()
+            self.filePos = self.file.tell()
+
+            while(self.file.tell()<propertyChange.fileEndPosition):
+                string = self.file.readline()
+                tokenList = string.split("|")
+                self.addPropertyDetailChange(tokenList, propertyChange.category)
+                print("stub")
+
+    # 디테일
+    def addPropertyDetailChange(self,tokenList, section):
+        if len(tokenList) <= 6 :
+            pos = 3
+            pc = PropertyChange()
+
+            pc.setPreviousValue = tokenList[pos]
+            pc.setTotalIncrease = tokenList[pos+1]
+            pc.setTotalDecrease = tokenList[pos+2]
+            pc.setPresentValue = tokenList[pos+3]
+            pc.setFileStartPosition = self.fileBeforePos
+            pc.setCategory = section
+            pc.deepCategory = tokenList[pos-2]
+            pc.propertyDetail = tokenList[pos-3]
+            pc.reason = tokenList[pos+4]
+
+            self.propertyChangeDetailList.append(pc)
+        else:
+            print("something went wrong\n")
+
+    # total 변화, 섹션별 위치 저장
     def checkPropertyPosition(self):
 
         # for i in range(0, self.__fileSize):
@@ -103,7 +140,7 @@ class PoliticianPropertyParser():
                 statement = False
 
 
-
+    # 섹션별 위치 저장 실행
     def checkDivide(self, string):
         tokenList = string.split("|")
         if len(tokenList) > 1 :
@@ -111,17 +148,13 @@ class PoliticianPropertyParser():
 
 
 
-
+    # 파싱후 판단
+    # 카테고리 지정
     def checkPropertyDivide(self, tokenList):
         if tokenList[0] == "▶ 토지(소계)" :
             # self.addLandProperty(tokenList)
             self.addPropertyChange(tokenList, "토지(소계)")
         elif tokenList[0] == "▶ 건물(소계)" :
-            # getProperty = self.politician.getPoliticianLandProperty
-            # if getProperty != None :
-            #     getProperty.setFileEndPosition =  self.fileBeforePos
-            #
-            # self.addRealEstate(tokenList)
             list = self.propertyChangeList
             if(len(list) == 0):
                 self.addPropertyChange(tokenList, "건물(소계)")
@@ -129,11 +162,6 @@ class PoliticianPropertyParser():
                 list[len(list)-1].fileEndPosition = self.fileBeforePos
                 self.addPropertyChange(tokenList, "건물(소계)")
         elif tokenList[0].startswith("▶ 부동산에") :
-            # getProperty = self.politician.getPoliticianRealEstate
-            # if getProperty != None :
-            #     getProperty.setFileEndPosition =  self.fileBeforePos
-            #
-            # self.addRealRight(tokenList)
             list = self.propertyChangeList
             if(len(list) == 0):
                 self.addPropertyChange(tokenList, "부동산(소계)")
@@ -141,11 +169,6 @@ class PoliticianPropertyParser():
                 list[len(list)-1].fileEndPosition = self.fileBeforePos
                 self.addPropertyChange(tokenList, "부동산(소계)")
         elif tokenList[0] == "▶ 예금(소계)" :
-            # getProperty = self.politician.getPoliticianRealRight
-            # if getProperty != None :
-            #     getProperty.setFileEndPosition =  self.fileBeforePos
-
-            # self.addDeposit(tokenList)
             list = self.propertyChangeList
             if(len(list) == 0):
                 self.addPropertyChange(tokenList, "예금(소계)")
@@ -154,11 +177,6 @@ class PoliticianPropertyParser():
                 self.addPropertyChange(tokenList, "예금(소계)")
 
         elif tokenList[0].startswith("▶ 정치자금법에") :
-            # getProperty = self.politician.getPoliticianDeposit
-            # if getProperty != None :
-            #     getProperty.setFileEndPosition =  self.fileBeforePos
-            #
-            # self.addPoliticDeposit(tokenList)
             list = self.propertyChangeList
             if(len(list) == 0):
                 self.addPropertyChange(tokenList, "정치자금(소계)")
@@ -167,11 +185,7 @@ class PoliticianPropertyParser():
                 self.addPropertyChange(tokenList, "정치자금(소계)")
 
         elif tokenList[0] == "▶ 채무(소계)" :
-            # getProperty = self.politician.getPoliticianPoliticDeposit
-            # if getProperty != None :
-            #     getProperty.setFileEndPosition =  self.fileBeforePos
-            #
-            # self.addDebt(tokenList)
+
             list = self.propertyChangeList
             if(len(list) == 0):
                 self.addPropertyChange(tokenList, "채무(소계)")
@@ -180,23 +194,23 @@ class PoliticianPropertyParser():
                 self.addPropertyChange(tokenList, "채무(소계)")
 
 
-
+    # 카테고리 지정된것을 기준으로 위치 저장 등
     def addPropertyChange(self, tokenList, section):
 
         if len(tokenList) <= 6 :
             pos = 1
             pc = PropertyChange()
 
-            pc.setPreviousValue = tokenList[pos].replace("\n","")
-            pc.setTotalIncrease = tokenList[pos+1].replace("\n","")
-            pc.setTotalDecrease = tokenList[pos+2].replace("\n","")
-            pc.setPresentValue = tokenList[pos+3].replace("\n","")
-            pc.setFileStartPosition = self.fileBeforePos
-            pc.setCategory = section
-
+            pc.previousValue = tokenList[pos]
+            pc.totalIncrease = tokenList[pos+1]
+            pc.totalDecrease = tokenList[pos+2]
+            pc.presentValue = tokenList[pos+3]
+            pc.fileStartPosition = self.fileBeforePos
+            pc.category = section
             self.propertyChangeList.append(pc)
 
 
+    # legacy
     def numericValidCheck(self, tokenList, prop):
         count = 0
         pos = 0
