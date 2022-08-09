@@ -105,3 +105,12 @@ class Politician:
     @getPoliticianPropertyChangeList.setter
     def setPoliticianPropertyChangeList(self, propertyChange):
         self.politicianPropertyChangeList = propertyChange
+
+    @property
+    def getPoliticianPropertyChangeDetailList(self):
+        return self.politicianPropertyChangeDetailList
+
+
+    @getPoliticianPropertyChangeDetailList.setter
+    def setPoliticianPropertyChangeDetailList(self, propertyChange):
+        self.politicianPropertyChangeDetailList = propertyChange

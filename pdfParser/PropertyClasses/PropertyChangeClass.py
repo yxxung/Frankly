@@ -142,6 +142,14 @@ class PropertyChange:
         self.deepCategory = section
 
 
+    @property
+    def getWhos(self):
+        return self.whos
+    @getWhos.setter
+    def setWhos(self, who):
+        self.whos = who
+
+
     # def getFileStartPos(self):
     #     return self.fileStartPos
     #

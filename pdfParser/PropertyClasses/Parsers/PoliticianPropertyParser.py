@@ -76,48 +76,63 @@ class PoliticianPropertyParser():
     def parse(self):
         self.file.seek(self.politician.filePosition)
         self.checkPropertyPosition()
-        self.checkPropoertyDetail()
         list = self.propertyChangeList
         list[len(list)-1].fileEndPosition = self.fileBeforePos
+        self.checkPropoertyDetail()
         self.politician.politicianPropertyChangeList = copy.deepcopy(self.propertyChangeList)
         self.propertyChangeList = []
+        self.politician.politicianPropertyChangeDetailList = copy.deepcopy(self.propertyChangeDetailList)
+        self.propertyChangeDetailList = []
         # return self.__politician
 
 
     def checkPropoertyDetail(self):
-        print("stub")
+
         for propertyChange in self.propertyChangeList:
             self.file.seek(propertyChange.fileStartPosition)
             self.fileBeforePos = self.file.tell()
             # 첫라인 패스
-            self.file.readline()
+            string = self.file.readline()
             self.filePos = self.file.tell()
 
             while(self.file.tell()<propertyChange.fileEndPosition):
                 string = self.file.readline()
                 tokenList = string.split("|")
-                self.addPropertyDetailChange(tokenList, propertyChange.category)
-                print("stub")
+                if(tokenList[0] == "본인" or tokenList[0] =="배우자"):
+                    self.addPropertyDetailChange(tokenList, propertyChange.category)
+
 
     # 디테일
     def addPropertyDetailChange(self,tokenList, section):
-        if len(tokenList) <= 6 :
-            pos = 3
-            pc = PropertyChange()
 
-            pc.setPreviousValue = tokenList[pos]
-            pc.setTotalIncrease = tokenList[pos+1]
-            pc.setTotalDecrease = tokenList[pos+2]
-            pc.setPresentValue = tokenList[pos+3]
-            pc.setFileStartPosition = self.fileBeforePos
-            pc.setCategory = section
-            pc.deepCategory = tokenList[pos-2]
-            pc.propertyDetail = tokenList[pos-3]
-            pc.reason = tokenList[pos+4]
+        tokenList[len(tokenList)-1] = tokenList[len(tokenList)-1].replace("\n", "")
+        pos = self.numericValidCheck(tokenList)
+        if pos == -1:
+            print(tokenList)
+            print("something went wrong")
+            return
 
-            self.propertyChangeDetailList.append(pc)
+        pc = PropertyChange()
+        pc.whos = tokenList[0]
+        if(len(tokenList) > 6):
+            pc.deepCategory = tokenList[1]
         else:
-            print("something went wrong\n")
+            pc.deepCategory = "empty"
+        pc.propertyDetail = tokenList[pos-1]
+        pc.previousValue = tokenList[pos].replace("\n","")
+        pc.totalIncrease = tokenList[pos+1].replace("\n","")
+        pc.totalDecrease = tokenList[pos+2].replace("\n","")
+        pc.presentValue = tokenList[pos+3].replace("\n","")
+        pc.category = section
+
+        if(pos+5==len(tokenList)):
+            pc.reason = tokenList[pos+4]
+        else:
+            pc.reason = "empty"
+
+        self.propertyChangeDetailList.append(pc)
+
+
 
     # total 변화, 섹션별 위치 저장
     def checkPropertyPosition(self):
@@ -193,6 +208,14 @@ class PoliticianPropertyParser():
                 list[len(list)-1].fileEndPosition = self.fileBeforePos
                 self.addPropertyChange(tokenList, "채무(소계)")
 
+        elif tokenList[0] == "▶ 회원권(소계)" :
+
+            list = self.propertyChangeList
+            if(len(list) == 0):
+                self.addPropertyChange(tokenList, "회원권(소계)")
+            else:
+                list[len(list)-1].fileEndPosition = self.fileBeforePos
+                self.addPropertyChange(tokenList, "회원권(소계)")
 
     # 카테고리 지정된것을 기준으로 위치 저장 등
     def addPropertyChange(self, tokenList, section):
@@ -201,48 +224,31 @@ class PoliticianPropertyParser():
             pos = 1
             pc = PropertyChange()
 
-            pc.previousValue = tokenList[pos]
-            pc.totalIncrease = tokenList[pos+1]
-            pc.totalDecrease = tokenList[pos+2]
-            pc.presentValue = tokenList[pos+3]
+            pc.previousValue = tokenList[pos].replace("\n","")
+            pc.totalIncrease = tokenList[pos+1].replace("\n","")
+            pc.totalDecrease = tokenList[pos+2].replace("\n","")
+            pc.presentValue = tokenList[pos+3].replace("\n","")
             pc.fileStartPosition = self.fileBeforePos
             pc.category = section
             self.propertyChangeList.append(pc)
 
 
     # legacy
-    def numericValidCheck(self, tokenList, prop):
+    # 실거래가 예외처리
+    def numericValidCheck(self, tokenList):
         count = 0
         pos = 0
         for index in range(len(tokenList)-1):
             # 숫자가 4번 연속으로 나오면 금액변동임
             if str(tokenList[index]).replace(",","").isdigit():
                 count += 1
-                if count == 1 :
-                    pos = index
-            if count == 4:
-                break
-            elif count > 4:
-                print(self.politician.getPoliticianName + "numeric valid check Error")
-                return False
+            else:
+                pos += 1
 
-
-        prop.setPreviousValue = tokenList[pos]
-        prop.setTotalIncrease = tokenList[pos+1]
-        prop.setTotalDecrease = tokenList[pos+2]
-        if str(tokenList[pos+3]).isnumeric():
-            prop.setPresentValue = tokenList[pos+3]
-            return True
+        if count == 4:
+            return pos
         else:
-            regex = re.compile("\d+")
-            result = regex.findall(tokenList[pos+3])
-            temp = ""
-            if result != None :
-                for num in result:
-                    temp = temp + num
-                temp = format(int(temp), ',')
-                prop.setPresentValue = temp
-                return True
-            else :
-                return False
+            print(self.politician.name + "numeric valid check Error")
+            return -1
+
 
