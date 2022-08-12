@@ -109,7 +109,6 @@ class PoliticianPropertyParser():
         pos = self.numericValidCheck(tokenList)
         if pos == -1:
             print(tokenList)
-            print("something went wrong")
             return
 
         pc = PropertyChange()
@@ -238,14 +237,18 @@ class PoliticianPropertyParser():
     def numericValidCheck(self, tokenList):
         count = 0
         pos = 0
-        for index in range(len(tokenList)-1):
+        for index in range(len(tokenList)):
             # 숫자가 4번 연속으로 나오면 금액변동임
             if str(tokenList[index]).replace(",","").isdigit():
+                count += 1
+            elif str(tokenList[index].split("(")[0].replace(",","")).isdigit():
+                count += 1
+            elif tokenList[index] == '-':
                 count += 1
             else:
                 pos += 1
 
-        if count == 4:
+        if count >= 4:
             return pos
         else:
             print(self.politician.name + "numeric valid check Error")
