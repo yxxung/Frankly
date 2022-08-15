@@ -1,6 +1,7 @@
 import re
 from PropertyClasses.PropertyChangeClass import PropertyChange
 import copy
+import re
 
 
 class PoliticianPropertyParser():
@@ -90,16 +91,24 @@ class PoliticianPropertyParser():
 
         for propertyChange in self.propertyChangeList:
             self.file.seek(propertyChange.fileStartPosition)
-            self.fileBeforePos = self.file.tell()
             # 첫라인 패스
             string = self.file.readline()
-            self.filePos = self.file.tell()
 
             while(self.file.tell()<propertyChange.fileEndPosition):
                 string = self.file.readline()
                 tokenList = string.split("|")
                 if(tokenList[0] == "본인" or tokenList[0] =="배우자"):
                     self.addPropertyDetailChange(tokenList, propertyChange.category)
+    # def addDepositDetailChange(self, tokenList, section):
+    #     print("stub")
+    #     tokenList[len(tokenList)-1] = tokenList[len(tokenList)-1].replace("\n", "")
+    #     pos = self.numericValidCheck(tokenList)
+    #     if pos == -1:
+    #         print(tokenList)
+    #         return
+    #
+    #     pc = PropertyChange()
+    #     pc.whos = tokenList[0]
 
 
     # 디테일
@@ -117,7 +126,71 @@ class PoliticianPropertyParser():
             pc.deepCategory = tokenList[1]
         else:
             pc.deepCategory = "empty"
-        pc.propertyDetail = tokenList[pos-1]
+        if section == "예금(소계)" or section ==  "정치자금(소계)" or pc.deepCategory == "금융채무" or pc.deepCategory == "상장주식" or pc.deepCategory == "비상장주식":
+            detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", ""))
+            tokenIndex = 0
+            for token in detailTokenList:
+                # 증감 없는 재산들 데이터 다루기 편하도록 변환
+                if(not(token.endswith(")"))):
+                    detailTokenList[tokenIndex] = detailTokenList[tokenIndex] + "(0 증가)"
+                tokenIndex+=1
+
+            tokenIndex = 0
+            newIndex = 0
+            newList =[]
+            # 각 은행별 증감사항 변경
+            for token in detailTokenList:
+                tempTokenList = re.split(r' |\(', token)
+                # 이상 log
+                if(len(tempTokenList) != 4):
+                    # print(str(tempTokenList)+"예금 이름이상\n\n")
+                    for token in tempTokenList:
+                        # 파싱 잘못된것 삭제
+                        if(token == ''):
+                            tempTokenList.remove("")
+                        if(token == "공제사업부"):
+                            tempTokenList[0] = tempTokenList[0] + "공제사업부"
+                            tempTokenList.remove("공제사업부")
+                    # continue
+
+                detailChange = PropertyChange()
+                pos2 = len(tempTokenList)-1
+                # 은행이름
+                detailChange.propertyDetail = tempTokenList[0]
+                # 현재가액
+                detailChange.presentValue = tempTokenList[pos2-2].replace(",","")
+                detailChange.category = tempTokenList[1]
+                # 증감액
+                if(pc.deepCategory != "상장주식" and pc.deepCategory != "비상장주식"):
+                    if(tempTokenList[pos2] == "증가)"):
+                        detailChange.totalIncrease = tempTokenList[pos2-1].replace(",","")
+                        detailChange.totalDecrease = "0"
+                        detailChange.previousValue = int(detailChange.presentValue) - int(detailChange.totalIncrease)
+                    elif(tempTokenList[pos2] == "감소)"):
+                        detailChange.totalIncrease = "0"
+                        detailChange.totalDecrease = tempTokenList[pos2-1].replace(",","")
+                        detailChange.previousValue = int(detailChange.presentValue) + int(detailChange.totalDecrease)
+                    else:
+                        print(tempTokenList)
+                    newList.append(detailChange)
+                else:
+                    if(tempTokenList[pos2] == "증가)"):
+                        detailChange.totalIncrease = tempTokenList[pos2-1].replace(",","")
+                        detailChange.totalDecrease = "0주"
+                        detailChange.previousValue = str(int(detailChange.presentValue.replace("주","")) - int(detailChange.totalIncrease.replace("주",""))) + "주"
+                    elif(tempTokenList[pos2] == "감소)"):
+                        detailChange.totalIncrease = "0주"
+                        detailChange.totalDecrease = tempTokenList[pos2-1].replace(",","")
+                        detailChange.previousValue = str(int(detailChange.presentValue.replace("주","")) + int(detailChange.totalDecrease.replace("주",""))) + "주"
+                    else:
+                        print(tempTokenList)
+                    newList.append(detailChange)
+
+            pc.propertyDetail = newList
+        else:
+            # 은행 등 아닐경우 간단처리
+            pc.propertyDetail = tokenList[pos-1]
+
         pc.previousValue = tokenList[pos].replace("\n","")
         pc.totalIncrease = tokenList[pos+1].replace("\n","")
         pc.totalDecrease = tokenList[pos+2].replace("\n","")
@@ -207,6 +280,33 @@ class PoliticianPropertyParser():
                 list[len(list)-1].fileEndPosition = self.fileBeforePos
                 self.addPropertyChange(tokenList, "채무(소계)")
 
+        elif tokenList[0] == "▶ 채권(소계)" :
+
+            list = self.propertyChangeList
+            if(len(list) == 0):
+                self.addPropertyChange(tokenList, "채권(소계)")
+            else:
+                list[len(list)-1].fileEndPosition = self.fileBeforePos
+                self.addPropertyChange(tokenList, "채권(소계)")
+
+        elif tokenList[0] == "▶ 증권(소계)" :
+
+            list = self.propertyChangeList
+            if(len(list) == 0):
+                self.addPropertyChange(tokenList, "증권(소계)")
+            else:
+                list[len(list)-1].fileEndPosition = self.fileBeforePos
+                self.addPropertyChange(tokenList, "증권(소계)")
+
+        elif tokenList[0] == "▶ 현금(소계)" :
+
+            list = self.propertyChangeList
+            if(len(list) == 0):
+                self.addPropertyChange(tokenList, "현금(소계)")
+            else:
+                list[len(list)-1].fileEndPosition = self.fileBeforePos
+                self.addPropertyChange(tokenList, "현금(소계)")
+
         elif tokenList[0] == "▶ 회원권(소계)" :
 
             list = self.propertyChangeList
@@ -215,6 +315,13 @@ class PoliticianPropertyParser():
             else:
                 list[len(list)-1].fileEndPosition = self.fileBeforePos
                 self.addPropertyChange(tokenList, "회원권(소계)")
+        elif tokenList[0].startswith("▶ 합명") :
+            list = self.propertyChangeList
+            if(len(list) == 0):
+                self.addPropertyChange(tokenList, "출자지분(소계)")
+            else:
+                list[len(list)-1].fileEndPosition = self.fileBeforePos
+                self.addPropertyChange(tokenList, "출자지분(소계)")
 
     # 카테고리 지정된것을 기준으로 위치 저장 등
     def addPropertyChange(self, tokenList, section):
@@ -240,18 +347,21 @@ class PoliticianPropertyParser():
         for index in range(len(tokenList)):
             # 숫자가 4번 연속으로 나오면 금액변동임
             if str(tokenList[index]).replace(",","").isdigit():
-                count += 1
+                # count += 1
+                return pos
             elif str(tokenList[index].split("(")[0].replace(",","")).isdigit():
-                count += 1
+                # count += 1
+                return pos
             elif tokenList[index] == '-':
-                count += 1
+                # count += 1
+                return pos
             else:
                 pos += 1
 
-        if count >= 4:
-            return pos
-        else:
-            print(self.politician.name + "numeric valid check Error")
-            return -1
+        # if count >= 4:
+        #     return pos
+        # else:
+        #     print(self.politician.name + "numeric valid check Error")
+        #     return -1
 
 

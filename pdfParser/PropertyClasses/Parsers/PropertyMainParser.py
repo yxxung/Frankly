@@ -191,18 +191,35 @@ class PropertyMainParser:
             newFile.write("\""+politician.getName.replace("\n","") + "\",\n")
             newFile.write("\"시작\": ")
             newFile.write(str(politician.getFilePosition) + ",\n")
-            newFile.write("\"재산변동 total\": [{")
+            newFile.write("\"재산변동 total\": [{\n")
 
             count = 0
             for propertyChange in politician.politicianPropertyChangeList:
                 count += 1
                 if propertyChange != None:
                     newFile.write("\""+propertyChange.category +"\" :")
-                    self.records(newFile, propertyChange)
+                    self.changeRecord(newFile, propertyChange)
                     if(count < len(politician.politicianPropertyChangeList)):
                         newFile.write("},\n")
                     else:
                         newFile.write("}\n")
+            newFile.write("}],\n")
+            newFile.write("\"재산변동\": [{\n")
+            count = 0
+            for propertyChange in politician.politicianPropertyChangeDetailList:
+                count += 1
+                if propertyChange != None:
+                    section = propertyChange.category
+                    newFile.write("\""+section +"\" :")
+                    if section == "예금(소계)" or section ==  "정치자금(소계)" or propertyChange.deepCategory =="금융채무" or propertyChange.deepCategory != "상장주식" or propertyChange.deepCategory != "비상장주식":
+                        self.changeDetailBankRecord(newFile, propertyChange)
+                    else:
+                        self.changeDetailRecord(newFile, propertyChange)
+                    if(count < len(politician.politicianPropertyChangeDetailList)):
+                        newFile.write("},\n")
+                    else:
+                        newFile.write("}\n")
+
             newFile.write("}],\n")
             newFile.write("\"국회의원끝\": ")
             newFile.write(str(politician.fileEndPosition) + "}\n,\n")
@@ -220,16 +237,72 @@ class PropertyMainParser:
         newFile.close()
 
 
-    def records(self, newFile, getProperty):
+    def changeRecord(self, newFile, getProperty):
             newFile.write("{\n\t\"시작\": ")
             newFile.write(str(getProperty.fileStartPosition).replace(",","")+ ",\n")
             newFile.write("\t\"종전가액\": ")
-            newFile.write(getProperty.previousValue.replace(",","")+ ",\n")
+            newFile.write("\""+getProperty.previousValue.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"증가액\": ")
-            newFile.write(getProperty.totalIncrease.replace(",","")+ ",\n")
+            newFile.write("\""+getProperty.totalIncrease.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"감소액\": ")
-            newFile.write(getProperty.totalDecrease.replace(",","")+ ",\n")
+            newFile.write("\""+getProperty.totalDecrease.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"현재가액\": ")
-            newFile.write(getProperty.presentValue.replace(",","")+ ",\n")
+            newFile.write("\""+getProperty.presentValue.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"재산끝\": ")
             newFile.write(str(getProperty.fileEndPosition))
+
+    def changeDetailRecord(self, newFile, getProperty):
+        newFile.write("{\n\t\"종류\": ")
+        newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
+        newFile.write("\t\"상세종류\": ")
+        newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"재산명세\": ")
+        newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"종전가액\": ")
+        newFile.write("\""+getProperty.previousValue.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"증가액\": ")
+        newFile.write("\""+getProperty.totalIncrease.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"감소액\": ")
+        newFile.write("\""+getProperty.totalDecrease.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"현재가액\": ")
+        newFile.write("\""+getProperty.presentValue.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"변동사유\": ")
+        newFile.write("\""+getProperty.reason.replace(",","")+"\"")
+
+
+
+    def changeDetailBankRecord(self, newFile, getProperty):
+        newFile.write("{\n\t\"종류\": ")
+        newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
+        # newFile.write("\t\"상세종류\": ")
+        # newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"재산명세\": [\n")
+        count = 0
+        for propertyChange in getProperty.propertyDetail:
+            count+=1
+            newFile.write("{\n")
+            newFile.write("\t\t\"사명\": ")
+            newFile.write("\"" + propertyChange.propertyDetail + "\"" + ",\n")
+            newFile.write("\t\t\"종전가액\": ")
+            newFile.write("\"" + str(propertyChange.previousValue) + "\"" + ",\n")
+            newFile.write("\t\t\"증가액\": ")
+            newFile.write("\"" + str(propertyChange.totalIncrease) + "\"" + ",\n")
+            newFile.write("\t\t\"감소액\": ")
+            newFile.write("\"" + str(propertyChange.totalDecrease) + "\"" + ",\n")
+            newFile.write("\t\t\"현재가액\": ")
+            newFile.write("\"" + str(propertyChange.presentValue) + "\"" + "\n")
+            if(count < len(getProperty.propertyDetail)):
+                newFile.write("},\n")
+            else:
+                newFile.write("}],\n")
+
+        newFile.write("\t\"종전가액\": ")
+        newFile.write("\""+getProperty.previousValue.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"증가액\": ")
+        newFile.write("\""+getProperty.totalIncrease.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"감소액\": ")
+        newFile.write("\""+getProperty.totalDecrease.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"현재가액\": ")
+        newFile.write("\""+getProperty.presentValue.replace(",","").split("(")[0]+"\""+ ",\n")
+        newFile.write("\t\"변동사유\": ")
+        newFile.write("\""+getProperty.reason.replace(",","")+"\"")
