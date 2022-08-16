@@ -211,7 +211,7 @@ class PropertyMainParser:
                 if propertyChange != None:
                     section = propertyChange.category
                     newFile.write("\""+section +"\" :")
-                    if section == "예금(소계)" or section ==  "정치자금(소계)" or propertyChange.deepCategory =="금융채무" or propertyChange.deepCategory != "상장주식" or propertyChange.deepCategory != "비상장주식":
+                    if section == "예금(소계)" or section ==  "정치자금(소계)" or propertyChange.deepCategory =="금융채무" or propertyChange.deepCategory == "상장주식" or propertyChange.deepCategory == "비상장주식":
                         self.changeDetailBankRecord(newFile, propertyChange)
                     else:
                         self.changeDetailRecord(newFile, propertyChange)
@@ -280,7 +280,7 @@ class PropertyMainParser:
         count = 0
         for propertyChange in getProperty.propertyDetail:
             count+=1
-            newFile.write("{\n")
+            newFile.write("\t\t{\n")
             newFile.write("\t\t\"사명\": ")
             newFile.write("\"" + propertyChange.propertyDetail + "\"" + ",\n")
             newFile.write("\t\t\"종전가액\": ")
@@ -292,9 +292,9 @@ class PropertyMainParser:
             newFile.write("\t\t\"현재가액\": ")
             newFile.write("\"" + str(propertyChange.presentValue) + "\"" + "\n")
             if(count < len(getProperty.propertyDetail)):
-                newFile.write("},\n")
+                newFile.write("\t\t},\n")
             else:
-                newFile.write("}],\n")
+                newFile.write("\t\t}],\n")
 
         newFile.write("\t\"종전가액\": ")
         newFile.write("\""+getProperty.previousValue.replace(",","").split("(")[0]+"\""+ ",\n")

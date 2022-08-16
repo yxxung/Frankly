@@ -122,12 +122,14 @@ class PoliticianPropertyParser():
 
         pc = PropertyChange()
         pc.whos = tokenList[0]
+
+        # 6자리가 넘지 않는 경우, 세부 카테고리가 없는것임.
         if(len(tokenList) > 6):
             pc.deepCategory = tokenList[1]
         else:
             pc.deepCategory = "empty"
         if section == "예금(소계)" or section ==  "정치자금(소계)" or pc.deepCategory == "금융채무" or pc.deepCategory == "상장주식" or pc.deepCategory == "비상장주식":
-            detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", ""))
+            detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", "").replace("(보험)",""))
             tokenIndex = 0
             for token in detailTokenList:
                 # 증감 없는 재산들 데이터 다루기 편하도록 변환
@@ -135,28 +137,48 @@ class PoliticianPropertyParser():
                     detailTokenList[tokenIndex] = detailTokenList[tokenIndex] + "(0 증가)"
                 tokenIndex+=1
 
-            tokenIndex = 0
-            newIndex = 0
             newList =[]
+
             # 각 은행별 증감사항 변경
             for token in detailTokenList:
                 tempTokenList = re.split(r' |\(', token)
-                # 이상 log
-                if(len(tempTokenList) != 4):
-                    # print(str(tempTokenList)+"예금 이름이상\n\n")
-                    for token in tempTokenList:
-                        # 파싱 잘못된것 삭제
-                        if(token == ''):
-                            tempTokenList.remove("")
-                        if(token == "공제사업부"):
-                            tempTokenList[0] = tempTokenList[0] + "공제사업부"
-                            tempTokenList.remove("공제사업부")
-                    # continue
+
+                if (tempTokenList[0] == "KODEX"):
+                    tempTokenList[0] += " " + tempTokenList[1]
+                    tempTokenList.pop(1)
+                elif (tempTokenList[0] == "Standard"):
+                    tempTokenList[0] += " " + tempTokenList[1] + " " + tempTokenList[2]
+                    tempTokenList.pop(1)
+                    tempTokenList.pop(1)
+
+                for token in tempTokenList:
+                    # 파싱 잘못된것 삭제
+                    if(token == ""):
+                        tempTokenList.remove("")
+
+
 
                 detailChange = PropertyChange()
-                pos2 = len(tempTokenList)-1
-                # 은행이름
-                detailChange.propertyDetail = tempTokenList[0]
+
+                if(len(tempTokenList)>4):
+                    numPos = self.numericValidCheck(tempTokenList)
+                    # 띄어쓰기 있는 사명들 처리.
+                    if(numPos != 1):
+                        for index in range(numPos-1):
+                            tempTokenList[0] += " " + tempTokenList[index+1]
+                            tempTokenList.pop(index+1)
+
+                if(len(tempTokenList)<=4):
+                    pos2 = len(tempTokenList)-1
+                else:
+                    # 가끔 자리 오류 나는것.
+                    pos2 = 3
+
+
+
+
+                # 은행이름1
+                detailChange.propertyDetail = tempTokenList[0].replace(")", "")
                 # 현재가액
                 detailChange.presentValue = tempTokenList[pos2-2].replace(",","")
                 detailChange.category = tempTokenList[1]
@@ -346,7 +368,7 @@ class PoliticianPropertyParser():
         pos = 0
         for index in range(len(tokenList)):
             # 숫자가 4번 연속으로 나오면 금액변동임
-            if str(tokenList[index]).replace(",","").isdigit():
+            if str(tokenList[index]).replace(",","").replace("주","").isdigit():
                 # count += 1
                 return pos
             elif str(tokenList[index].split("(")[0].replace(",","")).isdigit():
