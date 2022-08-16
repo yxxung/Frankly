@@ -6,20 +6,25 @@
 
 '''
 import traceback
+import os
 
 from PropertyClasses.Parsers.PropertyMainParser import PropertyMainParser
 
 
 def main():
-    filePath = './parsed.txt'
-    try:
+    filePath = './moneyTXT'
+    fileList = os.listdir(filePath)
+    pdfPath = filePath + "/"
 
-        parser = PropertyMainParser(filePath)
-        parser.parse()
+    for filename in fileList:
+        try:
+            parser = PropertyMainParser(pdfPath+filename)
+            parser.parse()
 
-    except Exception as e:
-        traceback.print_exc()
-        exit(99)
+        except Exception as e:
+            traceback.print_exc()
+            print(filename)
+            exit(99)
 
 
 

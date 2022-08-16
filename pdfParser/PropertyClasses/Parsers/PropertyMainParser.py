@@ -28,7 +28,7 @@ class PropertyMainParser:
         self.politicianPosition = None
         self.politicianList = None
         self.politicianParser = None
-        self.file = open(filePath, 'r', encoding ='utf-8')
+        self.file = open(filePath, 'r', encoding ='utf-16')
         self.file.seek(0, 2)
         self.fileSize = self.file.tell()
         self.file.seek(0)
@@ -226,7 +226,7 @@ class PropertyMainParser:
         newFile.close()
 
         # 마지막 콤마 삭제..
-        newFile = open('./politician.json', 'r+', encoding='utf-8')
+        newFile = open(self.filePath.replace(".txt",".json"), 'r+', encoding='utf-8')
         lines = newFile.readlines()
         newFile.seek(0)
 

@@ -117,7 +117,7 @@ class PoliticianPropertyParser():
         tokenList[len(tokenList)-1] = tokenList[len(tokenList)-1].replace("\n", "")
         pos = self.numericValidCheck(tokenList)
         if pos == -1:
-            print(tokenList)
+            print(str(tokenList) + "num position error \n")
             return
 
         pc = PropertyChange()
@@ -194,25 +194,40 @@ class PoliticianPropertyParser():
                     if(tempTokenList[pos2] == "증가)"):
                         detailChange.totalIncrease = tempTokenList[pos2-1].replace(",","")
                         detailChange.totalDecrease = "0"
-                        detailChange.previousValue = int(detailChange.presentValue) - int(detailChange.totalIncrease)
+                        if(detailChange.presentValue.isdigit() and detailChange.totalIncrease.isdigit()):
+                            detailChange.previousValue = float(detailChange.presentValue) - float(detailChange.totalIncrease)
+                        else:
+                            print(str(tempTokenList) + "not digit\n")
+                            continue
                     elif(tempTokenList[pos2] == "감소)"):
                         detailChange.totalIncrease = "0"
                         detailChange.totalDecrease = tempTokenList[pos2-1].replace(",","")
-                        detailChange.previousValue = int(detailChange.presentValue) + int(detailChange.totalDecrease)
+                        if(detailChange.presentValue.isdigit() and detailChange.totalIncrease.isdigit()):
+                            detailChange.previousValue = float(detailChange.presentValue) + float(detailChange.totalDecrease)
+                        else:
+                            print(str(tempTokenList) + "not digit\n")
+                            continue
+
                     else:
-                        print(tempTokenList)
+                        print(str(tempTokenList))
                     newList.append(detailChange)
                 else:
                     if(tempTokenList[pos2] == "증가)"):
                         detailChange.totalIncrease = tempTokenList[pos2-1].replace(",","")
                         detailChange.totalDecrease = "0주"
-                        detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) - float(detailChange.totalIncrease.replace("주",""))) + "주"
+                        if(detailChange.presentValue.isdigit() and detailChange.totalIncrease.isdigit()):
+                            detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) - float(detailChange.totalIncrease.replace("주",""))) + "주"
+                        else:
+                            print(str(tempTokenList) + "not digit\n")
                     elif(tempTokenList[pos2] == "감소)"):
                         detailChange.totalIncrease = "0주"
                         detailChange.totalDecrease = tempTokenList[pos2-1].replace(",","")
-                        detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) + float(detailChange.totalDecrease.replace("주",""))) + "주"
+                        if(detailChange.presentValue.isdigit() and detailChange.totalIncrease.isdigit()):
+                            detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) + float(detailChange.totalDecrease.replace("주",""))) + "주"
+                        else:
+                            print(str(tempTokenList) + "not digit\n")
                     else:
-                        print(tempTokenList)
+                        print(str(tempTokenList) + "not up/down\n")
                     newList.append(detailChange)
 
             pc.propertyDetail = newList
@@ -229,7 +244,7 @@ class PoliticianPropertyParser():
         if(pos+5==len(tokenList)):
             pc.reason = tokenList[pos+4]
         else:
-            pc.reason = "empty"
+            pc.reason = "None"
 
         self.propertyChangeDetailList.append(pc)
 
