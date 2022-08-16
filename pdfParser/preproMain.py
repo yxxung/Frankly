@@ -5,6 +5,7 @@
 @Date 21/1/8
 
 '''
+import gc
 import traceback
 import os
 
@@ -18,8 +19,10 @@ def main():
 
     for filename in fileList:
         try:
-            parser = PropertyMainParser(pdfPath+filename)
-            parser.parse()
+            if (filename.endswith(".txt")):
+                parser = PropertyMainParser(pdfPath+filename)
+                parser.parse()
+                parser = None
 
         except Exception as e:
             traceback.print_exc()

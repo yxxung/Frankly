@@ -7,8 +7,8 @@ table_settings = {
     "vertical_strategy" : "lines_strict",
     "horizontal_strategy" : "lines_strict",
     "keep_blank_chars": True,
-    "text_tolerance": 1.5,
-    "text_x_tolerance": 1.5
+    "text_tolerance": 1,
+    "text_x_tolerance": 1
 }
 
 pdfDir = './moneyPDF'
@@ -19,7 +19,7 @@ txtDir = './moneyTXT'
 for fileName in fileList:
     txtName = txtDir+ "/" + fileName.replace(".pdf","") + ".txt"
 
-    f = open(txtName,'w', encoding="UTF-16")
+    f = open(txtName,'w', encoding="UTF-8")
     with pdfplumber.open(pdfDir+"/"+fileName) as pdf:
         # page = pdf.pages[1]
         # im = page.to_image(resolution=150)

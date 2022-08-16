@@ -28,7 +28,8 @@ class PropertyMainParser:
         self.politicianPosition = None
         self.politicianList = None
         self.politicianParser = None
-        self.file = open(filePath, 'r', encoding ='utf-16')
+        self.filePath = filePath
+        self.file = open(filePath, 'r', encoding ='utf-8')
         self.file.seek(0, 2)
         self.fileSize = self.file.tell()
         self.file.seek(0)
@@ -125,6 +126,7 @@ class PropertyMainParser:
 
         print("test")
         self.recordPolitician()
+        self.file.close()
 
 
     def checkPoliticianPosition(self):
@@ -159,6 +161,9 @@ class PropertyMainParser:
             # 각 국회의원들 블록 지정
             if politicianListLen > 0 :
                 self.addPoliticianFileEndPosition(politicianListLen)
+            if len(tokenList)<6:
+                print(str(tokenList)+" politician format error \n" )
+                tokenList.insert(4, "국회의원")
             self.addPolitician(tokenList, 1)
             # print(tokenList[5], " add OK")
 
@@ -182,7 +187,7 @@ class PropertyMainParser:
 
 
     def recordPolitician(self):
-        newFile = open('./politician.json', 'w', encoding='utf-8')
+        newFile = open(self.filePath.replace(".txt",".json"), 'w', encoding='utf-8')
         newFile.write("[\n")
         for politician in self.politicianList :
             newFile.write("{")
@@ -235,6 +240,7 @@ class PropertyMainParser:
 
         newFile.write("]")
         newFile.close()
+
 
 
     def changeRecord(self, newFile, getProperty):

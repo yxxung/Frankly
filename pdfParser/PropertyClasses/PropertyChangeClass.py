@@ -22,6 +22,7 @@ class PropertyChange:
         self.presentValue = None
         self.totalIncrease = None
         self.totalDecrease = None
+        self.fileEndPosition = None
 
     @property
     def getPropertyDetail(self):
