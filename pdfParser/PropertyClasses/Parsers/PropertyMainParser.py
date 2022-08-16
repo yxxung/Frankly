@@ -200,9 +200,9 @@ class PropertyMainParser:
                     newFile.write("\""+propertyChange.category +"\" :")
                     self.changeRecord(newFile, propertyChange)
                     if(count < len(politician.politicianPropertyChangeList)):
-                        newFile.write("},\n")
+                        newFile.write("\t},\n")
                     else:
-                        newFile.write("}\n")
+                        newFile.write("\t}\n")
             newFile.write("}],\n")
             newFile.write("\"재산변동\": [{\n")
             count = 0
@@ -238,18 +238,18 @@ class PropertyMainParser:
 
 
     def changeRecord(self, newFile, getProperty):
-            newFile.write("{\n\t\"시작\": ")
-            newFile.write(str(getProperty.fileStartPosition).replace(",","")+ ",\n")
-            newFile.write("\t\"종전가액\": ")
+            # newFile.write("{\n\t\"시작\": ")
+            # newFile.write(str(getProperty.fileStartPosition).replace(",","")+ ",\n")
+            newFile.write("{\n\t\"종전가액\": ")
             newFile.write("\""+getProperty.previousValue.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"증가액\": ")
             newFile.write("\""+getProperty.totalIncrease.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"감소액\": ")
             newFile.write("\""+getProperty.totalDecrease.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"현재가액\": ")
-            newFile.write("\""+getProperty.presentValue.replace(",","")+"\""+ ",\n")
-            newFile.write("\t\"재산끝\": ")
-            newFile.write(str(getProperty.fileEndPosition))
+            newFile.write("\""+getProperty.presentValue.replace(",","")+"\""+ "\n")
+            # newFile.write("\t\"재산끝\": ")
+            # newFile.write(str(getProperty.fileEndPosition))
 
     def changeDetailRecord(self, newFile, getProperty):
         newFile.write("{\n\t\"종류\": ")
@@ -280,8 +280,7 @@ class PropertyMainParser:
         count = 0
         for propertyChange in getProperty.propertyDetail:
             count+=1
-            newFile.write("\t\t{\n")
-            newFile.write("\t\t\"사명\": ")
+            newFile.write("\t\t{\n\t\t\"사명\": ")
             newFile.write("\"" + propertyChange.propertyDetail + "\"" + ",\n")
             newFile.write("\t\t\"종전가액\": ")
             newFile.write("\"" + str(propertyChange.previousValue) + "\"" + ",\n")

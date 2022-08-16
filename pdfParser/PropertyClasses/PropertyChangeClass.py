@@ -37,7 +37,7 @@ class PropertyChange:
         if self.previousValue != None:
             return self.previousValue
         else:
-            return "NaN"
+            return None
 
     @getPreviousValue.setter
     def setPreviousValue(self, preValue):
@@ -54,7 +54,7 @@ class PropertyChange:
         if self.presentValue != None:
             return self.presentValue
         else:
-            return "NaN"
+            return None
 
     @getPresentValue.setter
     def setPresentValue(self, nowValue):
@@ -71,7 +71,7 @@ class PropertyChange:
         if self.totalIncrease != None:
             return self.totalIncrease
         else:
-            return "NaN"
+            return None
 
     @getTotalIncrease.setter
     def setTotalIncrease(self, increase):
@@ -88,7 +88,7 @@ class PropertyChange:
         if self.totalDecrease != None:
             return self.totalDecrease
         else:
-            return "NaN"
+            return None
 
     @getTotalDecresase.setter
     def setTotalDecrease(self,decrease):
@@ -105,7 +105,7 @@ class PropertyChange:
         if self.reason != None:
             return self.reason
         else:
-            return "NaN"
+            return None
 
     @getReason.setter
     def setReason(self, reason):

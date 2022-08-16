@@ -1,6 +1,6 @@
 import pdfplumber
 
-f = open("parsed.txt",'w', encoding="UTF-8")
+
 
 
 table_settings = {
@@ -8,7 +8,11 @@ table_settings = {
     "horizontal_strategy" : "lines_strict"
 }
 
-with pdfplumber.open(r'./money.pdf') as pdf:
+
+f = open("parsed.txt",'w', encoding="UTF-8")
+
+
+with pdfplumber.open(r'money/국회공보 제2022-31호(정기재산변동신고).pdf') as pdf:
     # page = pdf.pages[1]
     # im = page.to_image(resolution=150)
     # im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")

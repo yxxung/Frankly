@@ -127,7 +127,7 @@ class PoliticianPropertyParser():
         if(len(tokenList) > 6):
             pc.deepCategory = tokenList[1]
         else:
-            pc.deepCategory = "empty"
+            pc.deepCategory = "None"
         if section == "예금(소계)" or section ==  "정치자금(소계)" or pc.deepCategory == "금융채무" or pc.deepCategory == "상장주식" or pc.deepCategory == "비상장주식":
             detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", "").replace("(보험)",""))
             tokenIndex = 0
@@ -143,6 +143,7 @@ class PoliticianPropertyParser():
             for token in detailTokenList:
                 tempTokenList = re.split(r' |\(', token)
 
+                # ETF이름들 ;;
                 if (tempTokenList[0] == "KODEX"):
                     tempTokenList[0] += " " + tempTokenList[1]
                     tempTokenList.pop(1)
@@ -151,11 +152,16 @@ class PoliticianPropertyParser():
                     tempTokenList.pop(1)
                     tempTokenList.pop(1)
 
+
+                blankCount = 0
                 for token in tempTokenList:
                     # 파싱 잘못된것 삭제
                     if(token == ""):
-                        tempTokenList.remove("")
+                        blankCount +=1
 
+                if(blankCount != 0):
+                    for count in range(blankCount):
+                        tempTokenList.remove("")
 
 
                 detailChange = PropertyChange()
@@ -163,10 +169,11 @@ class PoliticianPropertyParser():
                 if(len(tempTokenList)>4):
                     numPos = self.numericValidCheck(tempTokenList)
                     # 띄어쓰기 있는 사명들 처리.
-                    if(numPos != 1):
+                    if(numPos != 1 and (numPos != None)):
                         for index in range(numPos-1):
                             tempTokenList[0] += " " + tempTokenList[index+1]
-                            tempTokenList.pop(index+1)
+                        for count in range(numPos-1):
+                            tempTokenList.pop(1)
 
                 if(len(tempTokenList)<=4):
                     pos2 = len(tempTokenList)-1
@@ -199,11 +206,11 @@ class PoliticianPropertyParser():
                     if(tempTokenList[pos2] == "증가)"):
                         detailChange.totalIncrease = tempTokenList[pos2-1].replace(",","")
                         detailChange.totalDecrease = "0주"
-                        detailChange.previousValue = str(int(detailChange.presentValue.replace("주","")) - int(detailChange.totalIncrease.replace("주",""))) + "주"
+                        detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) - float(detailChange.totalIncrease.replace("주",""))) + "주"
                     elif(tempTokenList[pos2] == "감소)"):
                         detailChange.totalIncrease = "0주"
                         detailChange.totalDecrease = tempTokenList[pos2-1].replace(",","")
-                        detailChange.previousValue = str(int(detailChange.presentValue.replace("주","")) + int(detailChange.totalDecrease.replace("주",""))) + "주"
+                        detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) + float(detailChange.totalDecrease.replace("주",""))) + "주"
                     else:
                         print(tempTokenList)
                     newList.append(detailChange)
@@ -344,6 +351,15 @@ class PoliticianPropertyParser():
             else:
                 list[len(list)-1].fileEndPosition = self.fileBeforePos
                 self.addPropertyChange(tokenList, "출자지분(소계)")
+
+        elif tokenList[0].startswith("▶") :
+            list = self.propertyChangeList
+            if(len(list) == 0):
+                self.addPropertyChange(tokenList, "기타")
+            else:
+                list[len(list)-1].fileEndPosition = self.fileBeforePos
+                self.addPropertyChange(tokenList, "기타")
+
 
     # 카테고리 지정된것을 기준으로 위치 저장 등
     def addPropertyChange(self, tokenList, section):
