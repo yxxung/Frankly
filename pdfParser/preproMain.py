@@ -5,19 +5,30 @@
 @Date 21/1/8
 
 '''
-from PropertyClasses.MainParser import MainParser
+import gc
+import traceback
+import os
+
+from PropertyClasses.Parsers.PropertyMainParser import PropertyMainParser
 
 
 def main():
-    filePath = './parsed.txt'
-    try:
+    filePath = './moneyTXT'
+    fileList = os.listdir(filePath)
+    pdfPath = filePath + "/"
 
-        parser = MainParser(filePath)
-        parser.parse()
+    for filename in fileList:
+        try:
+            if (filename.endswith(".txt")):
+                print(filename + " start\n")
+                parser = PropertyMainParser(pdfPath+filename)
+                parser.parse()
+                parser = None
 
-    except Exception as e:
-        print(e)
-        exit(99)
+        except Exception as e:
+            traceback.print_exc()
+            print(filename)
+            exit(99)
 
 
 
