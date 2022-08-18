@@ -21,7 +21,6 @@ class PoliticianPropertyParser():
         self.propertyChangeList = []
         self.propertyChangeDetailList = []
         self.file = file
-
     # property
 #----------------
     @property
@@ -138,26 +137,65 @@ class PoliticianPropertyParser():
 
         pc = PropertyChange()
         pc.whos = tokenList[0]
+        tempReason = ""
 
-        # 6자리가 넘지 않는 경우, 세부 카테고리가 없는것임.
+
+        # 예외처리 6자리가 넘지 않는 경우, 세부 카테고리가 없는것임.
         if(len(tokenList) > 6):
             pc.deepCategory = tokenList[1]
         else:
             pc.deepCategory = "None"
+
+
+        #     은행 여러개 입력되어 있는 부분 처리.
         if section == "예금(소계)" or section ==  "정치자금(소계)" or pc.deepCategory == "금융채무" or pc.deepCategory == "상장주식" or pc.deepCategory == "비상장주식":
             detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", "").replace("(보험)",""))
             tokenIndex = 0
+            newList =[]
+            if not(self.find0Numeric(tokenList)):
+                return
+
+            # 예외처리 은행 수가 너무 많아 나오는 파싱 오류 수정 디테일에 한버에 다 안붙여 나오는 오류 수정.
+            if(detailTokenList[len(detailTokenList)-1].endswith(",")):
+                string = self.file.readline().replace("\n","")
+                token = string.split("|")
+                if(len(token) == 2):
+                    tempReason = token[1]
+                tokenList[pos-1] = tokenList[pos-1] +token[0]
+                detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", "").replace("(보험)",""))
+
+
             for token in detailTokenList:
-                # 증감 없는 재산들 데이터 다루기 편하도록 변환
+                # 예외처리  증감 없는 재산들 데이터 다루기 편하도록 변환
+
+                # 파싱 오류로 마지막에 콤마 딸려옴
+
+
                 if(not(token.endswith(")"))):
                     detailTokenList[tokenIndex] = detailTokenList[tokenIndex] + "(0 증가)"
                 tokenIndex+=1
 
-            newList =[]
+
+            # 만약 (0증가)처리까지 해주엇는데 토큰 크기가 너무 짧으면, 파싱하다가 오류가 났을 가능성이 큼 얘도 디테일에 한번에 다 안들어오는 오류
+            # 예외처리.
+            if self.find0Numeric(tokenList) and len(re.split(r' |\(',detailTokenList[len(detailTokenList)-1]))<=3:
+                print("아마개행오류")
+                print(tokenList)
+                string = self.file.readline().replace("\n","")
+                token = string.split("|")
+                if(len(token) == 2):
+                    print(token[1])
+                tokenList[pos-1] = tokenList[pos-1] +token[0]
+                detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", "").replace("(보험)",""))
 
             # 각 은행별 증감사항 변경
             for token in detailTokenList:
+                tempReason = ""
                 tempTokenList = re.split(r' |\(', token)
+
+
+
+
 
                 # ETF이름들 ;;
                 if (tempTokenList[0] == "KODEX"):
@@ -170,9 +208,9 @@ class PoliticianPropertyParser():
 
 
                 blankCount = 0
-                for token in tempTokenList:
+                for token2 in tempTokenList:
                     # 파싱 잘못된것 삭제
-                    if(token == ""):
+                    if(token2 == ""):
                         blankCount +=1
 
                 if(blankCount != 0):
@@ -197,12 +235,26 @@ class PoliticianPropertyParser():
                 #     # 가끔 자리 오류 나는것.
                 #     pos2 = 3
 
-                pos2 = 3
+                pos2 = len(tempTokenList)-1
+                if(pos2 <=1):
+                    break
                 for indexCount in range(len(tempTokenList)):
-                    if(tempTokenList[indexCount] == "증가)" or tempTokenList[indexCount] == "가)" or tempTokenList[indexCount] == "감소)" or tokenList[indexCount] == "소)"):
+                    if(tempTokenList[indexCount] == "증가)" or tempTokenList[indexCount] == "감소)" or tempTokenList[indexCount] == "가)"  or tempTokenList[indexCount] == "소)"):
                         pos2 = indexCount
+                        break
 
+                # 예외처리 띄어쓰기 오입력
+                pos3 = pos2-2
+                if(tempTokenList[pos3] == "주"):
+                    tempTokenList[pos3-1] += tempTokenList[pos3]
+                    tempTokenList.pop(pos3)
+                    pos2-=1
 
+                elif(tempTokenList[pos3+1] == "주"):
+                    pos3+=1
+                    tempTokenList[pos3-1] += tempTokenList[pos3]
+                    tempTokenList.pop(pos3)
+                    pos2-=1
 
                 # 은행이름1
                 detailChange.propertyDetail = tempTokenList[0].replace(")", "")
@@ -216,17 +268,19 @@ class PoliticianPropertyParser():
                             pos2 -= 1
                         detailChange.totalIncrease = tempTokenList[pos2-1].replace(",","")
                         detailChange.totalDecrease = "0"
+                        # if(detailChange.presentValue.isnumeric() and detailChange.totalIncrease.isnumeric()):
                         if(self.isNumeric(detailChange.presentValue) and self.isNumeric(detailChange.totalIncrease)):
                             detailChange.previousValue = float(detailChange.presentValue) - float(detailChange.totalIncrease)
                         else:
                             print(str(tempTokenList) + "not digit\n")
                             continue
-                    elif(tempTokenList[pos2] == "감소)" or tokenList[pos2] == "소)"):
+                    elif(tempTokenList[pos2] == "감소)" or tempTokenList[pos2] == "소)"):
                         if(tempTokenList[pos2] == "소)"):
                             pos2 -= 1
                         detailChange.totalIncrease = "0"
                         detailChange.totalDecrease = tempTokenList[pos2-1].replace(",","")
-                        if(self.isNumeric(detailChange.presentValue)and self.isNumeric(detailChange.totalIncrease)):
+                        # if(detailChange.presentValue.isnumeric()and detailChange.totalIncrease.isnumeric()):
+                        if(self.isNumeric(detailChange.presentValue) and self.isNumeric(detailChange.totalIncrease)):
                             detailChange.previousValue = float(detailChange.presentValue) + float(detailChange.totalDecrease)
                         else:
                             print(str(tempTokenList) + "not digit\n")
@@ -241,15 +295,17 @@ class PoliticianPropertyParser():
                             pos2 -= 1
                         detailChange.totalIncrease = tempTokenList[pos2-1].replace(",","")
                         detailChange.totalDecrease = "0주"
+                        # if(detailChange.presentValue.replace("주","").isnumeric() and detailChange.totalIncrease.replace("주","").isnumeric()):
                         if(self.isNumeric(detailChange.presentValue.replace("주","")) and self.isNumeric(detailChange.totalIncrease.replace("주",""))):
                             detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) - float(detailChange.totalIncrease.replace("주",""))) + "주"
                         else:
                             print(str(tempTokenList) + "not digit\n")
-                    elif(tempTokenList[pos2] == "감소)" or tokenList[pos2] == "소)"):
+                    elif(tempTokenList[pos2] == "감소)" or tempTokenList[pos2] == "소)"):
                         if(tempTokenList[pos2] == "소)"):
                             pos2 -= 1
                         detailChange.totalIncrease = "0주"
                         detailChange.totalDecrease = tempTokenList[pos2-1].replace(",","")
+                        # if(detailChange.presentValue.replace("주","").isnumeric() and detailChange.totalIncrease.replace("주","").isnumeric()):
                         if(self.isNumeric(detailChange.presentValue.replace("주","")) and self.isNumeric(detailChange.totalIncrease.replace("주",""))):
                             detailChange.previousValue = str(float(detailChange.presentValue.replace("주","")) + float(detailChange.totalDecrease.replace("주",""))) + "주"
                         else:
@@ -272,7 +328,8 @@ class PoliticianPropertyParser():
         if(pos+5==len(tokenList)):
             pc.reason = tokenList[pos+4]
         else:
-            pc.reason = "None"
+            if(tempReason == ""):
+                pc.reason = "None"
 
         self.propertyChangeDetailList.append(pc)
 
@@ -440,10 +497,10 @@ class PoliticianPropertyParser():
         pos = 0
         for index in range(len(tokenList)):
             # 숫자가 4번 연속으로 나오면 금액변동임
-            if self.isNumeric(str(tokenList[index]).replace(",","").replace("주","")):
+            if str(tokenList[index]).replace(",","").replace("주","").isdigit():
                 # count += 1
                 return pos
-            elif self.isNumeric(str(tokenList[index].split("(")[0].replace(",",""))):
+            elif str(tokenList[index].split("(")[0].replace(",","")).isdigit():
                 # count += 1
                 return pos
             elif tokenList[index] == '-':
@@ -458,20 +515,31 @@ class PoliticianPropertyParser():
         #     print(self.politician.name + "numeric valid check Error")
         #     return -1
 
+        # legacy
+        # 실거래가 예외처리
+    def find0Numeric(self, tokenList):
+        count = 0
+
+        for index in range(len(tokenList)):
+            if(tokenList[index] == "0"):
+                count +=1
+
+
+        if(count == 4):
+            return False
+        else:
+            return True
 
     def isNumeric(self,value):
         flag = True
-
-        if value == '' :
-            flag = False
-            return flag
 
         try:
             num = float(value)
             # NaN check
             flag = num == num
-        except ValueError:
+
+        except:
             flag = False
-            pass
 
         return flag
+

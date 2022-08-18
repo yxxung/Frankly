@@ -20,6 +20,7 @@ def main():
     for filename in fileList:
         try:
             if (filename.endswith(".txt")):
+                print(filename + " start\n")
                 parser = PropertyMainParser(pdfPath+filename)
                 parser.parse()
                 parser = None

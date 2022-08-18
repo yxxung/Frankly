@@ -282,7 +282,10 @@ class PropertyMainParser:
         newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
         # newFile.write("\t\"상세종류\": ")
         # newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
-        newFile.write("\t\"재산명세\": [\n")
+        if(len(getProperty.propertyDetail)!= 0):
+            newFile.write("\t\"재산명세\": [\n")
+        else:
+            newFile.write("\t\"재산명세\": \"None\",\n")
         count = 0
         for propertyChange in getProperty.propertyDetail:
             count+=1
