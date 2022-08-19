@@ -1,12 +1,11 @@
-import re
-from PropertyClasses.PropertyChangeClass import PropertyChange
-import copy
-import re
-
-
-
 '''
 @author 최제현
+
+변경된 설계 반영 시작
+@date 22/01/08
+
+1차 리펙토링 시작
+@date 22/08/01
 
 1차 merge
 @date 22/08/18
@@ -14,7 +13,7 @@ import re
 총 변환 액수 추가
 @date 22/08/19
 
-개선필요사항 : 
+개선필요사항 :
 
 우선 실거래가 무시하여 작성(22/08/19)
 설계에 맞게 리펙토링 필요.
@@ -26,6 +25,10 @@ import re
 
 
 '''
+
+from PropertyClasses.PropertyChangeClass import PropertyChange
+import copy
+import re
 
 
 class PoliticianPropertyParser():
@@ -208,14 +211,14 @@ class PoliticianPropertyParser():
 
 
 
-                # ETF이름들 ;;
-                if (tempTokenList[0] == "KODEX"):
-                    tempTokenList[0] += " " + tempTokenList[1]
-                    tempTokenList.pop(1)
-                elif (tempTokenList[0] == "Standard"):
-                    tempTokenList[0] += " " + tempTokenList[1] + " " + tempTokenList[2]
-                    tempTokenList.pop(1)
-                    tempTokenList.pop(1)
+                # # ETF이름들 ;;
+                # if (tempTokenList[0] == "KODEX"):
+                #     tempTokenList[0] += " " + tempTokenList[1]
+                #     tempTokenList.pop(1)
+                # elif (tempTokenList[0] == "Standard"):
+                #     tempTokenList[0] += " " + tempTokenList[1] + " " + tempTokenList[2]
+                #     tempTokenList.pop(1)
+                #     tempTokenList.pop(1)
 
 
                 blankCount = 0

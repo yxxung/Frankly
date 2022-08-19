@@ -1,7 +1,17 @@
+'''
+@Author 최제현
+@date 22/1/07
+
+tokenize를 위해 구분자 변경
+@date 22/08/01
+
+pdf
+
+'''
+
+
 import pdfplumber
 import os
-
-
 
 table_settings = {
     "vertical_strategy" : "lines_strict",
@@ -11,10 +21,18 @@ table_settings = {
     "text_x_tolerance": 1
 }
 
-pdfDir = './moneyPDF'
+# pdfDir = './moneyPDF'
+
+# txtDir = './moneyTXT'
+
+
+pdfDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyPDF'
+
+txtDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyTXT'
+
 fileList = os.listdir(pdfDir)
 
-txtDir = './moneyTXT'
+
 
 for fileName in fileList:
     txtName = txtDir+ "/" + fileName.replace(".pdf","") + ".txt"

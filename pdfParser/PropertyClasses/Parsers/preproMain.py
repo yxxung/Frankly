@@ -4,6 +4,12 @@
 @Author 최제현
 @Date 21/1/8
 
+국회공보 주소
+
+https://www.assembly.go.kr/portal/bbs/B0000059/list.do?pageIndex=1&menuNo=600103&searchWrdMb=&searchDtGbnMb=c0&pageUnit=10&searchDtGbn=c0&sdate=&edate=&cl1Cd=&searchCnd=1&searchWrd=%EC%9E%AC%EC%82%B0
+
+정치인 재산 정보를 pdf에서 파싱하여, json으로 변환
+
 '''
 import gc
 import traceback
@@ -13,7 +19,8 @@ from PropertyClasses.Parsers.PropertyMainParser import PropertyMainParser
 
 
 def main():
-    filePath = './moneyTXT'
+    filePath = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyTXT'
+    # filePath = 'moneyTXT'
     fileList = os.listdir(filePath)
     pdfPath = filePath + "/"
 
