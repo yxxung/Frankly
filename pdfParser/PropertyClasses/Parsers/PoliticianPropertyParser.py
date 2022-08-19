@@ -4,13 +4,31 @@ import copy
 import re
 
 
+
+'''
+@author 최제현
+
+1차 merge
+@date 22/08/18
+
+총 변환 액수 추가
+@date 22/08/19
+
+개선필요사항 : 
+
+우선 실거래가 무시하여 작성(22/08/19)
+설계에 맞게 리펙토링 필요.
+
+
+1차적으로 pdf 에서 추출한 txt문서로 변환한 테이블들을 양식에 맞게 처리하는 모듈
+
+정치인들의 재산정보  JSON으로 변환
+
+
+'''
+
+
 class PoliticianPropertyParser():
-    # file = None
-    # filePos = 0
-    # fileBeforePos = 0;
-    # politician = None
-    # landParser = None
-    # propertyChangeList = []
 
     def __init__(self, file):
         print("Politician Property parse")
@@ -21,7 +39,9 @@ class PoliticianPropertyParser():
         self.propertyChangeList = []
         self.propertyChangeDetailList = []
         self.file = file
+
     # property
+    # getter setter
 #----------------
     @property
     def getFile(self):
@@ -70,9 +90,10 @@ class PoliticianPropertyParser():
         self.propertyChangeDetailList = propertyChangeList
 
 
-#----------------------
 
+#----------------------------------------------------------------------------
 
+    # 전체적인 통제를 하는 메서드
     def parse(self):
         self.file.seek(self.politician.filePosition)
 
@@ -108,23 +129,13 @@ class PoliticianPropertyParser():
 
             # if(propertyChange.fileEndPosition == None):
             #     propertyChange.fileEndPosition = self.politician.fileEndPosition
-            # end position 버그
+
+            # end position 버그 처리
             while(self.file.tell()<propertyChange.fileEndPosition):
                 string = self.file.readline()
                 tokenList = string.split("|")
                 if(tokenList[0] == "본인" or tokenList[0] =="배우자"):
                     self.addPropertyDetailChange(tokenList, propertyChange.category)
-    # def addDepositDetailChange(self, tokenList, section):
-    #     print("stub")
-    #     tokenList[len(tokenList)-1] = tokenList[len(tokenList)-1].replace("\n", "")
-    #     pos = self.numericValidCheck(tokenList)
-    #     if pos == -1:
-    #         print(tokenList)
-    #         return
-    #
-    #     pc = PropertyChange()
-    #     pc.whos = tokenList[0]
-
 
     # 디테일
     def addPropertyDetailChange(self,tokenList, section):
@@ -225,16 +236,11 @@ class PoliticianPropertyParser():
                     # 띄어쓰기 있는 사명들 처리.
                     if(numPos != 1 and (numPos != None)):
                         for index in range(numPos-1):
-                            tempTokenList[0] += " " + tempTokenList[index+1]
+                            tempTokenList[0] += tempTokenList[index+1]
                         for count in range(numPos-1):
                             tempTokenList.pop(1)
 
-                # if(len(tempTokenList)<=4):
-                #     pos2 = len(tempTokenList)-1
-                # else:
-                #     # 가끔 자리 오류 나는것.
-                #     pos2 = 3
-
+                # 증가 감소 위치 찾기
                 pos2 = len(tempTokenList)-1
                 if(pos2 <=1):
                     break
@@ -312,6 +318,7 @@ class PoliticianPropertyParser():
                             print(str(tempTokenList) + "not digit\n")
                     else:
                         print(str(tempTokenList) + "not up/down 증감 인식불가\n")
+
                     newList.append(detailChange)
 
             pc.propertyDetail = newList
@@ -353,6 +360,13 @@ class PoliticianPropertyParser():
                 # print("pos : ", self.__file.tell() , " O K")
                 self.checkDivide(string)
             else:
+                # 국회의원 마지막 위치에 왓으면 총계정리.
+                tokenList = string.split("|")
+                if tokenList[0].startswith("총") :
+                    list = self.propertyChangeList
+                    list[len(list)-1].fileEndPosition = self.fileBeforePos
+                    self.addPropertyChange(tokenList, "총계")
+
                 statement = False
 
 
@@ -369,7 +383,6 @@ class PoliticianPropertyParser():
     # 카테고리 지정
     def checkPropertyDivide(self, tokenList):
         if tokenList[0] == "▶ 토지(소계)" :
-            # self.addLandProperty(tokenList)
             self.addPropertyChange(tokenList, "토지(소계)")
         elif tokenList[0] == "▶ 건물(소계)" :
             list = self.propertyChangeList
@@ -469,9 +482,6 @@ class PoliticianPropertyParser():
             else:
                 list[len(list)-1].fileEndPosition = self.fileBeforePos
                 self.addPropertyChange(tokenList, "기타")
-        elif tokenList[0].startswith("총") :
-            list = self.propertyChangeList
-            list[len(list)-1].fileEndPosition = self.fileBeforePos
 
 
     # 카테고리 지정된것을 기준으로 위치 저장 등
@@ -487,6 +497,9 @@ class PoliticianPropertyParser():
             pc.presentValue = tokenList[pos+3].replace("\n","")
             pc.fileStartPosition = self.fileBeforePos
             pc.category = section
+            if(section == "총계"):
+                pc.propertyDetail = tokenList[pos+4].replace("\n","")
+                pc.fileEndPosition = self.politician.fileEndPosition
             self.propertyChangeList.append(pc)
 
 
@@ -509,6 +522,7 @@ class PoliticianPropertyParser():
             else:
                 pos += 1
 
+        # 숫자 4번 연속으로 오면 현재가 정보임. 파싱 정확도 상승으로 우선 주석처리
         # if count >= 4:
         #     return pos
         # else:

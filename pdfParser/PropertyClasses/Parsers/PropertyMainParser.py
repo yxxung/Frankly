@@ -156,7 +156,7 @@ class PropertyMainParser:
 
     def checkPoliticianDivide(self, tokenList, politicianListLen):
 
-        if tokenList[1] == "국회" :
+        if tokenList[0] == "소속" :
             # 국회의원 정보 시작
             # 각 국회의원들 블록 지정
             if politicianListLen > 0 :
@@ -226,6 +226,10 @@ class PropertyMainParser:
                         newFile.write("}\n")
 
             newFile.write("}],\n")
+
+
+            # 총액 변동 삽입
+
             newFile.write("\"국회의원끝\": ")
             newFile.write(str(politician.fileEndPosition) + "}\n,\n")
         newFile.close()
@@ -242,7 +246,8 @@ class PropertyMainParser:
         newFile.close()
 
 
-
+    # ------------------------------------------------------------------------
+    # 추출된 클래스 정보들을 json 양식으로 출력하는 메서드들
     def changeRecord(self, newFile, getProperty):
             # newFile.write("{\n\t\"시작\": ")
             # newFile.write(str(getProperty.fileStartPosition).replace(",","")+ ",\n")
@@ -254,6 +259,9 @@ class PropertyMainParser:
             newFile.write("\""+getProperty.totalDecrease.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"현재가액\": ")
             newFile.write("\""+getProperty.presentValue.replace(",","")+"\""+ "\n")
+            if(getProperty.category =="총계"):
+                newFile.write("\t\"증감액\": ")
+                newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\""+ "\n")
             # newFile.write("\t\"재산끝\": ")
             # newFile.write(str(getProperty.fileEndPosition))
 
