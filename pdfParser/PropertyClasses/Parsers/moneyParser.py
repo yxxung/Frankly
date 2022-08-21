@@ -39,9 +39,12 @@ for fileName in fileList:
 
     f = open(txtName,'w', encoding="UTF-8")
     with pdfplumber.open(pdfDir+"/"+fileName) as pdf:
+        # debug code // not work
         # page = pdf.pages[1]
         # im = page.to_image(resolution=150)
         # im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")
+
+        # PDF에서 테이블 추출
         for pdf_page in pdf.pages:
             try:
                 table = pdf_page.extract_table(table_settings)

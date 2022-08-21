@@ -205,17 +205,16 @@ class PropertyMainParser:
                     newFile.write("\""+propertyChange.category +"\" :")
                     self.changeRecord(newFile, propertyChange)
                     if(count < len(politician.politicianPropertyChangeList)):
-                        newFile.write("\t},\n")
+                        newFile.write("\n\t},\n")
                     else:
                         newFile.write("\t}\n")
             newFile.write("}],\n")
-            newFile.write("\"재산변동\": [{\n")
+            newFile.write("\"재산변동\": [\n")
             count = 0
             for propertyChange in politician.politicianPropertyChangeDetailList:
                 count += 1
                 if propertyChange != None:
                     section = propertyChange.category
-                    newFile.write("\""+section +"\" :")
                     if section == "예금(소계)" or section ==  "정치자금(소계)" or propertyChange.deepCategory =="금융채무" or propertyChange.deepCategory == "상장주식" or propertyChange.deepCategory == "비상장주식":
                         self.changeDetailBankRecord(newFile, propertyChange)
                     else:
@@ -225,7 +224,7 @@ class PropertyMainParser:
                     else:
                         newFile.write("}\n")
 
-            newFile.write("}],\n")
+            newFile.write("],\n")
 
 
             # 총액 변동 삽입
@@ -258,10 +257,10 @@ class PropertyMainParser:
             newFile.write("\t\"감소액\": ")
             newFile.write("\""+getProperty.totalDecrease.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"현재가액\": ")
-            newFile.write("\""+getProperty.presentValue.replace(",","")+"\""+ "\n")
+            newFile.write("\""+getProperty.presentValue.replace(",","")+"\"")
             if(getProperty.category =="총계"):
-                newFile.write("\t\"증감액\": ")
-                newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\""+ "\n")
+                newFile.write(",\n\t\"증감액\": ")
+                newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\"")
             # newFile.write("\t\"재산끝\": ")
             # newFile.write(str(getProperty.fileEndPosition))
 
