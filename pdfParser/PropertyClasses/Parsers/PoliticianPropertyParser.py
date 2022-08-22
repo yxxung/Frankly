@@ -151,6 +151,11 @@ class PoliticianPropertyParser():
 
         pc = PropertyChange()
         pc.whos = tokenList[0]
+        pc.category = section
+
+        # 은행 및 증권리스트 저장용.
+
+
         tempReason = ""
 
 
@@ -158,11 +163,17 @@ class PoliticianPropertyParser():
         if(len(tokenList) > 6):
             pc.deepCategory = tokenList[1]
         else:
-            pc.deepCategory = "None"
+            pc.deepCategory = section
 
-
+        if(section == "증권(소계)"):
+            pc.deepCategory = tokenList[1]
+        elif(section == "예금(소계)"):
+            pc.deepCategory = "예금"
+        elif( section ==  "정치자금(소계)"):
+            pc.deepCategory = "정치자금"
         #     은행 여러개 입력되어 있는 부분 처리.
         if section == "예금(소계)" or section ==  "정치자금(소계)" or pc.deepCategory == "금융채무" or pc.deepCategory == "상장주식" or pc.deepCategory == "비상장주식":
+            pc.tempChangeDetail = tokenList[pos-1]
             detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", "").replace("(보험)",""))
             tokenIndex = 0
             newList =[]

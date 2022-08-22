@@ -21,14 +21,19 @@ table_settings = {
     "text_x_tolerance": 1
 }
 
+pdfDir = 'D:\code\Frankly\pdfParser\PropertyClasses\moneyPDF'
+
+txtDir = 'D:\code\Frankly\pdfParser\PropertyClasses\moneyTXT'
+
+
+# pdfDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyPDF'
+
+# txtDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyTXT'
+
 # pdfDir = './moneyPDF'
 
 # txtDir = './moneyTXT'
 
-
-pdfDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyPDF'
-
-txtDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyTXT'
 
 fileList = os.listdir(pdfDir)
 
@@ -39,7 +44,7 @@ for fileName in fileList:
 
     f = open(txtName,'w', encoding="UTF-8")
     with pdfplumber.open(pdfDir+"/"+fileName) as pdf:
-        # debug code // not work
+
         # page = pdf.pages[1]
         # im = page.to_image(resolution=150)
         # im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")

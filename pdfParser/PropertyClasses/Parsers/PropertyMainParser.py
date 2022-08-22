@@ -122,9 +122,6 @@ class PropertyMainParser:
             parser.parse()
             print(politician.name, " OK ", cnt)
             cnt += 1
-
-
-        print("test")
         self.recordPolitician()
         self.file.close()
 
@@ -269,6 +266,8 @@ class PropertyMainParser:
         newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
         newFile.write("\t\"상세종류\": ")
         newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"관계\": ")
+        newFile.write("\""+getProperty.whos.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"재산명세\": ")
         newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"종전가액\": ")
@@ -287,6 +286,12 @@ class PropertyMainParser:
     def changeDetailBankRecord(self, newFile, getProperty):
         newFile.write("{\n\t\"종류\": ")
         newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
+        newFile.write("\t\"상세종류\": ")
+        newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"관계\": ")
+        newFile.write("\""+getProperty.whos.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"재산명세원본\": ")
+        newFile.write("\""+getProperty.tempChangeDetail.replace(",","")+"\""+ ",\n")
         # newFile.write("\t\"상세종류\": ")
         # newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
         if(len(getProperty.propertyDetail)!= 0):

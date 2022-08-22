@@ -223,7 +223,7 @@ class Politician:
 
             cursor.execute(sql)
 
-            return cursor.fetchone()[0]
+            return cursor.fetchone()
         except Exception as e:
             traceback.print_exc()
             return None

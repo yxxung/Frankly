@@ -24,6 +24,14 @@ class Property:
         self._politicianID = politicianID
 
     @property
+    def propertyDetail(self):
+        return self._propertyDetail
+
+    @propertyDetail.setter
+    def propertyDetail(self, propertyDetail):
+        self._propertyDetail = propertyDetail
+
+    @property
     def presentPrice(self):
         return self._presentPrice
 

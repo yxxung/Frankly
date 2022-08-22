@@ -1,3 +1,6 @@
+import traceback
+
+
 class PropertyList:
 
     @property
@@ -30,12 +33,49 @@ class PropertyList:
 
     @kind.setter
     def kind(self, kind):
-        self._kind = kind
+        self._kind = kind.replace(" ", "")
 
     @property
-    def propertyDetail(self):
-        return self._propertyDetail
+    def section(self):
+        return self._section
 
-    @propertyDetail.setter
-    def propertyDetail(self, propertyDetail):
-        self._propertyDetail = propertyDetail
+    @section.setter
+    def section(self,section):
+        self._section = section
+
+    # ----------------------------------------------
+
+    def selectOne(self, cursor,section, kind, relation):
+        try:
+            sql = "SELECT propertyListID FROM PropertyList "+\
+                "WHERE section = %s AND kind = %s AND relation = %s"
+            cursor.execute(sql,(section, kind.replace(" ", ""), relation))
+
+            return cursor.fetchone()
+        except Exception as e:
+            traceback.print_exc()
+            return None
+    def insert(self, cursor):
+        try:
+            sql = "INSERT INTO PropertyList VALUE (%s,%s, %s, %s)"
+            cursor.execute(sql,(None,self.section, self.kind, self.relation))
+            return True
+        except Exception as e:
+            traceback.print_exc()
+            return False
+
+        # ----------------------------------------------
+
+        # iterator 동작시 json 내용과 현재 오브젝트의 값 비교
+    def __eq__(self, other):
+        # type이 dict인 경우..
+        if(str(type(other)) == "<class 'dict'>"):
+            return self.section == other["종류"] and self.kind == other["상세종류"].replace(" ", "") and self.relation == other["관계"]
+        elif (str(type(other)) == "<class 'PropertyList'>"):
+            return self.section == other.section and self.kind == other.kind and self.relation == other.relation
+    def __hash__(self, other):
+        return hash((self.section, self.kind, self.relation))
+
+
+
+
