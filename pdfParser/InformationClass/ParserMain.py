@@ -1,3 +1,4 @@
+import pdfplumber
 import pymysql
 # 파일이름, class명
 from Politician import Politician
@@ -44,6 +45,50 @@ class ParserMain:
             traceback.print_exc()
             print("politician insert error")
 
+    def parseAttendancePDF(self):
+        # pdfDir = 'E:\work\Frankly\pdfParser\InformationClass\Json'
+        pdfDir = 'D:\code\Frankly\pdfParser\InformationClass/attendance'
+        fileList = os.listdir(pdfDir)
+
+        table_settings = {
+            "vertical_strategy" : "lines",
+            "horizontal_strategy" : "lines",
+            # "snap_tolerance": 1,
+            # "snap_x_tolerance": 1,
+            # "snap_y_tolerance": 1,
+            # "join_tolerance": 1,
+            # "join_x_tolerance": 1,
+            # "join_y_tolerance": 1,
+            # "edge_min_length": 1,
+            # "min_words_vertical": 1,
+            # "min_words_horizontal": 1,
+            # "keep_blank_chars": False,
+            # "text_tolerance": 1,
+            # "text_x_tolerance": 1,
+            # "text_y_tolerance": 1,
+            # "intersection_tolerance": 1,
+            # "intersection_x_tolerance": 1,
+            # "intersection_y_tolerance": 1
+        }
+
+        for fileName in fileList:
+            if(fileName.endswith(".pdf")):
+                with pdfplumber.open(pdfDir + "/" + fileName) as pdf:
+                    txtName = pdfDir+ "/" + fileName.replace(".pdf","") + ".txt"
+                    # page = pdf.pages[1]
+                    # im = page.to_image(resolution=150)
+                    # im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")
+                    f = open(txtName,'w', encoding="UTF-8")
+                    for pdf_page in pdf.pages:
+                        try:
+                            table = pdf_page.extract_table(table_settings)
+                            str1 = ['|'.join(list(filter(None, line))) for line in table]
+                            str2 = [str.replace("\n"," ") for str in str1]
+                            str3 = '\n'.join(str2)
+                            f.write(str3+'\n')
+                            # f.write(str3)
+                        except Exception as e:
+                            print(e)
         print("stub")
 
 
@@ -182,5 +227,7 @@ if option == '1':
 
     parser.parseJsonToPolitician()
 
+if option == '2':
+    parser.parseAttendancePDF()
 
 

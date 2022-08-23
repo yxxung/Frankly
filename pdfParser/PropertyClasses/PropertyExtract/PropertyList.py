@@ -33,7 +33,7 @@ class PropertyList:
 
     @kind.setter
     def kind(self, kind):
-        self._kind = kind.replace(" ", "")
+        self._kind = kind
 
     @property
     def section(self):
@@ -49,7 +49,7 @@ class PropertyList:
         try:
             sql = "SELECT propertyListID FROM PropertyList "+\
                 "WHERE section = %s AND kind = %s AND relation = %s"
-            cursor.execute(sql,(section, kind.replace(" ", ""), relation))
+            cursor.execute(sql,(section, kind, relation))
 
             return cursor.fetchone()
         except Exception as e:
@@ -70,9 +70,12 @@ class PropertyList:
     def __eq__(self, other):
         # type이 dict인 경우..
         if(str(type(other)) == "<class 'dict'>"):
-            return self.section == other["종류"] and self.kind == other["상세종류"].replace(" ", "") and self.relation == other["관계"]
+            return self.section == other["종류"] and self.kind == other["상세종류"] and self.relation == other["관계"]
         elif (str(type(other)) == "<class 'PropertyList'>"):
             return self.section == other.section and self.kind == other.kind and self.relation == other.relation
+        else:
+            return False
+
     def __hash__(self, other):
         return hash((self.section, self.kind, self.relation))
 

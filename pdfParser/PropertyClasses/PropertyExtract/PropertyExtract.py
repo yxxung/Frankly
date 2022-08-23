@@ -21,7 +21,8 @@ class PropertyExtract:
         sectionBank = ["예금", "정치자금"]
         categoryBank = ["상장주식", "비상장주식", "금융채무"]
         p = Politician(index=None)
-
+        propertyListCategory = []
+        categoryIndex =0
         for fileName in fileList:
             if(fileName.endswith(".json")):
                 with open(jsonDir+"/"+fileName, encoding="UTF8") as jsonObject:
@@ -43,24 +44,35 @@ class PropertyExtract:
 
 
                         for change in politician["재산변동"]:
+                            change["상세종류"] = change["상세종류"].replace(" ", "")
                             propertyList = PropertyList()
-                            result = propertyList.selectOne(cur, section=change["종류"], \
-                                                            kind= change["상세종류"].replace(" ",""), \
-                                                            relation=change["관계"])
-
-                            if result == None:
-                                # if not(change["종류"] in sectionBank or change["상세종류"] in categoryBank):
+                            if not(change in propertyListCategory):
                                 propertyList.section = change["종류"]
                                 propertyList.kind = change["상세종류"]
                                 propertyList.relation = change["관계"]
-                                propertyList.insert(cur)
+                                categoryIndex += 1
+                                propertyListCategory.append(propertyList)
                             else:
                                 continue
 
-                    con.commit()
+
+
+                    for propertyList in propertyListCategory:
+                        result = propertyList.selectOne(cur, section=propertyList.section, \
+                                                        kind= propertyList.kind, \
+                                                        relation=propertyList.relation)
+
+                        if result == None:
+                            propertyList.insert(cur)
+                            con.commit()
+                        else:
+                            continue
+                    print("stub")
+
+
                     con.close()
 
-                    print("stub")
+
                     # for change in politician["재산변동"]:
                     #     property = Property()
                     #     property.politicianID = politicianID
