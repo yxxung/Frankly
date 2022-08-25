@@ -1,5 +1,7 @@
 import traceback
 
+import pymysql.err
+
 
 class PropertyList:
 
@@ -60,9 +62,16 @@ class PropertyList:
             sql = "INSERT INTO PropertyList VALUE (%s,%s, %s, %s)"
             cursor.execute(sql,(None,self.section, self.kind, self.relation))
             return True
+        except pymysql.err.IntegrityError as e:
+            code, msg = e.args
+            if(code == 1062):
+                # sql = "ALTER TABLE PropertyList AUTO_INCREMENT = "
+                # cursor.execute(sql)
+            else:
+                traceback.print_exc()
+            return False
         except Exception as e:
             traceback.print_exc()
-            return False
 
         # ----------------------------------------------
 

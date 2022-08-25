@@ -187,6 +187,7 @@ class Politician:
 
     @property
     def secretary(self):
+
         return self._secretary
     @secretary.setter
     def secretary(self, Secretary):

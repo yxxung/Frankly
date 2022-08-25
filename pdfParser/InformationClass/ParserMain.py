@@ -46,8 +46,8 @@ class ParserMain:
             print("politician insert error")
 
     def parseAttendancePDF(self):
-        # pdfDir = 'E:\work\Frankly\pdfParser\InformationClass\Json'
-        pdfDir = 'D:\code\Frankly\pdfParser\InformationClass/attendance'
+        pdfDir = 'E:\work\Frankly\pdfParser\InformationClass\Json'
+        # pdfDir = 'D:\code\Frankly\pdfParser\InformationClass/attendance'
         fileList = os.listdir(pdfDir)
 
         table_settings = {
@@ -75,9 +75,9 @@ class ParserMain:
             if(fileName.endswith(".pdf")):
                 with pdfplumber.open(pdfDir + "/" + fileName) as pdf:
                     txtName = pdfDir+ "/" + fileName.replace(".pdf","") + ".txt"
-                    # page = pdf.pages[1]
-                    # im = page.to_image(resolution=150)
-                    # im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")
+                    page = pdf.pages[1]
+                    im = page.to_image(resolution=150)
+                    im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")
                     f = open(txtName,'w', encoding="UTF-8")
                     for pdf_page in pdf.pages:
                         try:

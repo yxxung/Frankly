@@ -19,9 +19,9 @@ from PropertyClasses.Parsers.PropertyMainParser import PropertyMainParser
 
 
 def main():
-    # filePath = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyTXT'
+    filePath = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyTXT'
     # filePath = 'moneyTXT'
-    filePath = 'D:\code\Frankly\pdfParser\PropertyClasses\moneyTXT'
+    # filePath = 'D:\code\Frankly\pdfParser\PropertyClasses\moneyTXT'
     fileList = os.listdir(filePath)
     pdfPath = filePath + "/"
 
