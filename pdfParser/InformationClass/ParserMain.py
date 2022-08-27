@@ -1,3 +1,15 @@
+'''
+@Author 최제현
+@Date 22/8/
+
+국회공보 주소
+
+https://www.assembly.go.kr/portal/bbs/B0000059/list.do?pageIndex=1&menuNo=600103&searchWrdMb=&searchDtGbnMb=c0&pageUnit=10&searchDtGbn=c0&sdate=&edate=&cl1Cd=&searchCnd=1&searchWrd=%EC%9E%AC%EC%82%B0
+
+정치인, 정당, 지역 정보를 DB에 저장.
+
+'''
+
 import pdfplumber
 import pymysql
 # 파일이름, class명

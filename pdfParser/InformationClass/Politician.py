@@ -23,7 +23,8 @@ import traceback
 
 class Politician:
 
-    def __init__(self, index):
+
+    def __init__(self, index=None):
         self._politicianID = index
         self._secretaru = None
         self._personalAssistant = None

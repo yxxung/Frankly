@@ -1,3 +1,8 @@
+import traceback
+
+import pymysql
+
+
 class PropertyChange:
 
     @property
@@ -17,12 +22,20 @@ class PropertyChange:
         self._politicianID = politicianID
 
     @property
-    def propertyListID(self):
-        return self._propertyListID
+    def propertyID(self):
+        return self._propertyID
 
-    @propertyListID.setter
-    def propertyListID(self, propertyListID):
-        self._propertyListID = propertyListID
+    @propertyID.setter
+    def propertyID(self, propertyID):
+        self._propertyID = propertyID
+
+    @property
+    def period(self):
+        return self._period
+
+    @period.setter
+    def period(self, period):
+        self._period = period
 
     @property
     def price(self):
@@ -39,3 +52,21 @@ class PropertyChange:
     @reason.setter
     def reason(self, reason):
         self._reason = reason
+    # ----------------------------------------
+
+    def insert(self, cursor):
+        try:
+            sql = "INSERT INTO PropertyChange VALUE (%s,%s, %s, %s,%s,%s)"
+            cursor.execute(sql,(None,self.politicianID, self.propertyID, self.period, self.price, self.reason))
+            return True
+        except pymysql.err.IntegrityError as e:
+            code, msg = e.args
+            if(code == 1062):
+                print("propertyChange 중복")
+                # sql = "ALTER TABLE PropertyList AUTO_INCREMENT = "
+                # cursor.execute(sql)
+            else:
+                traceback.print_exc()
+            return False
+        except Exception as e:
+            traceback.print_exc()

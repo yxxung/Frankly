@@ -17,6 +17,7 @@ class PropertyMainParser:
     # # __politicianPosition = None
     # politicianList = None
     # politicianParser = None
+    period = 0
 
 
 
@@ -107,6 +108,18 @@ class PropertyMainParser:
 
     def parse(self):
         cnt = 0
+        string = self.file.readline()
+        token = string.split("제")
+        if(len(token)>1):
+            self.period = token[1][0:4]
+        else:
+            string = self.file.readline()
+            if(len(token)>1):
+                token = string.split("제")
+                self.period = token[1][0:4]
+            else:
+                print("period error")
+
         self.checkPoliticianPosition()
 
         # for index in range(len(self.politicianList)-1) :
@@ -163,6 +176,7 @@ class PropertyMainParser:
                 tokenList.insert(4, "국회의원")
             self.addPolitician(tokenList, 1)
             # print(tokenList[5], " add OK")
+        # elif
 
 
 
@@ -264,6 +278,8 @@ class PropertyMainParser:
     def changeDetailRecord(self, newFile, getProperty):
         newFile.write("{\n\t\"종류\": ")
         newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
+        newFile.write("\t\"기간\": ")
+        newFile.write("\""+self.period.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"상세종류\": ")
         newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"관계\": ")
@@ -286,6 +302,8 @@ class PropertyMainParser:
     def changeDetailBankRecord(self, newFile, getProperty):
         newFile.write("{\n\t\"종류\": ")
         newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
+        newFile.write("\t\"기간\": ")
+        newFile.write("\""+self.period.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"상세종류\": ")
         newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"관계\": ")

@@ -50,7 +50,7 @@ class PropertyList:
     def selectOne(self, cursor,section, kind, relation):
         try:
             sql = "SELECT propertyListID FROM PropertyList "+\
-                "WHERE section = %s AND kind = %s AND relation = %s"
+                "WHERE relation = %s AND kind = %s AND section = %s"
             cursor.execute(sql,(section, kind, relation))
 
             return cursor.fetchone()
@@ -65,8 +65,13 @@ class PropertyList:
         except pymysql.err.IntegrityError as e:
             code, msg = e.args
             if(code == 1062):
-                # sql = "ALTER TABLE PropertyList AUTO_INCREMENT = "
-                # cursor.execute(sql)
+                print("propertyList 중복")
+                sql = "SELECT count(propertyListID) from PropertyList"
+                cursor.execute(sql)
+                selectcount = cursor.fetchone()
+                sql = "ALTER TABLE PropertyList AUTO_INCREMENT = %s"
+                cursor.execute(sql,(selectcount[0]))
+                print("auto increment set : " + str(selectcount[0]))
             else:
                 traceback.print_exc()
             return False
