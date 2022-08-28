@@ -38,27 +38,29 @@ public class BoardController {
 
 
   //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
-  @PutMapping("/{region}/{boardID}")
+  @PutMapping("/{region}/{id}")
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
                                          @PathVariable("region") int region,
-                                         @PathVariable("boardID")int boardID)throws Exception{
+                                         @PathVariable("id")Long id)throws Exception{
 
-      log.info("게시물 수정 수정자 :"  + boardDTO.getAuthor());
-      boardService.updateBoard(boardDTO, region, boardID);
+      log.info("개시물 수정 수정자 :"  + boardDTO.getAuthor());
+      boardService.updateBoard(boardDTO, region, id);
       return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/{region}/{boardID}")
+  @GetMapping("/{region}/{id}")
     public ResponseEntity<BoardDTO> getBoardById(@PathVariable int region,
-                                                 @PathVariable int boardID) throws Exception{
+                                                 @PathVariable Long id) throws Exception{
 
-      log.info("게시물 불러오기 : " + boardID);
+      log.info("게시물 불러오기 : " + id);
       try{
-          BoardDTO boardDTO = boardService.readBoard(region, boardID);
+          BoardDTO boardDTO = boardService.readBoard(region, id);
           return new ResponseEntity<>(boardDTO, HttpStatus.OK);
       }catch (Exception e){
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
+
+
   }
 
   @GetMapping("/{region}/{start}")
@@ -70,18 +72,19 @@ public class BoardController {
       return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @DeleteMapping("/{region}/{boardID}")
+  @DeleteMapping("/{region}/{id}")
     public ResponseEntity<?> deleteBoard(@PathVariable("region") int region,
-                                         @PathVariable("boardID") int boardID) throws Exception{
+                                         @PathVariable("id") Long id) throws Exception{
 
       BoardDTO boardDTO = new BoardDTO();
-      boardDTO.setBoardID(boardID);
+      boardDTO.setId(id);
       boardDTO.setRegion(region);
 
-      log.info(boardID + "게시글 삭제");
+      log.info(id + "게시글 삭제");
       boardService.deleteBoard(boardDTO);
 
       return new ResponseEntity<>(HttpStatus.OK);
+
   }
 
 

@@ -1,10 +1,13 @@
 package com.frankly.restapi.controller;
 
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.frankly.restapi.domain.UserDTO;
 import com.frankly.restapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.buf.UDecoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,12 +23,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{userID}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable("userID") int userID)
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable("userId") Long userId)
             throws Exception{
-        log.info("read" + userID);
+        log.info("read" + userId);
 
-        UserDTO userDTO = userService.getUser(userID);
+        UserDTO userDTO = userService.getUser(userId);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
@@ -33,30 +36,20 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<UserDTO> registerUser(@Validated @RequestBody UserDTO userDTO)
             throws Exception{
-        log.info("create User " + userDTO.getEmail());
+        log.info("create User" + userDTO.getEmail());
 
         userService.registerUser(userDTO);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
 
     }
-    @PutMapping("/{userID}")
-    public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody UserDTO userDTO)
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable("userId")Long id)
             throws Exception{
-        log.info("update User " + userDTO.getName());
+        log.info("delete user : " + id);
 
-        userService.updateUser(userDTO);
-
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-
-    }
-
-    @DeleteMapping("/{userID}")
-    public ResponseEntity<?> deleteUser(@PathVariable("userID")int userID)
-            throws Exception{
-        log.info("delete user : " + userID);
-
-        userService.deleteUser(userID);
+        userService.deleteUser(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
