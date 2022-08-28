@@ -1,0 +1,214 @@
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    letter-spacing: -0.025rem;
+    line-height: 130%;
+    overflow-x: hidden;
+}
+
+/*
+상단 고정 헤더
+*/
+
+.header {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    max-width: 540px;   /*max-width*/
+    height: 56px;
+    z-index: 999;
+    background-color: #ffffff;
+}
+
+/*로고 헤더*/
+.header_logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*뒤로가기 헤더*/
+.header--back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header--back > h2 {
+    font-size: 18px;
+}
+/*커뮤니티 헤더*/
+.header__community {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header__community > h2 {
+    padding-left: 24px;
+    font-size: 24px;
+}
+/*헤더 오른쪽 ICON*/
+.header-right-icon {
+    position: absolute;
+    right: 0;
+    display: flex;
+}
+
+/*아이콘 버튼*/
+.icon-button-56 {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-button-56:after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 24px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-button-56:hover:after {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.icon-button-24 {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-button-24:after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-button-24:hover:after {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.header__back-button {
+    position: absolute;
+    left: 0;
+}
+/*
+하단 네비게이션
+*/
+
+.navigation-bottom {
+    bottom: 0;
+    position: fixed;
+    width: 100vw;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 -1px 2px #EDEDED;
+}
+
+/*
+메인 페이지
+ */
+.wrap {
+    margin: 54px auto 0 auto;
+    max-width: 540px;  /*max-width*/
+    position: relative;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+
+/*
+원형 체크박스 (input)
+*/
+.input-checkbox {
+   display: none;
+}
+.input-checkbox + label {
+    content: '';
+    display: inline-block;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 1px solid #CCCCCC;
+}
+
+.input-checkbox:checked + label {
+    border: 6px solid #596ae5;
+}
+
+textarea {
+    width: 100%;
+    height: 60px;
+    resize: none;
+    border: 1px solid #DCDCDC;
+}
+textarea:focus {
+     border: #DCDCDC;
+}
+
+/*
+하단 네비게이션
+*/
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-nav-area {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bottom-nav-area a {
+    width: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.bottom-nav-area span {
+    color: #B5B5B5;
+}
+
+.bottom-nav-area p {
+    margin-top: 2px;
+    font-size: 10px;
+    color: #B5B5B5;
+}
+
+.nav--active p {
+    color: black;
+}
