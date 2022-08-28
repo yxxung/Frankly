@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.frankly.restapi.mapper.MemberMapper">
+<mapper namespace="com.frankly.restapi.mapper.PoliticianMapper">
 
-    <resultMap type="MemberDTO" id = "memberResultMap">
-    <id column="id" property="id"/>
-        <result column="name" property="name"/>
+    <resultMap type="PoliticianDTO" id = "politicianResultMap">
+    <id column="politicianID" property="politicianID"/>
+        <result column="politicianName" property="politicianName"/>
         <result column="hanName" property="hanName"/>
         <result column="engName" property="engName"/>
         <result column="lunar" property="lunar"/>
         <result column="birthday" property="birthday"/>
-        <result column="party" property="party"/>
-        <result column="district" property="district"/>
+        <result column="partyID" property="partyID"/>
+        <result column="partyName" property="partyName"/>
+        <result column="regionID" property="regionID"/>
         <result column="selectNumber" property="selectNumber"/>
         <result column="selectInfo" property="selectInfo"/>
         <result column="sex" property="sex"/>
@@ -24,27 +25,28 @@
         <result column="personalAssistant" property="personalAssistant"/>
     </resultMap>
 
-    <select id="memberList" resultMap="memberResultMap">
+    <select id="politicianList" resultMap="politicianResultMap">
         SELECT *
-        FROM member_info.memberinfo
+        FROM frankly.politician
     </select>
 
 
 <!--    Mapper 매서드 이름과 Mapping-->
-    <select id="readMember" resultMap="memberResultMap">
-        SELECT * FROM member_info.memberinfo
-        WHERE id = #{id}
+    <select id="readPolitician" resultMap="politicianResultMap">
+        SELECT * FROM frankly.politician
+        WHERE politicianID = #{politicianID}
     </select>
 
-    <insert id="insertMember">
-        INSERT INTO member_info.memberinfo
-            VALUES (#{name}
+    <insert id="createPolitician" parameterType="PoliticianDTO">
+        INSERT INTO frankly.politician
+            VALUES (#{politicianName}
             , #{hanName}
             , #{engName}
             , #{lunar}
             , #{birthday}
-            , #{party}
-            , #{district}
+            , #{partyID}
+            , #{partyName}
+            , #{regionID}
             , #{selectNumber}
             , #{selectInfo}
             , #{sex}
@@ -55,7 +57,7 @@
             , #{aide}
             , #{secretary}
             , #{personallAssitant}
-            , #{id})
+            , #{politicianID})
     </insert>
 
 </mapper>

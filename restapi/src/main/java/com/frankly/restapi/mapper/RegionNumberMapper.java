@@ -1,6 +1,5 @@
 package com.frankly.restapi.mapper;
 
-import com.frankly.restapi.domain.MemberDTO;
 import com.frankly.restapi.domain.RegionNumberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
