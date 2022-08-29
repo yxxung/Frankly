@@ -9,10 +9,14 @@ https://www.assembly.go.kr/portal/bbs/B0000059/list.do?pageIndex=1&menuNo=600103
 정치인, 정당, 지역 정보를 DB에 저장.
 
 '''
+import re
 
 import pdfplumber
 import pymysql
 # 파일이름, class명
+from InformationClass.ConferenceAttendance import Attendance
+from InformationClass.ConferenceSchedule import ConferenceSchedule
+from InformationClass.ScheduleAPI import ScheduleAPI
 from Politician import Politician
 from Region import Region
 from Party import Party
@@ -23,6 +27,8 @@ import traceback
 import sys
 import json
 import os
+import requests
+import pprint
 
 class ParserMain:
     politicianList = []
@@ -103,6 +109,149 @@ class ParserMain:
                             print(e)
         print("stub")
 
+    def parseAttendance(self):
+        con, cur = self.dbConnect()
+        # pdfDir = 'E:\work\Frankly\pdfParser\InformationClass\Json'
+        pdfDir = 'D:\code\Frankly\pdfParser\InformationClass/attendance'
+        fileList = os.listdir(pdfDir)
+        for fileName in fileList:
+            if(fileName.endswith(".txt")):
+                with open(pdfDir + "/" + fileName, encoding="UTF8") as file:
+                    print(fileName)
+
+                    string = file.readline()
+                    token = string.split("|")
+                    if(token[0] == "구분"):
+                        conferenceNumber = token[1].replace("\n", "")
+
+                    else:
+                        print( fileName + " file error")
+
+                    # 차수 계산
+                    string = file.readline()
+                    token = string.split("|")
+                    if(token[0] == "의원명"):
+                        attendanceLength = len(token) - 8
+                    else:
+                        print( fileName + " file error")
+
+                    # 날짜 리스트 추출
+
+                    dateList = []
+                    conferenceIDList = []
+
+                    string = file.readline()
+                    token = string.split("|")
+
+                    if(token[0].startswith("(") and attendanceLength == len(token)):
+                        conference = ConferenceSchedule()
+                        for date in token:
+                            # 정규표현식으로 숫자들 추출 date 패턴으로 변경
+                            number = re.findall('\d+', date)
+                            fixedDate = number[0] + "-" + number[1] + "-" + number[2]
+                            result = conference.search(cur, fixedDate)
+                            if(result != None):
+                                conferenceID = result[0]
+                            else:
+                                print(token[0] + fixedDate + " 회의정보에러 " + fileName )
+                                continue
+
+                            dateList.append(fixedDate)
+                            conferenceIDList.append(conferenceID)
+                    else:
+                        print( fileName + " file error")
+
+
+
+                    pp = Politician()
+                    statement = True
+                    while statement:
+                        string = file.readline()
+
+                        if(string == ''):
+                            statement = False
+
+                        token = string.split("|")
+                        # 페이지 변경
+                        if(token[0] == "구분"):
+                            string = file.readline()
+                            string = file.readline()
+                            string = file.readline()
+                            token = string.split("|")
+
+                        # 국회의원 ID 검색
+                        result = pp.selectNameID(cursor= cur,\
+                                        value= token[0],\
+                                        column= "politicianName")
+                        if(result != None):
+                            politicianID = result[0]
+                        else:
+                            print(token[0] + " 사퇴")
+                            continue
+
+                        attendanceList = []
+
+                        for index in range(attendanceLength):
+                            # 국회의원 임명 전 처리
+                            if(token[index+2]=="-"):
+                                continue
+                            attendance = Attendance()
+
+                            attendance.conferenceID = conferenceIDList[index]
+                            # attendance.conferenceDate = dateList[index]
+                            attendance.politicianID = politicianID
+                            attendance.attendanceCheck(token, index)
+                            attendanceList.append(attendance)
+
+    #                    출석 카운트 맞는지 체크
+                        self.attendanceVaildateCheck(attendanceList, token)
+
+                        for attendance in attendanceList:
+                            try:
+                                attendance.insert(cursor=cur)
+                                con.commit()
+                            except Exception as e:
+                                print("출석정보 중복. 더 이상 삽입이 필요없거나 데이터 확인이 필요합니다.")
+                                return
+
+
+
+        con.close()
+
+
+
+
+    def attendanceVaildateCheck(self, attendanceList, token):
+        # token 순서 예시  강기윤|국민의힘|결석|출석|2|1|1|0|0|0
+        attendanceCount = 0
+        petitionLeave = 0
+        businessTrip = 0
+        absence = 0
+        for attendance in attendanceList:
+            if(attendance.attendance == True):
+                attendanceCount += 1
+            elif(attendance.petitionLeave == True):
+                petitionLeave += 1
+            elif(attendance.businessTrip == True):
+                businessTrip += 1
+            else:
+                absence += 1
+
+        result = attendanceCount + petitionLeave + businessTrip + absence
+
+        # 뒤에서부터 탐색
+        if(attendanceCount == int(token[len(token)-5]) and\
+                petitionLeave == int(token[len(token)-3]) and\
+                businessTrip == int(token[len(token)-2]) and\
+                result == int(token[len(token)-6])):
+            # print(str(token[0]) + "출석 OK")
+            return True
+        else:
+            print(str(token[0]) + "출석 집계 에러")
+            return False
+
+
+
 
     def jsonParse(self):
 
@@ -138,6 +287,32 @@ class ParserMain:
             # print("stub")
 
         jsonObject.close()
+
+    def getScheduleFromAPI(self):
+        con, cur = self.dbConnect()
+        api = ScheduleAPI(sApiID=1)
+        api.setAPIInfo(cur)
+
+        # json 데이터 이상.. 2002년 데이터도 들어가있음 걸러내야함.
+        params = {'Key': api.secretKey, 'Type': 'json',\
+                  'pIndex': 1, 'pSize' : 92, 'UNIT_CD' : '100021'}
+        response = requests.get(api.scheduleURL, params=params)
+        contents = response.text
+
+        scheduleJson = json.loads(contents)
+        pattern = r'[^0-9]'
+
+        for parsedJson in scheduleJson['nekcaiymatialqlxr'][1]["row"]:
+            schedule = ConferenceSchedule()
+            schedule.generation = re.sub(pattern,'',parsedJson["UNIT_NM"])
+            schedule.conferenceTitle = parsedJson['MEETINGSESSION']
+            schedule.conferenceDate = parsedJson['MEETTING_DATE']
+            schedule.conferenceSession = re.sub(pattern,'',parsedJson['CHA'])
+            schedule.insert(cursor=cur)
+        con.commit()
+        con.close()
+
+
 
 
     def makeRegion(self):
@@ -215,8 +390,10 @@ class ParserMain:
 
 
     def dbConnect(self):
-        dbinfoDir = "E:\work\Frankly\pdfParser\InformationClass/dbinfo.info"
+        # dbinfoDir = "E:\work\Frankly\pdfParser\InformationClass/dbinfo.info"
+        dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
         with open(dbinfoDir, encoding="UTF8") as dbInfo:
+
 
             IP  = dbInfo.readline().split(" ")[1].replace("\n", "")
             port = dbInfo.readline().split(" ")[1].replace("\n", "")
@@ -239,7 +416,11 @@ if option == '1':
 
     parser.parseJsonToPolitician()
 
-if option == '2':
-    parser.parseAttendancePDF()
+elif option == '2':
+    # parser.parseAttendancePDF()
+    parser.parseAttendance()
+
+elif option == '3':
+    parser.getScheduleFromAPI()
 
 

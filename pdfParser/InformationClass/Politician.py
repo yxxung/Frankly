@@ -218,12 +218,12 @@ class Politician:
         try:
             if(column == "politicianID"):
                 sql = "SELECT politicianName FROM Politician " +\
-                      "WHERE politicianID = '" + value +"'"
+                      "WHERE politicianID = %s"
             elif(column == "politicianName"):
                 sql = "SELECT politicianID FROM Politician " + \
-                      "WHERE politicianName = '" + value +"'"
+                      "WHERE politicianName = %s"
 
-            cursor.execute(sql)
+            cursor.execute(sql,(value))
 
             return cursor.fetchone()
         except Exception as e:
@@ -234,14 +234,14 @@ class Politician:
         cursor.execute(sql)
 
 
-    def selectPoliticiandef(self, cursor, value, column):
-
-        if(column == "politicianID"):
-            sql = "SELECT * FROM Politician" + \
-                  "WHERE PoliticianID =" + value
-        elif(column == "politicianName"):
-            sql = "SELECT * FROM Politician" + \
-                  "WHERE PoliticianName =" + value
+    # def selectPoliticiandef(self, cursor, value, column):
+    #
+    #     if(column == "politicianID"):
+    #         sql = "SELECT * FROM Politician" + \
+    #               "WHERE PoliticianID =" + value
+    #     elif(column == "politicianName"):
+    #         sql = "SELECT * FROM Politician" + \
+    #               "WHERE PoliticianName =" + value
 
 
 
