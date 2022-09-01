@@ -47,11 +47,16 @@ class ConferenceSchedule:
 
     # ----------------------
 
-    def search(self, cursor, date):
+    def search(self, cursor, input, column):
         try:
-            sql = "SELECT conferenceID FROM ConferenceSchedule "+ \
-                  "WHERE conferenceDate = %s"
-            cursor.execute(sql,(date))
+            if(column == "conferenceDate"):
+                sql = "SELECT * FROM ConferenceSchedule "+ \
+                      "WHERE conferenceDate = %s"
+                cursor.execute(sql,(input))
+            elif(column == "conferenceTitle"):
+                sql = "SELECT * FROM ConferenceSchedule "+ \
+                      "WHERE conferenceTitle = %s"
+                cursor.execute(sql,(input))
 
             return cursor.fetchone()
         except Exception as e:

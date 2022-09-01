@@ -20,6 +20,8 @@ import json
 import os
 import traceback
 
+from InformationClass.Party import Party
+
 
 class Politician:
 
@@ -213,17 +215,21 @@ class Politician:
                "','" + self.aide + "','" + self.secretary +"','" + self.personalAssistant + "')"
         cursor.execute(sql)
 
-    def selectNameID(self, cursor, value, column):
+    def selectNameID(self, cursor, input, column):
 
         try:
             if(column == "politicianID"):
                 sql = "SELECT politicianName FROM Politician " +\
                       "WHERE politicianID = %s"
+                cursor.execute(sql,(input[0]))
             elif(column == "politicianName"):
                 sql = "SELECT politicianID FROM Politician " + \
-                      "WHERE politicianName = %s"
-
-            cursor.execute(sql,(value))
+                      "WHERE politicianName = %s OR hanName = %s AND partyName = %s"
+                cursor.execute(sql,(input[0],input[0], input[1]))
+            elif(column == "142"):
+                sql = "SELECT politicianID FROM Politician " + \
+                      "WHERE politicianName = %s AND regionID = 142"
+                cursor.execute(sql,(input))
 
             return cursor.fetchone()
         except Exception as e:

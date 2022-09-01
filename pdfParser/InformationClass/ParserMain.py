@@ -142,18 +142,27 @@ class ParserMain:
 
                     string = file.readline()
                     token = string.split("|")
-
+                    index = 0
                     if(token[0].startswith("(") and attendanceLength == len(token)):
                         conference = ConferenceSchedule()
                         for date in token:
+                            index += 1
                             # 정규표현식으로 숫자들 추출 date 패턴으로 변경
                             number = re.findall('\d+', date)
                             fixedDate = number[0] + "-" + number[1] + "-" + number[2]
-                            result = conference.search(cur, fixedDate)
+                            result = conference.search(cur, fixedDate, "conferenceDate")
                             if(result != None):
                                 conferenceID = result[0]
                             else:
-                                print(token[0] + fixedDate + " 회의정보에러 " + fileName )
+                                print(token[0] + fixedDate + " 회의정보누락 " + fileName )
+                                newSchedule = ConferenceSchedule()
+                                newSchedule.conferenceDate = fixedDate
+                                newSchedule.conferenceTitle = fileName.replace("(", "국회(").replace("임", "임시회)")
+                                newSchedule.generation = conference.search(cur, newSchedule.conferenceTitle, "conferenceTitle")[0]
+                                newSchedule.conferenceSession = index
+                                newSchedule.insert(cur)
+                                print(newSchedule.conferenceDate + "삽입")
+                                result = conference.search(cur, fixedDate, "conferenceDate")
                                 continue
 
                             dateList.append(fixedDate)
@@ -180,9 +189,16 @@ class ParserMain:
                             token = string.split("|")
 
                         # 국회의원 ID 검색
-                        result = pp.selectNameID(cursor= cur,\
-                                        value= token[0],\
-                                        column= "politicianName")
+                        ppName = token[0].split("(")
+                        if(len(ppName) == 2 and ppName[1] == "비)"):
+                            result = pp.selectNameID(cursor= cur,\
+                                                     input = ppName[0],\
+                                                     column="142")
+                        else:
+                            input = [ppName[0], token[1]]
+                            result = pp.selectNameID(cursor= cur,\
+                                            input= input,\
+                                            column= "politicianName")
                         if(result != None):
                             politicianID = result[0]
                         else:
