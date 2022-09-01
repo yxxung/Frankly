@@ -17,6 +17,7 @@ class PropertyMainParser:
     # # __politicianPosition = None
     # politicianList = None
     # politicianParser = None
+    period = 0
 
 
 
@@ -107,6 +108,18 @@ class PropertyMainParser:
 
     def parse(self):
         cnt = 0
+        string = self.file.readline()
+        token = string.split("제")
+        if(len(token)>1):
+            self.period = token[1][0:4]
+        else:
+            string = self.file.readline()
+            if(len(token)>1):
+                token = string.split("제")
+                self.period = token[1][0:4]
+            else:
+                print("period error")
+
         self.checkPoliticianPosition()
 
         # for index in range(len(self.politicianList)-1) :
@@ -122,9 +135,6 @@ class PropertyMainParser:
             parser.parse()
             print(politician.name, " OK ", cnt)
             cnt += 1
-
-
-        print("test")
         self.recordPolitician()
         self.file.close()
 
@@ -166,6 +176,7 @@ class PropertyMainParser:
                 tokenList.insert(4, "국회의원")
             self.addPolitician(tokenList, 1)
             # print(tokenList[5], " add OK")
+        # elif
 
 
 
@@ -205,17 +216,16 @@ class PropertyMainParser:
                     newFile.write("\""+propertyChange.category +"\" :")
                     self.changeRecord(newFile, propertyChange)
                     if(count < len(politician.politicianPropertyChangeList)):
-                        newFile.write("\t},\n")
+                        newFile.write("\n\t},\n")
                     else:
                         newFile.write("\t}\n")
             newFile.write("}],\n")
-            newFile.write("\"재산변동\": [{\n")
+            newFile.write("\"재산변동\": [\n")
             count = 0
             for propertyChange in politician.politicianPropertyChangeDetailList:
                 count += 1
                 if propertyChange != None:
                     section = propertyChange.category
-                    newFile.write("\""+section +"\" :")
                     if section == "예금(소계)" or section ==  "정치자금(소계)" or propertyChange.deepCategory =="금융채무" or propertyChange.deepCategory == "상장주식" or propertyChange.deepCategory == "비상장주식":
                         self.changeDetailBankRecord(newFile, propertyChange)
                     else:
@@ -225,7 +235,7 @@ class PropertyMainParser:
                     else:
                         newFile.write("}\n")
 
-            newFile.write("}],\n")
+            newFile.write("],\n")
 
 
             # 총액 변동 삽입
@@ -258,18 +268,22 @@ class PropertyMainParser:
             newFile.write("\t\"감소액\": ")
             newFile.write("\""+getProperty.totalDecrease.replace(",","")+"\""+ ",\n")
             newFile.write("\t\"현재가액\": ")
-            newFile.write("\""+getProperty.presentValue.replace(",","")+"\""+ "\n")
+            newFile.write("\""+getProperty.presentValue.replace(",","")+"\"")
             if(getProperty.category =="총계"):
-                newFile.write("\t\"증감액\": ")
-                newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\""+ "\n")
+                newFile.write(",\n\t\"증감액\": ")
+                newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\"")
             # newFile.write("\t\"재산끝\": ")
             # newFile.write(str(getProperty.fileEndPosition))
 
     def changeDetailRecord(self, newFile, getProperty):
         newFile.write("{\n\t\"종류\": ")
         newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
+        newFile.write("\t\"기간\": ")
+        newFile.write("\""+self.period.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"상세종류\": ")
         newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"관계\": ")
+        newFile.write("\""+getProperty.whos.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"재산명세\": ")
         newFile.write("\""+getProperty.propertyDetail.replace(",","")+"\""+ ",\n")
         newFile.write("\t\"종전가액\": ")
@@ -288,6 +302,14 @@ class PropertyMainParser:
     def changeDetailBankRecord(self, newFile, getProperty):
         newFile.write("{\n\t\"종류\": ")
         newFile.write("\""+getProperty.category.replace(",","").split("(")[0]+"\"" + ",\n")
+        newFile.write("\t\"기간\": ")
+        newFile.write("\""+self.period.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"상세종류\": ")
+        newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"관계\": ")
+        newFile.write("\""+getProperty.whos.replace(",","")+"\""+ ",\n")
+        newFile.write("\t\"재산명세원본\": ")
+        newFile.write("\""+getProperty.tempChangeDetail.replace(",","")+"\""+ ",\n")
         # newFile.write("\t\"상세종류\": ")
         # newFile.write("\""+getProperty.deepCategory.replace(",","")+"\""+ ",\n")
         if(len(getProperty.propertyDetail)!= 0):
