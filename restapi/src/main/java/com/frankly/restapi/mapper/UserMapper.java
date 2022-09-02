@@ -1,6 +1,5 @@
 package com.frankly.restapi.mapper;
 
-import com.frankly.restapi.domain.MemberDTO;
 import com.frankly.restapi.domain.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,11 +18,11 @@ public interface UserMapper {
 
     public void createUser(UserDTO userDTO) throws Exception;
 
-    public UserDTO readUser(Long userId) throws Exception;
+    public UserDTO readUser(int userID) throws Exception;
 
     public void updateUser(UserDTO userDTO) throws Exception;
 
-    public void deleteUser(Long userId) throws Exception;
+    public void deleteUser(int userID) throws Exception;
 
     public UserDTO getUserByEmail(String userEmail) throws Exception;
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.PoliticianMapper">
+
+    <resultMap type="PoliticianDTO" id = "politicianResultMap">
+        <id column="politicianID" property="politicianID"/>
+        <result column="politicianName" property="politicianName"/>
+        <result column="hanName" property="hanName"/>
+        <result column="engName" property="engName"/>
+        <result column="lunar" property="lunar"/>
+        <result column="birthday" property="birthday"/>
+        <result column="partyID" property="partyID"/>
+        <result column="partyName" property="partyName"/>
+        <result column="regionID" property="regionID"/>
+        <result column="selectNumber" property="selectNumber"/>
+        <result column="selectInfo" property="selectInfo"/>
+        <result column="sex" property="sex"/>
+        <result column="contact" property="contact"/>
+        <result column="office" property="office"/>
+        <result column="email" property="email"/>
+        <result column="homepage" property="homepage"/>
+        <result column="aide" property="aide"/>
+        <result column="secretary" property="secretary"/>
+        <result column="personalAssistant" property="personalAssistant"/>
+    </resultMap>
+
+    <select id="politicianList" resultMap="politicianResultMap">
+        SELECT *
+        FROM frankly.politician
+    </select>
+
+
+    <!--    Mapper 매서드 이름과 Mapping-->
+    <select id="readPolitician" resultMap="politicianResultMap">
+        SELECT * FROM frankly.politician
+        WHERE politicianID = #{politicianID}
+    </select>
+
+    <insert id="createPolitician" parameterType="PoliticianDTO">
+        INSERT INTO frankly.politician
+        VALUES (#{politicianName}
+               , #{hanName}
+               , #{engName}
+               , #{lunar}
+               , #{birthday}
+               , #{partyID}
+               , #{partyName}
+               , #{regionID}
+               , #{selectNumber}
+               , #{selectInfo}
+               , #{sex}
+               , #{contact}
+               , #{office}
+               , #{email}
+               , #{homepage}
+               , #{aide}
+               , #{secretary}
+               , #{personallAssitant}
+               , #{politicianID})
+    </insert>
+
+</mapper>

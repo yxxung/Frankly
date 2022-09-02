@@ -3,10 +3,10 @@
 
 <mapper namespace="com.frankly.restapi.mapper.BoardMapper">
 
-<!--    resultmap 복습필요.-->
+    <!--    resultmap 복습필요.-->
     <resultMap type="BoardDTO" id="boardResultMap">
-        <id column="id" property="id"/>
-        <result column="author" property="author"/>
+        <id column="boardID" property="boardID"/>
+        <result column="userID" property="userID"/>
         <result column="regDate" property="regDate"/>
         <result column="marked" property="marked"/>
         <result column="title" property="title"/>
@@ -14,35 +14,36 @@
     </resultMap>
 
     <insert id="createBoard" parameterType="BoardDTO">
-    INSERT INTO member_info.board(author, regDate, marked, title, content, region)
-    VALUES(#{author}
-        ,#{regDate}
-        ,#{marked}
-        ,#{title}
-        ,#{content}
-        ,#{region})
+        INSERT INTO frankly.board(userID, regDate, marked, title, content, region)
+        VALUES(#{userID}
+              ,#{regDate}
+              ,#{marked}
+              ,#{title}
+              ,#{content}
+              ,#{region})
     </insert>
 
     <select id="readBoard" resultMap="boardResultMap">
-        SELECT * FROM member_info.board
-        WHERE id = #{id} AND region = #{region}
+        SELECT * FROM frankly.board
+        WHERE boardID = #{boardID} AND region = #{region}
     </select>
 
     <update id="updateBoard" parameterType="BoardDTO">
-        UPDATE member_info.board
+        UPDATE frankly.board
         SET marked = #{marked},
             title = #{title},
             content = #{content}
-        WHERE id = #{id} AND region = #{region}
+        WHERE boardID = #{boardID} AND region = #{region}
     </update>
 
-
     <delete id="deleteBoard" parameterType="BoardDTO">
-        DELETE FROM member_info.board
-        WHERE id = #{id} AND region = #{region}
-
+        DELETE FROM frankly.board
+        WHERE boardID = #{boardID} AND region = #{region}
     </delete>
 
-
+    <select id="allBoardList" resultMap="boardResultMap">
+        SELECT * FROM frankly.board
+        WHERE region = #{region}
+    </select>
 
 </mapper>
