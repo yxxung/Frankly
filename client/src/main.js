@@ -8,5 +8,5 @@ axios.defaults.baseURL = 'http://localhost:8080'
 
 //createApp(App).use(store).use(router).mount('#app')
 const app = createApp(App)
-app.config.globalProperties.axios = axios;
-app.use(store).use(router).mount('#app')
+app.config.globalProperties.$axios = axios;
+app.use(store).use(router).mount('#app');

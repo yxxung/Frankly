@@ -63,6 +63,7 @@ public class BoardController {
 
   }
 
+  //start == 지역 번호
   @GetMapping("/{region}/{start}")
     public ResponseEntity<BoardDTO> getBoardList(@PathVariable Long start) throws Exception{
 

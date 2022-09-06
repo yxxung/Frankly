@@ -23,6 +23,7 @@
         ,#{region})
     </insert>
 
+    <!-- 게시글 정보 조회 -->
     <select id="readBoard" resultMap="boardResultMap">
         SELECT * FROM member_info.board
         WHERE id = #{id} AND region = #{region}

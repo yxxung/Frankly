@@ -3,7 +3,7 @@
         <div class="wrap">
             <!--헤더-->
             <header class="header header--back">
-                <a class="icon-button-56 header__back-button" href="/Home">
+                <a class="icon-button-56 header__back-button" href="/">
                     <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
                 </a>
                 <a class="icon-button-56 header-right-icon" href="index.html">
@@ -24,7 +24,7 @@
               <div class="mypage-bookmark-politician"></div>
             </div>
 
-            
+
 
             <Navigation />
         </div>
