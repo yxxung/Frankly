@@ -223,15 +223,15 @@ class Politician:
                       "WHERE politicianID = %s"
                 cursor.execute(sql,(input[0]))
             elif(column == "politicianName"):
-                sql = "SELECT politicianID FROM Politician " + \
-                      "WHERE politicianName = %s OR hanName = %s AND partyName = %s"
+                sql = "SELECT politicianID, regionID FROM Politician " + \
+                      "WHERE (politicianName = %s OR hanName = %s) AND partyName = %s"
                 cursor.execute(sql,(input[0],input[0], input[1]))
             elif(column == "142"):
-                sql = "SELECT politicianID FROM Politician " + \
+                sql = "SELECT politicianID, regionID FROM Politician " + \
                       "WHERE politicianName = %s AND regionID = 142"
                 cursor.execute(sql,(input))
 
-            return cursor.fetchone()
+            return cursor.fetchall()
         except Exception as e:
             traceback.print_exc()
             return None
