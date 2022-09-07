@@ -32,8 +32,8 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public UserDTO getUser(Long userId) throws Exception {
-        return userMapper.readUser(userId);
+    public UserDTO getUser(int userID) throws Exception {
+        return userMapper.readUser(userID);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public void deleteUser(Long userId) throws Exception {
-        userMapper.deleteUser(userId);
+    public void deleteUser(int userID) throws Exception {
+        userMapper.deleteUser(userID);
 
     }
 

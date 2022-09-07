@@ -49,55 +49,6 @@ class Politician:
         self.fileEndPosition = pos
 
     @property
-    def getLandProperty(self):
-        return self.Land
-
-    @getLandProperty.setter
-    def setLandProperty(self, land):
-        self.Land = land
-
-    @property
-    def getRealEstate(self):
-        return self.RealEstate
-
-    @getRealEstate.setter
-    def setRealEstate(self, re):
-        self.RealEstate = re
-
-    @property
-    def getRealRight(self):
-        return self.RealRight
-
-    @getRealRight.setter
-    def setRealRight(self, rr):
-        self.RealRight = rr
-
-    @property
-    def getDeposit(self):
-        return self.Deposit
-
-    @getDeposit.setter
-    def setDeposit(self, deposit):
-        self.Deposit = deposit
-
-    @property
-    def getPoliticDeposit(self):
-        return self.Deposit
-
-    @getPoliticDeposit.setter
-    def setPoliticDeposit(self, deposit):
-        self.PoliticDeposit = deposit
-
-
-    @property
-    def getDebt(self):
-        return self.Debt
-
-    @getDebt.setter
-    def setDebt(self, debt):
-        self.Debt = debt
-
-    @property
     def getPoliticianPropertyChangeList(self):
         return self.politicianPropertyChangeList
 

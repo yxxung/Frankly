@@ -20,7 +20,7 @@ import java.util.Set;
 public class UserDTO implements UserDetails {
 
     //Id와, EMail 모두 unique
-    private Long id;
+    private int userID;
     private String email;
     private String contact;
 
@@ -67,6 +67,10 @@ public class UserDTO implements UserDetails {
 
     @Override
     public String getUsername() {
+        return name;
+    }
+
+    public String getEmail() {
         return email;
     }
 

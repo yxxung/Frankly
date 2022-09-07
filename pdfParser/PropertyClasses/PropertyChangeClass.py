@@ -8,14 +8,8 @@
 class PropertyChange:
     # 단위액
     plusNum = ",000"
-    # fileStartPos = 0
-    # fileEndPos = 0
-    # totalIncrease = 0
-    # totalDecrease = 0
-    # presentValue = 0
-    # previousValue = 0
-    # category = None
-    # reason = None
+
+    # 이름 바꿔야함 나중에.
 
     def __init__(self):
         self.previousValue = None

@@ -1,12 +1,11 @@
-import re
-from PropertyClasses.PropertyChangeClass import PropertyChange
-import copy
-import re
-
-
-
 '''
 @author 최제현
+
+변경된 설계 반영 시작
+@date 22/01/08
+
+1차 리펙토링 시작
+@date 22/08/01
 
 1차 merge
 @date 22/08/18
@@ -14,7 +13,7 @@ import re
 총 변환 액수 추가
 @date 22/08/19
 
-개선필요사항 : 
+개선필요사항 :
 
 우선 실거래가 무시하여 작성(22/08/19)
 설계에 맞게 리펙토링 필요.
@@ -26,6 +25,10 @@ import re
 
 
 '''
+
+from PropertyClasses.PropertyChangeClass import PropertyChange
+import copy
+import re
 
 
 class PoliticianPropertyParser():
@@ -148,6 +151,11 @@ class PoliticianPropertyParser():
 
         pc = PropertyChange()
         pc.whos = tokenList[0]
+        pc.category = section
+
+        # 은행 및 증권리스트 저장용.
+
+
         tempReason = ""
 
 
@@ -155,11 +163,17 @@ class PoliticianPropertyParser():
         if(len(tokenList) > 6):
             pc.deepCategory = tokenList[1]
         else:
-            pc.deepCategory = "None"
+            pc.deepCategory = section
 
-
+        if(section == "증권(소계)"):
+            pc.deepCategory = tokenList[1]
+        elif(section == "예금(소계)"):
+            pc.deepCategory = "예금"
+        elif( section ==  "정치자금(소계)"):
+            pc.deepCategory = "정치자금"
         #     은행 여러개 입력되어 있는 부분 처리.
         if section == "예금(소계)" or section ==  "정치자금(소계)" or pc.deepCategory == "금융채무" or pc.deepCategory == "상장주식" or pc.deepCategory == "비상장주식":
+            pc.tempChangeDetail = tokenList[pos-1]
             detailTokenList = re.split(r', ',tokenList[pos-1].replace("(주)", "").replace("(보험)",""))
             tokenIndex = 0
             newList =[]
@@ -208,14 +222,14 @@ class PoliticianPropertyParser():
 
 
 
-                # ETF이름들 ;;
-                if (tempTokenList[0] == "KODEX"):
-                    tempTokenList[0] += " " + tempTokenList[1]
-                    tempTokenList.pop(1)
-                elif (tempTokenList[0] == "Standard"):
-                    tempTokenList[0] += " " + tempTokenList[1] + " " + tempTokenList[2]
-                    tempTokenList.pop(1)
-                    tempTokenList.pop(1)
+                # # ETF이름들 ;;
+                # if (tempTokenList[0] == "KODEX"):
+                #     tempTokenList[0] += " " + tempTokenList[1]
+                #     tempTokenList.pop(1)
+                # elif (tempTokenList[0] == "Standard"):
+                #     tempTokenList[0] += " " + tempTokenList[1] + " " + tempTokenList[2]
+                #     tempTokenList.pop(1)
+                #     tempTokenList.pop(1)
 
 
                 blankCount = 0

@@ -1,7 +1,17 @@
+'''
+@Author 최제현
+@date 22/1/07
+
+tokenize를 위해 구분자 변경
+@date 22/08/01
+
+pdf
+
+'''
+
+
 import pdfplumber
 import os
-
-
 
 table_settings = {
     "vertical_strategy" : "lines_strict",
@@ -11,19 +21,35 @@ table_settings = {
     "text_x_tolerance": 1
 }
 
-pdfDir = './moneyPDF'
+pdfDir = 'D:\code\Frankly\pdfParser\PropertyClasses\moneyPDF'
+
+txtDir = 'D:\code\Frankly\pdfParser\PropertyClasses\moneyTXT'
+
+
+# pdfDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyPDF'
+
+# txtDir = 'E:\work\Frankly\pdfParser\PropertyClasses\Parsers\moneyTXT'
+
+# pdfDir = './moneyPDF'
+
+# txtDir = './moneyTXT'
+
+
 fileList = os.listdir(pdfDir)
 
-txtDir = './moneyTXT'
+
 
 for fileName in fileList:
     txtName = txtDir+ "/" + fileName.replace(".pdf","") + ".txt"
 
     f = open(txtName,'w', encoding="UTF-8")
     with pdfplumber.open(pdfDir+"/"+fileName) as pdf:
+
         # page = pdf.pages[1]
         # im = page.to_image(resolution=150)
         # im.reset().debug_tablefinder(table_settings).save("./debug.PNG", format="PNG")
+
+        # PDF에서 테이블 추출
         for pdf_page in pdf.pages:
             try:
                 table = pdf_page.extract_table(table_settings)

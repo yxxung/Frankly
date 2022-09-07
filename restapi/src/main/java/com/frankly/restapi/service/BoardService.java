@@ -24,17 +24,17 @@ public class BoardService implements BoardServiceInterface {
         String strDate = dateFormat.format(Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).getTime());
         Date date = dateFormat.parse(strDate);
         boardDTO.setRegDate(date);
-        boardDTO.setMarked(false);
+        boardDTO.setMarked(0);
         boardMapper.createBoard(boardDTO);
     }
 
     @Override
-    public void updateBoard(BoardDTO boardDTO,int region, Long targetId) throws Exception {
+    public void updateBoard(BoardDTO boardDTO, int region, int boardID) throws Exception {
 
-        BoardDTO targetBoard = boardMapper.readBoard(region, targetId);
-        if(targetBoard.getAuthor().equals(boardDTO.getAuthor())){
+        BoardDTO targetBoard = boardMapper.readBoard(region, boardID);
+        if(targetBoard.getAuthor() == (boardDTO.getAuthor())){
             try{
-                boardDTO.setId(targetId);
+                boardDTO.setBoardID(boardID);
                 boardDTO.setRegion(region);
                 boardMapper.updateBoard(boardDTO);
             }catch(SQLException e){
@@ -46,8 +46,6 @@ public class BoardService implements BoardServiceInterface {
             throw new Exception("author is different");
         }
 
-
-
     }
     @Override
     public void deleteBoard(BoardDTO boardDTO) throws Exception {
@@ -55,8 +53,8 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public BoardDTO readBoard(int region,Long id) throws Exception {
-        return boardMapper.readBoard(region, id);
+    public BoardDTO readBoard(int region, int boardID) throws Exception {
+        return boardMapper.readBoard(region, boardID);
     }
 
     @Override
@@ -64,8 +62,8 @@ public class BoardService implements BoardServiceInterface {
         return null;
     }
 
-    @Override
-    public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
-        return null;
-    }
+//    @Override
+//    public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
+//        return null;
+//    }
 }
