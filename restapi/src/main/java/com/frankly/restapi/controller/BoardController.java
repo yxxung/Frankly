@@ -15,7 +15,8 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/boards")
+//원래 api/boards였는데 /board로 수정
+@RequestMapping("/board")
 @RequiredArgsConstructor
 public class BoardController {
 
