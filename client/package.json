@@ -10,15 +10,11 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
-    "jquery": "^3.6.0",
+    "swiper": "^5.4.5",
     "vue": "^3.2.13",
-    "vue-carousel": "^0.18.0",
-    "vue-fab": "^2.3.1",
-    "vue-owl-carousel": "^2.0.3",
-    "vue-owl-carousel2": "^2.0.7",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "^4.0.3",
-    "vue-slick": "^1.1.20",
-    "vue3-carousel": "^0.1.43",
+    "vueperslides": "^3.4.2",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

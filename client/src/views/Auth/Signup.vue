@@ -74,6 +74,12 @@
 </div>
 </template>
 
+<script>
+export default {
+    name: 'Signup'
+}
+</script>
+
 <style>
 .sign-up-title {
     padding: 0 24px;

@@ -5,7 +5,7 @@
                 <img src="@/assets/icon/nav/Home.svg" alt="홈으로 이동">
                 <p>홈</p>
             </a>
-            <a href="/Community">
+            <a href="/Board">
                 <img src="@/assets/icon/nav/Chat.svg" alt="홈으로 이동">
                 <p>커뮤니티</p>
             </a>
@@ -27,7 +27,7 @@ export default {
         return {
             lists: [
                 { link: '/', title: 'Home' },
-                { link: '/Community', title: 'Community' },
+                { link: '/Board', title: 'Board' },
                 { link: '/Politician', title: 'Politician' },
                 { link: '/Mypage', title: 'Mypage' }
             ]

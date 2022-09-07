@@ -11,6 +11,7 @@
 
             <div class="politician-title">
                 <h2>대한민국 정당</h2>
+                <Slider />
             </div>
 
             <div class="political-party-list">
@@ -31,12 +32,14 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue'
+import Slider from '@/components/Slider.vue'
 import PoliticianList from '@/components/PoliticianList/PoliticianList.vue'
 export default {
   name: 'Politician',
   components: {
     'Navigation': Navigation,
-    'PoliticianList': PoliticianList
+    'PoliticianList': PoliticianList,
+    'Slider': Slider
   }
 }
 </script>
@@ -84,5 +87,20 @@ export default {
 }
 
 /*대한민국 정당*/
+.politician-title {
+    padding: 8px 24px;
+}
 
+.politician-title > h2 {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 26px;
+    /* identical to box height */
+
+    letter-spacing: -0.024em;
+
+    color: #2B2B2B;
+}
 </style>

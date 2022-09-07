@@ -1,4 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
+const path = require("path")
+
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
@@ -10,5 +12,11 @@ module.exports = defineConfig({
             `
         }
     }
-}
+},
+devServer: {
+  proxy: 'http://localhost:8081'
+},
+indexPath: '../../templates/vue/index.html',
+publicPath: '/vue',
+outputDir: path.resolve(__dirname, "../restapi/src/main/resources/static/vue")
 })

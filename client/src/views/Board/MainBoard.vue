@@ -20,7 +20,7 @@
             <div class="community-list">
                 <h4>지역 커뮤니티</h4>
                 <ul>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">서울특별시</a></li>
+                    <li><a href="/board/${board.region}"><img src="@/assets/icon/Pin.svg" alt="">서울특별시</a></li>
                     <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">부산광역시</a></li>
                     <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">대구광역시</a></li>
                     <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">인천광역시</a></li>
@@ -55,7 +55,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 export default {
-  name: 'Community',
+  name: 'Board',
   components: {
     'Navigation': Navigation
   }
