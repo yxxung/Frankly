@@ -13,5 +13,5 @@ import java.util.List;
 @Mapper
 public interface RegionNumberMapper {
 
-    public List<RegionNumberDTO> getMemberListByRegionNumber(Integer regionNumber) throws Exception;
+    public List<RegionNumberDTO> getMemberListByRegionNumber(Integer regionID) throws Exception;
 }

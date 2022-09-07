@@ -4,15 +4,13 @@
 <mapper namespace="com.frankly.restapi.mapper.RegionNumberMapper">
 
     <resultMap type="RegionNumberDTO" id = "regionResultMap">
-        <id column="id" property="id"/>
-        <result column="district" property="district"/>
-        <result column="region" property="region"/>
-        <result column="regionNumber" property="regionNumber"/>
+        <result column="regionID" property="regionID"/>
+        <result column="regionName" property="regionName"/>
     </resultMap>
 
     <select id="getMemberListByRegionNumber" resultMap="regionResultMap">
-        SELECT * FROM member_info.regionNumber
-        WHERE regionNumber = #{regionNumber}
+        SELECT * FROM frankly.regionID
+        WHERE regionID = #{regionID}
     </select>
 
 </mapper>

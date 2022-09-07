@@ -17,12 +17,13 @@
         <result column="selectInfo" property="selectInfo"/>
         <result column="sex" property="sex"/>
         <result column="contact" property="contact"/>
-        <result column="office" property="office"/>
         <result column="email" property="email"/>
         <result column="homepage" property="homepage"/>
         <result column="aide" property="aide"/>
         <result column="secretary" property="secretary"/>
         <result column="personalAssistant" property="personalAssistant"/>
+        <result column="politicianImageURL" property="politicianImageURL"/>
+
     </resultMap>
 
     <select id="politicianList" resultMap="politicianResultMap">
@@ -57,7 +58,9 @@
                , #{aide}
                , #{secretary}
                , #{personallAssitant}
-               , #{politicianID})
+               , #{politicianID}
+               , #{politicianImageURL}
+               )
     </insert>
 
 </mapper>
