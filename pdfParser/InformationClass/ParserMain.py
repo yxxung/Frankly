@@ -16,7 +16,7 @@ import pymysql
 # 파일이름, class명
 from InformationClass.ConferenceAttendance import Attendance
 from InformationClass.ConferenceSchedule import ConferenceSchedule
-from InformationClass.ScheduleAPI import ScheduleAPI
+from InformationClass.openAPI import openAPI
 from Politician import Politician
 from Region import Region
 from Party import Party
@@ -321,8 +321,8 @@ class ParserMain:
 
     def getScheduleFromAPI(self):
         con, cur = self.dbConnect()
-        api = ScheduleAPI(sApiID=1)
-        api.setAPIInfo(cur)
+        api = openAPI()
+        api.setAPIInfo(cur, "conferenceschedule")
 
         # json 데이터 이상.. 2002년 데이터도 들어가있음 걸러내야함.
         params = {'Key': api.secretKey, 'Type': 'json',\
