@@ -8,6 +8,10 @@ import Login from '../views/Auth/Login.vue'
 import FreeBoard from '../views/Board/FreeBoard.vue'
 import HotBoard from '../views/Board/HotBoard.vue'
 import BoardContext from '../views/Board/BoardContext.vue'
+import AdminBoard from '../views/Admin/AdminBoard.vue'
+import DataExtract from '../views/Admin/DataExtract.vue'
+import EditBoard from '../views/Admin/EditBoard.vue'
+import EditUser from '../views/Admin/EditUser.vue'
 
 const routes = [
   {
@@ -70,6 +74,22 @@ const routes = [
     path: '/BoardContext',
     name: 'BoardContext',
     component: BoardContext
+  },
+  {
+    path: '/AdminBoard',
+    component: AdminBoard
+  },
+  {
+    path: '/DataExtract',
+    component: DataExtract
+  },
+  {
+    path: '/EditBoard',
+    component: EditBoard
+  },
+  {
+    path: '/EditUser',
+    component: EditUser
   }
 ]
 

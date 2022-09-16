@@ -2,7 +2,7 @@
     <body>
         <div class="wrap">
             <Header />
-        
+
             <!--슬라이더-->
             <div id="slider">
                 <input type="radio" name="slider" id="slide1" checked>

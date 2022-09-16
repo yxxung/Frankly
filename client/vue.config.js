@@ -14,9 +14,10 @@ module.exports = defineConfig({
     }
 },
 devServer: {
-  proxy: 'http://localhost:8081'
+  proxy:'http://localhost:8081'
 },
 indexPath: '../../templates/vue/index.html',
-publicPath: '/vue',
-outputDir: path.resolve(__dirname, "../restapi/src/main/resources/static/vue")
+publicPath: '/',
+outputDir: path.resolve(__dirname, "../restapi/src/main/resources/static/vue"),
+
 })
