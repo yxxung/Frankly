@@ -9,12 +9,9 @@
                 </form>
             </div>
 
-            <div class="politician-title">
+            <div class="political-party-list">
                 <h2>대한민국 정당</h2>
                 <Slider />
-            </div>
-
-            <div class="political-party-list">
             </div>
 
             <div class="politician-title">
@@ -23,8 +20,9 @@
             </div>
 
             <div class="all-politician-list">
-
+                <PoliticianList />
             </div>
+
             <Navigation />
         </div>
     </body>
@@ -33,7 +31,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 import Slider from '@/components/Slider.vue'
-import PoliticianList from '@/components/PoliticianList/PoliticianList.vue'
+import PoliticianList from '@/views/Politician/PoliticianList.vue'
 export default {
   name: 'Politician',
   components: {
@@ -45,7 +43,7 @@ export default {
 </script>
 
 <style lang="style.scss">
-@import "../assets/scss/style.scss";
+@import "@/assets/scss/style.scss";
 
 /*국회의원 검색*/
 .politician-search {
@@ -53,13 +51,13 @@ export default {
     justify-content: space-evenly;
     align-items: center;
     top: 0px;
-    width: 540px;
+    padding: 8px 24px;
 }
 
 .politician-search-form__text-input {
     align-items: center;
-    width: 478px;
-    height: 34px;
+    width: 448px;
+    height: 38px;
     left: 16px;
     top: 297px;
     padding: 4px 0 4px 14px;
@@ -87,20 +85,52 @@ export default {
 }
 
 /*대한민국 정당*/
-.politician-title {
+.political-party-list {
     padding: 8px 24px;
 }
 
-.politician-title > h2 {
+.political-party-list > h2 {
+    padding-top: 10px;
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 26px;
-    /* identical to box height */
-
     letter-spacing: -0.024em;
 
     color: #2B2B2B;
+}
+
+.politician-title {
+    padding: 8px 24px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.politician-title > h2 {
+    padding-top: 10px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 26px;
+    letter-spacing: -0.024em;
+
+    color: #2B2B2B;
+}
+
+.politician-title > h3 {
+    right: 0;
+    display: flex;
+    font-size: 14px;
+    line-height: 26px;
+    letter-spacing: -0.024em;
+    font-weight: 00;
+
+    color: #818181;
+}
+
+.all-politician-list {
+    padding: 8px 24px;
 }
 </style>

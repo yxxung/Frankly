@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Board from '../views/Board/MainBoard.vue'
-import Politician from '../views/Politician.vue'
+import Politician from '../views/Politician/Politician.vue'
 import Mypage from '../views/Mypage.vue'
 import Signup from '../views/Auth/Signup.vue'
 import Login from '../views/Auth/Login.vue'

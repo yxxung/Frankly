@@ -49,8 +49,8 @@
             </div>
 
             <!--국회의원 검색-->
-            <div class="politician-search">
-                <form class="politician-search-form" action="" method="get">
+            <div class="home-politician-search">
+                <form class="home-politician-search-form" action="" method="get">
                     <input class="politician-search-form__text-input" type="text" placeholder="국회의원 검색">
                     <button class="search-button" type="submit" name="click"><img src="@/assets/icon/button.svg"></button>
                 </form>
@@ -269,7 +269,7 @@ export default {
 }
 
 /*국회의원 검색*/
-.politician-search {
+.home-politician-search {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -277,7 +277,7 @@ export default {
     width: 540px;
 }
 
-.politician-search-form__text-input {
+.home-politician-search-form__text-input {
     align-items: center;
     width: 478px;
     height: 34px;
@@ -289,7 +289,7 @@ export default {
     border-radius: 55px;
 }
 
-.politician-search-form__text-input::placeholder{
+.home-politician-search-form__text-input::placeholder{
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 300;

@@ -2,7 +2,7 @@
     <div class="wrap">
         <!--헤더-->
         <header class="header header--back">
-            <a class="icon-button-56 header__back-button" href="/Community">
+            <a class="icon-button-56 header__back-button" href="/Board">
                 <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
             </a>
             <h2>자유게시판</h2>
@@ -44,14 +44,29 @@
 import Navigation from '@/components/Navigation.vue'
 import FloatingButton from '@/components/FloatingButton.vue'
 
+import axios from 'axios';
+
 export default {
     components : {
         'Navigation': Navigation,
         'FloatingButton': FloatingButton
     },
+    data() {
+        return {
+            freeboards: []
+        }
+    },
     methods: {
         getBoardList() {
             console.log(this.$axios);
+            axios.get('/api/boards')
+            .then(response => {
+                console.log('boards', response.data)
+                this.freeboards = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            })
         }
     }
 }

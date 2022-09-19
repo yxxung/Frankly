@@ -1,10 +1,6 @@
 package com.frankly.restapi.domain;
 
-import lombok.Builder;
 import lombok.Data;
-
-import java.util.Date;
-
 
 /**
  * @author 최제현
@@ -13,12 +9,12 @@ import java.util.Date;
  * 추후 나눌 필요가 있어보임.
  */
 @Data
-@Builder
 public class PoliticianDTO {
+
     //id
-    private int politicianID;
+    private Long id;
     //이름
-    private String politicianName;
+    private String name;
     //한자명
     private String hanName;
     //영문명칭
@@ -26,15 +22,13 @@ public class PoliticianDTO {
     //음/양력
     private String lunar;
     //생년월일
-    private Date birthday;
-    //정당번호
-    private int partyID;
+    private String birthday;
     //정당명
-    private String partyName;
-    //선거구
-    private int regionID;//district;
+    private String party;
+    //선서구
+    private String district;
     //재선횟수
-    private int selectNumber;
+    private String selectNumber;
     //당선
     private String selectInfo;
     //성별
@@ -54,30 +48,7 @@ public class PoliticianDTO {
     //비서
     private String personalAssistant;
 
-    @Builder
-    public PoliticianDTO(int politicianID, String politicianName, String hanName, String engName, String lunar, Date birthday, int partyID,
-                         String partyName, int regionID, int selectNumber, String selectInfo, String sex, String contact, String office,
-                         String email, String homepage, String aide, String secretary, String personalAssistant) {
-        this.politicianID = politicianID;
-        this.politicianName = politicianName;
-        this.hanName = hanName;
-        this.engName = engName;
-        this.lunar = lunar;
-        this.birthday = birthday;
-        this.partyID = partyID;
-        this.partyName = partyName;
-        this.regionID = regionID;
-        this.selectNumber = selectNumber;
-        this.selectInfo = selectInfo;
-        this.sex = sex;
-        this.contact = contact;
-        this.office = office;
-        this.email = email;
-        this.homepage = homepage;
-        this.aide = aide;
-        this.secretary = secretary;
-        this.personalAssistant = personalAssistant;
-    }
+
     //나머지 Lombok으로 자동생성.
 
 }

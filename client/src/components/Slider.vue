@@ -38,7 +38,7 @@ export default {
 
 <style>
 .vueper-slides {
-	padding-top: 10px;
+	margin-top: 20px;
 }
 
 .vueperslide {

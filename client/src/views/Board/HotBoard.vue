@@ -2,7 +2,7 @@
     <div class="wrap">
         <!--헤더-->
         <header class="header header--back">
-            <a class="icon-button-56 header__back-button" href="/Community">
+            <a class="icon-button-56 header__back-button" href="/Board">
                 <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
             </a>
             <h2>인기게시글</h2>
