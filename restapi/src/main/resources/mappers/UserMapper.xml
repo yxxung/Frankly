@@ -5,7 +5,8 @@
 
 
     <resultMap type="UserDTO" id = "userResultMap">
-        <id column="id" property="id"/>
+        <id column="userID" property="userID"/>
+        <result column="loginID" property="loginID"/>
         <result column="email" property="email"/>
         <result column="name" property="name"/>
         <result column="password" property="password"/>
@@ -16,23 +17,23 @@
     </resultMap>
 
     <select id="userList" resultMap="userResultMap">
-        SELECT * FROM member_info.userinfo
-        ORDER BY id asc
+        SELECT * FROM frankly.User
+        ORDER BY userID asc
     </select>
 
     <select id="readUser" resultMap="userResultMap">
-        SELECT * FROM member_info.userinfo
-        WHERE id = #{id}
+        SELECT * FROM frankly.User
+        WHERE userID = #{userID}
     </select>
 
     <select id="getUserByEmail" resultMap="userResultMap">
-        SELECT email,password,auth FROM member_info.userinfo
+        SELECT email,password,auth FROM frankly.User
         WHERE email = #{email}
 
     </select>
 
     <insert id="createUser" parameterType="UserDTO">
-        INSERT INTO member_info.userinfo(email, name, password, district, sex, auth, contact)
+        INSERT INTO frankly.User(email, name, password, district, sex, auth, contact)
         VALUES(#{email},
                #{name},
                #{password},
@@ -42,19 +43,24 @@
                #{contact})
     </insert>
 
+    <select id="loginUser" resultMap="userResultMap">
+    SELECT * FROM frankly.User
+    WHERE userID = #{userID}
+    </select>
+
     <delete id="deleteUser" parameterType="Long">
-        DELETE FROM member_info.userinfo
-        WHERE id = #{id}
+        DELETE FROM frankly.User
+        WHERE userID = #{userID}
     </delete>
 
     <update id="updateUser" parameterType="UserDTO">
-        UPDATE member_info.userinfo
+        UPDATE frankly.User
         SET password = #{password},
             district = #{district},
             sex = #{sex},
             auth = #{auth},
             contact = #{contact}
-        WHERE id = #{id}
+        WHERE userID = #{userID}
     </update>
 
 
