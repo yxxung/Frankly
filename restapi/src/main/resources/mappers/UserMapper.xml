@@ -27,13 +27,13 @@
     </select>
 
     <select id="getUserByEmail" resultMap="userResultMap">
-        SELECT email,password,auth FROM frankly.User
+        SELECT email,password,userAuth FROM frankly.User
         WHERE email = #{email}
 
     </select>
 
     <insert id="createUser" parameterType="UserDTO">
-        INSERT INTO frankly.User(email, name, password, district, sex, auth, contact)
+        INSERT INTO frankly.User(email, name, password, district, sex, userAuth, contact)
         VALUES(#{email},
                #{name},
                #{password},
@@ -58,7 +58,7 @@
         SET password = #{password},
             district = #{district},
             sex = #{sex},
-            auth = #{auth},
+            userAuth = #{auth},
             contact = #{contact}
         WHERE userID = #{userID}
     </update>

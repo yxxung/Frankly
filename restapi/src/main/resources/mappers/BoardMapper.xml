@@ -14,7 +14,7 @@
     </resultMap>
 
     <insert id="createBoard" parameterType="BoardDTO">
-        INSERT INTO frankly.board(userID, regDate, marked, title, content, region)
+        INSERT INTO frankly.Board(userID, regDate, marked, title, content, region)
         VALUES(#{userID}
               ,#{regDate}
               ,#{marked}
@@ -25,12 +25,12 @@
 
     <!-- 게시글 정보 조회 -->
     <select id="readBoard" resultMap="boardResultMap">
-        SELECT * FROM frankly.board
+        SELECT * FROM frankly.Board
         WHERE boardID = #{boardID} AND region = #{region}
     </select>
 
     <update id="updateBoard" parameterType="BoardDTO">
-        UPDATE frankly.board
+        UPDATE frankly.Board
         SET marked = #{marked},
             title = #{title},
             content = #{content}
@@ -38,12 +38,12 @@
     </update>
 
     <delete id="deleteBoard" parameterType="BoardDTO">
-        DELETE FROM frankly.board
+        DELETE FROM frankly.Board
         WHERE boardID = #{boardID} AND region = #{region}
     </delete>
 
     <select id="allBoardList" resultMap="boardResultMap">
-        SELECT * FROM frankly.board
+        SELECT * FROM frankly.Board
         WHERE region = #{region}
     </select>
 

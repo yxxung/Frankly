@@ -47,18 +47,6 @@
                     <span>13</span>
                 </div>
             </li>
-
-            <li class="post-list__container">
-                <div class="post-list__title">
-                    <h3>가나다라<span>[11239]</span></h3>
-                </div>
-                <p>자 내글을 잘봐 이건말이</p>
-                <div class="post-list__info">
-                    <span>12/11</span>
-                    <img src="@/assets/icon/Like.svg" alt="좋아요">
-                    <span>20345</span>
-                </div>
-            </li>
         </ul>
         <FloatingButton />
         <Navigation />
