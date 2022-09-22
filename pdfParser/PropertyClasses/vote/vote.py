@@ -91,6 +91,13 @@ class Vote:
         politicianList = pp.selectALL(cur)
         cb = ConferenceBillLaw()
         billLawList = cb.selectAll(cur)
+        for billLaw in billLawList:
+            billLaw.checked = False
+
+        for billLaw in billLawList:
+            billLaw.checked = True
+            if(billLaw.billNumber == 2110278):
+                break
         voteAPI = openAPI()
         voteAPI.setAPIInfo(cur, "vote")
         billLawAPI = openAPI()
@@ -110,6 +117,9 @@ class Vote:
         # print("billLaw id parse finish")
 
         for billLaw in billLawList:
+            if billLaw.checked == True:
+                print("이미 완료된 bill law ")
+                continue
             voteParams = {'Key': voteAPI.secretKey, 'Type': 'json', \
                       'pIndex': 1, 'pSize' : 1000, 'AGE':21, "BILL_ID" : billLaw.billLawAPIID}
             response = json.loads(requests.get(voteAPI.URL, params=voteParams).text)
@@ -139,7 +149,7 @@ class Vote:
 
                 except Exception as e:
                     print("출석정보 중복. 더 이상 삽입이 필요없거나 데이터 확인이 필요합니다.")
-                    continue
+                    break
             con.commit()
             print("billlaw vote information insert " + voteJson['BILL_NO'])
         print("vote parse end")
