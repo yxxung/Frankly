@@ -1,3 +1,4 @@
+
 """
 
 https://developers.naver.com/docs/serviceapi/search/news/news.md#%EB%89%B4%EC%8A%A4
@@ -19,6 +20,9 @@ import json
 import datetime
 import requests
 import re
+from time import sleep
+
+
 from string import whitespace
 
 from selenium import webdriver
@@ -152,13 +156,36 @@ class News:
             n.newsKeyword = news[4]
             n.newsAbstract = news[5]
             n.newsContent = news[6]
+            n.newsContent = news[7]
             NewsList.append(n)
 
             return NewsList
+
     def selectByID(self, cursor, politicianID):
 
-        sql = "SELECT * FROM News WHERE politicianID = %s"
+        sql = "SELECT * FROM News WHERE politicianID = %s AND newsContent = \"\" "
         cursor.execute(sql,(politicianID))
+        selectNews = cursor.fetchall()
+        NewsList = []
+
+        for news in selectNews:
+            n = News()
+            n.newsID = news[0]
+            n.politicianID = news[1]
+            n.newsTitle = news[2]
+            n.newsURL = news[3]
+            n.newsKeyword = news[4]
+            n.newsAbstract = news[5]
+            n.newsDate = news[6]
+            n.newsContent = news[7]
+            NewsList.append(n)
+
+        return NewsList
+
+    def selectByIDDate(self, cursor, politicianID, startdate, enddate):
+
+        sql = "SELECT * FROM News WHERE politicianID = %s AND newsDate >= %s AND newsDate <= %s;"
+        cursor.execute(sql,(politicianID, startdate, enddate))
         selectNews = cursor.fetchall()
         NewsList = []
 
@@ -302,48 +329,52 @@ class News:
     def newsCrawling(self):
         con, cur = self.dbConnect()
         politicianList = Politician().selectALL(cur)
-        politician = politicianList[0]
         headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
         emailPattern = re.compile(r'[a-zA-Z0-9_-]+@[a-z]+.[a-z]+')
         urlPattern = re.compile(r'(?:https?:\/\/)?[-_0-9a-z]+(?:\.[-_0-9a-z]+)+')
         whiteSpacePattern = re.compile(f'[{whitespace}]+')
+        emojiPattern = re.compile('[^A-Za-z0-9가-힣 ,.\"\']')
 
         # selenium set
         # driver = webdriver.Chrome(service = Service(ChromeDriverManager().install()))
 
 
-
+        for politician in politicianList:
         # 크롤링 테스트 이후 loop 걸어서 진행
-        newsList = self.selectByID(cur, politician.politicianID)
-        for news in newsList:
-            # driver.get(news.newsURL)
-            # driver.implicitly_wait(3)
-            response = requests.get(url=news.newsURL,headers=headers)
-            bs = BeautifulSoup(response.text, "html.parser")
-            divTag = None
-            divTag = bs.find('div', {'class': 'go_trans _article_content'})
+            newsList = self.selectByID(cur, politician.politicianID)
+            print(politician.politicianName+ " parsing..")
+            for news in newsList:
+                sleep(0.08)
+                # driver.get(news.newsURL)
+                # driver.implicitly_wait(3)
+                response = requests.get(url=news.newsURL,headers=headers)
+                bs = BeautifulSoup(response.text, "html.parser")
+                divTag = None
+                divTag = bs.find('div', {'class': 'go_trans _article_content'})
 
-            if(divTag == None):
-                print(news.newsURL + " HTML 파싱 오류")
-                continue
+                if(divTag == None):
+                    print(news.newsURL + " HTML 파싱 오류")
+                    continue
 
-            # 본문 전처리
+                    # 본문 전처리
 
-            newsContent = divTag.text.replace("\n", " ")
+                newsContent = divTag.text.replace("\n", " ")
 
-            newsContent = emailPattern.sub(repl='', string=newsContent)
-            newsContent = urlPattern.sub(repl='', string=newsContent)
-            newsContent = whiteSpacePattern.sub(repl=' ', string=newsContent)
-            
-            news.newsContent = newsContent
+                newsContent = emailPattern.sub(repl='', string=newsContent)
+                newsContent = urlPattern.sub(repl='', string=newsContent)
+                newsContent = whiteSpacePattern.sub(repl=' ', string=newsContent)
+                newsContent = emojiPattern.sub(repl='', string=newsContent)
 
+                news.newsContent = newsContent
 
-            news.update(cur)
-            con.commit()
+                try:
+                    news.update(cur)
+                    con.commit()
+                except:
+                    print("update error" + newsContent)
+                    continue
+        con.close()
 
-
-n = News()
-
-# targetDate = "2020-05-01"
-# n.getNewsFromAPI(targetDate)
-n.newsCrawling()
+if __name__ == "__main__":
+    n = News()
+    n.newsCrawling()
