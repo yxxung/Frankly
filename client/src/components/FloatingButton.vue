@@ -1,12 +1,20 @@
 <template>
-    <div class="floating-button">
+    <div class="floating-button"
+    @click="write">
         <img src="@/assets/icon/Write.svg" />
     </div>
 </template>
 
 <script>
 export default {
-    name: 'FloatingButton'
+    name: 'FloatingButton',
+    methods: {
+        write() {
+            this.$router.push({
+                path: '/WriteBoard'
+            })
+        }
+    },
 }
 </script>
 

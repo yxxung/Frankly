@@ -9,14 +9,15 @@
         </header>
 
         <ul class="post-list">
-            <li class="post-list__container" id="post123">
+            <li class="post-list__container"
+            v-for="(board, boardID) in boardList" :key="boardID">
                 <div class="post-list__title">
                     <img src="@/assets/icon/Image.svg" alt="이미지 있음">
-                    <h3>정치 잘 모르는 사람들을 위...<span>[110]</span></h3>
+                    <h3>{{board.title}}<span>[110]</span></h3>
                 </div>
-                <p>자 내글을 잘봐 이건말이</p>
+                <p>{{board.content}}</p>
                 <div class="post-list__info">
-                    <span>1시간 전</span>
+                    <span>{{board.regDate}}</span>
                     <img src="@/assets/icon/Like.svg" alt="좋아요">
                     <span>13</span>
                 </div>
@@ -24,27 +25,13 @@
 
             <li class="post-list__container">
                 <div class="post-list__title">
-                    <img src="@/assets/icon/Image.svg" alt="이미지 있음">
-                    <h3>정치 잘 모르는 사람들을 위123..<span>[110]</span></h3>
-                </div>
-                <p>자 내글을 잘봐 이건말이자 내글을 잘봐 이건...</p>
-                <div class="post-list__info">
-                    <span>1시간 전</span>
-                    <img src="@/assets/icon/Like.svg" alt="좋아요">
-                    <span>13</span>
-                </div>
-            </li>
-
-            <li class="post-list__container">
-                <div class="post-list__title">
-                    <img src="@/assets/icon/Image.svg" alt="이미지 있음">
-                    <h3>정치 잘 모르는 사람들을 위...<span>[110]</span></h3>
+                    <h3>가나다라<span>[11239]</span></h3>
                 </div>
                 <p>자 내글을 잘봐 이건말이</p>
                 <div class="post-list__info">
-                    <span>1시간 전</span>
+                    <span>12/11</span>
                     <img src="@/assets/icon/Like.svg" alt="좋아요">
-                    <span>13</span>
+                    <span>20345</span>
                 </div>
             </li>
         </ul>
@@ -57,12 +44,31 @@
 import Navigation from '@/components/Navigation.vue'
 import FloatingButton from '@/components/FloatingButton.vue'
 
+import axios from 'axios';
+
 export default {
     components : {
         'Navigation': Navigation,
         'FloatingButton': FloatingButton
     },
+    data() {
+        return {
+            freeboards: []
+        }
+    },
     methods: {
+        getBoardList() {
+            console.log(this.$axios);
+            axios.get('/api/boards')
+            .then(response => {
+                console.log('boards', response.data)
+                this.freeboards = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
+
         // 무한 스크롤 정의
         handleNotificationListScroll(e) {
         const { scrollHeight, scrollTop, clientHeight } = e.target;
@@ -105,8 +111,8 @@ export default {
 }
 </script>
 
-<style lang="style.scss">
-@import "@/assets/scss/style.scss";
+<style>
+@import '@/assets/scss/style.scss';
 
 /*
 게시판 목록

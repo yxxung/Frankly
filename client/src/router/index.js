@@ -7,17 +7,24 @@ import Signup from '../views/Auth/Signup.vue'
 import Login from '../views/Auth/Login.vue'
 import FreeBoard from '../views/Board/FreeBoard.vue'
 import HotBoard from '../views/Board/HotBoard.vue'
-import BoardContext from '../views/Board/BoardContext.vue'
+import PostDetail from '../views/Board/PostDetail.vue'
 import AdminBoard from '../views/Admin/AdminBoard.vue'
 import DataExtract from '../views/Admin/DataExtract.vue'
 import EditBoard from '../views/Admin/EditBoard.vue'
 import EditUser from '../views/Admin/EditUser.vue'
+import PoliticianInfo from '../views/Politician/PoliticianInfo.vue'
+import WriteBoard from '../views/Board/WriteBoard.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/Login',
+    name: 'Login',
+    component: Login
   },
   {
     path: '/Signup',
@@ -56,7 +63,7 @@ const routes = [
   },
   {
     //콜론으로 시작하는 부분이 동적 세그먼트
-    path: '/Mypage/:userID',
+    path: '/Mypage',
     name: 'Mypage',
     component: Mypage
   },
@@ -71,9 +78,8 @@ const routes = [
     component: HotBoard
   },
   {
-    path: '/BoardContext',
-    name: 'BoardContext',
-    component: BoardContext
+    path: '/PostDetail',
+    component: PostDetail
   },
   {
     path: '/AdminBoard',
@@ -90,6 +96,14 @@ const routes = [
   {
     path: '/EditUser',
     component: EditUser
+  },
+  {
+    path: '/PoliticianInfo',
+    component: PoliticianInfo
+  },
+  {
+    path: '/WriteBoard',
+    component: WriteBoard
   }
 ]
 
