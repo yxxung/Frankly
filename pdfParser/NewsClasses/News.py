@@ -163,8 +163,8 @@ class News:
 
     def selectByID(self, cursor, politicianID):
 
-        sql = "SELECT * FROM News WHERE politicianID = %s AND newsContent = \"\" "
-        cursor.execute(sql,(politicianID))
+        sql = "SELECT * FROM News WHERE politicianID = %s AND newsContents = %s "
+        cursor.execute(sql,(politicianID,''))
         selectNews = cursor.fetchall()
         NewsList = []
 
@@ -203,6 +203,16 @@ class News:
 
         return NewsList
 
+    def selectNewsDateList(self, cursor):
+        sql = "SELECT DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-1) DAY), '%Y-%m-%d') as start,\
+                    DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-7) DAY), '%Y-%m-%d') as end,\
+                    DATE_FORMAT(`newsDate`, '%Y%u') AS `date`\
+                    FROM frankly.News\
+                    GROUP BY date;"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+
+        return result
 
     #     -----------------------------------------
     # 네이버 검색 API예제는 블로그를 비롯 전문자료까지 호출방법이 동일하므로 blog검색만 대표로 예제를 올렸습니다.
@@ -311,8 +321,8 @@ class News:
 
     def dbConnect(self):
         # dbinfoDir = "E:\work\Frankly\pdfParser\InformationClass/dbinfo.info"
-        # dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
-        dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
+        dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
+        # dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
         with open(dbinfoDir, encoding="UTF8") as dbInfo:
 
             IP  = dbInfo.readline().split(" ")[1].replace("\n", "")
