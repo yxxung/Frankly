@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.ConferenceBillLawMapper">
+
+    <resultMap type="ConferenceBillLawDTO" id="conferenceBillLawResultMap">
+        <id column="billID" property="billID"/>
+        <result column="generation" property="generation"/>
+        <result column="billTitle" property="billTitle"/>
+        <result column="proposer" property="proposer"/>
+        <result column="billResult" property="billResult"/>
+        <result column="effectiveDate" property="effectiveDate"/>
+        <result column="proposalDate" property="proposalDate"/>
+        <result column="competentCommittee" property="competentCommittee"/>
+        <result column="billNumber" property="billNumber"/>
+        <result column="billLawAPIID" property="billLawAPIID"/>
+    </resultMap>
+
+    <resultMap type="PoliticianDTO" id = "politicianResultMap">
+        <id column="politicianID" property="politicianID"/>
+        <result column="politicianName" property="politicianName"/>
+        <result column="hanName" property="hanName"/>
+        <result column="engName" property="engName"/>
+        <result column="lunar" property="lunar"/>
+        <result column="birthday" property="birthday"/>
+        <result column="partyID" property="partyID"/>
+        <result column="partyName" property="partyName"/>
+        <result column="regionID" property="regionID"/>
+        <result column="selectNumber" property="selectNumber"/>
+        <result column="selectInfo" property="selectInfo"/>
+        <result column="sex" property="sex"/>
+        <result column="contact" property="contact"/>
+        <result column="email" property="email"/>
+        <result column="homepage" property="homepage"/>
+        <result column="aide" property="aide"/>
+        <result column="secretary" property="secretary"/>
+        <result column="personalAssistant" property="personalAssistant"/>
+        <result column="politicianImageURL" property="politicianImageURL"/>
+    </resultMap>
+
+    <!-- 법률안 정보 전체 읽기
+    <select id="readConferenceBillLaw" resultMap="conferenceBillLawResultMap">
+        SELECT * FROM frankly.ConferenceBillLaw
+         WHERE billID = #{billID}
+    </select>-->
+
+    <!-- 법률안 발의 대표자 읽기-->
+    <select id="readConferenceBillLaw" resultMap="conferenceBillLawResultMap">
+        select B.*, P.politicianID
+        FROM frankly.ConferenceBillLaw B LEFT JOIN frankly.Politician P
+        on substring_index(proposer,'의원',1) = P.politicianName
+        WHERE P.politicianID = #{politicianID}
+    </select>
+
+    <!-- 법률안 정보 수정 -->
+    <update id="updateConferenceBillLaw" parameterType="ConferenceBillLawDTO">
+        UPDATE frankly.ConferenceBillLaw
+        SET generation = #{generation},
+            billTitle = #{billTitle},
+            proposer = #{proposer},
+            billResult = #{billResult},
+            effectiveDate = #{effectiveDate},
+            proposalDate = #{proposalDate},
+            competentCommittee = #{competentCommittee},
+            billNumber = #{billNumber},
+            billLawAPIID = #{billLawAPIID}
+        WHERE billID = #{billID}
+    </update>
+
+    <!-- 법률안 정보 삭제 -->
+    <delete id="deleteConferenceBillLaw" parameterType="ConferenceBillLawDTO">
+        DELETE FROM frankly.ConferenceBillLaw
+        WHERE billID = #{billID}
+    </delete>
+
+</mapper>

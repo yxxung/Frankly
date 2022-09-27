@@ -13,12 +13,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RegionNumberService implements RegionNumberServiceInterface {
 
-    private final RegionNumberMapper mapper;
+    private final RegionNumberMapper regionNumberMapper;
 
     @Override
-    public List<RegionNumberDTO> getMemeberListByRegion(Integer regionNumber) throws Exception {
-        log.info("getMemeberListByRegion : " + regionNumber);
-        return mapper.getMemberListByRegionNumber(regionNumber);
+    public List<RegionNumberDTO> getMemeberListByRegion(Integer regionID) throws Exception {
+        log.info("getMemeberListByRegion : " + regionID);
+        return regionNumberMapper.getMemberListByRegionNumber(regionID);
     }
 
 }

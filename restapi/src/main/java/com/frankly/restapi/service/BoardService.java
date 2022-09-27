@@ -59,7 +59,7 @@ public class BoardService implements BoardServiceInterface {
 
     @Override
     public List<BoardDTO> allBoardList() throws Exception {
-        return null;
+        return boardMapper.allBoardList();
     }
 
 //    @Override

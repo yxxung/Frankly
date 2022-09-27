@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.ConferenceScheduleMapper">
+
+    <resultMap type="ConferenceScheduleDTO" id="conferenceScheduleResultMap">
+        <id column="conferenceID" property="conferenceID"/>
+        <result column="generation" property="generation"/>
+        <result column="conferenceDate" property="conferenceDate"/>
+        <result column="conferenceTitle" property="conferenceTitle"/>
+        <result column="conferenceSession" property="conferenceSession"/>
+    </resultMap>
+
+    <!-- 회의 정보 읽기  conferenceDate가 오늘 날짜와 같을때-->
+    <select id="readConferenceSchedule" resultMap="conferenceScheduleResultMap">
+        SELECT generation, conferenceDate, conferenceTitle, conferenceSession
+        FROM frankly.ConferenceSchedule
+        WHERE conferenceDate = (SELECT SUBSTRING(now(), 1, 10))
+        <!-- 오늘의 회의 일정
+        SELECT generation, conferenceTitle, conferenceSession
+        FROM frankly.ConferenceSchedule
+        WHERE conferenceDate = date(now())
+        -->
+    </select>
+
+<!-- 회의 정보 수정 -->
+    <update id="updateConferenceSchedule" parameterType="ConferenceScheduleDTO">
+        UPDATE frankly.ConferenceSchedule
+        SET generation = #{generation},
+            conferenceDate = #{conferenceDate},
+            conferenceTitle = #{conferenceTitle},
+            conferenceSession = #{conferenceSession}
+        WHERE conferenceID = #{conferenceID}
+    </update>
+
+    <!-- 회의 정보 삭제 -->
+    <delete id="deleteConferenceSchedule" parameterType="ConferenceScheduleDTO">
+        DELETE FROM frankly.ConferenceSchedule
+        WHERE conferenceID = #{conferenceID}
+    </delete>
+
+</mapper>
