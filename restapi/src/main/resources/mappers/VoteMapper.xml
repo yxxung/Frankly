@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.VoteMapper">
+
+    <resultMap type="VoteDTO" id="voteResultMap">
+        <id column="voteID" property="voteID"/>
+        <result column="politicianID" property="politicianID"/>
+        <result column="billNumber" property="billNumber"/>
+        <result column="voteDate" property="voteDate"/>
+        <result column="voteResult" property="voteResult"/>
+        <result column="voteURL" property="voteURL"/>
+    </resultMap>
+
+    <!-- 회의 표결 읽기 -->
+    <select id="readVote" resultMap="voteResultMap">
+        SELECT * FROM frankly.Vote
+        WHERE politicianID = #{politicianID}
+    </select>
+
+    <!-- 회의 표결 세기 -->
+    <select id="countVote" resultMap="voteResultMap">
+        SELECT voteResult, count(voteResult) FROM frankly.Vote
+        WHERE politicianID = #{politicianID}
+        GROUP BY voteResult
+    </select>
+
+    <!-- 회의 표결 수정 -->
+    <update id="updateVote" parameterType="VoteDTO">
+        UPDATE frankly.Vote
+        SET voteID = #{voteID},
+            politicianID = #{politicianID},
+            billNumber = #{billNumber},
+            voteDate = #{voteDate},
+            voteResult = #{voteResult},
+            voteURL = #{voteURL}
+        WHERE voteID = #{voteID}
+    </update>
+
+    <!-- 회의 표결 삭제 -->
+    <delete id="deleteVote" parameterType="VoteDTO">
+        DELETE FROM frankly.Vote
+        WHERE voteID = #{voteID}
+    </delete>
+
+</mapper>

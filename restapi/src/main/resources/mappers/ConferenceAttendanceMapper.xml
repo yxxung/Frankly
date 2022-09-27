@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.ConferenceAttendanceMapper">
+
+    <resultMap type="ConferenceAttendanceDTO" id="conferenceAttendanceResultMap">
+        <id column="attendanceID" property="attendanceID"/>
+        <result column="conferenceID" property="conferenceID"/>
+        <result column="politicianID" property="politicianID"/>
+        <result column="attendance" property="attendance"/>
+        <result column="petitionLeave" property="petitionLeave"/>
+        <result column="businessTrip" property="businessTrip"/>
+    </resultMap>
+    <resultMap type="ConferenceScheduleDTO" id="conferenceScheduleResultMap">
+        <id column="conferenceID" property="conferenceID"/>
+        <result column="generation" property="generation"/>
+        <result column="conferenceDate" property="conferenceDate"/>
+        <result column="conferenceTitle" property="conferenceTitle"/>
+        <result column="conferenceSession" property="conferenceSession"/>
+    </resultMap>
+
+    <!-- 회의 출석 정보 읽기 --> <!--희차 / 출석 / 결석 / 출장 / 신고서-->
+    <select id="readConferenceAttendance" resultMap="conferenceAttendanceResultMap">
+        SELECT S.conferenceTitle, A.attendance, A.petitionLeave, A.businessTrip
+        FROM frankly.ConferenceAttendance A JOIN frankly.ConferenceSchedule S
+        ON A.conferenceID = S.conferenceID
+        WHERE politicianID = #{politicianID}
+    </select>
+
+    <!-- 회의 출석 정보 수정? -->
+    <update id="updateConferenceAttendance" parameterType="ConferenceAttendanceDTO">
+        UPDATE frankly.ConferenceAttendance
+        SET attendance = #{attendance},
+            petitionLeave = #{petitionLeave},
+            businessTrip = #{businessTrip}
+        WHERE attendanceID = #{attendanceID}, politicianID = #{politicianID}
+    </update>
+
+    <!-- 회의 출석 정보 삭제 -->
+    <delete id="deleteConferenceAttendance" parameterType="ConferenceAttendanceDTO">
+        DELETE FROM frankly.ConferenceAttendance
+        WHERE attendanceID = #{attendanceID}
+    </delete>
+
+</mapper>
