@@ -36,6 +36,7 @@ restapi/out/production/pdfParser/money3.csv
 restapi/out/production/pdfParser/money3.pdf
 restapi/out/production/pdfParser/parsed.txt
 restapi/out/production/pdfParser/parser.py
+restapi/src/main/resources/application.properties
 pdfParser/21대국회의원인적사항.json
 pdfParser/suggest_2020_04.xlsx
 pdfParser/suggest_2020_06.csv
@@ -69,3 +70,4 @@ pdfParser/PropertyClasses/moneyTXT/국회공보 제2022-31호(정기재산변동
 pdfParser/PropertyClasses/moneyTXT/국회공보 제2022-31호(정기재산변동신고).txt
 pdfParser/PropertyClasses/vote/vote21.csv
 pdfParser/PropertyClasses/vote/vote21.json
+
