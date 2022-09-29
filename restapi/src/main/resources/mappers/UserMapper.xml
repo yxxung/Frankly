@@ -6,13 +6,12 @@
 
     <resultMap type="UserDTO" id = "userResultMap">
         <id column="userID" property="userID"/>
-        <result column="loginID" property="loginID"/>
         <result column="email" property="email"/>
         <result column="name" property="name"/>
         <result column="password" property="password"/>
         <result column="district" property="district"/>
         <result column="sex" property="sex"/>
-        <result column="auth" property="userAuth"/>
+        <result column="userAuth" property="userAuth"/>
         <result column="contact" property="contact"/>
     </resultMap>
 
@@ -44,8 +43,8 @@
     </insert>
 
     <select id="loginUser" resultMap="userResultMap">
-    SELECT * FROM frankly.User
-    WHERE userID = #{userID}
+        SELECT * FROM frankly.User
+        WHERE userID = #{userID}
     </select>
 
     <delete id="deleteUser" parameterType="Long">
@@ -62,8 +61,4 @@
             contact = #{contact}
         WHERE userID = #{userID}
     </update>
-
-
-
-
 </mapper>

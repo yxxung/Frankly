@@ -3,7 +3,7 @@
     <div class="wrap">
       <!--헤더-->
       <header class="header header--back">
-        <a class="icon-button-56 header__back-button" href="/Board">
+        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
           <img src="@/assets/icon/Out.svg" alt="나가기" />
         </a>
         <h2>글쓰기</h2>
@@ -49,7 +49,7 @@
           &#10;그냥 알아서 할말 다하고 사쇼 &#10;그냥 알아서 할말 다하고 사쇼"
           maxlength="2000"
         />
-        <!--이미지 업로드-->
+        <!--이미지 업로드 !!수정하기!!-->
           <label for="file">첨부파일</label>
           <input multiple @change="onInputImage()" id="file" ref="image" type="file" />
       </div>
@@ -107,13 +107,14 @@ export default {
       formdata.append("image", this.image);
 
       axios
-        .post("/api/boards/$region/create", formdata, {
+        .post(`/api/boards/${region}/create`, formdata, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((response) => {
           //응답 처리
+          console.log(response)
         });
     },
   },

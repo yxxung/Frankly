@@ -7,13 +7,14 @@ import Signup from '../views/Auth/Signup.vue'
 import Login from '../views/Auth/Login.vue'
 import FreeBoard from '../views/Board/FreeBoard.vue'
 import HotBoard from '../views/Board/HotBoard.vue'
-import PostDetail from '../views/Board/PostDetail.vue'
+import BoardDetail from '../views/Board/BoardDetail.vue'
 import AdminBoard from '../views/Admin/AdminBoard.vue'
 import DataExtract from '../views/Admin/DataExtract.vue'
 import EditBoard from '../views/Admin/EditBoard.vue'
 import EditUser from '../views/Admin/EditUser.vue'
 import PoliticianInfo from '../views/Politician/PoliticianInfo.vue'
 import WriteBoard from '../views/Board/WriteBoard.vue'
+import SeoulBoard from '../views/Board/SeoulBoard.vue'
 
 const routes = [
   {
@@ -50,11 +51,6 @@ const routes = [
   {
     path: '/Board',
     component: Board,
-    children: [
-      {
-        path: '/:region/:start'
-      }
-    ]
   },
   {
     path: '/Politician',
@@ -78,8 +74,15 @@ const routes = [
     component: HotBoard
   },
   {
-    path: '/PostDetail',
-    component: PostDetail
+    path: '/SeoulBoard',
+    name: 'SeoulBoard',
+    component: SeoulBoard
+  },
+  {
+    path: '/BoardDetail/:boardID',
+    name: 'BoardDetail',
+    component: BoardDetail,
+    props: true
   },
   {
     path: '/AdminBoard',

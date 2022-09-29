@@ -2,7 +2,7 @@
     <div class="wrap">
     <!--헤더-->
     <header class="header header--back">
-        <a class="icon-button-56 header__back-button" href="#">
+        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
             <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
         </a>
     </header>
@@ -89,20 +89,13 @@
 
 <script>
 import axios from 'axios'
+import signup from '@/store/signup.js'
 
 export default {
     name: 'Signup',
     data() {
-        return {
-            selected_city: '',
-            selected_county: '',
-            user: {
-                userEmail: '',
-                userPassword: '',
-                userCity: '',
-                userCounty: ''
-            }
-        }
+        formData = new signup("", "", "", "")
+        valid: false
     },
     methods: {
         doSignup() {

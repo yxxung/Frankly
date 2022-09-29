@@ -17,13 +17,13 @@
         <div
           class="politician"
           v-for="politician in politicianItems"
-          :key="politician.politicianID"
+          v-bind:key="politicianID"
         >
-          <!-- 정치인 리스트 출력 -->
+        <!-- 정치인 리스트 출력 -->
           <img
             :src="require(`@/assets/politician/${politician.politicianImage}`)"
           />
-          <p>{{ politician.politicianName }}</p>
+          <h2>{{ politician.politicianName }}</h2>
         </div>
       </div>
 

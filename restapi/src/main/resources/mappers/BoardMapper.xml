@@ -26,7 +26,7 @@
     <!-- 게시글 정보 조회 -->
     <select id="readBoard" resultMap="boardResultMap">
         SELECT * FROM frankly.Board
-        WHERE boardID = #{boardID} AND region = #{region}
+        WHERE boardID = #{boardID}
     </select>
 
     <update id="updateBoard" parameterType="BoardDTO">
@@ -42,9 +42,8 @@
         WHERE boardID = #{boardID} AND region = #{region}
     </delete>
 
-    <select id="allBoardList" resultMap="boardResultMap">
+    <select id="getBoardList" resultMap="boardResultMap">
         SELECT * FROM frankly.Board
-        WHERE region = #{region}
     </select>
 
 </mapper>

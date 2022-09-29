@@ -2,7 +2,7 @@
     <div class="wrap">
         <!--헤더-->
         <header class="header header--back">
-            <a class="icon-button-56 header__back-button" href="/Board">
+            <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
                 <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
             </a>
             <h2>자유게시판</h2>
@@ -10,7 +10,7 @@
 
         <ul class="post-list">
             <li class="post-list__container"
-            v-for="(board, boardID) in boardList" :key="boardID">
+            v-for="(board, boardID) in boards" :key="boardID" @click="$router.push('BoardDetail/'+$route.params.boardID)">
                 <div class="post-list__title">
                     <img src="@/assets/icon/Image.svg" alt="이미지 있음">
                     <h3>{{board.title}}<span>[110]</span></h3>
@@ -23,7 +23,7 @@
                 </div>
             </li>
 
-            <li class="post-list__container">
+            <li class="post-list__container" @click="$router.push('BoardDetail/'+$route.params.boardID)">
                 <div class="post-list__title">
                     <h3>가나다라<span>[11239]</span></h3>
                 </div>
@@ -53,13 +53,13 @@ export default {
     },
     data() {
         return {
-            freeboards: []
+            boards: []
         }
     },
     methods: {
         getBoardList() {
             console.log(this.$axios);
-            axios.get('/api/boards')
+            axios.get('/api/boards/boardlist')
             .then(response => {
                 console.log('boards', response.data)
                 this.freeboards = response.data;
@@ -68,7 +68,7 @@ export default {
                 console.log(error)
             })
         },
-        
+
         // 무한 스크롤 정의
         handleNotificationListScroll(e) {
         const { scrollHeight, scrollTop, clientHeight } = e.target;
