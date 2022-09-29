@@ -26,6 +26,16 @@ export default {
     align-items: center;
     cursor: pointer;
     z-index: 999;
+<<<<<<< HEAD
+=======
+
+    top: 550px;
+    margin-left: 450px;
+}
+
+.floating-button:hover {
+    background: #4a4a4a;
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
 }
 
 .floationg-button img {

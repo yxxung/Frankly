@@ -5,9 +5,22 @@ import Politician from '../views/Politician.vue'
 import Mypage from '../views/Mypage.vue'
 import Signup from '../views/Auth/Signup.vue'
 import Login from '../views/Auth/Login.vue'
+<<<<<<< HEAD
 import FreeBoard from '../views/Community/FreeBoard.vue'
 import HotBoard from '../views/Community/HotBoard.vue'
 import BoardContext from '../views/Community/BoardContext.vue'
+=======
+import FreeBoard from '../views/Board/FreeBoard.vue'
+import HotBoard from '../views/Board/HotBoard.vue'
+import BoardDetail from '../views/Board/BoardDetail.vue'
+import AdminBoard from '../views/Admin/AdminBoard.vue'
+import DataExtract from '../views/Admin/DataExtract.vue'
+import EditBoard from '../views/Admin/EditBoard.vue'
+import EditUser from '../views/Admin/EditUser.vue'
+import PoliticianInfo from '../views/Politician/PoliticianInfo.vue'
+import WriteBoard from '../views/Board/WriteBoard.vue'
+import SeoulBoard from '../views/Board/SeoulBoard.vue'
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
 
 const routes = [
   {
@@ -32,9 +45,14 @@ const routes = [
     ],
   },
   {
+<<<<<<< HEAD
     path: '/Community',
     name: 'Community',
     component: Community
+=======
+    path: '/Board',
+    component: Board,
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
   },
   {
     path: '/Politician',
@@ -57,9 +75,45 @@ const routes = [
     component: HotBoard
   },
   {
+<<<<<<< HEAD
     path: '/BoardContext',
     name: 'BoardContext',
     component: BoardContext
+=======
+    path: '/SeoulBoard',
+    name: 'SeoulBoard',
+    component: SeoulBoard
+  },
+  {
+    path: '/BoardDetail/:boardID',
+    name: 'BoardDetail',
+    component: BoardDetail,
+    props: true
+  },
+  {
+    path: '/AdminBoard',
+    component: AdminBoard
+  },
+  {
+    path: '/DataExtract',
+    component: DataExtract
+  },
+  {
+    path: '/EditBoard',
+    component: EditBoard
+  },
+  {
+    path: '/EditUser',
+    component: EditUser
+  },
+  {
+    path: '/PoliticianInfo',
+    component: PoliticianInfo
+  },
+  {
+    path: '/WriteBoard',
+    component: WriteBoard
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
   }
 ]
 

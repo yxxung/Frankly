@@ -1,7 +1,10 @@
 package com.frankly.restapi.domain;
 
 import lombok.*;
+import org.apache.tomcat.jni.Local;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -14,7 +17,7 @@ public class BoardDTO {
 
     private int userID;
 
-    private Date regDate;
+    private LocalDateTime regDate;
 
     private int marked;
 
@@ -22,13 +25,13 @@ public class BoardDTO {
 
     private String content;
 
-    private int region;
+    private String region;
 
 
     @Builder
-    public BoardDTO(int boardID, int userID, Date regDate,
-                    int marked, String title, String content
-            ,int region){
+    public BoardDTO(int boardID, int userID, LocalDateTime regDate,
+                    int marked, String title, String content,
+                    String region){
         this.boardID = boardID;
         this.userID = userID;
         this.regDate = regDate;
@@ -39,7 +42,7 @@ public class BoardDTO {
     }
 
     @Builder
-    public BoardDTO(int boardID, int region){
+    public BoardDTO(int boardID, String region){
         this.boardID = boardID;
         this.region = region;
     }

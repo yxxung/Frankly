@@ -14,9 +14,9 @@ public interface BoardMapper {
 
     public void deleteBoard(BoardDTO boardDTO) throws Exception;
 
-    public BoardDTO readBoard(int region, int boardID)throws Exception;
+    public BoardDTO readBoard(int boardID)throws Exception;
 
-    public List<BoardDTO> allBoardList() throws  Exception;
+    public List<BoardDTO> getBoardList() throws  Exception;
 
     //public List<BoardDTO> pageNumberBoardList(Long pageNumber) throws Exception;
 

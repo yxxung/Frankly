@@ -13,6 +13,10 @@
         <result column="district" property="district"/>
         <result column="sex" property="sex"/>
         <result column="userAuth" property="userAuth"/>
+<<<<<<< HEAD
+=======
+        <result column="contact" property="contact"/>
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
     </resultMap>
 
     <select id="userList" resultMap="userResultMap">
@@ -42,6 +46,14 @@
                #{contact})
     </insert>
 
+<<<<<<< HEAD
+=======
+    <select id="loginUser" resultMap="userResultMap">
+        SELECT * FROM frankly.User
+        WHERE userID = #{userID}
+    </select>
+
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
     <delete id="deleteUser" parameterType="Long">
         DELETE FROM frankly.User
         WHERE userID = #{userID}
@@ -56,8 +68,4 @@
             contact = #{contact}
         WHERE userID = #{userID}
     </update>
-
-
-
-
 </mapper>

@@ -2,17 +2,38 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    access_token: sessionStorage.getItem("access_token"),
-    refresh_token: sessionStorage.getItem("refresh_token"),
-    expires_in: "",
-    claims: JSON.parse(sessionStorage.getItem("claims")),
-    intervalId: null
+    userInfo: null,
+    isLogin: false
   },
   getters: {
   },
   mutations: {
+    oginSuccess(state, payload) {
+      state.isLogin = true
+      state.userInfo = payload
+    },
+    logout(state) {
+      state.isLogin = false
+      state.userInfo = null
+      localStorage.removeItem("access_token")
+    }
   },
   actions: {
+    getAccountInfo({ commit }) {
+      let token = localStorage.getItem("access_token")
+      axios
+        .get("/userinfo", {
+          headers: {
+            "X-AUTH-TOKEN": token
+          }
+        })
+        .then((response) => {
+          commit("loginSuccess", response.data.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   },
   modules: {
   }

@@ -2,14 +2,23 @@
     <div class="wrap">
         <!--헤더-->
         <header class="header header--back">
+<<<<<<< HEAD:client/src/views/Community/FreeBoard.vue
             <a class="icon-button-56 header__back-button" href="/Community">
+=======
+            <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정):client/src/views/Board/FreeBoard.vue
                 <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
             </a>
             <h2>자유게시판</h2>
         </header>
 
         <ul class="post-list">
+<<<<<<< HEAD:client/src/views/Community/FreeBoard.vue
             <li class="post-list__container" id="post123">
+=======
+            <li class="post-list__container"
+            v-for="(board, boardID) in boards" :key="boardID" @click="$router.push('BoardDetail/'+$route.params.boardID)">
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정):client/src/views/Board/FreeBoard.vue
                 <div class="post-list__title">
                     <img src="@/assets/icon/Image.svg" alt="이미지 있음">
                     <h3>정치 잘 모르는 사람들을 위...<span>[110]</span></h3>
@@ -22,7 +31,7 @@
                 </div>
             </li>
 
-            <li class="post-list__container">
+            <li class="post-list__container" @click="$router.push('BoardDetail/'+$route.params.boardID)">
                 <div class="post-list__title">
                     <h3>가나다라<span>[11239]</span></h3>
                 </div>
@@ -48,7 +57,28 @@ export default {
         'Navigation': Navigation,
         'FloatingButton': FloatingButton
     },
+<<<<<<< HEAD:client/src/views/Community/FreeBoard.vue
     methods: {
+=======
+    data() {
+        return {
+            boards: []
+        }
+    },
+    methods: {
+        getBoardList() {
+            console.log(this.$axios);
+            axios.get('/api/boards/boardlist')
+            .then(response => {
+                console.log('boards', response.data)
+                this.freeboards = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
+
+>>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정):client/src/views/Board/FreeBoard.vue
         // 무한 스크롤 정의
         handleNotificationListScroll(e) {
         const { scrollHeight, scrollTop, clientHeight } = e.target;
