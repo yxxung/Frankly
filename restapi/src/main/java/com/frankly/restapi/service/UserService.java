@@ -51,4 +51,9 @@ public class UserService implements UserServiceInterface {
     public List<UserDTO> userList() throws Exception {
         return null;
     }
+
+    @Override
+    public void loginUser(UserDTO userDTO) throws Exception {
+        userMapper.loginUser(userDTO);
+    }
 }

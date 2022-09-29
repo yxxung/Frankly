@@ -2,7 +2,7 @@
   <div class="wrap">
     <!--헤더-->
     <header class="header header--back">
-        <a class="icon-button-56 header__back-button" href="#">
+        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
             <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
         </a>
     </header>
@@ -35,14 +35,29 @@
             </div>
             <a href="#">비밀번호 찾기</a>
         </div>
-        <button class="sign-up-form__button" onclick="location.href='/index.html'">로그인</button>
+        <button class="sign-up-form__button"
+        @click.prevent="doLogin='/index.html'">로그인</button>
     </form>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data() {
+    return {
+        userID: '',
+        userPassword: ''
+    }
+  },
+  methods: {
+    doLogin() {
+        let saveData = {};
+        saveData.userId = this.userId;
+        saveData.userPassword = this.userPassword;
+
+    }
+  },
 }
 </script>
 

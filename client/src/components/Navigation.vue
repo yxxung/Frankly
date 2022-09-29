@@ -1,22 +1,22 @@
 <template>
     <nav class="bottom-nav">
         <div class="bottom-nav-area">
-            <a href="/">
+            <router-link to="/">
                 <img src="@/assets/icon/nav/Home.svg" alt="홈으로 이동">
                 <p>홈</p>
-            </a>
-            <a href="/Board">
+            </router-link>
+            <router-link to="/Board">
                 <img src="@/assets/icon/nav/Chat.svg" alt="홈으로 이동">
                 <p>커뮤니티</p>
-            </a>
-            <a href="/Politician">
+            </router-link>
+            <router-link to="/Politician">
                 <img src="@/assets/icon/nav/NtnlAsmbl.svg" alt="홈으로 이동">
                 <p>국회의원</p>
-            </a>
-            <a href="/Mypage">
+            </router-link>
+            <router-link to="/Mypage">
                 <img src="@/assets/icon/nav/User.svg" alt="홈으로 이동">
                 <p>내 정보</p>
-            </a>
+            </router-link>
         </div>
     </nav>
 </template>
@@ -36,8 +36,8 @@ export default {
 }
 </script>
 
-<style lang="style.scss">
-@import '../assets/scss/style.scss';
+<style>
+@import '@/assets/scss/style.scss';
 
 .bottom-nav {
     position: fixed;
@@ -57,7 +57,7 @@ export default {
     justify-content: space-between;
 }
 
-.bottom-nav-area a {
+.bottom-nav-area .router-link {
     width: 56px;
     display: flex;
     flex-direction: column;

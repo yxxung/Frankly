@@ -16,7 +16,7 @@ import pymysql
 # 파일이름, class명
 from InformationClass.ConferenceAttendance import Attendance
 from InformationClass.ConferenceSchedule import ConferenceSchedule
-from InformationClass.ScheduleAPI import ScheduleAPI
+from InformationClass.openAPI import openAPI
 from Politician import Politician
 from Region import Region
 from Party import Party
@@ -157,13 +157,14 @@ class ParserMain:
                                 print(token[0] + fixedDate + " 회의정보누락 " + fileName )
                                 newSchedule = ConferenceSchedule()
                                 newSchedule.conferenceDate = fixedDate
-                                newSchedule.conferenceTitle = fileName.replace("(", "국회(").replace("임", "임시회)")
-                                newSchedule.generation = conference.search(cur, newSchedule.conferenceTitle, "conferenceTitle")[0]
+                                newSchedule.conferenceTitle = fileName.split()[0].replace("(", "국회(").replace("임", "임시회")
+                                newSchedule.generation = conference.search(cur, newSchedule.conferenceTitle, "conferenceTitle")[1]
                                 newSchedule.conferenceSession = index
                                 newSchedule.insert(cur)
+                                con.commit()
                                 print(newSchedule.conferenceDate + "삽입")
                                 result = conference.search(cur, fixedDate, "conferenceDate")
-                                continue
+                                conferenceID = result[0]
 
                             dateList.append(fixedDate)
                             conferenceIDList.append(conferenceID)
@@ -179,6 +180,7 @@ class ParserMain:
 
                         if(string == ''):
                             statement = False
+                            continue
 
                         token = string.split("|")
                         # 페이지 변경
@@ -188,6 +190,9 @@ class ParserMain:
                             string = file.readline()
                             token = string.split("|")
 
+                        if(string == ''):
+                            statement = False
+                            continue
                         # 국회의원 ID 검색
                         ppName = token[0].split("(")
                         if(len(ppName) == 2 and ppName[1] == "비)"):
@@ -195,12 +200,22 @@ class ParserMain:
                                                      input = ppName[0],\
                                                      column="142")
                         else:
+                            if(ppName[0] == "이수진" or ppName[0] == "김병욱"):
+                                print("stub")
                             input = [ppName[0], token[1]]
                             result = pp.selectNameID(cursor= cur,\
                                             input= input,\
                                             column= "politicianName")
-                        if(result != None):
-                            politicianID = result[0]
+
+                        if(len(result) != 0):
+                            politicianID = result[0][0]
+                            if(len(result) == 2):
+                                for politicianSelectResult in result:
+                                    # 같은 당 동명이인중 비례대표일 경우(비) 라고 표기는 되지만, 검색은 됨.
+                                    if(politicianSelectResult[1] != 142):
+                                        politicianID = politicianSelectResult[0]
+
+
                         else:
                             print(token[0] + " 사퇴")
                             continue
@@ -306,8 +321,8 @@ class ParserMain:
 
     def getScheduleFromAPI(self):
         con, cur = self.dbConnect()
-        api = ScheduleAPI(sApiID=1)
-        api.setAPIInfo(cur)
+        api = openAPI()
+        api.setAPIInfo(cur, "conferenceschedule")
 
         # json 데이터 이상.. 2002년 데이터도 들어가있음 걸러내야함.
         params = {'Key': api.secretKey, 'Type': 'json',\
@@ -407,7 +422,8 @@ class ParserMain:
 
     def dbConnect(self):
         # dbinfoDir = "E:\work\Frankly\pdfParser\InformationClass/dbinfo.info"
-        dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
+        # dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
+        dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
         with open(dbinfoDir, encoding="UTF8") as dbInfo:
 
 

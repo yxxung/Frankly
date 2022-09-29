@@ -2,7 +2,7 @@
     <div class="wrap">
     <!--헤더-->
     <header class="header header--back">
-        <a class="icon-button-56 header__back-button" href="#">
+        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
             <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
         </a>
     </header>
@@ -15,14 +15,21 @@
 <!--이메일-->
         <label>
             <p class="sign-up-form__input-info">이메일</p>
-            <input class="sign-up-form__text-input" type="email" placeholder="example@gmail.com">
+            <input class="sign-up-form__text-input"
+            type="email"
+            placeholder="example@gmail.com"
+            v-model="user.userEmail">
             <p class="sign-up-form__error-message">올바른 이메일 형식을 입력해주세요.</p>
         </label>
 
 <!--비밀번호-->
         <label>
             <p class="sign-up-form__input-info">비밀번호</p>
-            <input class="sign-up-form__text-input" type="email" placeholder="대소문자, 숫자, 특수문자 포함 8~16자리" maxlength="16">
+            <input class="sign-up-form__text-input"
+            type="password"
+            placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
+            maxlength="16"
+            v-model="user.userPassword">
             <p class="sign-up-form__error-message">대소문자, 숫자, 특수문자 포함 8~16자리</p>
         </label>
         <!--input 양식 에러발생 시 label 태그에 sign-up-form--error 클래스-->
@@ -35,10 +42,16 @@
         <label>
             <p class="sign-up-form__input-info">지역</p>
             <div class="dropdown-container">
-                <select class="sign-up-form__dropdown" name="city" id="city">
-                    <option value="1">서울</option>
-                    <option value="2">Dave</option>
-                    <option value="3">Pumpernickel</option>
+                <select class="sign-up-form__dropdown"
+                name="city" id="city"
+                v-model="selected_city">
+                    <option :value="{서울}">서울</option>
+                    <option :value="{서울}">서울</option>
+                    <option :value="{서울}">서울</option>
+                    <option :value="{서울}">서울</option>
+                    <option :value="{서울}">서울</option>
+                    <option :value="{서울}">서울</option>
+                    <option :value="{서울}">서울</option>
                 </select>
 
                 <select class="sign-up-form__dropdown" name="county" id="county">
@@ -75,8 +88,20 @@
 </template>
 
 <script>
+import axios from 'axios'
+import signup from '@/store/signup.js'
+
 export default {
-    name: 'Signup'
+    name: 'Signup',
+    data() {
+        formData = new signup("", "", "", "")
+        valid: false
+    },
+    methods: {
+        doSignup() {
+
+        }
+    },
 }
 </script>
 

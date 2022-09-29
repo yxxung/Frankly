@@ -36,3 +36,36 @@ restapi/out/production/pdfParser/money3.csv
 restapi/out/production/pdfParser/money3.pdf
 restapi/out/production/pdfParser/parsed.txt
 restapi/out/production/pdfParser/parser.py
+pdfParser/21대국회의원인적사항.json
+pdfParser/suggest_2020_04.xlsx
+pdfParser/suggest_2020_06.csv
+pdfParser/vote_20_06_20_12.csv
+pdfParser/vote_21_01_21_07.csv
+pdfParser/vote_21_07_.csv
+pdfParser/데이터_국회의원 발의법률안.xlsx
+pdfParser/데이터_국회의원 본회의 표결정보.xlsx
+pdfParser/데이터_국회의원 상임위 활동.xlsx
+pdfParser/표결정보_20_06.xlsx
+pdfParser/표결정보_20_06~20_12.xlsx
+pdfParser/표결정보_21_01~21_07.xlsx
+pdfParser/표결정보_21_07~.xlsx
+pdfParser/InformationClass/dbinfo.info
+pdfParser/InformationClass/debug.PNG
+pdfParser/InformationClass/attendance/제398회(임) 본회의 출결현황.pdf
+pdfParser/InformationClass/attendance/제398회(임) 본회의 출결현황.txt
+pdfParser/InformationClass/attendanceDone/제394회(임) 본회의 출결현황.pdf
+pdfParser/InformationClass/attendanceDone/제394회(임) 본회의 출결현황.txt
+pdfParser/InformationClass/attendanceDone/제395회(임) 본회의 출결현황.pdf
+pdfParser/InformationClass/attendanceDone/제395회(임) 본회의 출결현황.txt
+pdfParser/InformationClass/attendanceDone/제396회(임) 본회의 출결현황.pdf
+pdfParser/InformationClass/attendanceDone/제396회(임) 본회의 출결현황.txt
+pdfParser/InformationClass/attendanceDone/제397회(임) 본회의 출결현황.pdf
+pdfParser/InformationClass/attendanceDone/제397회(임) 본회의 출결현황.txt
+pdfParser/PropertyClasses/moneyPDF/국회공보 제2021-42호.pdf
+pdfParser/PropertyClasses/moneyPDF/국회공보 제2022-31호(정기재산변동신고).pdf
+pdfParser/PropertyClasses/moneyTXT/국회공보 제2021-42호.json
+pdfParser/PropertyClasses/moneyTXT/국회공보 제2021-42호.txt
+pdfParser/PropertyClasses/moneyTXT/국회공보 제2022-31호(정기재산변동신고).json
+pdfParser/PropertyClasses/moneyTXT/국회공보 제2022-31호(정기재산변동신고).txt
+pdfParser/PropertyClasses/vote/vote21.csv
+pdfParser/PropertyClasses/vote/vote21.json

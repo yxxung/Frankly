@@ -13,7 +13,7 @@
 
             <div class="mypage-info">
                 <div class="mypage-info-image">
-                  <img src="" alt="">
+                  <img src="@/assets/politician/정진석.png">
                 </div>
                 <h2 class="mypage-info-name">익명1</h2>
                 <h4 class="mypage-info-region">충남 아산시을1</h4>
@@ -21,10 +21,11 @@
 
             <div class="mypage-bookmark">
               <h2>북마크 국회의원</h2>
-              <div class="mypage-bookmark-politician"></div>
+              <div class="mypage-bookmark-politician"
+              >
+
+              </div>
             </div>
-
-
 
             <Navigation />
         </div>
@@ -37,11 +38,26 @@ export default {
   name: 'Mypage',
   components: {
     'Navigation': Navigation
-  }
+  },
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+
+  },
 }
 </script>
 
-<style lang="style.scss">
-@import "../assets/scss/style.scss";
+<style>
+@import '@/assets/scss/style.scss';
 
+.mypage-info {
+  padding: 8px 24px;
+}
+
+.mypage-bookmark {
+  padding: 8px 24px;
+}
 </style>

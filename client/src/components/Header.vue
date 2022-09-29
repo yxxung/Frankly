@@ -6,7 +6,7 @@
     </header>
 </template>
 
-<style lang="style.scss">
+<style>
 @import '../assets/scss/style.scss';
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR&display=swap');
 

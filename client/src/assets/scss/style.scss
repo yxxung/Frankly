@@ -39,6 +39,11 @@ body {
 .header--back > h2 {
     font-size: 18px;
 }
+.header--right {
+    display: flex;
+    right: 0;
+    position: absolute;
+}
 /*커뮤니티 헤더*/
 .header__community {
     display: flex;
