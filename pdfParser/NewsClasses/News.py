@@ -163,8 +163,8 @@ class News:
 
     def selectByID(self, cursor, politicianID):
 
-        sql = "SELECT * FROM News WHERE politicianID = %s AND newsContent = \"\" "
-        cursor.execute(sql,(politicianID))
+        sql = "SELECT * FROM News WHERE politicianID = %s AND newsContents = %s "
+        cursor.execute(sql,(politicianID,''))
         selectNews = cursor.fetchall()
         NewsList = []
 
@@ -203,6 +203,16 @@ class News:
 
         return NewsList
 
+    def selectNewsDateList(self, cursor):
+        sql = "SELECT DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-1) DAY), '%Y-%m-%d') as start,\
+                    DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-7) DAY), '%Y-%m-%d') as end,\
+                    DATE_FORMAT(`newsDate`, '%Y%u') AS `date`\
+                    FROM frankly.News\
+                    GROUP BY date;"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+
+        return result
 
     #     -----------------------------------------
     # 네이버 검색 API예제는 블로그를 비롯 전문자료까지 호출방법이 동일하므로 blog검색만 대표로 예제를 올렸습니다.
@@ -211,6 +221,7 @@ class News:
     def getNewsFromAPI(self, targetDate):
         KST = datetime.timezone(datetime.timedelta(hours=9))
         targetDate = datetime.datetime.strptime(targetDate, "%Y-%m-%d").replace(tzinfo=KST)
+        total = -1
 
         con, cur = self.dbConnect()
         api = openAPI()
@@ -225,6 +236,7 @@ class News:
         politicianList = p.selectALL(cur)
 
         for politicain in politicianList:
+            sleep(1)
             encText = urllib.parse.quote(politicain.politicianName + " 국회의원")
 
             startPage = 1
@@ -235,10 +247,31 @@ class News:
             request = urllib.request.Request(url)
             request.add_header("X-Naver-Client-Id",client_id)
             request.add_header("X-Naver-Client-Secret",client_secret)
-            response = urllib.request.urlopen(request)
-            rescode = response.getcode()
-            if(rescode==200):
-                response_body = response.read()
+            try:
+                response = urllib.request.urlopen(request)
+                rescode = response.getcode()
+                if(rescode==200):
+                    response_body = response.read()
+                    content = json.loads(response_body.decode('utf-8'))
+                    total = content['total']
+                else:
+                    print("Error Code:" + str(rescode))
+            except:
+                rescode = -1
+                time = 0
+                while rescode == 200 or time == 50:
+                    time = time + 1
+                    sleep(10)
+                    try:
+                        response = urllib.request.urlopen(request)
+                        rescode = response.getcode()
+                        if(rescode==200):
+                            response_body = response.read()
+                            content = json.loads(response_body.decode('utf-8'))
+                            total = content['total']
+                            break
+                    except:
+                        exit(-1)
 
                 """
                 content
@@ -256,62 +289,78 @@ class News:
                 pubDate	datetime	검색 결과 문서가 네이버에 제공된 시간이다.
                 """
 
-                content = json.loads(response_body.decode('utf-8'))
-                total = content['total']
 
-                while(startPage < total):
-                    url = api.URL + "?query="+ encText  + "&display="+ str(display) +"&start="+ str(startPage) +"&sort=date"# json 결과
-                    # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # xml 결과
+            while(startPage < total):
+                url = api.URL + "?query="+ encText  + "&display="+ str(display) +"&start="+ str(startPage) +"&sort=date"# json 결과
+                # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # xml 결과
 
-                    request = urllib.request.Request(url)
-                    request.add_header("X-Naver-Client-Id",client_id)
-                    request.add_header("X-Naver-Client-Secret",client_secret)
+                request = urllib.request.Request(url)
+                request.add_header("X-Naver-Client-Id",client_id)
+                request.add_header("X-Naver-Client-Secret",client_secret)
+
+                try:
                     response = urllib.request.urlopen(request)
                     rescode = response.getcode()
                     if(rescode==200):
                         response_body = response.read()
                         content = json.loads(response_body.decode('utf-8'))
-
-
-                        for item in content["items"]:
-                            if(item["link"].startswith("https://n.news.naver.com/")):
-                                newNews = News()
-                                newNews.newsURL = item["link"]
-                                newNews.newsTitle = item['title'].replace("&quot;","").replace("<b>","").replace("&apos;", "")
-                                newNews.newsDate = datetime.datetime.strptime(item['pubDate'], '%a, %d %b %Y %H:%M:%S %z')
-                                newNews.newsAbstract = item['description']
-                                newNews.politicianID = politicain.politicianID
-
-                                if(newNews.newsDate < targetDate):
-                                    startPage = total
-                                    break
-                                newNews.insert(cur)
-                        con.commit()
-
-                        # 'https://n.news.naver.com/mnews/article/088/0000774104?sid=100'
-                        # xpath] /html/body/div/div[2]/div/div[1]/div[1]/div[2]
-                        # selector] newsct_article
                     else:
                         print("Error Code:" + str(rescode))
-                    startPage = startPage + 100
-                    if(startPage == total):
-                        print(politicain.politicianName + " 뉴스 삽입완료")
-                        break
-                    elif(startPage > total):
-                        display = startPage - total - 1
-                        startPage = startPage - 100
-                    elif(startPage == 1001):
-                        startPage = total
-                        print(politicain.politicianName + " 뉴스 삽입완료")
-                        break
+                except:
+                    rescode = -1
+                    time = 0
+                    while rescode == 200 or time == 50:
+                        time = time + 1
+                        sleep(10)
+                        try:
+                            response = urllib.request.urlopen(request)
+                            rescode = response.getcode()
+                            if(rescode==200):
+                                response_body = response.read()
+                            content = json.loads(response_body.decode('utf-8'))
+                            break
+                        except:
+                            continue
 
 
-            else:
-                print("Error Code:" + str(rescode))
+                for item in content["items"]:
+                    if(item["link"].startswith("https://n.news.naver.com/")):
+                        newNews = News()
+                        newNews.newsURL = item["link"]
+                        newNews.newsTitle = item['title'].replace("&quot;","").replace("<b>","").replace("&apos;", "")
+                        newNews.newsDate = datetime.datetime.strptime(item['pubDate'], '%a, %d %b %Y %H:%M:%S %z')
+                        newNews.newsAbstract = item['description']
+                        newNews.politicianID = politicain.politicianID
+
+                        if(newNews.newsDate < targetDate):
+                            startPage = total
+                            break
+                        newNews.insert(cur)
+                con.commit()
+
+                    # 'https://n.news.naver.com/mnews/article/088/0000774104?sid=100'
+                    # xpath] /html/body/div/div[2]/div/div[1]/div[1]/div[2]
+                    # selector] newsct_article
+
+                startPage = startPage + 100
+                if(startPage == total):
+                    print(politicain.politicianName + " 뉴스 삽입완료")
+                    break
+                elif(startPage > total):
+                    display = startPage - total - 1
+                    startPage = startPage - 100
+                elif(startPage == 1001):
+                    startPage = total
+                    print(politicain.politicianName + " 뉴스 삽입완료")
+                    break
+
+
+
 
     def dbConnect(self):
         # dbinfoDir = "E:\work\Frankly\pdfParser\InformationClass/dbinfo.info"
         dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
+        # dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
         with open(dbinfoDir, encoding="UTF8") as dbInfo:
 
             IP  = dbInfo.readline().split(" ")[1].replace("\n", "")
@@ -377,4 +426,5 @@ class News:
 
 if __name__ == "__main__":
     n = News()
+    n.getNewsFromAPI(targetDate="2020-06-01")
     n.newsCrawling()
