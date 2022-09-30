@@ -8,6 +8,19 @@
         <typeAlias type="com.frankly.restapi.domain.UserDTO" alias="UserDTO"/>
         <typeAlias type="com.frankly.restapi.domain.MemberDTO" alias="MemberDTO"/>
         <typeAlias type="com.frankly.restapi.domain.RegionNumberDTO" alias="RegionNumberDTO"/>
+<<<<<<< HEAD
+=======
+        <typeAlias type="com.frankly.restapi.domain.ConferenceAttendanceDTO" alias="ConferenceAttendanceDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.ConferenceScheduleDTO" alias="ConferenceScheduleDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.ConferenceBillLawDTO" alias="ConferenceBillLawDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.VoteDTO" alias="VoteDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.PropertyDTO" alias="PropertyDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.PropertyChangeDTO" alias="PropertyChangeDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.PropertyListDTO" alias="PropertyListDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.ReplyDTO" alias="ReplyDTO"/>
+
+
+>>>>>>> b7fa46a (feature - property reply)
     </typeAliases>
 
 </configuration>
