@@ -22,18 +22,6 @@
                     <span>13</span>
                 </div>
             </li>
-
-            <li class="post-list__container" @click="$router.push('BoardDetail/'+$route.params.boardID)">
-                <div class="post-list__title">
-                    <h3>가나다라<span>[11239]</span></h3>
-                </div>
-                <p>자 내글을 잘봐 이건말이</p>
-                <div class="post-list__info">
-                    <span>12/11</span>
-                    <img src="@/assets/icon/Like.svg" alt="좋아요">
-                    <span>20345</span>
-                </div>
-            </li>
         </ul>
         <FloatingButton />
         <Navigation />
@@ -56,13 +44,16 @@ export default {
             boards: []
         }
     },
+    mounted() {
+        this.getBoardList();
+    },
     methods: {
         getBoardList() {
             console.log(this.$axios);
             axios.get('/api/boards/boardlist')
             .then(response => {
                 console.log('boards', response.data)
-                this.freeboards = response.data;
+                this.boards = response.data;
             })
             .catch(error => {
                 console.log(error)

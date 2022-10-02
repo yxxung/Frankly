@@ -1,6 +1,7 @@
 package com.frankly.restapi.service;
 
 import com.frankly.restapi.domain.BoardDTO;
+import com.frankly.restapi.domain.PoliticianDTO;
 import com.frankly.restapi.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,8 @@ public class BoardService implements BoardServiceInterface {
 
     @Override
     public List<BoardDTO> getBoardList() throws Exception {
-        return null;
+        log.info("getList");
+        return boardMapper.getBoardList();
     }
 
 //    @Override

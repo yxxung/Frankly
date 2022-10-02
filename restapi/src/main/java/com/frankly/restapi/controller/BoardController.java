@@ -1,14 +1,15 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.BoardDTO;
-import com.frankly.restapi.domain.UserDTO;
 import com.frankly.restapi.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,19 +20,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
-
     private final BoardService boardService;
 
-    //지역마다 DB분리 필요할수도
-    //create board이름 변경
-    //DB 분리 고려..
-    @PostMapping("/{region}/create")
-    public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                                @PathVariable("region") String region) throws Exception{
+    //file 전송시 file과 dto를 나눠서 전송해야 함
+    //requestpart로 나눠서 받기,,,나머지 수정 필요
+    @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<BoardDTO> createBoard(@Validated @RequestPart BoardDTO boardDTO,
+                                                @RequestPart(required = false) MultipartFile file) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
-        boardDTO.setRegion(region);
         boardService.createBoard(boardDTO);
         log.info("time: " + boardDTO.getRegDate());
+        log.info("dto: " + boardDTO);
+        log.info("file: " + file);
 
         return new ResponseEntity<>(boardDTO, HttpStatus.OK);
     }
@@ -61,12 +61,9 @@ public class BoardController {
     }
 
     @GetMapping("/boardlist")
-    public ResponseEntity<BoardDTO> getBoardList() throws Exception{
+    public ResponseEntity<List<BoardDTO>> getBoardList() throws Exception{
 
-        log.info("게시글 리스트 불러오기 +  ");
-//      BoardDTO boardDTO = boardService.pageNumberBoardList(start);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(boardService.getBoardList(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{region}/{boardID}")

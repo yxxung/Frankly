@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+//인터페이스를 마이바티스용 mapper로 만들어줌
+//XML mapper에서 이름과 일치하는 SQL문을 찾아서 실행해준다
 @Mapper
 public interface BoardMapper {
 

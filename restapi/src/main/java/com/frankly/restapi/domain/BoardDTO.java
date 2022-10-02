@@ -41,11 +41,11 @@ public class BoardDTO {
         this.region = region;
     }
 
-    @Builder
+    /*@Builder
     public BoardDTO(int boardID, String region){
         this.boardID = boardID;
         this.region = region;
-    }
+    }*/
 
     public int getAuthor() { return userID;}
 

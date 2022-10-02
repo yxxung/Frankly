@@ -45,7 +45,6 @@ const routes = [
     component: Politician
   },
   {
-    //콜론으로 시작하는 부분이 동적 세그먼트
     path: '/Mypage',
     name: 'Mypage',
     component: Mypage
