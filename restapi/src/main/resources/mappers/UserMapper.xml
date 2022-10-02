@@ -57,7 +57,7 @@
         SET password = #{password},
             district = #{district},
             sex = #{sex},
-            userAuth = #{auth},
+            userAuth = #{userAuth},
             contact = #{contact}
         WHERE userID = #{userID}
     </update>

@@ -12,7 +12,7 @@
             <div class="community-list">
                 <h4>일반 커뮤니티</h4>
                 <ul>
-                    <li><a href="/HotBoard"><img src="@/assets/icon/Pin.svg" alt="">인기게시글</a></li>
+                    <li><a href="/HotBoard"><img src="@/assets/icon/Fire.svg" alt="">인기게시글</a></li>
                     <li><a href="/FreeBoard"><img src="@/assets/icon/Pin.svg" alt="">자유게시판</a></li>
                 </ul>
             </div>
@@ -43,8 +43,8 @@
             <div class="community-list">
                 <h4>내 기록</h4>
                 <ul>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">내가 쓴 글</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">댓글 단 글</a></li>
+                    <li><a href="#"><img src="@/assets/icon/Write.svg" alt="">내가 쓴 글</a></li>
+                    <li><a href="#"><img src="@/assets/icon/Write.svg" alt="">댓글 단 글</a></li>
                 </ul>
             </div>
             <Navigation />
@@ -55,7 +55,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 export default {
-  name: 'Board',
+  name: 'MainBoard',
   components: {
     'Navigation': Navigation
   }
@@ -74,6 +74,7 @@ export default {
 }
 
 .community-list > h4 {
+    font-family: 'Noto Sans KR';
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: normal;
@@ -81,11 +82,13 @@ export default {
 }
 
 .community-list a {
+    font-family: 'Noto Sans KR';
     padding: 8px;
     display: flex;
     align-items: center;
     color: #2B2B2B;
     font-size: 16px;
+    text-decoration: none;
 }
 .community-list a:hover {
     background-color: #f8f8f8;

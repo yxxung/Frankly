@@ -16,7 +16,7 @@
       <div class="all-politician-list">
         <div
           class="politician"
-          v-for="politician in politicianItems"
+          v-for="(politician, politicianID) in politicians"
           v-bind:key="politicianID"
         >
         <!-- 정치인 리스트 출력 -->
@@ -52,10 +52,26 @@ export default {
   data() {
     return {
       searchKeyword: '',
-      politicianItems: []
+      politicians: []
     };
   },
+  mounted() {
+    this.getPoliticianList()
+  },
   methods: {
+    getPoliticianList() {
+      axios
+      .get("/api/infos/all", {
+        headers: {}
+      })
+      .then((response) => {
+        console.log("politicians", response.data);
+        this.politicians = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
     searchResultShow(searchKeyword) {
       console.log('"',keyword,'"' + ' 검색')
       if (searchKeyword !== '') {
@@ -72,20 +88,7 @@ export default {
     searchKeywordChange() {
       this.isResultShow = false
     }
-  },
-  created() {
-    axios
-      .get("/api/infos/all", {
-        headers: {}
-      })
-      .then((response) => {
-        console.log("politicianItems", response.data);
-        this.politicianItems = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
+  }
 };
 </script>
 
