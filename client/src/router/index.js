@@ -53,6 +53,23 @@ const routes = [
     path: '/Board',
     component: Board,
 >>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
+=======
+    path: '/Login',
+    component: Login
+  },
+  {
+    path: '/Signup',
+    component: Signup
+  },
+  {
+    // 중첩된 라우트 : 한 페이지에 url에 따라서 다른 컴포넌트를 보여야 할 때 사용.
+    path: '/Auth',
+    component: AuthPage
+  },
+  {
+    path: '/MainBoard',
+    component: MainBoard,
+>>>>>>> da99784 (Merge pull request #42 from hanpaa/feature/board)
   },
   {
     path: '/Politician',

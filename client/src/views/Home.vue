@@ -15,19 +15,16 @@
 
                     <div class="slide slide_1">
                         <div class="slide-content">
-                        <h2>Slide1</h2>
                         </div>
                     </div>
 
                     <div class="slide slide_2">
                         <div class="slide-content">
-                        <h2>Slide2</h2>
                         </div>
                     </div>
 
                     <div class="slide slide_3">
                         <div class="slide-content">
-                        <h2>Slide3</h2>
                         </div>
                     </div>
 
@@ -142,10 +139,11 @@ export default {
 
 /* 슬라이드 */
 #slider {
-  margin: 0 auto;
+  margin: 15px auto;
   width: 540px;
   max-width: 100%;
   text-align: center;
+  padding: 8px 24px;
 }
 
 #slider input[type=radio] {
@@ -198,13 +196,16 @@ export default {
 }
 
 #slides .slide_1{
-  background: rgb(53, 144, 144);
+  background-image: url("@/assets/home-slide.png");
+  background-size: cover;
 }
 #slides .slide_2{
-  background: lightskyblue;
+  background-image: url("@/assets/home-slide.png");
+  background-size: cover;
 }
 #slides .slide_3{
-  background: mediumturquoise;
+  background-image: url("@/assets/home-slide.png");
+  background-size: cover;
 }
 
 .slide-content {
@@ -312,8 +313,9 @@ export default {
     max-width: 540px;
     width: 100%;
     margin: 0 auto;
-    top: 60px;
+    top: 40px;
     position: relative;
+    padding: 8px 24px;
 }
 
 .icon-button {
@@ -328,7 +330,7 @@ export default {
 
 .trend-top4-politician-title h2{
     position: absolute;
-    left: 36px;
+    left: 55px;
     vertical-align: middle;
 
     font-family: 'Noto Sans KR';
@@ -341,8 +343,9 @@ export default {
 
 /*인기검색 국회의원 리스트*/
 .trend-top4-politician-list{
+    padding: 8px 24px;
     position: relative;
-    top: 95px;
+    top: 65px;
     width: 100%;
     max-width: 540px;
     height: 120px;
@@ -384,10 +387,11 @@ export default {
 
 /*오늘의 국회 일정*/
 .parliamentary-schedule-title {
+    padding: 8px 24px;
     max-width: 540px;
     width: 100%;
     margin: 0 auto;
-    top: 148px;
+    top: 120px;
     position: relative;
 }
 
@@ -403,7 +407,7 @@ export default {
 
 .parliamentary-schedule-title h2{
     position: absolute;
-    left: 36px;
+    left: 60px;
     vertical-align: middle;
 
     font-family: 'Noto Sans KR';
@@ -416,20 +420,21 @@ export default {
 
 .parliamentary-schedule-title h3 {
     position: absolute;
-    left: 464px;
+    left: 432px;
 
     vertical-align: middle;
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 23px;
     color: #818181;
 }
 
 .parliamentary-schedule-list{
+    padding: 8px 24px;
     position: relative;
-    top: 190px;
+    top: 150px;
     width: 100%;
     max-width: 540px;
     height: 120px;

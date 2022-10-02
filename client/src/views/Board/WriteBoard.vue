@@ -9,7 +9,7 @@
         <h2>글쓰기</h2>
         <div class="header--right">
           <!--제출 버튼-->
-          <button class="write-button" type="submit" @click="onClickSubmit">
+          <button class="write-button" type="submit" @click="onClickSubmit()">
             완료
           </button>
         </div>
@@ -89,10 +89,10 @@ export default {
     };
   },
   methods: {
-    onInputImage() {
+    /*onInputImage() {
       console.log(this.$refs);
       this.image = this.$refs.image.files[0];
-    },
+    },*/
     onClickSubmit() {
       //입력된 내용이 없을 시
       if (this.title.length <= 0 || this.content.length <= 0) {
@@ -101,20 +101,24 @@ export default {
       }
 
       const formdata = new FormData();
-      formdata.append("region", this.region);
+      this.image = this.$refs.image.files[0];
+      //formdata.append("region", this.region);
       formdata.append("title", this.title);
       formdata.append("content", this.content);
       formdata.append("image", this.image);
 
       axios
-        .post(`/api/boards/${region}/create`, formdata, {
+        .post(`/api/boards/create`, formdata, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            
           },
         })
         .then((response) => {
           //응답 처리
           console.log(response)
+        })
+        .catch((error) => {
+          console.error(error);
         });
     },
   },

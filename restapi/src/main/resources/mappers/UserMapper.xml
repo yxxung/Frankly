@@ -64,7 +64,11 @@
         SET password = #{password},
             district = #{district},
             sex = #{sex},
+<<<<<<< HEAD
             auth = #{auth},
+=======
+            userAuth = #{userAuth},
+>>>>>>> da99784 (Merge pull request #42 from hanpaa/feature/board)
             contact = #{contact}
         WHERE userID = #{userID}
     </update>

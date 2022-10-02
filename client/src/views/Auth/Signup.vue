@@ -12,14 +12,14 @@
     </div>
 
     <form class="sign-up-form">
-<!--이메일-->
+    <!--이메일-->
         <label>
             <p class="sign-up-form__input-info">이메일</p>
             <input class="sign-up-form__text-input" type="email" placeholder="example@gmail.com">
             <p class="sign-up-form__error-message">올바른 이메일 형식을 입력해주세요.</p>
         </label>
 
-<!--비밀번호-->
+    <!--비밀번호-->
         <label>
             <p class="sign-up-form__input-info">비밀번호</p>
             <input class="sign-up-form__text-input" type="email" placeholder="대소문자, 숫자, 특수문자 포함 8~16자리" maxlength="16">
@@ -31,7 +31,7 @@
             <p class="sign-up-form__error-message">비밀번호가 같지 않습니다.</p>
         </label>
 
-<!--지역-->
+    <!--지역-->
         <label>
             <p class="sign-up-form__input-info">지역</p>
             <div class="dropdown-container">
@@ -49,7 +49,7 @@
             </div>
         </label>
 
-<!--이용동의 체크-->
+    <!--이용동의 체크-->
         <div class="form__check">
             <ul>
                 <li class="check-box-line">
