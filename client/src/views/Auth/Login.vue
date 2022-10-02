@@ -36,7 +36,7 @@
             <a href="#">비밀번호 찾기</a>
         </div>
         <button class="sign-up-form__button"
-        @click.prevent="doLogin='/index.html'">로그인</button>
+        @click.prevent="doLogin">로그인</button>
     </form>
 </div>
 </template>
@@ -46,14 +46,14 @@ export default {
   name: 'Login',
   data() {
     return {
-        userID: '',
+        userEmail: '',
         userPassword: ''
     }
   },
   methods: {
     doLogin() {
         let saveData = {};
-        saveData.userId = this.userId;
+        saveData.userEmail = this.userEmail;
         saveData.userPassword = this.userPassword;
 
     }
