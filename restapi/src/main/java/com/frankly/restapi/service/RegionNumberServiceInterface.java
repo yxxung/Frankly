@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface RegionNumberServiceInterface {
 
-    public List<RegionNumberDTO> getMemeberListByRegion(Integer regionNumber) throws Exception;
+    public List<RegionNumberDTO> getMemeberListByRegion(Integer regionID) throws Exception;
 
 }

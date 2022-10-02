@@ -32,7 +32,7 @@
               class="a_tag_modal ml-4 white--text"
               color="rgb(153, 26, 47)"
               @click="modalShow = !modalShow"
-            >만든 사람들</v-btn>
+            >만든 사람들</b-btn>
             <b-modal v-model="modalShow" hide-footer hide-header>
               <img
                 class="image"
@@ -40,7 +40,7 @@
                 alt
               />
             </b-modal>
-            <b-icon class="ml-4">mdi-account-circle</v-icon>
+            <b-icon class="ml-4">mdi-account-circle</b-icon>
           </b-col>
         </b-footer>
       </b-card>

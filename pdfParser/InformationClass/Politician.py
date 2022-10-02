@@ -223,21 +223,49 @@ class Politician:
                       "WHERE politicianID = %s"
                 cursor.execute(sql,(input[0]))
             elif(column == "politicianName"):
-                sql = "SELECT politicianID FROM Politician " + \
-                      "WHERE politicianName = %s OR hanName = %s AND partyName = %s"
+                sql = "SELECT politicianID, regionID FROM Politician " + \
+                      "WHERE (politicianName = %s OR hanName = %s) AND partyName = %s"
                 cursor.execute(sql,(input[0],input[0], input[1]))
             elif(column == "142"):
-                sql = "SELECT politicianID FROM Politician " + \
+                sql = "SELECT politicianID, regionID FROM Politician " + \
                       "WHERE politicianName = %s AND regionID = 142"
                 cursor.execute(sql,(input))
 
-            return cursor.fetchone()
+            return cursor.fetchall()
         except Exception as e:
             traceback.print_exc()
             return None
 
 
+
+    def selectALL(self, cursor):
+        sql = "SELECT * FROM Politician AS p, Region AS r WHERE p.regionID = r.regionID"
         cursor.execute(sql)
+        selectPoliticians = cursor.fetchall()
+        politicianList = []
+
+        for politician in selectPoliticians:
+            p = Politician()
+            p.politicianID = politician[0]
+            p.politicianName = politician[1]
+            p.hanName = politician[2]
+            p.engName = politician[3]
+            p.lunar = politician[4]
+            p.birthday = politician[5]
+            p.partyID = politician[6]
+            p.partyName = politician[7]
+            p.regionID = politician[8]
+            p.regionName = politician[20]
+            p.selectNumbe = politician[9]
+            p.selectInfo = politician[10]
+            p.sex = politician[11]
+            politicianList.append(p)
+
+        return politicianList
+
+
+
+
 
 
     # def selectPoliticiandef(self, cursor, value, column):
