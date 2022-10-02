@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Board from '../views/Board/MainBoard.vue'
+import MainBoard from '../views/Board/MainBoard.vue'
 import Politician from '../views/Politician/Politician.vue'
 import Mypage from '../views/Mypage.vue'
 import AuthPage from '../views/Auth/AuthPage.vue'
@@ -20,17 +20,14 @@ import SeoulBoard from '../views/Board/region/SeoulBoard.vue'
 const routes = [
   {
     path: '/',
-    name: 'Home',
     component: Home
   },
   {
     path: '/Login',
-    name: 'Login',
     component: Login
   },
   {
     path: '/Signup',
-    name: 'Signup',
     component: Signup
   },
   {
@@ -39,8 +36,8 @@ const routes = [
     component: AuthPage
   },
   {
-    path: '/Board',
-    component: Board,
+    path: '/MainBoard',
+    component: MainBoard,
   },
   {
     path: '/Politician',

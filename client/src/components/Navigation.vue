@@ -5,7 +5,7 @@
                 <img src="@/assets/icon/nav/Home.svg" alt="홈으로 이동">
                 <p>홈</p>
             </router-link>
-            <router-link to="/Board">
+            <router-link to="/MainBoard">
                 <img src="@/assets/icon/nav/Chat.svg" alt="홈으로 이동">
                 <p>커뮤니티</p>
             </router-link>
