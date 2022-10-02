@@ -31,7 +31,7 @@
     </update>
 
     <delete id="deleteReply" parameterType="ReplyDTO">
-        DELETE FROM frankly.Board
+        DELETE FROM frankly.Reply
         WHERE replyID = #{replyID} AND boardID = #{boardID}
     </delete>
 

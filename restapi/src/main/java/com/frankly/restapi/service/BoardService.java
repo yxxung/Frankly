@@ -56,13 +56,8 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-<<<<<<< HEAD
-    public List<BoardDTO> allBoardList() throws Exception {
-        return boardMapper.allBoardList();
-=======
     public List<BoardDTO> getBoardList() throws Exception {
         return null;
->>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
     }
 
 //    @Override

@@ -10,7 +10,7 @@ public interface ReplyServiceInterface {
 
     public void createReply(int boardID) throws Exception;
 
-    public List<ReplyDTO> readReply(ReplyDTO replyDTO) throws Exception;
+    public List<ReplyDTO> readReply(int boardID) throws Exception;
 
     public void updateReply(ReplyDTO replyDTO) throws Exception;
 
