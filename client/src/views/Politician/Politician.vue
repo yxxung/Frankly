@@ -18,16 +18,18 @@
           class="politician"
           v-for="politician in politicians"
           v-bind:key="politician.politicianID"
+          @click="goToPoliticianDetail(politician.politicianID)"
         >
-        <!-- 정치인 리스트 출력 -->
-          <img
-            :src="require(`@/assets/politician/${politician.politicianImage}`)"
-          />
+          <!-- 정치인 리스트 출력 -->
+          <div class="background"></div>
           <h2>{{ politician.politicianName }}</h2>
         </div>
       </div>
 
-      <PoliticianSearchView v-if="isResultShow" v-bind:searchKeyword="searchKeyword"></PoliticianSearchView>
+      <PoliticianSearchView
+        v-if="isResultShow"
+        v-bind:searchKeyword="searchKeyword"
+      ></PoliticianSearchView>
 
       <Navigation />
     </div>
@@ -47,53 +49,63 @@ export default {
     Navigation: Navigation,
     Slider: Slider,
     PoliticianSearchView: PoliticianSearchView,
-    SearchBar: SearchBar
+    SearchBar: SearchBar,
   },
   data() {
     return {
-      searchKeyword: '',
-      politicians: []
+      searchKeyword: "",
+      politicians: [],
     };
   },
   mounted() {
-    this.getPoliticianList()
+    this.getPoliticianList();
   },
   methods: {
     getPoliticianList() {
       axios
-      .get("/api/infos/all", {
-        headers: {}
-      })
-      .then((response) => {
-        console.log("politicians", response.data);
-        this.politicians = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .get("/api/infos/all", {
+          headers: {},
+        })
+        .then((response) => {
+          console.log("politicians", response.data);
+          this.politicians = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     searchResultShow(searchKeyword) {
-      console.log('"',keyword,'"' + ' 검색')
-      if (searchKeyword !== '') {
-        this.$router.push({
-          name: "Politician",
-          params: {
-            searchKeyword: this.searchKeyword
-          },
-        }).catch(()=>{});
+      console.log('"', keyword, '"' + " 검색");
+      if (searchKeyword !== "") {
+        this.$router
+          .push({
+            name: "Politician",
+            params: {
+              searchKeyword: this.searchKeyword,
+            },
+          })
+          .catch(() => {});
       } else {
-        alert('검색어를 입력해주세요 !')
+        alert("검색어를 입력해주세요 !");
       }
     },
+    goToBoardDetail(politicianID) {
+      this.$router.push({
+        name: "PoliticianDetail",
+        params: {
+          politicianID: politicianID,
+        },
+      });
+    },
     searchKeywordChange() {
-      this.isResultShow = false
-    }
-  }
+      this.isResultShow = false;
+    },
+  },
 };
 </script>
 
 <style>
-@import '@/assets/scss/style.scss';
+@import "@/assets/scss/style.scss";
 
 /*국회의원 검색*/
 .politician-search {
@@ -184,5 +196,29 @@ export default {
 
 .all-politician-list {
   padding: 8px 24px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  max-width: 540px;
+}
+
+.politician {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.politician h2 {
+  position: absolute;
+  font-size: 18px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  color: #000000;
 }
 </style>

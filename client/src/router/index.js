@@ -13,7 +13,7 @@ import AdminBoard from '../views/Admin/AdminBoard.vue'
 import DataExtract from '../views/Admin/DataExtract.vue'
 import EditBoard from '../views/Admin/EditBoard.vue'
 import EditUser from '../views/Admin/EditUser.vue'
-import PoliticianInfo from '../views/Politician/PoliticianInfo.vue'
+import PoliticianDetail from '../views/Politician/PoliticianDetail.vue'
 import WriteBoard from '../views/Board/WriteBoard.vue'
 import SeoulBoard from '../views/Board/region/SeoulBoard.vue'
 
@@ -86,8 +86,9 @@ const routes = [
     component: EditUser
   },
   {
-    path: '/PoliticianInfo',
-    component: PoliticianInfo
+    path: '/PoliticianDetail:PoliticianID',
+    name: 'PoliticianDetail',
+    component: PoliticianDetail
   },
   {
     path: '/WriteBoard',
