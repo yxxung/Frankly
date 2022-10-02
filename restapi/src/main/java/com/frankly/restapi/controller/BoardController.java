@@ -27,7 +27,7 @@ public class BoardController {
     //DB 분리 고려..
     @PostMapping("/{region}/create")
     public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                                @PathVariable("region") int region) throws Exception{
+                                                @PathVariable("region") String region) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
         boardDTO.setRegion(region);
         boardService.createBoard(boardDTO);
@@ -38,9 +38,9 @@ public class BoardController {
 
 
     //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
-    @PutMapping("/{region}/{boardID}")
+    @PutMapping("/{boardID}")
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                         @PathVariable("region") int region,
+                                         @PathVariable("region") String region,
                                          @PathVariable("boardID")int boardID)throws Exception{
 
         log.info("게시물 수정 수정자 :"  + boardDTO.getAuthor());
@@ -48,30 +48,29 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{region}/{boardID}")
-    public ResponseEntity<BoardDTO> getBoardById(@PathVariable int region,
-                                                 @PathVariable int boardID) throws Exception{
+    @GetMapping("/{boardID}")
+    public ResponseEntity<BoardDTO> getBoardById(@PathVariable int boardID) throws Exception{
 
         log.info("게시물 불러오기 : " + boardID);
         try{
-            BoardDTO boardDTO = boardService.readBoard(region, boardID);
+            BoardDTO boardDTO = boardService.readBoard(boardID);
             return new ResponseEntity<>(boardDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("/{region}/{start}")
-    public ResponseEntity<BoardDTO> getBoardList(@PathVariable Long start) throws Exception{
+    @GetMapping("/boardlist")
+    public ResponseEntity<BoardDTO> getBoardList() throws Exception{
 
-        log.info("게시글 리스트 불러오기 +  "  + start);
+        log.info("게시글 리스트 불러오기 +  ");
 //      BoardDTO boardDTO = boardService.pageNumberBoardList(start);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{region}/{boardID}")
-    public ResponseEntity<?> deleteBoard(@PathVariable("region") int region,
+    public ResponseEntity<?> deleteBoard(@PathVariable("region") String region,
                                          @PathVariable("boardID") int boardID) throws Exception{
 
         BoardDTO boardDTO = new BoardDTO();

@@ -2,7 +2,7 @@
     <body>
         <div class="wrap">
             <Header />
-        
+
             <!--슬라이더-->
             <div id="slider">
                 <input type="radio" name="slider" id="slide1" checked>
@@ -49,12 +49,7 @@
             </div>
 
             <!--국회의원 검색-->
-            <div class="politician-search">
-                <form class="politician-search-form" action="" method="get">
-                    <input class="politician-search-form__text-input" type="text" placeholder="국회의원 검색">
-                    <button class="search-button" type="submit" name="click"><img src="@/assets/icon/button.svg"></button>
-                </form>
-            </div>
+            <SearchBar />
 
             <!-- 인기 검색 국회의원 리스트-->
             <div class="trend-top4-politician-title">
@@ -119,13 +114,15 @@
 import Navigation from '@/components/Navigation.vue'
 import Header from '@/components/Header.vue'
 import ImageSlider from '@/components/ImageSlider.vue'
+import SearchBar from '@/components/SearchBar.vue'
 
 export default {
   name: 'Home',
   components: {
     'Navigation': Navigation,
     'Header': Header,
-    'ImageSlider': ImageSlider
+    'ImageSlider': ImageSlider,
+    'SearchBar': SearchBar
   },
   data() {
     return {
@@ -137,8 +134,8 @@ export default {
 }
 </script>
 
-<style lang="style.scss">
-@import '../assets/scss/style.scss';
+<style>
+@import '@/assets/scss/style.scss';
 
 /* 슬라이드 */
 #slider {
@@ -266,45 +263,6 @@ export default {
 #slide3:checked ~ #bullets label:nth-child(3)
 {
   background: rgb(124, 124, 124);
-}
-
-/*국회의원 검색*/
-.politician-search {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    top: 30px;
-    width: 540px;
-}
-
-.politician-search-form__text-input {
-    align-items: center;
-    width: 478px;
-    height: 34px;
-    left: 16px;
-    top: 297px;
-    padding: 4px 0 4px 14px;
-
-    background: #F5F5F5;
-    border-radius: 55px;
-}
-
-.politician-search-form__text-input::placeholder{
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 19px;
-
-    letter-spacing: -0.024em;
-    color: #A9A9A9;
-}
-
-.search-button img{
-    width: 25px;
-    height: 25px;
-    margin-left: 14px;
-    vertical-align: middle;
 }
 
 /*인기 검색 국회의원*/

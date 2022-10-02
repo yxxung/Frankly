@@ -6,17 +6,22 @@ module.exports = defineConfig({
   lintOnSave: false,
   css : {
     loaderOptions : {
-        sass : {
-            additionalData: `
-              @import "@/assets/scss/reset.scss";
-            `
+        scss : {
+            additionalData: `@import "~@/assets/scss/reset.scss";`
         }
     }
-},
+  },
 devServer: {
-  proxy: 'http://localhost:8081'
-},
-indexPath: '../../templates/vue/index.html',
-publicPath: '/vue',
-outputDir: path.resolve(__dirname, "../restapi/src/main/resources/static/vue")
+  client: {
+    overlay: false
+  },
+  port: 8080,
+  proxy: {
+    '/api': {
+      target:'http://localhost:8081', //요청할 서버 주소
+      changeOrigin: true,
+      logLevel: 'debug', //터미널에 proxy 로그가 찍힌다.
+      ws: false
+    }
+  }}
 })

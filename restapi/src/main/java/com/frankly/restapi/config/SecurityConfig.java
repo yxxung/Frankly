@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          * Authenticationmanager가 어디서 load되는지 알 수 있도록 설정\
          * jwtUserDetailsService에서 사용하겠다!
          * .credentials 일치하는 유저
-         * .BcryptPasswordEncoder 사용.
+         * .BcryptPasswordEncoder 사용.(암호화)
          */
 
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
@@ -67,10 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 한 유저 테스트기 때문에 CSRF 미적용 추후 수정.
-        http.csrf().disable()
+        http.csrf().disable() //security에서 기본으로 생성하는 login페이지 사용 안 함
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
-                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/infos/**").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**").permitAll()
                 //개발용 설정
 //                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
                 //cors 예외처리

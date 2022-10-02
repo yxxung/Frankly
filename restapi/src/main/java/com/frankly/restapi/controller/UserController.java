@@ -30,6 +30,17 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<UserDTO> loginUser(@Validated @RequestBody UserDTO userDTO)
+            throws Exception{
+        log.info("login User " + userDTO.getEmail());
+
+        userService.loginUser(userDTO);
+
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<UserDTO> registerUser(@Validated @RequestBody UserDTO userDTO)
             throws Exception{
