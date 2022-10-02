@@ -28,7 +28,7 @@
 
       <!--내용-->
       <article class="post-content">
-        <p>{{ DetailData.content }}</p>
+        <p>{{ content }}</p>
       </article>
 
       <!--좋아요, 싫어요-->

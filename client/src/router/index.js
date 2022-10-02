@@ -68,7 +68,6 @@ const routes = [
     path: '/BoardDetail/:boardID',
     name: 'BoardDetail',
     component: BoardDetail,
-    props: true
   },
   {
     path: '/AdminBoard',
