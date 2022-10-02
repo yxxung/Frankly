@@ -29,7 +29,7 @@ public class ReplyController {
     }
 
     //댓글 보기
-    @GetMapping("/{boardID}/{replyID}")
+    @GetMapping("/{boardID}")
     public ResponseEntity<BoardDTO> readReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
         log.info("readReply");
 
@@ -39,7 +39,7 @@ public class ReplyController {
     }
 
     //댓글 수정
-    @PutMapping("/{boardID}/{replyID}")
+    @PutMapping("/{boardID}")
     public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{
         replyService.updateReply(replyDTO);
 
@@ -47,7 +47,7 @@ public class ReplyController {
     }
 
     //댓글 삭제
-    @DeleteMapping("/{boardID}/{replyID}")
+    @DeleteMapping("/{boardID}")
     public ResponseEntity<?> deleteReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
 
         replyService.deleteReply(replyDTO);

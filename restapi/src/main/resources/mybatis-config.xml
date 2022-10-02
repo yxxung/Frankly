@@ -6,7 +6,7 @@
     <typeAliases>
         <typeAlias type="com.frankly.restapi.domain.BoardDTO" alias="BoardDTO"/>
         <typeAlias type="com.frankly.restapi.domain.UserDTO" alias="UserDTO"/>
-        <typeAlias type="com.frankly.restapi.domain.MemberDTO" alias="MemberDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.PoliticianDTO" alias="PoliticianDTO"/>
         <typeAlias type="com.frankly.restapi.domain.RegionNumberDTO" alias="RegionNumberDTO"/>
         <typeAlias type="com.frankly.restapi.domain.ConferenceAttendanceDTO" alias="ConferenceAttendanceDTO"/>
         <typeAlias type="com.frankly.restapi.domain.ConferenceScheduleDTO" alias="ConferenceScheduleDTO"/>
