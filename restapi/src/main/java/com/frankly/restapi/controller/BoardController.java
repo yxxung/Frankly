@@ -49,7 +49,7 @@ public class BoardController {
     }
 
     @GetMapping("/{boardID}")
-    public ResponseEntity<BoardDTO> getBoardById(@PathVariable int boardID) throws Exception{
+    public ResponseEntity<BoardDTO> readBoard(@PathVariable("boardID") int boardID) throws Exception{
 
         log.info("게시물 불러오기 : " + boardID);
         try{

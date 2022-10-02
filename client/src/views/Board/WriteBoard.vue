@@ -110,7 +110,7 @@ export default {
       axios
         .post(`/api/boards/create`, formdata, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            
           },
         })
         .then((response) => {

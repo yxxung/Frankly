@@ -38,6 +38,7 @@
         WHERE politicianID = #{politicianID}
     </select>
 
+
     <insert id="createPolitician" parameterType="PoliticianDTO">
         INSERT INTO frankly.Politician
         VALUES (#{politicianName}
