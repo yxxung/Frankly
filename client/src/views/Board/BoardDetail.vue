@@ -21,7 +21,7 @@
         <div class="post-header__kategorie">커뮤니티 > {{ DetailData.region }}</div>
         <h3 class="post-header__title">{{ DetailData.title }}</h3>
         <div class="post-header__info">
-          <div class="post-header__writer">{{ DetailData.author }}</div>
+          <div class="post-header__writer">{{ DetailData.userID }}</div>
           <div class="post-header__reg-date">{{ DetailData.regDate }}</div>
         </div>
       </div>
@@ -126,7 +126,6 @@ import axios from "axios";
 
 export default {
   name: "BoardDetail",
-  props: ["boardID"],
   data() {
     return {
       DetailData: {
@@ -135,7 +134,7 @@ export default {
         content: "",
         regDate: "",
         region: "",
-        author: "",
+        userID: "",
         marked: ""
       },
     };
@@ -148,8 +147,9 @@ export default {
       this.DetailData.content = response.data.content;
       this.DetailData.regDate = response.data.regDate;
       this.DetailData.region = response.data.region;
-      this.DetailData.author = response.data.userID;
+      this.DetailData.userID = response.data.userID;
       this.DetailData.marked = response.data.marked;
+      console.log(boardID);
     });
   },
   methods: {

@@ -10,7 +10,7 @@
 
         <ul class="post-list">
             <li class="post-list__container"
-            v-for="(board, boardID) in boards" :key="boardID" @click="goToBoardDetail(boardID)">
+            v-for="board in boards" :key="board.boardID" @click="goToBoardDetail(board.boardID)">
                 <div class="post-list__title">
                     <img src="@/assets/icon/Image.svg" alt="이미지 있음">
                     <h3>{{board.title}}<span>[110]</span></h3>
@@ -63,7 +63,7 @@ export default {
             this.$router.push({
                 name: "BoardDetail",
                 params:{
-                    boardID: boardID + 1
+                    boardID: boardID
                 }
             })
         },

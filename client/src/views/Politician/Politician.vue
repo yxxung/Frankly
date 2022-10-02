@@ -16,8 +16,8 @@
       <div class="all-politician-list">
         <div
           class="politician"
-          v-for="(politician, politicianID) in politicians"
-          v-bind:key="politicianID"
+          v-for="politician in politicians"
+          v-bind:key="politician.politicianID"
         >
         <!-- 정치인 리스트 출력 -->
           <img
