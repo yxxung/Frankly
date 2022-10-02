@@ -21,10 +21,10 @@ public class RegionInfoController {
 
     @GetMapping("/{regionNumber}")
     public ResponseEntity<List<RegionNumberDTO>> getMemberListByRegionNumber(
-            @PathVariable("regionNumber")Integer regionNumber) throws Exception {
+            @PathVariable("regionID")Integer regionID) throws Exception {
 
         return new ResponseEntity<>(
-                regionNumberService.getMemeberListByRegion(regionNumber)
+                regionNumberService.getMemeberListByRegion(regionID)
                 , HttpStatus.OK);
 
     }

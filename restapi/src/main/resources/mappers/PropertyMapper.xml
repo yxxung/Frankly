@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frankly.restapi.mapper.PropertyMapper">
+
+    <resultMap type="PropertyDTO" id="propertyResultMap">
+        <id column="assetID" property="assetID"/>
+        <result column="propertyListID" property="propertyListID"/>
+        <result column="politicianID" property="politicianID"/>
+        <result column="presentPrice" property="presentPrice"/>
+        <result column="propertyDetail" property="propertyDetail"/>
+    </resultMap>
+
+    <resultMap type="PropertyChangeDTO" id="propertyChangeResultMap">
+        <id column="changeID" property="changeID"/>
+        <result column="politicianID" property="politicianID"/>
+        <result column="propertyID" property="propertyID"/>
+        <result column="period" property="period"/>
+        <result column="price" property="price"/>
+        <result column="reason" property="reason"/>
+    </resultMap>
+
+    <resultMap type="PropertyListDTO" id="propertyListResultMap">
+        <id column="relation" property="relation"/>
+        <result column="kind" property="kind"/>
+        <result column="section" property="section"/>
+    </resultMap>
+
+    <!--재산 보가-->
+    <!--재산 삭제-->
+
+
+</mapper>
