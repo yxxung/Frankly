@@ -14,28 +14,29 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+//import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+//import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static java.time.LocalTime.now;
 
 @Slf4j
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/infos")
+@RequestMapping("/api/schedule")
 public class ConferenceScheduleController {
 
     private final ConferenceScheduleService conferenceScheduleService;
 
     //오늘의 국회 일정
-    @GetMapping("/schedule")
+    @GetMapping("/{conferenceID}")
     public ResponseEntity<List<ConferenceScheduleDTO>> readConferenceSchedule()
             throws Exception {
-        log.info("readConferenceSchedule - "+date());
+        log.info("readConferenceSchedule - ");
 
         return new ResponseEntity<>(conferenceScheduleService.readConferenceSchedule(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/schedule/{conferenceID}")
+    @DeleteMapping("/{conferenceID}")
     public ResponseEntity<?>deleteConferenceSchedule(@PathVariable("conferenceID") int conferenceID)
             throws Exception{
         log.info("deleteConferenceSchedule : " + conferenceID);

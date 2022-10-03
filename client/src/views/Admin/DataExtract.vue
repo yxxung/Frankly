@@ -1,6 +1,5 @@
 <template>
   <AdminNav />
-
   <b-card>
     <div>
       <h4>재산 데이터</h4>
@@ -34,7 +33,7 @@
 </template>
 
 <script>
-import AdminNav from "@/components/AdminNav.vue";
+import AdminNav from "@/components/AdminNav.vue"
 
 export default {
   name: 'DataExtract',
