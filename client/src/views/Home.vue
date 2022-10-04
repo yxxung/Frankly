@@ -136,7 +136,7 @@ export default {
 
 /* 슬라이드 */
 #slider {
-  margin: 15px auto;
+  margin: 15px auto 40px auto;
   width: 540px;
   max-width: 100%;
   text-align: center;

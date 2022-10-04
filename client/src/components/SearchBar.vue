@@ -52,8 +52,8 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  top: 0px;
   padding: 8px 24px;
+  margin-top: -30px;
 }
 
 .politician-search-form__text-input {
