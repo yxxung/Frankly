@@ -4,7 +4,7 @@
             <!--헤더-->
             <header class="header header__community">
                 <h2 class="community-title">커뮤니티</h2>
-                <a class="icon-button-56" href="index.html">
+                <a class="icon-button-56" href="/notice">
                     <img src="@/assets/icon/Bullhorn.svg" alt="공지사항">
                 </a>
             </header>

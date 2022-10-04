@@ -37,6 +37,16 @@ const routes = [
     component: AuthPage
   },
   {
+    path: '/Mypage',
+    name: 'Mypage',
+    component: Mypage
+  },
+  /*board*/
+  {
+    path: '/WriteBoard',
+    component: WriteBoard
+  },
+  {
     path: '/MainBoard',
     component: MainBoard,
   },
@@ -44,11 +54,6 @@ const routes = [
     path: '/Politician',
     name: 'Politician',
     component: Politician
-  },
-  {
-    path: '/Mypage',
-    name: 'Mypage',
-    component: Mypage
   },
   {
     path: '/FreeBoard',
@@ -68,8 +73,9 @@ const routes = [
   {
     path: '/BoardDetail/:boardID',
     name: 'BoardDetail',
-    component: BoardDetail,
+    component: BoardDetail
   },
+  /*admin*/
   {
     path: '/AdminBoard',
     component: AdminBoard
@@ -92,19 +98,17 @@ const routes = [
     component: EditData
   },*/
   {
-    path: '/PoliticianDetail:PoliticianID',
+    path: '/PoliticianDetail',
     name: 'PoliticianDetail',
     component: PoliticianDetail
-  },
-  {
-    path: '/WriteBoard',
-    component: WriteBoard
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  linkActiveClass: "route-active",
+  linkExactActiveClass: "route-active"
 })
 
 export default router

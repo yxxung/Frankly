@@ -161,7 +161,7 @@ export default {
 .all-politician-list {
   margin: 10px auto;
   width: 100%;
-  max-width: 510px;
+  max-width: 520px;
   display: table;
 }
 
