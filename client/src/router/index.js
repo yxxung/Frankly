@@ -194,7 +194,7 @@ const routes = [
     component: EditData
   },*/
   {
-    path: '/PoliticianDetail',
+    path: '/PoliticianDetail/:politicianID',
     name: 'PoliticianDetail',
     component: PoliticianDetail
   }

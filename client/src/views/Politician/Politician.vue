@@ -17,12 +17,10 @@
         class="politician"
         v-for="politician in politicians"
         v-bind:key="politician.politicianID"
+        @click="goToPoliticianDetail(politician.politicianID)"
       >
         <!-- 정치인 리스트 출력 이미지, 이름-->
-        <div
-          class="politician-image"
-          @click="goToPoliticianDetail(politician.politicianID)"
-        >
+        <div class="politician-image">
           <img src="@/assets/politician/정진석.png" />
         </div>
         <div class="politician-name">{{ politician.politicianName }}</div>
@@ -91,7 +89,7 @@ export default {
         alert("검색어를 입력해주세요 !");
       }
     },
-    goToBoardDetail(politicianID) {
+    goToPoliticianDetail(politicianID) {
       this.$router.push({
         name: "PoliticianDetail",
         params: {
@@ -175,12 +173,13 @@ export default {
   width: 75px;
   height: 75px;
   box-sizing: border-box;
-  border: 3px solid #307b9c;
+  border: 3px solid #00B5FF;
   border-radius: 100%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .politician-image img {

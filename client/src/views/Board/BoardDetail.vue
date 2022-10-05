@@ -19,16 +19,16 @@
       <!--타이틀-->
       <div class="post-header">
         <div class="post-header__kategorie">커뮤니티 > {{ DetailData.region }}</div>
-        <h3 class="post-header__title">{{ DetailData.title }}</h3>
+        <h3 class="post-header__title">{{ DetailDatatitle }}</h3>
         <div class="post-header__info">
           <div class="post-header__writer">{{ DetailData.userID }}</div>
-          <div class="post-header__reg-date">{{ DetailData.regDate }}</div>
+          <div class="post-header__reg-date">{{ elapsedText(DetailData.regDate) }}</div>
         </div>
       </div>
 
       <!--내용-->
       <article class="post-content">
-        <p>{{ content }}</p>
+        <p>{{ DetailData.content }}</p>
       </article>
 
       <!--좋아요, 싫어요-->
@@ -123,6 +123,7 @@
 
 <script>
 import axios from "axios";
+import dateformat from "@/commons/dateformat.js";
 
 export default {
   name: "BoardDetail",
@@ -153,6 +154,10 @@ export default {
     });
   },
   methods: {
+    //date format 변환
+    elapsedText(date) {
+      return dateformat.elapsedText(new Date(date))
+    },
     // 특정인덱스인 값을 삭제할 때 사용함
     deleteData() {
       data.splice(this.index, 1);

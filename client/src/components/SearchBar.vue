@@ -86,4 +86,5 @@ export default {
   margin-left: 14px;
   vertical-align: middle;
 }
+
 </style>
