@@ -7,6 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import static java.time.LocalDateTime.now;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,7 +19,7 @@ public class BoardDTO {
 
     private int userID;
 
-    private Date regDate;
+    private LocalDateTime regDate;
 
     private int marked;
 
@@ -29,12 +31,12 @@ public class BoardDTO {
 
 
     @Builder
-    public BoardDTO(int boardID, int userID, Date regDate,
+    public BoardDTO(int boardID, int userID, LocalDateTime regDate,
                     int marked, String title, String content,
                     String region){
         this.boardID = boardID;
         this.userID = userID;
-        this.regDate = regDate;
+        this.regDate = now();
         this.marked = marked;
         this.title = title;
         this.content = content;
