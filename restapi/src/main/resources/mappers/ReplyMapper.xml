@@ -12,15 +12,20 @@
     </resultMap>
 
     <insert id="createReply" parameterType="ReplyDTO">
-        INSERT INTO frankly.Reply(boardID, userID, reply, regDate)
+        INSERT INTO frankly.Reply(boardID, userID, reply)
         VALUES(#{boardID}
               ,#{userID}
               ,#{reply}
-              ,#{regDate})
+              )
     </insert>
 
     <select id="readReply" resultMap="replyResultMap">
         SELECT * FROM frankly.Reply
+        WHERE boardID = #{boardID}
+    </select>
+
+    <select id="countReply" resultMap="replyResultMap">
+        SELECT count(replyID) FROM frankly.Reply
         WHERE boardID = #{boardID}
     </select>
 

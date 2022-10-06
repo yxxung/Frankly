@@ -57,15 +57,9 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-<<<<<<< HEAD
-    public List<BoardDTO> getBoardList() throws Exception {
-        return null;
-=======
-
-    public List<BoardDTO> getBoardList() throws Exception {
+    public List<BoardDTO> getBoardList(String region) throws Exception {
         log.info("getList");
-        return boardMapper.getBoardList();
->>>>>>> da99784 (Merge pull request #42 from hanpaa/feature/board)
+        return boardMapper.getBoardList(region);
     }
 
 //    @Override

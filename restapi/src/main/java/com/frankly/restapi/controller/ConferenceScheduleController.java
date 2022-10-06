@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static java.time.LocalTime.now;
 
 @Slf4j
@@ -30,7 +29,7 @@ public class ConferenceScheduleController {
     @GetMapping("/schedule")
     public ResponseEntity<List<ConferenceScheduleDTO>> readConferenceSchedule()
             throws Exception {
-        log.info("readConferenceSchedule - "+date());
+        log.info("readConferenceSchedule - "+now());
 
         return new ResponseEntity<>(conferenceScheduleService.readConferenceSchedule(), HttpStatus.OK);
     }

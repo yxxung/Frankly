@@ -23,8 +23,8 @@ public class ReplyService implements ReplyServiceInterface {
     private final ReplyMapper replyMapper;
 
     @Override
-    public void createReply(int boardID) throws Exception {
-        replyMapper.createReply(boardID);
+    public void createReply(ReplyDTO replyDTO) throws Exception {
+        replyMapper.createReply(replyDTO);
     }
 
     @Override

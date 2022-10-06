@@ -11,16 +11,17 @@
         <result column="marked" property="marked"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
+        <result column="region" property="region"/>
     </resultMap>
 
     <insert id="createBoard" parameterType="BoardDTO">
-        INSERT INTO frankly.Board(userID, regDate, marked, title, content, region)
+        INSERT INTO frankly.Board(userID, marked, title, content, region, regDate)
         VALUES(#{userID}
-              ,#{regDate}
               ,#{marked}
               ,#{title}
               ,#{content}
-              ,#{region})
+              ,#{region}
+              ,now())
     </insert>
 
     <select id="readBoard" resultMap="boardResultMap">
@@ -38,11 +39,12 @@
 
     <delete id="deleteBoard" parameterType="BoardDTO">
         DELETE FROM frankly.Board
-        WHERE boardID = #{boardID} AND region = #{region}
+        WHERE boardID = #{boardID}
     </delete>
 
     <select id="getBoardList" resultMap="boardResultMap">
-        SELECT * FROM frankly.Board
+        SELECT * FROM frankly.Board ORDER BY boardID DESC
+        WHERE region = #{region}
     </select>
 
 </mapper>
