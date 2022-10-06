@@ -2,19 +2,19 @@
     <nav class="bottom-nav">
         <div class="bottom-nav-area">
             <router-link to="/">
-                <img src="@/assets/icon/nav/Home.svg" alt="홈으로 이동">
+                <img src="@/assets/icon/nav/Home.svg" alt="홈으로 이동" id="home" >
                 <p>홈</p>
             </router-link>
             <router-link to="/MainBoard">
-                <img src="@/assets/icon/nav/Chat.svg" alt="홈으로 이동">
+                <img src="@/assets/icon/nav/Chat.svg" alt="홈으로 이동" id="board">
                 <p>커뮤니티</p>
             </router-link>
             <router-link to="/Politician">
-                <img src="@/assets/icon/nav/NtnlAsmbl.svg" alt="홈으로 이동">
+                <img src="@/assets/icon/nav/NtnlAsmbl.svg" alt="홈으로 이동" id="politician">
                 <p>국회의원</p>
             </router-link>
             <router-link to="/Mypage">
-                <img src="@/assets/icon/nav/User.svg" alt="홈으로 이동">
+                <img src="@/assets/icon/nav/User.svg" alt="홈으로 이동" id="mypage" >
                 <p>내 정보</p>
             </router-link>
         </div>
@@ -24,14 +24,6 @@
 <script>
 export default {
     data() {
-        return {
-            lists: [
-                { link: '/', title: 'Home' },
-                { link: '/Board', title: 'Board' },
-                { link: '/Politician', title: 'Politician' },
-                { link: '/Mypage', title: 'Mypage' }
-            ]
-        }
     },
 }
 </script>
@@ -67,16 +59,36 @@ export default {
 }
 
 .bottom-nav-area span {
-    color: #B5B5B5;
+    color: #535353;
 }
 
 .bottom-nav-area p {
     margin-top: 2px;
-    font-size: 10px;
-    color: #B5B5B5;
+    font-size: 11px;
+    color: #535353;
+    font-family: 'Noto Sans KR';
+    line-height: 14px;
 }
 
-.nav--active p {
-    color: black;
+
+/*navigation active*/
+#home:hover,
+.route-active #home {
+    background-image: url("@/assets/icon/nav/HomeHover.svg");
+}
+
+#board:hover,
+.route-active #board {
+    background-image: url("@/assets/icon/nav/ChatHover.svg");
+}
+
+#politician:hover,
+.route-active #politician {
+    background-image: url("@/assets/icon/nav/NtnlHover.svg");
+}
+
+#mypage:hover,
+.route-active #mypage {
+    background-image: url("@/assets/icon/nav/UserHover.svg");
 }
 </style>

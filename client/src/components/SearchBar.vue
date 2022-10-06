@@ -52,8 +52,8 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  top: 0px;
   padding: 8px 24px;
+  margin-top: -30px;
 }
 
 .politician-search-form__text-input {
@@ -62,8 +62,9 @@ export default {
   height: 38px;
   left: 16px;
   top: 297px;
-  padding: 4px 0 4px 14px;
-
+  padding: 4px 0 4px 18px;
+  border: none;
+  outline: none;
   background: #f5f5f5;
   border-radius: 55px;
 }
@@ -71,7 +72,7 @@ export default {
 .politician-search-form__text-input::placeholder {
   font-family: "Noto Sans KR";
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   line-height: 19px;
 
@@ -85,4 +86,5 @@ export default {
   margin-left: 14px;
   vertical-align: middle;
 }
+
 </style>

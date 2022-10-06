@@ -13,9 +13,26 @@ import AdminBoard from '../views/Admin/AdminBoard.vue'
 import DataExtract from '../views/Admin/DataExtract.vue'
 import EditBoard from '../views/Admin/EditBoard.vue'
 import EditUser from '../views/Admin/EditUser.vue'
-import PoliticianInfo from '../views/Politician/PoliticianInfo.vue'
+import PoliticianDetail from '../views/Politician/PoliticianDetail.vue'
 import WriteBoard from '../views/Board/WriteBoard.vue'
 import SeoulBoard from '../views/Board/region/SeoulBoard.vue'
+import BusanBoard from '../views/Board/region/BusanBoard.vue'
+import ChungbukBoard from '../views/Board/region/ChungbukBoard.vue'
+import ChungnamBoard from '../views/Board/region/ChungnamBoard.vue'
+import DaeguBoard from '../views/Board/region/DaeguBoard.vue'
+import DaejeonBoard from '../views/Board/region/DaejeonBoard.vue'
+import GwangjuBoard from '../views/Board/region/GwangjuBoard.vue'
+import GangwonBoard from '../views/Board/region/GangwonBoard.vue'
+import GyeongbukBoard from '../views/Board/region/GyeongbukBoard.vue'
+import GyeongnamBoard from '../views/Board/region/GyeongnamBoard.vue'
+import GyeonggiBoard from '../views/Board/region/GyeonggiBoard.vue'
+import IncheonBoard from '../views/Board/region/IncheonBoard.vue'
+import JejuBoard from '../views/Board/region/JejuBoard.vue'
+import JeonbukBoard from '../views/Board/region/JeonbukBoard.vue'
+import JeonnamBoard from '../views/Board/region/JeonnamBoard.vue'
+import UlsanBoard from '../views/Board/region/UlsanBoard.vue'
+import SejongBoard from '../views/Board/region/SejongBoard.vue'
+//import EditData from "@/views/Admin/EditData"
 
 const routes = [
   {
@@ -36,6 +53,16 @@ const routes = [
     component: AuthPage
   },
   {
+    path: '/Mypage',
+    name: 'Mypage',
+    component: Mypage
+  },
+  /*board*/
+  {
+    path: '/WriteBoard',
+    component: WriteBoard
+  },
+  {
     path: '/MainBoard',
     component: MainBoard,
   },
@@ -43,11 +70,6 @@ const routes = [
     path: '/Politician',
     name: 'Politician',
     component: Politician
-  },
-  {
-    path: '/Mypage',
-    name: 'Mypage',
-    component: Mypage
   },
   {
     path: '/FreeBoard',
@@ -65,11 +87,91 @@ const routes = [
     component: SeoulBoard
   },
   {
+    path: '/BusanBoard',
+    name: 'BusanBoard',
+    component: BusanBoard
+  },
+  {
+    path: '/ChungbukBoard',
+    name: 'ChungbukBoard',
+    component: ChungbukBoard
+  },
+  {
+    path: '/ChungnamBoard',
+    name: 'ChungnamBoard',
+    component: ChungnamBoard
+  },
+  {
+    path: '/DaeguBoard',
+    name: 'DaeguBoard',
+    component: DaeguBoard
+  },
+  {
+    path: '/DaejeonBoard',
+    name: 'DaejeonBoard',
+    component: DaejeonBoard
+  },
+  {
+    path: '/GangwonBoard',
+    name: 'GangwonBoard',
+    component: GangwonBoard
+  },
+  {
+    path: '/GwangjuBoard',
+    name: 'GwangjuBoard',
+    component: GwangjuBoard
+  },
+  {
+    path: '/GyeongbukBoard',
+    name: 'GyeongbukBoard',
+    component: GyeongbukBoard
+  },
+  {
+    path: '/GyeonggiBoard',
+    name: 'GyeonggiBoard',
+    component: GyeonggiBoard
+  },
+  {
+    path: '/GyeongnamBoard',
+    name: 'GyeongnamBoard',
+    component: GyeongnamBoard
+  },
+  {
+    path: '/IncheonBoard',
+    name: 'IncheonBoard',
+    component: IncheonBoard
+  },
+  {
+    path: '/JejuBoard',
+    name: 'JejuBoard',
+    component: JejuBoard
+  },
+  {
+    path: '/JeonbukBoard',
+    name: 'JeonbukBoard',
+    component: JeonbukBoard
+  },
+  {
+    path: '/JeonnamBoard',
+    name: 'JeonnamBoard',
+    component: JeonnamBoard
+  },
+  {
+    path: '/SejongBoard',
+    name: 'SejongBoard',
+    component: SejongBoard
+  },
+  {
+    path: '/UlsanBoard',
+    name: 'UlsanBoard',
+    component: UlsanBoard
+  },
+  {
     path: '/BoardDetail/:boardID',
     name: 'BoardDetail',
-    component: BoardDetail,
-    props: true
+    component: BoardDetail
   },
+  /*admin*/
   {
     path: '/AdminBoard',
     component: AdminBoard
@@ -86,19 +188,23 @@ const routes = [
     path: '/EditUser',
     component: EditUser
   },
+  /*
   {
-    path: '/PoliticianInfo',
-    component: PoliticianInfo
-  },
+    path: '/EditData',
+    component: EditData
+  },*/
   {
-    path: '/WriteBoard',
-    component: WriteBoard
+    path: '/PoliticianDetail/:politicianID',
+    name: 'PoliticianDetail',
+    component: PoliticianDetail
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  linkActiveClass: "route-active",
+  linkExactActiveClass: "route-active"
 })
 
 export default router

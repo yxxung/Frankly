@@ -14,13 +14,14 @@
           <b-row class="my-1">
             <b-col sm="10">
               <b-form-input
-                v-model="title"
+                v-bind:value="inputUserInfo"
+                v-on:input="updateInput"
                 type="text"
-                placeholder="검색어를 입력하세요"
+                placeholder="유저 정보를 입력하세요."
               />
             </b-col>
             <b-col sm="2">
-              <b-button variant="outline-primary">검색</b-button>
+              <b-button variant="outline-primary" v-on:click="searchUser(this.inputUserInfo)">검색</b-button>
             </b-col>
           </b-row>
         </b-container>
@@ -81,9 +82,23 @@ export default {
       perPage: 15,
       currentPage: 1,
       userinfos: [],
+      inputUserInfo : ""
     };
   },
   methods: {
+    searchUser: function (input){
+      axios.get('/api/users/' + input)
+        .then(response => {
+          this.userinfos = response.data.map(r => r.data)
+        })
+        .catch(e => {
+          console.log('error:', e)
+        })
+    },
+    updateInput: function (event){
+      var text = event.target.value;
+      this.inputUserInfo = text;
+    },
     //수정
     doChange: function(userinfo) {
 
@@ -99,7 +114,7 @@ export default {
     }
   },
   created() {
-    axios.get('localhost:8080/api/users')
+    axios.get('/api/users')
     .then(response => {
       this.userinfos = response.data.map(r => r.data)
     })
@@ -107,6 +122,7 @@ export default {
       console.log('error:', e)
     })
   },
+
 };
 </script>
 

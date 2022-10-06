@@ -17,7 +17,7 @@ public class BoardDTO {
 
     private int userID;
 
-    private LocalDateTime regDate;
+    private Date regDate;
 
     private int marked;
 
@@ -29,7 +29,7 @@ public class BoardDTO {
 
 
     @Builder
-    public BoardDTO(int boardID, int userID, LocalDateTime regDate,
+    public BoardDTO(int boardID, int userID, Date regDate,
                     int marked, String title, String content,
                     String region){
         this.boardID = boardID;

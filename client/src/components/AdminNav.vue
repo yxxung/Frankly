@@ -5,6 +5,7 @@
       <b-nav-item href="/EditUser">회원 관리</b-nav-item>
       <b-nav-item href="/EditBoard">게시글 관리</b-nav-item>
       <b-nav-item href="/DataExtract">데이터 추출</b-nav-item>
+      <b-nav-item href="/EditData">데이터 관리</b-nav-item>
     </b-nav>
   </div>
 </template>

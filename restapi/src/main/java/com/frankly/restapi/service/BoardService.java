@@ -5,10 +5,12 @@ import com.frankly.restapi.domain.PoliticianDTO;
 import com.frankly.restapi.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -21,18 +23,14 @@ public class BoardService implements BoardServiceInterface {
     @Override
     public void createBoard(BoardDTO boardDTO) throws Exception {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-        String strDate = dateFormat.format(Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).getTime());
-        Date date = dateFormat.parse(strDate);
-        boardDTO.setRegDate(date);
         boardDTO.setMarked(0);
         boardMapper.createBoard(boardDTO);
     }
 
     @Override
-    public void updateBoard(BoardDTO boardDTO, int region, int boardID) throws Exception {
+    public void updateBoard(BoardDTO boardDTO, String region, int boardID) throws Exception {
 
-        BoardDTO targetBoard = boardMapper.readBoard(region, boardID);
+        BoardDTO targetBoard = boardMapper.readBoard(boardID);
         if(targetBoard.getAuthor() == (boardDTO.getAuthor())){
             try{
                 boardDTO.setBoardID(boardID);
@@ -54,12 +52,11 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public BoardDTO readBoard(int region, int boardID) throws Exception {
-        return boardMapper.readBoard(region, boardID);
+    public BoardDTO readBoard(int boardID) throws Exception {
+        return boardMapper.readBoard(boardID);
     }
 
     @Override
-
     public List<BoardDTO> getBoardList() throws Exception {
         log.info("getList");
         return boardMapper.getBoardList();

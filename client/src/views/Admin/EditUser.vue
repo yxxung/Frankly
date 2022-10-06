@@ -14,13 +14,16 @@
           <b-row class="my-1">
             <b-col sm="10">
               <b-form-input
-                v-model="title"
-                type="text"
+                v-model="inputValue"
+                type="search"
                 placeholder="검색어를 입력하세요"
               />
+              <!--    v-bind:value = "inputValue"-->
+              <!--    v-on:input="getInput"-->
+              <div class="mt-2">Value: {{ inputValue }}</div>
             </b-col>
             <b-col sm="2">
-              <b-button variant="outline-primary">검색</b-button>
+              <b-button variant="outline-primary" v-on:click="getUserInfo">검색</b-button>
             </b-col>
           </b-row>
         </b-container>
@@ -77,14 +80,27 @@ export default {
     ModalEditUser
   },
   data() {
+
     return {
       perPage: 15,
       currentPage: 1,
       userinfos: [],
+      inputValue:''
     };
   },
   methods: {
-    //수정
+    getUserInfo: function (){
+      axios.get('/api/users/' + this.inputValue)
+        .then(response => {
+          this.userinfos = response.data.map(r => r.data)
+
+        })
+        .catch(e => {
+          console.log('error:', e)
+          console.log(this.inputValue + "request")
+        })
+    },
+    // 수정
     doChange: function(userinfo) {
 
     },
@@ -99,7 +115,7 @@ export default {
     }
   },
   created() {
-    axios.get('localhost:8080/api/users')
+    axios.get('/api/users')
     .then(response => {
       this.userinfos = response.data.map(r => r.data)
     })
