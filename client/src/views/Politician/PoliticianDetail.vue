@@ -32,6 +32,24 @@
       </div>
     </div>
     <div class="assembly-text" />
+
+    <div class="assembly-infos">
+      <div class="assembly-detail">
+        <h2>국회 출석률</h2>
+        <h3>86%</h3>
+      </div>
+      <div class="assembly-detail">
+        <h2>표결건수</h2>
+        <h3>3147건</h3>
+      </div>
+      <div class="assembly-detail">
+        <h2>당선 횟수</h2>
+        <h3>4선</h3>
+      </div>
+      <router-link to="/statistics"
+        ><div class="link-statistics">통계 더보기</div></router-link
+      >
+    </div>
   </div>
 </template>
 
@@ -138,7 +156,7 @@ export default {
   margin: 5px auto;
   font-family: "Noto Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 22px;
   line-height: 32px;
   /* identical to box height */
@@ -161,5 +179,18 @@ export default {
   letter-spacing: -0.024em;
 
   color: #000000;
+}
+
+/*국회 정보*/
+.assembly-infos {
+  width: 375px;
+  height: 89px;
+  background: #ffffff;
+  border-radius: 24px;
+  display: table;
+}
+
+.assembly-detail {
+  width: 33%;
 }
 </style>
