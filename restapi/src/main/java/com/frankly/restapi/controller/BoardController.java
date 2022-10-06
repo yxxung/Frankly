@@ -2,6 +2,7 @@ package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.BoardDTO;
 import com.frankly.restapi.service.BoardService;
+import com.frankly.restapi.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+
+    private final ReplyService replyService;
 
     //file 전송시 file과 dto를 나눠서 전송해야 함
     //requestpart로 나눠서 받기,,,나머지 수정 필요
@@ -48,8 +51,12 @@ public class BoardController {
 
 
     //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
+<<<<<<< HEAD
 
     @PutMapping("{boardID}")
+=======
+    @PutMapping("/{boardID}")
+>>>>>>> refactoring
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
                                          @PathVariable("region") String region,
                                          @PathVariable("boardID")int boardID)throws Exception{
@@ -59,13 +66,19 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+<<<<<<< HEAD
 
     @GetMapping("{boardID}")
+=======
+    @GetMapping("/{boardID}")
+>>>>>>> refactoring
     public ResponseEntity<BoardDTO> readBoard(@PathVariable("boardID") int boardID) throws Exception{
 
         log.info("게시물 불러오기 : " + boardID);
         try{
             BoardDTO boardDTO = boardService.readBoard(boardID);
+            replyService.readReply(boardID);
+
             return new ResponseEntity<>(boardDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -79,7 +92,7 @@ public class BoardController {
         return new ResponseEntity<>(boardService.getBoardList(region), HttpStatus.OK);
     }
 
-    @DeleteMapping("{boardID}")
+    @DeleteMapping("/{boardID}")
     public ResponseEntity<?> deleteBoard(@PathVariable("boardID") int boardID) throws Exception{
 
         BoardDTO boardDTO = new BoardDTO();
