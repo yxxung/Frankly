@@ -16,7 +16,7 @@ import EditUser from '../views/Admin/EditUser.vue'
 import PoliticianDetail from '../views/Politician/PoliticianDetail.vue'
 import WriteBoard from '../views/Board/WriteBoard.vue'
 import SeoulBoard from '../views/Board/region/SeoulBoard.vue'
-//import EditData from "@/views/Admin/EditData"
+import EditData from "@/views/Admin/EditData"
 
 const routes = [
   {
@@ -75,13 +75,9 @@ const routes = [
     name: 'BoardDetail',
     component: BoardDetail
   },
-  /*admin*/
+  // admin page router
   {
-    path: '/AdminBoard',
-    component: AdminBoard
-  },
-  {
-    path: '/DataExtract',
+    path: '/adminPage',
     component: DataExtract
   },
   {
@@ -92,11 +88,11 @@ const routes = [
     path: '/EditUser',
     component: EditUser
   },
-  /*
+
   {
     path: '/EditData',
     component: EditData
-  },*/
+  },
   {
     path: '/PoliticianDetail',
     name: 'PoliticianDetail',

@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
-@Builder
 @NoArgsConstructor
 //@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoardDTO {
