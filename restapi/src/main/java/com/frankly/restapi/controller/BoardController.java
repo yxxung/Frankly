@@ -40,11 +40,10 @@ public class BoardController {
     //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
     @PutMapping("/{boardID}")
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                         @PathVariable("region") String region,
                                          @PathVariable("boardID")int boardID)throws Exception{
 
         log.info("게시물 수정 수정자 :"  + boardDTO.getAuthor());
-        boardService.updateBoard(boardDTO, region, boardID);
+        boardService.updateBoard(boardDTO, boardID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -66,13 +65,11 @@ public class BoardController {
         return new ResponseEntity<>(boardService.getBoardList(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{region}/{boardID}")
-    public ResponseEntity<?> deleteBoard(@PathVariable("region") String region,
-                                         @PathVariable("boardID") int boardID) throws Exception{
+    @DeleteMapping("/{boardID}")
+    public ResponseEntity<?> deleteBoard(@PathVariable("boardID") int boardID) throws Exception{
 
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setBoardID(boardID);
-        boardDTO.setRegion(region);
 
         log.info(boardID + "게시글 삭제");
         boardService.deleteBoard(boardDTO);

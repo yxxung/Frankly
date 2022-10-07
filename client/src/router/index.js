@@ -97,6 +97,11 @@ const routes = [
     path: '/PoliticianDetail',
     name: 'PoliticianDetail',
     component: PoliticianDetail
+  },
+  {
+    path: '/DataExtract',
+    name: 'DataExtract',
+    component: DataExtract
   }
 ]
 

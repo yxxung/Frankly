@@ -38,7 +38,7 @@
 
     <delete id="deleteBoard" parameterType="BoardDTO">
         DELETE FROM frankly.Board
-        WHERE boardID = #{boardID} AND region = #{region}
+        WHERE boardID = #{boardID}
     </delete>
 
     <select id="getBoardList" resultMap="boardResultMap">
