@@ -1,46 +1,49 @@
 <template>
-    <div class="floating-button">
-        <img src="@/assets/icon/Write.svg" />
-    </div>
+  <div class="floating-button"
+       @click="write">
+    <img src="@/assets/icon/Write.svg" />
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'FloatingButton'
+  name: 'FloatingButton',
+  methods: {
+    write() {
+      this.$router.push({
+        path: '/WriteBoard'
+      })
+    }
+  },
 }
 </script>
 
 <style>
-/*위치 수정 필요*/
 .floating-button {
-    position: fixed;
-    right: 35%;
-    line-height: 63px;
-    bottom: 90px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #2F2F2F;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 999;
-<<<<<<< HEAD
-=======
+  position: fixed;
+  line-height: 63px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background-color: #2F2F2F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  z-index: 999;
 
-    top: 550px;
-    margin-left: 450px;
+  top: 520px;
+  margin-left: 450px;
 }
 
 .floating-button:hover {
-    background: #4a4a4a;
->>>>>>> aa0d70e (boardDetail 넘어가기, backend api 수정)
+  background: #4a4a4a;
 }
 
 .floationg-button img {
-    widows: 25px;
-    height: 25px;
-    filter: invert(100%) sepia(6%) saturate(7500%) hue-rotate(305deg) brightness(96%) contrast(96%);
+  widows: 28px;
+  height: 28px;
+  filter: invert(100%) sepia(6%) saturate(7500%) hue-rotate(305deg) brightness(96%) contrast(96%);
 }
 </style>
