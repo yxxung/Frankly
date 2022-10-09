@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/boards")
+@RequestMapping("/api/replys")
 @RequiredArgsConstructor
 public class ReplyController {
 
     private final ReplyService replyService;
 
     //댓글 달기
-    @PostMapping("/{boardID}/create")
+    @PostMapping("{boardID}/create")
     public ResponseEntity<BoardDTO> createReply(@PathVariable int boardID) throws Exception {
         replyService.createReply(boardID);
 
@@ -29,14 +29,14 @@ public class ReplyController {
     }
 
     //댓글 보기
-    @GetMapping("/{boardID}/{replyID}")
+    /*@GetMapping("/{boardID}/{replyID}")
     public ResponseEntity<BoardDTO> readReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
         log.info("readReply");
 
         replyService.readReply(replyDTO);
 
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 
     //댓글 수정
     @PutMapping("/{boardID}/{replyID}")
