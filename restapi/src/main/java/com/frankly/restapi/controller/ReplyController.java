@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @CrossOrigin
@@ -29,11 +31,11 @@ public class ReplyController {
     }
 
     //댓글 보기
-    /*@GetMapping("/{boardID}/{replyID}")
-    public ResponseEntity<BoardDTO> readReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
+    @GetMapping("/{boardID}/{replyID}")
+    public ResponseEntity<List<BoardDTO>> readReply(@PathVariable("boardID") int boardID) throws Exception{
         log.info("readReply");
 
-        replyService.readReply(replyDTO);
+        replyService.readReply(boardID);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }*/

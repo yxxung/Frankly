@@ -26,6 +26,11 @@
         WHERE boardID = #{boardID}
     </select>
 
+    <select id="countReply" resultMap="replyResultMap">
+        SELECT count(replyID) FROM frankly.Reply
+        WHERE boardID = #{boardID}
+    </select>
+
     <update id="updateReply" parameterType="ReplyDTO">
         UPDATE frankly.Reply
         SET reply = #{reply}

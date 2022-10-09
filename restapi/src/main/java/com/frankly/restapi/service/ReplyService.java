@@ -28,8 +28,8 @@ public class ReplyService implements ReplyServiceInterface {
     }
 
     @Override
-    public List<ReplyDTO> readReply(ReplyDTO replyDTO) throws Exception {
-        return replyMapper.readReply(replyDTO);
+    public List<ReplyDTO> readReply(int boardID) throws Exception {
+        return replyMapper.readReply(boardID);
     }
 
     @Override

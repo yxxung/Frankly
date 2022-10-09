@@ -18,7 +18,7 @@ public interface BoardMapper {
 
     public BoardDTO readBoard(int boardID)throws Exception;
 
-    public List<BoardDTO> getBoardList() throws  Exception;
+    public List<BoardDTO> getBoardList(String region) throws  Exception;
 
     //public List<BoardDTO> pageNumberBoardList(Long pageNumber) throws Exception;
 
