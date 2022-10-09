@@ -8,6 +8,7 @@
       rows="10"
       placeholder="댓글 입력..."
       class="enter-comment__textarea"
+      v-model="commentInput"
     ></textarea>
     <button class="enter-comment__submit" @click="onClickCommentSubmit()">
       <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
@@ -21,13 +22,17 @@ import axios from "axios";
 export default {
   data() {
     return {
+      commentInput: "",
+      //작성자는 로컬 스트리지에서 받아옴
+      userData: {
 
+      }
     }
   },
   methods: {
     //댓글 입력
     onClickCommentSubmit() {
-      
+      if(this.commentInput.trim())
     }
   },
 };
