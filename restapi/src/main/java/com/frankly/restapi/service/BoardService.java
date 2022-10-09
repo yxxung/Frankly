@@ -62,6 +62,18 @@ public class BoardService implements BoardServiceInterface {
         return boardMapper.getBoardList(region);
     }
 
+
+    // 게시물 총 갯수
+    @Override
+    public int searchCount(String searchType, String keyword) throws Exception {
+        return boardMapper.searchCount(searchType, keyword);
+    }
+
+    @Override
+    public List<BoardDTO> searchBoard(String region, String searchType, String keyword) throws Exception {
+        log.info("getSearchList");
+        return boardMapper.searchBoard(region, searchType, keyword);
+    }
 //    @Override
 //    public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
 //        return null;

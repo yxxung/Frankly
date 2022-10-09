@@ -1,16 +1,16 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.BoardDTO;
+import com.frankly.restapi.domain.PageVO;
 import com.frankly.restapi.service.BoardService;
 import com.frankly.restapi.service.ReplyService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -92,6 +92,24 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //게시물 검색
+    @GetMapping("/boardlist/{region}/search")
+    public ResponseEntity<List<BoardDTO>> searchBoard(@PathVariable("region") String region,
+                                                      @RequestParam(value = "searchType", required = false, defaultValue = "title") String searchType,
+                                                      @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) throws Exception{
+
+        PageVO pageVO = new PageVO();
+
+        //PageVO.setNum(num);
+        //PageVO.setCount(boardService.searchCount(searchType, keyword));
+        //pageVO.setSearchTypeKeyword(searchType, keyword);
+        pageVO.setSearchType(searchType);
+        pageVO.setKeyword(keyword);
+
+
+
+        return new ResponseEntity<>(boardService.searchBoard(region, searchType, keyword), HttpStatus.OK);
+    }
 
 
 }
