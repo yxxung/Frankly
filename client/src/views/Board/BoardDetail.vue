@@ -1,51 +1,79 @@
 <template>
-  <div>
-    <div class="wrap">
-      <!--헤더-->
-      <header class="header header--back">
-        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
-          <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
+  <div class="wrap">
+    <!--헤더-->
+    <header class="header header--back">
+      <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
+        <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
+      </a>
+      <div class="header-right-icon">
+        <a class="icon-button-56">
+          <img src="@/assets/icon/Share.svg" alt="공유하기" />
         </a>
-        <div class="header-right-icon">
-          <a class="icon-button-56">
-            <img src="@/assets/icon/Share.svg" alt="공유하기" />
-          </a>
-          <a class="icon-button-56">
-            <img src="@/assets/icon/Other2.svg" alt="더보기" />
-          </a>
-        </div>
-      </header>
-
-      <!--타이틀-->
-      <div class="post-header">
-        <div class="post-header__kategorie">커뮤니티 > {{ DetailData.region }}</div>
-        <h3 class="post-header__title">{{ DetailDatatitle }}</h3>
-        <div class="post-header__info">
-          <div class="post-header__writer">{{ DetailData.userID }}</div>
-          <div class="post-header__reg-date">{{ elapsedText(DetailData.regDate) }}</div>
-        </div>
+        <a class="icon-button-56">
+          <img src="@/assets/icon/Other2.svg" alt="더보기" />
+        </a>
       </div>
+    </header>
 
-      <!--내용-->
-      <article class="post-content">
-        <p>{{ DetailData.content }}</p>
-      </article>
-
-      <!--좋아요, 싫어요-->
-      <div class="post-like">
-        <button><img src="@/assets/icon/Like.svg"></button>
-        <button><img src="@/assets/icon/Unlike.svg"></button>
+    <!--타이틀-->
+    <div class="post-header">
+      <div class="post-header__kategorie">
+        커뮤니티 > {{ DetailData.region }}
+      </div>
+      <h3 class="post-header__title">{{ DetailDatatitle }}</h3>
+      <div class="post-header__info">
+        <div class="post-header__writer">{{ DetailData.userID }}</div>
+        <div class="post-header__reg-date">
+          {{ elapsedText(DetailData.regDate) }}
+        </div>
       </div>
     </div>
+
+    <!--내용-->
+    <article class="post-content">
+      <p>{{ DetailData.content }}</p>
+    </article>
+
+    <!--좋아요, 싫어요-->
+    <div class="post-like">
+      <button><img src="@/assets/icon/Like.svg" /></button>
+      <button><img src="@/assets/icon/Unlike.svg" /></button>
+    </div>
+
+    <!--댓글-->
+    <div class="comments">
+      <ul>
+        <li class="comments__box">
+          <div class="comments__info">
+            <div class="comments__info-left">
+              <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
+              <h6>익명</h6>
+              <span class="comments__info__date">36분전</span>
+            </div>
+
+            <div class="comments__info-right">
+              <button class="icon-button-24">
+                <img src="@/assets/icon/Other1.svg" alt="더보기" />
+              </button>
+            </div>
+          </div>
+          <div class="comments__text">나는 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+        </li>
+      </ul>
+    </div>
+
+    <Reply @create-Reply="createReply"/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import dateformat from "@/commons/dateformat.js";
+import Reply from "@/views/Board/Reply.vue";
 
 export default {
   name: "BoardDetail",
+  components: { Reply },
   data() {
     return {
       DetailData: {
@@ -56,6 +84,7 @@ export default {
         region: "",
         userID: "",
         marked: "",
+        replys: []
       },
     };
   },
@@ -71,6 +100,7 @@ export default {
       this.DetailData.marked = response.data.marked;
       console.log(boardID);
     });
+    axios.get(`/api/replys/`)
   },
   methods: {
     //date format 변환
@@ -92,36 +122,8 @@ export default {
           boardID: this.index,
         },
       });
-    },
-    //댓글 작성
-    createReply(reply) {
-      axios
-        .post(
-          `${BACK_URL}/boards/replys`,
-          {
-            boardId: this.detailData.boardId,
-            commentContent: comment,
-          },
-          {
-            headers: { "jwt-auth-token": this.$cookies.get("token") },
-          }
-        )
-        .then((response) => {
-          // console.log(response);
-          if (response.status === 200) {
-            alert("댓글이 작성되었습니다!");
-            axios
-              .get(`${BACK_URL}/boards/${this.detailData.boardId}`)
-              .then((response) => {
-                this.detailData.comments = response.data.board.comments;
-              });
-          }
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -233,5 +235,66 @@ export default {
 .post-like button {
   margin-right: 8px;
   background-color: #f3f3f3;
+}
+
+/*댓글*/
+.comments__box {
+  padding: 8px 16px;
+  border-bottom: 1px solid #f6f6f6;
+}
+
+.comments__box--reply {
+  padding-left: 32px;
+  position: relative;
+}
+
+.comments__box--reply:before {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-image: url("@/assets/icon/Reply.svg");
+  background-repeat: no-repeat;
+}
+
+.comments__info {
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.comments__info h6 {
+  padding: 0 12px 0 8px;
+  font-size: 14px;
+  color: #696969;
+}
+
+.comments__info-left {
+  display: flex;
+  align-items: center;
+}
+
+.comments__info__date {
+  font-size: 12px;
+  color: #696969;
+}
+
+.comments__plus {
+  padding: 16px;
+}
+
+.comments__plus-button {
+  padding: 14px 0;
+  width: 100%;
+  border-radius: 12px;
+  color: #424242;
+  background-color: #f1f1f1;
+}
+
+.comments__plus-button:hover {
+  background-color: #e7e7e7;
 }
 </style>
