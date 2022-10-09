@@ -32,10 +32,10 @@ public class ReplyController {
 
     //댓글 보기
     @GetMapping("/{boardID}/{replyID}")
-    public ResponseEntity<List<BoardDTO>> readReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
+    public ResponseEntity<List<BoardDTO>> readReply(@PathVariable("boardID") int boardID) throws Exception{
         log.info("readReply");
 
-        replyService.readReply(replyDTO);
+        replyService.readReply(boardID);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
