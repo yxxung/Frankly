@@ -43,12 +43,12 @@
     <!--댓글-->
     <div class="comments">
       <ul>
-        <li class="comments__box">
+        <li class="comments__box" v-for="reply in replys" v-bind:key="reply.replyID">
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
               <h6>익명</h6>
-              <span class="comments__info__date">36분전</span>
+              <span class="comments__info__date">{{elapsedText(reply.regDate)}}</span>
             </div>
 
             <div class="comments__info-right">
@@ -57,12 +57,12 @@
               </button>
             </div>
           </div>
-          <div class="comments__text">나는 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="comments__text">{{reply.reply}}</div>
         </li>
       </ul>
     </div>
 
-    <Reply @create-Reply="createReply"/>
+    <Reply @create-reply="createReply" />
   </div>
 </template>
 
@@ -84,8 +84,8 @@ export default {
         region: "",
         userID: "",
         marked: "",
-        replys: []
       },
+      replys: {}
     };
   },
   created() {
@@ -100,7 +100,10 @@ export default {
       this.DetailData.marked = response.data.marked;
       console.log(boardID);
     });
-    axios.get(`/api/replys/`)
+    axios.get(`/api/replys/${boardID}/replyList`).then((response => {
+      this.replys = response.data
+      console.log(response.data);
+    }))
   },
   methods: {
     //date format 변환
@@ -122,6 +125,14 @@ export default {
           boardID: this.index,
         },
       });
+    },
+    createReply(replys) {
+      axios.post(`/api/replys/${boardID}/create`, {
+        boardID: this.DetailData.boardID,
+        reply: replys
+      }).then((response) => {
+        console.log(response);
+      })
     }
   }
 };
@@ -296,5 +307,47 @@ export default {
 
 .comments__plus-button:hover {
   background-color: #e7e7e7;
+}
+
+/*댓글 입력창*/
+.enter-comment {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 540px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+}
+
+.enter-comment__textarea {
+  height: 32px;
+  border-radius: 24px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  color: #2b2b2b;
+  background-color: #f8f8f8;
+  outline: 0;
+  border: 0;
+  resize: 0;
+}
+
+.enter-comment__textarea:focus-visible {
+  outline: 0;
+  /*box-shadow: 0 0 0 2px #000 inset;*/
+}
+
+.enter-comment__submit {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+}
+
+.enter-comment__submit:hover {
+  background-color: #cccccc;
 }
 </style>
