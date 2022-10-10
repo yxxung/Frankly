@@ -3,7 +3,7 @@
 
   <div class="hello">
     <b-card
-      header="정치인 데이터 관리"
+      header="게시판 관리"
       style="max-width: 80rem; margin: auto; margin-top: 10vh"
       class="mb-2"
       border-variant="info"
@@ -28,7 +28,7 @@
           </b-row>
         </b-container>
       </b-form-group>
-      <EditBoardListView v-bind:propInfos="infos"></EditBoardListView>
+      <EditBoardDetail v-bind:propInfos="infos"></EditBoardDetail>
       <!-- 페이징 처리-->
 
     </b-card>
@@ -38,13 +38,13 @@
 <script>
 import AdminNav from "@/components/AdminNav.vue";
 import axios from "axios";
-import EditBoardListView from "@/views/Admin/EditBoardListView";
+import EditBoardDetail from "@/views/Admin/EditBoardDetail";
 
 export default {
-  name: "EditData",
+  name: 'EditData',
   components: {
     AdminNav,
-    EditBoardListView
+    EditBoardDetail
   },
   data() {
 

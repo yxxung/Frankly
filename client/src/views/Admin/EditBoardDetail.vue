@@ -39,9 +39,9 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
         <b-card>
           <ul>
             <li v-for="(value, key) in row.item" :key="key">
-              {{key}} <br>
+              <span v-if="!key.endsWith('ID') && key !== '_showDetails'">{{key}}</span> <br>
               <!--                Original Value : {{value}} <br>-->
-              <textarea property="value" v-model="row.item[key]" @Change="onChange(key,$event)" >{{value}}</textarea>
+              <textarea property="value" v-model="row.item[key]" v-if="!key.endsWith('ID') && key !== '_showDetails'" @Change="onChange(key,$event)" >{{value}}</textarea>
               <!--            <b-form-textarea>{{value}}</b-form-textarea>-->
             </li>
 
@@ -130,31 +130,28 @@ export default {
   methods:{
     doChange: function(boardInfo) {
       this.editButtonshow = true
-      setTimeout(1000)
+
       if (!confirm("정말 수정 하시겠습니까?")) {
         alert("취소(아니오)를 누르셨습니다.");
       } else {
         console.log(boardInfo)
-        let params = new URLSearchParams();
 
-        //boardID, userID, regDate, title, content, region, marked
-        params.append('boardID', boardInfo["boardID"]);
-        params.append('userID', boardInfo['userID']);
-        params.append('regDate', boardInfo['regDate']);
-        params.append('title', boardInfo['title']);
-        params.append('content', boardInfo['content']);
-        params.append('region', boardInfo['region']);
-        params.append('marked'. boardInfo['marked']);
-
-        axios.put('/api/boards/'+ boardInfo["boardID"], params)
+        axios.put('/api/boards/'+ boardInfo["boardID"], boardInfo, {
+          headers: { "Content-Type": `application/json`}
+        })
           .then(response => {
-            if( response.data instanceof Array){
-              this.infos = response.data
-            }else(
-              this.infos.push(response.data)
-            )
+            if(response.status == 200){
+              for(let i = 0; i < this.propInfos.length; i++) {
+                if(this.propInfos[i]["boardID"] === boardInfo["boardID"])  {
+                  this.propInfos.splice(i, 1);
+                  i--;
+                }
+              }
+              alert("수정되었습니다.")
+            }else{
+              alert( " 응답 코드" + response.status)
 
-            console.log(this.infos)
+            }
           })
           .catch(e => {
             console.log('error:', e)

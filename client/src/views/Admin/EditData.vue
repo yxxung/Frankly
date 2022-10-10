@@ -28,7 +28,7 @@
           </b-row>
         </b-container>
       </b-form-group>
-    <EditPolitician v-bind:propInfos="infos"></EditPolitician>
+    <EditDataDetail v-bind:propInfos="infos" v-bind:select="selected" v-bind:fields="fields"></EditDataDetail>
       <!-- 페이징 처리-->
 
     </b-card>
@@ -38,13 +38,13 @@
 <script>
 import AdminNav from "@/components/AdminNav.vue";
 import axios from "axios";
-import EditPolitician from "@/views/Admin/EditPolitician";
+import EditDataDetail from "@/views/Admin/EditDataDetail";
 
 export default {
   name: "EditData",
   components: {
     AdminNav,
-    EditPolitician
+    EditDataDetail
   },
   data() {
 
@@ -55,16 +55,99 @@ export default {
       options: [
         { value: 'politician', text: '정치인 기본정보' },
         { value: 'property', text: '재산 데이터' },
-        { value: 'vote', text: '표결정보' },
+        { value: 'vote', text: '표결정보 (국회의원 ID 입력)' },
         { value: 'schedule', text: '본희의정보' },
-        { value: 'attendance', text: '출석정보' }
+        { value: 'attendance', text: '출석정보 (국회의원 ID 입력)' }
+      ],
+      fields:[]
+      ,
+      politicianFields : [
+        {
+          key: 'politicianID',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'politicianName',
+          sortable: true
+        },
+        {
+          key: 'partyName',
+          sortable: true,
+        },
+        {
+          key: 'sex',
+          sortable: false,
+        },
+        {
+          key:"actions",
+          label:"Actions"
+        }
+      ],
+      voteFields : [
+        {
+          key: 'voteID',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'politicianID',
+          sortable: true
+        },
+        {
+          key: 'billNumber',
+          sortable: true,
+        },
+        {
+          key: 'voteResult',
+          sortable: false,
+        },
+        {
+          key:"actions",
+          label:"Actions"
+        }
+      ],
+      attendacneFields : [
+      {
+        key: 'attendanceID',
+        sortable: true,
+        sortDirection: 'desc'
+      },
+      {
+        key: 'c',
+        sortable: true
+      },
+      {
+        key: 'politicianID',
+        sortable: true,
+      },
+      {
+        key:"actions",
+        label:"Actions"
+      }
       ]
     };
   },
   methods: {
     getInfo: function (){
+      var requestURL = '/api/' + this.selected +"/"+ this.inputValue
       this.infos = []
-      axios.get('/api/' + this.selected +"/"+ this.inputValue )
+
+      if(this.selected === "politician"){
+        this.fields = this.politicianFields
+
+      }else if(this.selected === "vote"){
+
+        this.fields = this.voteFields
+        requestURL = '/api/' + this.inputValue +"/"+ this.selected
+
+      }else if(this.selected === "attendance"){
+        this.fields = this.attendacneFields
+        requestURL = '/api/' + this.inputValue +"/"+ "attend"
+          // this.selected
+      }
+
+      axios.get(requestURL)
         .then(response => {
           if( response.data instanceof Array){
             this.infos = response.data
@@ -78,6 +161,7 @@ export default {
           console.log('error:', e)
           console.log(this.inputValue + "request")
         })
+
     },
     //수정
     doChange: function(userinfo) {

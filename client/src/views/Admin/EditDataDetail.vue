@@ -39,9 +39,9 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
           <b-card>
             <ul>
               <li v-for="(value, key) in row.item" :key="key">
-                {{key}} <br>
-<!--                Original Value : {{value}} <br>-->
-                <textarea property="value" v-model="row.item[key]" @Change="onChange(key,$event)" >{{value}}</textarea>
+                <span v-if="!key.endsWith('ID') && key !== '_showDetails'">{{key}}</span> <br>
+                <!--                Original Value : {{value}} <br>-->
+                <textarea property="value" v-model="row.item[key]" v-if="!key.endsWith('ID') && key !== '_showDetails'" @Change="onChange(key,$event)" >{{value}}</textarea>
                 <!--            <b-form-textarea>{{value}}</b-form-textarea>-->
               </li>
 
@@ -82,7 +82,11 @@ import axios from "axios";
 
 export default {
   name: "EditPolitician",
-  props: {propInfos : Array},
+  props: {
+    propInfos : Array,
+    select : String,
+    fields : Array
+  },
   components: {
     ModalEditPolitician
   },
@@ -92,88 +96,73 @@ export default {
       totalRows: 1,
       perPage: 15,
       currentPage: 1,
-      fields: [
-        {
-          key: 'politicianID',
-          sortable: true,
-          sortDirection: 'desc'
-        },
-        {
-          key: 'politicianName',
-          sortable: true
-        },
-        {
-          key: 'partyName',
-          sortable: true,
-        },
-        {
-          key: 'sex',
-          sortable: false,
-        },
-        {
-          key:"actions",
-          label:"Actions"
-        }
-      ],
-      // politicianInfo : []
-
     }
 
   },
-  // computed: {
-  //   copyProps: function(){
-  //     this.politicianInfo = this.propInfos
-  //   }
-  // },
+  beforeCreate() {
+  },
   beforeUpdate() {
     this.totalRows = this.propInfos.length
   },
   methods:{
-    doChange: function(userinfo) {
+    doChange: function(boardInfo) {
       this.editButtonshow = true
-      setTimeout(1000)
+
       if (!confirm("정말 수정 하시겠습니까?")) {
         alert("취소(아니오)를 누르셨습니다.");
       } else {
-        console.log(userinfo)
-        // axios.get('/api/' + this.selected +"/"+ this.inputValue )
-        //   .then(response => {
-        //     if( response.data instanceof Array){
-        //       this.infos = response.data
-        //     }else(
-        //       this.infos.push(response.data)
-        //     )
-        //
-        //     console.log(this.infos)
-        //   })
-        //   .catch(e => {
-        //     console.log('error:', e)
-        //     console.log(this.inputValue + "request")
-        //   })
+        console.log(boardInfo)
+
+        axios.put('/api/boards/'+ boardInfo["boardID"], boardInfo, {
+          headers: { "Content-Type": `application/json`}
+        })
+          .then(response => {
+            if(response.status == 200){
+              for(let i = 0; i < this.propInfos.length; i++) {
+                if(this.propInfos[i]["boardID"] === boardInfo["boardID"])  {
+                  this.propInfos.splice(i, 1);
+                  i--;
+                }
+              }
+              alert("수정되었습니다.")
+            }else{
+              alert( " 응답 코드" + response.status)
+
+            }
+          })
+          .catch(e => {
+            console.log('error:', e)
+            console.log(this.inputValue + "request")
+          })
       }
 
     },
     //삭제
-    doRemove:  function(userinfo) {
+    doRemove:  function(boardInfo) {
 
       if (!confirm("정말 삭제 하시겠습니까?")) {
         alert("취소(아니오)를 누르셨습니다.");
       } else {
-        console.log(userinfo["politicianName"] + "삭제")
-        // axios.get('/api/' + this.selected +"/"+ this.inputValue )
-        //   .then(response => {
-        //     if( response.data instanceof Array){
-        //       this.infos = response.data
-        //     }else(
-        //       this.infos.push(response.data)
-        //     )
-        //
-        //     console.log(this.infos)
-        //   })
-        //   .catch(e => {
-        //     console.log('error:', e)
-        //     console.log(this.inputValue + "request")
-        //   })
+        axios.delete('/api/boards/'+ boardInfo["boardID"] )
+          .then(response => {
+            if(response.status == 200){
+              for(let i = 0; i < this.propInfos.length; i++) {
+                if(this.propInfos[i]["boardID"] === boardInfo["boardID"])  {
+                  this.propInfos.splice(i, 1);
+                  i--;
+                }
+              }
+              alert("삭제되었습니다.")
+            }else{
+              alert( " 응답 코드" + response.status)
+
+            }
+
+          })
+          .catch(e => {
+            console.log('error:', e)
+            console.log(this.inputValue + "request")
+          })
       }
 
     },

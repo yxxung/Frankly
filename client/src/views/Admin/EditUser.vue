@@ -3,7 +3,7 @@
 
   <div class="hello">
     <b-card
-      header="회원 관리"
+      header="게시판 관리"
       style="max-width: 80rem; margin: auto; margin-top: 10vh"
       class="mb-2"
       border-variant="info"
@@ -12,7 +12,8 @@
       <b-form-group id="board-search-input">
         <b-container fluid>
           <b-row class="my-1">
-            <b-col sm="10">
+            <b-col sm="3"><b-form-select v-model="selected" :options="options"></b-form-select></b-col>
+            <b-col sm="7">
               <b-form-input
                 v-model="inputValue"
                 type="search"
@@ -20,87 +21,65 @@
               />
               <!--    v-bind:value = "inputValue"-->
               <!--    v-on:input="getInput"-->
-              <div class="mt-2">Value: {{ inputValue }}</div>
             </b-col>
             <b-col sm="2">
-              <b-button variant="outline-primary" v-on:click="getUserInfo">검색</b-button>
+              <b-button variant="outline-primary" v-on:click="getInfo">검색</b-button>
             </b-col>
           </b-row>
         </b-container>
       </b-form-group>
-
-      <table class="edit-user-list">
-        <thead>
-          <tr>
-            <th class="id">ID</th>
-            <th class="name">이름</th>
-            <th class="button">수정</th>
-            <th class="button">삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="userinfo in userinfos" :key="userinfo.id">
-            <th>{{ userinfo.id }}</th>
-            <td>{{ userinfo.name }}</td>
-            <td class="button">
-              <!--수정 버튼 모달-->
-              <ModalEditUser v-if="doChange" @close-modal="doChange=false"></ModalEditUser>
-              <button @click="doChange=true">수정</button>
-              </td>
-            <td class="button">
-              <!--삭제 버튼 모달-->
-              <button v-on:click="doRemove(userinfo)">제거</button>
-              </td>
-          </tr>
-        </tbody>
-      </table>
-
+      <EditUserDetail v-bind:propInfos="infos"></EditUserDetail>
       <!-- 페이징 처리-->
-      <b-pagination
-            v-model="currentPage"
-            :total-rows="rows"
-            :per-page="perPage"
-            size="sm"
-            align="center"
-            class="mt-4">
-      </b-pagination>
+
     </b-card>
   </div>
 </template>
 
 <script>
 import AdminNav from "@/components/AdminNav.vue";
-import ModalEditUser from '@/views/Admin/ModalEditUser.vue'
 import axios from "axios";
+import EditUserDetail from "@/views/Admin/EditUserDetail";
 
 export default {
-  name: "EditUser",
+  name: 'EditData',
   components: {
     AdminNav,
-    ModalEditUser
+    EditUserDetail
   },
   data() {
 
     return {
-      perPage: 15,
-      currentPage: 1,
-      userinfos: [],
-      inputValue:''
+      infos: [],
+      inputValue:'',
+      selected: null,
+      options: [
+        { value: '1', text: '회원 ID' },
+        { value: '2', text: '회원 email' },
+        // { value: '3', text: '표결정보' },
+        // { value: '4', text: '본희의정보' },
+        // { value: '5', text: '출석정보' }
+      ]
     };
   },
   methods: {
-    getUserInfo: function (){
-      axios.get('/api/users/' + this.inputValue)
+    getInfo: function (){
+      this.infos = []
+      axios.get('/api/users/'+ this.inputValue )
         .then(response => {
-          this.userinfos = response.data.map(r => r.data)
+          if( response.data instanceof Array){
+            this.infos = response.data
+          }else(
+            this.infos.push(response.data)
+          )
 
+          console.log(this.infos)
         })
         .catch(e => {
           console.log('error:', e)
           console.log(this.inputValue + "request")
         })
     },
-    // 수정
+    //수정
     doChange: function(userinfo) {
 
     },
@@ -111,18 +90,9 @@ export default {
   },
   computed: {
     rows() {
-      return this.userinfos.length
+      return this.infos.length
     }
-  },
-  created() {
-    axios.get('/api/users')
-    .then(response => {
-      this.userinfos = response.data.map(r => r.data)
-    })
-    .catch(e => {
-      console.log('error:', e)
-    })
-  },
+  }
 };
 </script>
 

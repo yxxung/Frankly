@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/infos")
+@RequestMapping("/api")
 public class VoteController {
 
     private final VoteService voteService;

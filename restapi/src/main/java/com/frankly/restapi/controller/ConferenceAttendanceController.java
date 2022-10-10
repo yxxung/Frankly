@@ -14,7 +14,7 @@ import java.util.List;
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/infos")
+@RequestMapping("/api")
 public class ConferenceAttendanceController {
 
     private final ConferenceAttendanceService conferenceAttendanceService;
