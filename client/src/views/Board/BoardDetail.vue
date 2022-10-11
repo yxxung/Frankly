@@ -43,12 +43,18 @@
     <!--댓글-->
     <div class="comments">
       <ul>
-        <li class="comments__box" v-for="reply in replys" v-bind:key="reply.replyID">
+        <li
+          class="comments__box"
+          v-for="reply in replys"
+          v-bind:key="reply.replyID"
+        >
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
               <h6>익명</h6>
-              <span class="comments__info__date">{{elapsedText(reply.regDate)}}</span>
+              <span class="comments__info__date">{{
+                elapsedText(reply.regDate)
+              }}</span>
             </div>
 
             <div class="comments__info-right">
@@ -57,12 +63,23 @@
               </button>
             </div>
           </div>
-          <div class="comments__text">{{reply.reply}}</div>
+          <div class="comments__text">{{ reply.reply }}</div>
         </li>
       </ul>
     </div>
 
-    <Reply @create-reply="createReply" />
+    <!--댓글 입력창-->
+    <div class="enter-comment">
+      <textarea
+        placeholder="댓글 입력..."
+        class="enter-comment__textarea"
+        :value="replyInput"
+        @input="replyInput = $event.target.value"
+      ></textarea>
+      <button class="enter-comment__submit" v-on@click.prevent="createReply()">
+        <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -85,7 +102,8 @@ export default {
         userID: "",
         marked: "",
       },
-      replys: {}
+      replys: {},
+      replyInput: ""
     };
   },
   created() {
@@ -100,10 +118,10 @@ export default {
       this.DetailData.marked = response.data.marked;
       console.log(boardID);
     });
-    axios.get(`/api/replys/${boardID}/replyList`).then((response => {
-      this.replys = response.data
+    axios.get(`/api/replys/${boardID}/replyList`).then((response) => {
+      this.replys = response.data;
       console.log(response.data);
-    }))
+    });
   },
   methods: {
     //date format 변환
@@ -126,15 +144,24 @@ export default {
         },
       });
     },
-    createReply(replys) {
-      axios.post(`/api/replys/${boardID}/create`, {
-        boardID: this.DetailData.boardID,
-        reply: replys
-      }).then((response) => {
-        console.log(response);
-      })
-    }
-  }
+    //댓글 생성
+    createReply() {
+      if(this.replyInput.trim()) { //앞 뒤 공백제거
+        axios
+        .post("/api/replys/create", {
+          boardID: this.DetailData.boardID,
+          reply: this.replyInput
+        })
+        .then((response) => {
+          console.log(response);
+          this.$router.go()
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      }
+    },
+  },
 };
 </script>
 
