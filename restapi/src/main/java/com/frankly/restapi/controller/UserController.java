@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 @Slf4j
 @RequiredArgsConstructor
 @RestController

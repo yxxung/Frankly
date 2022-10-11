@@ -2,7 +2,6 @@ package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.PoliticianDTO;
 import com.frankly.restapi.service.PoliticianService;
-import com.frankly.restapi.service.PoliticianServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/infos")
+@RequestMapping("/api/politician")
 public class PoliticianController {
 
     private final PoliticianService politicianService;

@@ -1,68 +1,117 @@
 <template>
-    <body>
-        <div class="wrap">
-            <!--헤더-->
-            <header class="header header__community">
-                <h2 class="community-title">커뮤니티</h2>
-                <a class="icon-button-56" href="index.html">
-                    <img src="@/assets/icon/Bullhorn.svg" alt="공지사항">
-                </a>
-            </header>
+    <div class="wrap">
+        <!--헤더-->
+        <header class="header header--back">
+            <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
+                <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
+            </a>
+            <h2>인기게시글</h2>
+        </header>
 
-            <div class="community-list">
-                <h4>일반 커뮤니티</h4>
-                <ul>
-                    <li><a href="/HotBoard"><img src="@/assets/icon/Pin.svg" alt="">인기게시글</a></li>
-                    <li><a href="/FreeBoard"><img src="@/assets/icon/Pin.svg" alt="">자유게시판</a></li>
-                </ul>
-            </div>
+        <ul class="post-list">
+            <li class="post-list__container"
+            v-for="(board, boardID) in boardList" :key="boardID">
+                <div class="post-list__title">
+                    <img src="@/assets/icon/Image.svg" alt="이미지 있음">
+                    <h3>{{board.title}}<span>[110]</span></h3>
+                </div>
+                <p>{{board.content}}</p>
+                <div class="post-list__info">
+                    <span>{{board.regDate}}</span>
+                    <img src="@/assets/icon/Like.svg" alt="좋아요">
+                    <span>13</span>
+                </div>
+            </li>
 
-            <div class="community-list">
-                <h4>지역 커뮤니티</h4>
-                <ul>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">서울특별시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">부산광역시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">대구광역시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">인천광역시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">광주광역시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">대전광역시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">울산광역시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">세종특별자치시</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">경기도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">강원도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">충청북도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">충청남도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">전라북도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">전라남도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">경상북도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">경상남도</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">제주특별자치도</a></li>
-                </ul>
-            </div>
-
-            <div class="community-list">
-                <h4>내 기록</h4>
-                <ul>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">내가 쓴 글</a></li>
-                    <li><a href="#"><img src="@/assets/icon/Pin.svg" alt="">댓글 단 글</a></li>
-                </ul>
-            </div>
-            <Navigation />
-        </div>
-    </body>
+            <li class="post-list__container">
+                <div class="post-list__title">
+                    <h3>가나다라<span>[11239]</span></h3>
+                </div>
+                <p>자 내글을 잘봐 이건말이</p>
+                <div class="post-list__info">
+                    <span>12/11</span>
+                    <img src="@/assets/icon/Like.svg" alt="좋아요">
+                    <span>20345</span>
+                </div>
+            </li>
+        </ul>
+        <FloatingButton />
+        <Navigation />
+    </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation.vue'
+import FloatingButton from '@/components/FloatingButton.vue'
+
+import axios from 'axios';
+
 export default {
-  name: 'Community',
-  components: {
-    'Navigation': Navigation
-  }
+    components : {
+        'Navigation': Navigation,
+        'FloatingButton': FloatingButton
+    },
+    data() {
+        return {
+            freeboards: []
+        }
+    },
+    methods: {
+        getBoardList() {
+            console.log(this.$axios);
+            axios.get('/api/boards')
+            .then(response => {
+                console.log('boards', response.data)
+                this.freeboards = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
+
+        // 무한 스크롤 정의
+        handleNotificationListScroll(e) {
+        const { scrollHeight, scrollTop, clientHeight } = e.target;
+        const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
+        // 일정 한도 밑으로 내려오면 함수 실행
+        if (isAtTheBottom) this.handleLoadMore();
+        },
+
+        // 내려오면 api 호출하여 아래에 더 추가, total값 최대이면 호출 안함
+        handleLoadMore() {
+        if (this.notifications.length < this.total) {
+            const params = {
+            limit: this.params.limit,
+            page: this.params.page + 1
+            };
+            this.$store.commit(
+            "notification/SET_PARAMS",
+            this.filterValue ? { ...params, type: this.filterValue } : params
+            );
+            this.dispatchGetNotifications(false);
+        }
+        },
+
+        // 스크롤을 맨위로 올리고 싶을 때
+        handleClickTitle() {
+        this.$refs["notification-list"].scroll({ top: 0, behavior: "smooth" });
+        },
+
+        // 새로고침
+        handleClickRefresh() {
+        this.$refs["notification-list"].scroll({ top: 0 });
+        this.dispatchGetNotifications(true);
+        },
+
+        // 처음 렌더링시 이전 알림 불러오기 or reset=true시 새로고침, false시 이전 목록에 추가
+        dispatchGetNotifications(reset) {
+        this.$store.dispatch("notification/getNotifications", reset);
+        }
+    }
 }
 </script>
 
-<style lang="style.scss">
+<style>
 @import '@/assets/scss/style.scss';
 
 /*
@@ -312,5 +361,4 @@ export default {
 .enter-comment__submit:hover {
     background-color: #CCCCCC;
 }
-
 </style>
