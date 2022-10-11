@@ -35,21 +35,14 @@
             </div>
             <a href="#">비밀번호 찾기</a>
         </div>
-<<<<<<< HEAD
-        <button class="sign-up-form__button" onclick="location.href='/index.html'">로그인</button>
-=======
         <button class="sign-up-form__button"
         @click.prevent="doLogin">로그인</button>
->>>>>>> da99784 (Merge pull request #42 from hanpaa/feature/board)
     </form>
 </div>
 </template>
 
 <script>
 export default {
-<<<<<<< HEAD
-  name: 'Login'
-=======
   name: 'Login',
   data() {
     return {
@@ -65,7 +58,6 @@ export default {
 
     }
   },
->>>>>>> da99784 (Merge pull request #42 from hanpaa/feature/board)
 }
 </script>
 

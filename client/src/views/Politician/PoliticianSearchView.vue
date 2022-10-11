@@ -1,21 +1,20 @@
 <template>
   <div class="searchresult">
     <SearchBar />
-    <h2>검색 결과</h2>
-    <div class="all-politician-list">
-        <!--click 시 상세정보로 넘어가게 해야 함-->
-        <div
-          class="politician"
-          v-for="politician in $store.getters.getFilteredProduct(searchKeyword)"
-          :key="politician.politicianID"
-        >
-          <!-- 정치인 리스트 출력 -->
-          <img
-            :src="require(`@/assets/politician/${politician.politicianImage}`)"
-          />
-          <p>{{ politicians.politicianName }}</p>
+    <ul class="all-politician-list">
+      <li
+        class="politician"
+        v-for="politician in politicians"
+        v-bind:key="politician.politicianID"
+        @click="goToPoliticianDetail(politician.politicianID)"
+      >
+        <!-- 정치인 리스트 출력 이미지, 이름-->
+        <div class="politician-image">
+          <img src="@/assets/politician/정진석.png" />
         </div>
-      </div>
+        <div class="politician-name">{{ politician.politicianName }}</div>
+      </li>
+    </ul>
   </div>
 </template>
 <script>

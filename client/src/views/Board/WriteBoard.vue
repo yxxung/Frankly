@@ -45,8 +45,7 @@
           ref="content"
           v-model="content"
           class="board-content"
-          placeholder="[커뮤니티 이용 가이드]
-          &#10;그냥 알아서 할말 다하고 사쇼 &#10;그냥 알아서 할말 다하고 사쇼"
+          placeholder="내용을 입력하세요."
           maxlength="2000"
         />
         <!--이미지 업로드 !!수정하기!!-->
@@ -110,7 +109,7 @@ export default {
       axios
         .post(`/api/boards/create`, formdata, {
           headers: {
-            
+
           },
         })
         .then((response) => {
@@ -185,12 +184,12 @@ export default {
   width: 410px;
   height: 50px;
   outline: none;
+  padding-left: 10px;
 }
 
 .board-title::placeholder {
   color: #a9a9a9;
   font-size: 16px;
-  padding-left: 15px;
 }
 
 /*글쓰기*/
@@ -207,6 +206,7 @@ export default {
   outline: none;
   resize: none;
   border: none;
+  padding: 10px;
 }
 
 .board-content:focus {
@@ -216,7 +216,6 @@ export default {
 .board-content::placeholder {
   color: #a9a9a9;
   font-size: 16px;
-  padding: 15px;
 }
 
 /*파일 첨부*/

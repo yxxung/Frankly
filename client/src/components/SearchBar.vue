@@ -28,9 +28,9 @@ export default {
   },
   methods: {
     searchResultShow(searchKeyword) {
-      if (searchKeyword !== "") {
-        this.router.push({
-            name: 'Politician',
+      if (searchKeyword !== "") { //검색어를 입력한 경우
+        this.$router.push({
+            name: 'PoliticianSearchResult',
             params: {
                 searchKeyword: this.searchKeyword,
                 isResultShow: true
@@ -86,4 +86,5 @@ export default {
   margin-left: 14px;
   vertical-align: middle;
 }
+
 </style>
