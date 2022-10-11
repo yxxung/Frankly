@@ -49,6 +49,10 @@
       <router-link to="/statistics"
         ><div class="link-statistics">통계 더보기</div></router-link
       >
+      <router-link to ="/property">
+        <div class="link-statistics" v-bind:politicianInfo = "PoliticianDetailData">재산정보 보기</div>
+
+      </router-link>
     </div>
   </div>
 </template>
@@ -80,6 +84,18 @@ export default {
       console.log(response);
     });
   },
+  methods:{
+    goToPropertyDetail(politicianID) {
+      this.$router.push({
+        name: "PoliticianDetail",
+        params: {
+          politicianID: politicianID,
+        },
+      });
+    }
+
+  }
+
 };
 </script>
 
