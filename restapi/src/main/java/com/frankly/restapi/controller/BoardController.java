@@ -3,13 +3,14 @@ package com.frankly.restapi.controller;
 import com.frankly.restapi.domain.BoardDTO;
 import com.frankly.restapi.service.BoardService;
 import com.frankly.restapi.service.ReplyService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -90,5 +91,7 @@ public class BoardController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
 }

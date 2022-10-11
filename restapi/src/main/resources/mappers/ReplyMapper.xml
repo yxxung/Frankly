@@ -11,16 +11,14 @@
         <result column="boardID" property="boardID"/>
     </resultMap>
 
-    <!-- 댓글 작성 -->
     <insert id="createReply" parameterType="ReplyDTO">
-        INSERT INTO frankly.Reply(boardID, userID, reply, regDate)
+        INSERT INTO frankly.Reply(boardID, userID, reply)
         VALUES(#{boardID}
               ,#{userID}
               ,#{reply}
-              ,#{regDate})
+              )
     </insert>
 
-    <!-- 댓글 조회 -->
     <select id="readReply" resultMap="replyResultMap">
         SELECT * FROM frankly.Reply
         WHERE boardID = #{boardID}
@@ -34,12 +32,12 @@
     <update id="updateReply" parameterType="ReplyDTO">
         UPDATE frankly.Reply
         SET reply = #{reply}
-        WHERE replyID = #{replyID}
+        WHERE replyID = #{replyID} AND boardID = #{boardID}
     </update>
 
     <delete id="deleteReply" parameterType="ReplyDTO">
         DELETE FROM frankly.Reply
-        WHERE replyID = #{replyID}
+        WHERE replyID = #{replyID} AND boardID = #{boardID}
     </delete>
 
 </mapper>

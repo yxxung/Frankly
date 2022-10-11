@@ -51,12 +51,8 @@
     </delete>
 
     <select id="getBoardList" resultMap="boardResultMap">
-<<<<<<< HEAD
-        SELECT * FROM frankly.Board
-=======
         SELECT * FROM frankly.Board ORDER BY boardID DESC
         WHERE region = #{region}
->>>>>>> refactoring
     </select>
 
 </mapper>
