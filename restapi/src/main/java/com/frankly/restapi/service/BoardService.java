@@ -28,12 +28,13 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public void updateBoard(BoardDTO boardDTO, int boardID) throws Exception {
+    public void updateBoard(BoardDTO boardDTO, String region, int boardID) throws Exception {
 
         BoardDTO targetBoard = boardMapper.readBoard(boardID);
         if(targetBoard.getAuthor() == (boardDTO.getAuthor())){
             try{
                 boardDTO.setBoardID(boardID);
+                boardDTO.setRegion(region);
                 boardMapper.updateBoard(boardDTO);
             }catch(SQLException e){
                 System.out.println(e);
@@ -56,9 +57,9 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public List<BoardDTO> getBoardList() throws Exception {
+    public List<BoardDTO> getBoardList(String region) throws Exception {
         log.info("getList");
-        return boardMapper.getBoardList();
+        return boardMapper.getBoardList(region);
     }
 
 //    @Override

@@ -17,7 +17,6 @@
         <typeAlias type="com.frankly.restapi.domain.PropertyListDTO" alias="PropertyListDTO"/>
         <typeAlias type="com.frankly.restapi.domain.ReplyDTO" alias="ReplyDTO"/>
 
-
     </typeAliases>
 
 </configuration>

@@ -23,13 +23,13 @@ public class ReplyService implements ReplyServiceInterface {
     private final ReplyMapper replyMapper;
 
     @Override
-    public void createReply(int boardID) throws Exception {
-        replyMapper.createReply(boardID);
+    public void createReply(ReplyDTO replyDTO) throws Exception {
+        replyMapper.createReply(replyDTO);
     }
 
     @Override
-    public List<ReplyDTO> readReply(ReplyDTO replyDTO) throws Exception {
-        return replyMapper.readReply(replyDTO);
+    public List<ReplyDTO> readReply(int boardID) throws Exception {
+        return replyMapper.readReply(boardID);
     }
 
     @Override

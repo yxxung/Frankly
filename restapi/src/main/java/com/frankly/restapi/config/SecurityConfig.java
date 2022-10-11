@@ -70,9 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable() //security에서 기본으로 생성하는 login페이지 사용 안 함
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
-//                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**").permitAll()
                 //개발용 설정
-                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
+//                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
+                //cors 예외처리
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 //다른 모든 request에는 auth작업 해주어야함.
                 .anyRequest().authenticated().and()
                 //restful api 는 stateless해야하므로, statless로 바꾸어줌. 유저 state 저장안함.

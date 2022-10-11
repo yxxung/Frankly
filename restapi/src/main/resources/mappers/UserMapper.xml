@@ -7,11 +7,13 @@
     <resultMap type="UserDTO" id = "userResultMap">
         <id column="userID" property="userID"/>
         <result column="email" property="email"/>
+        <result column="contact" property="contact"/>
         <result column="name" property="name"/>
         <result column="password" property="password"/>
         <result column="district" property="district"/>
         <result column="sex" property="sex"/>
         <result column="userAuth" property="userAuth"/>
+
         <result column="contact" property="contact"/>
     </resultMap>
 
@@ -26,13 +28,13 @@
     </select>
 
     <select id="getUserByEmail" resultMap="userResultMap">
-        SELECT email,password,userAuth FROM frankly.User
+        SELECT email,password,auth FROM frankly.User
         WHERE email = #{email}
 
     </select>
 
     <insert id="createUser" parameterType="UserDTO">
-        INSERT INTO frankly.User(email, name, password, district, sex, userAuth, contact)
+        INSERT INTO frankly.User(email, name, password, district, sex, auth, contact)
         VALUES(#{email},
                #{name},
                #{password},
@@ -41,6 +43,7 @@
                #{userAuth},
                #{contact})
     </insert>
+
 
     <select id="loginUser" resultMap="userResultMap">
         SELECT * FROM frankly.User
