@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ politicianInfo["politicianName"] }}
   </div>
   <svg :width="width" :height="height">
     <path fill="none" stroke="#76BF8A" stroke-width="3" :d="path"></path>
@@ -11,9 +10,15 @@
 import * as d3 from "d3"
 export default {
   name: "PoliticianPropertyDetail",
-  props:[
-    'politicianInfo'
-  ],
+  props:{
+    politicianID: {
+      type : String
+    },
+    politicianInfo:{
+      type : Array
+    }
+  }
+  ,
   data(){
     return{
       politicianProperty:[],
@@ -41,8 +46,32 @@ export default {
     },
     ySclae() {
       return d3.scaleLinear().range([this.height - this.padding, this.padding]).domain([0, 100]);
+    },
+    chart: function () {
+      const svg = d3.create("svg").attr("viewBox", [0, 0, this.width, this.height]);
+
+      const updateBars = bars(svg);
+      const updateAxis = axis(svg);
+      const updateLabels = labels(svg);
+      const updateTicker = ticker(svg);
+
+      for (const keyframe of keyframes) {
+        const transition = svg.transition()
+          .duration(duration)
+          .ease(d3.easeLinear);
+
+        // Extract the top bar’s value.
+        x.domain([0, keyframe[1][0].value]);
+
+        updateAxis(keyframe, transition);
+        updateBars(keyframe, transition);
+        updateLabels(keyframe, transition);
+        updateTicker(keyframe, transition);
+
+        invalidation.then(() => svg.interrupt());
     }
   }
+
 }
 </script>
 

@@ -201,7 +201,7 @@ const routes = [
     component: PoliticianDetail
   },
   {
-    path:'/property',
+    path:'/PoliticianDetail/:politicianID/property',
     name: 'PoliticianPropertyDetail',
     component: PoliticianPropertyDetail,
     props: true
