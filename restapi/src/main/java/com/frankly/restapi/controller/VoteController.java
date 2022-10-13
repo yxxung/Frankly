@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,17 +39,17 @@ public class VoteController {
 
     //수정
     @PutMapping("/update")
-    public ResponseEntity<VoteDTO> updateVote(@Validated @RequestBody VoteDTO voteDTO)
+    public ResponseEntity<VoteDTO> updateVote(@PathVariable("voteID") int voteID)
             throws Exception{
         log.info("update Vote");
 
-        voteService.updateVote(voteDTO);
+        voteService.updateVote(voteID);
 
-        return new ResponseEntity<>(voteDTO, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //삭제
-    @DeleteMapping("/delete}")
+    @DeleteMapping("/delete")
     public ResponseEntity<?>deleteVote(@PathVariable("voteID") int voteID)
             throws Exception{
         log.info("deleteVote : " + voteID);

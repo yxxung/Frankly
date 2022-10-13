@@ -41,7 +41,7 @@ public class NewsController {
     }
 
     //뉴스 키워드 수정
-    @PutMapping("/update")
+    @PutMapping("/updatekw")
     public ResponseEntity<NewsKeywordDTO> updateNewsKeyword(@PathVariable("newsKeywordID") int newsKeywordID)
             throws Exception{
         log.info("update NewsKeyword");
@@ -63,7 +63,7 @@ public class NewsController {
     }
 
     //뉴스 키워드 삭제
-    @DeleteMapping("/delete")
+    @DeleteMapping("/deletekw")
     public ResponseEntity<?>deleteNewsKeyword(@PathVariable("newsKeywordID") int newsKeywordID)
             throws Exception{
         log.info("delete NewsKeyword : " + newsKeywordID);
