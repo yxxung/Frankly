@@ -4,7 +4,8 @@
 <mapper namespace="com.frankly.restapi.mapper.RegionNumberMapper">
 
     <resultMap type="RegionNumberDTO" id = "regionResultMap">
-        <result column="regionID" property="regionID"/>
+        <id column="regionID" property="regionID"/>
+        <result column="district" property="district"/>
         <result column="regionName" property="regionName"/>
     </resultMap>
 

@@ -10,8 +10,9 @@ import lombok.Data;
 @Data
 public class RegionNumberDTO {
 
-    private int regionID;
+    private Long regionID;
 
-    private String regionName;
+    private Integer regionName;
+
 
 }

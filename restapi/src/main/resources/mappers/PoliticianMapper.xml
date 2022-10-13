@@ -53,15 +53,13 @@
                , #{selectInfo}
                , #{sex}
                , #{contact}
-               , #{office}
                , #{email}
                , #{homepage}
                , #{aide}
                , #{secretary}
                , #{personallAssitant}
-               , #{politicianID}
                , #{politicianImageURL}
-               )
+               , #{politicianID})
     </insert>
 
 </mapper>
