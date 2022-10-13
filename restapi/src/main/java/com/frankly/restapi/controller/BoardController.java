@@ -39,7 +39,7 @@ public class BoardController {
 //        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
 //    }
     @PostMapping(value = "/create")
-    public ResponseEntity<BoardDTO> createBoard(@Validated BoardDTO boardDTO) throws Exception{
+    public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
         boardService.createBoard(boardDTO);
         log.info("time: " + boardDTO.getRegDate());

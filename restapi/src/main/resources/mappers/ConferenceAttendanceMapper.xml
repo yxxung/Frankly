@@ -33,7 +33,7 @@
         SET attendance = #{attendance},
             petitionLeave = #{petitionLeave},
             businessTrip = #{businessTrip}
-        WHERE attendanceID = #{attendanceID}, politicianID = #{politicianID}
+        WHERE attendanceID = #{attendanceID} AND politicianID = #{politicianID}
     </update>
 
     <!-- 회의 출석 정보 삭제 -->

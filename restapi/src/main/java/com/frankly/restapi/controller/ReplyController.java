@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/boards")
+@RequestMapping("/api/replys")
 @RequiredArgsConstructor
 public class ReplyController {
 

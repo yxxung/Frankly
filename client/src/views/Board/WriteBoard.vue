@@ -18,12 +18,10 @@
       <!--글쓰기 화면-->
       <div class="write-title">
         <!--카테고리-->
-        <select v-model="region" class="region" @change="selected()">
-          <option :value="null">카테고리</option>
+        <select v-model="regionName" class="region" @change="selected">
           <option
             v-for="region in regions"
-            :key="region.regionName"
-            :value="region"
+            :key="region.value"
           >
             {{ region.regionName }}
           </option>
@@ -63,24 +61,24 @@ export default {
   data() {
     return {
       regions: [
-        { region: "0", regionName: "서울특별시" },
-        { region: "1", regionName: "부산광역시" },
-        { region: "2", regionName: "대구광역시" },
-        { region: "3", regionName: "인천광역시" },
-        { region: "4", regionName: "광주광역시" },
-        { region: "5", regionName: "대전광역시" },
-        { region: "6", regionName: "울산광역시" },
-        { region: "7", regionName: "세종특별자치시" },
-        { region: "8", regionName: "경기도" },
-        { region: "9", regionName: "강원도" },
-        { region: "10", regionName: "충청북도" },
-        { region: "11", regionName: "충청남도" },
-        { region: "12", regionName: "전라북도" },
-        { region: "13", regionName: "전라남도" },
-        { region: "14", regionName: "경상북도" },
-        { region: "15", regionName: "경상남도" },
-        { region: "16", regionName: "제주특별자치도" },
-        { region: "17", regionName: "자유게시판" },
+        { value: "0", regionName: "서울특별시" },
+        { value: "1", regionName: "부산광역시" },
+        { value: "2", regionName: "대구광역시" },
+        { value: "3", regionName: "인천광역시" },
+        { value: "4", regionName: "광주광역시" },
+        { value: "5", regionName: "대전광역시" },
+        { value: "6", regionName: "울산광역시" },
+        { value: "7", regionName: "세종특별자치시" },
+        { value: "8", regionName: "경기도" },
+        { value: "9", regionName: "강원도" },
+        { value: "10", regionName: "충청북도" },
+        { value: "11", regionName: "충청남도" },
+        { value: "12", regionName: "전라북도" },
+        { value: "13", regionName: "전라남도" },
+        { value: "14", regionName: "경상북도" },
+        { value: "15", regionName: "경상남도" },
+        { value: "16", regionName: "제주특별자치도" },
+        { value: "17", regionName: "자유게시판" },
       ],
       title: "",
       content: "",
@@ -88,6 +86,9 @@ export default {
     };
   },
   methods: {
+    selected() {
+      console.log(this.regionName)
+    },
     /*onInputImage() {
       console.log(this.$refs);
       this.image = this.$refs.image.files[0];
@@ -98,23 +99,25 @@ export default {
         window.alert("모든 내용을 입력해주세요!");
         return false;
       }
-
+      /*
       const formdata = new FormData();
       this.image = this.$refs.image.files[0];
-      //formdata.append("region", this.region);
+      formdata.append("region", this.region);
+      formdata.append("region", this.regionName)
       formdata.append("title", this.title);
       formdata.append("content", this.content);
-      formdata.append("image", this.image);
+      formdata.append("image", this.image);*/
 
       axios
-        .post(`/api/boards/create`, formdata, {
-          headers: {
-
-          },
+        .post("/api/boards/create", {
+          title: this.title,
+          region: this.regionName,
+          content: this.content
         })
         .then((response) => {
           //응답 처리
           console.log(response)
+          this.$router.push({path:`/BoardDetail/${regionName}`})
         })
         .catch((error) => {
           console.error(error);
