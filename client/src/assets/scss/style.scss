@@ -13,7 +13,7 @@ body {
 메인 페이지
  */
  .wrap {
-    margin: 54px auto 54px auto;
+    margin: 54px auto 0 auto;
     max-width: 540px;  /*max-width*/
     height: 100%;
     background-color: #ffffff;
@@ -48,11 +48,6 @@ body {
 }
 .header--back > h2 {
     font-size: 18px;
-}
-.header--right {
-    display: flex;
-    right: 0;
-    position: absolute;
 }
 /*커뮤니티 헤더*/
 .header__community {

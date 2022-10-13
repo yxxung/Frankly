@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/replys")
+@RequestMapping("/api/boards")
 @RequiredArgsConstructor
 public class ReplyController {
 
@@ -25,7 +25,6 @@ public class ReplyController {
     //댓글 달기
     @PostMapping("/create")
     public ResponseEntity<ReplyDTO> createReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception {
-        replyService.createReply(replyDTO);
 
         return new ResponseEntity<>(replyDTO, HttpStatus.OK);
     }
@@ -38,7 +37,7 @@ public class ReplyController {
     }
 
     //댓글 수정
-    @PutMapping("/{boardID}/{replyID}")
+    @PutMapping("/{boardID}/reply")
     public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{
         replyService.updateReply(replyDTO);
 
@@ -46,7 +45,7 @@ public class ReplyController {
     }
 
     //댓글 삭제
-    @DeleteMapping("/{boardID}/{replyID}")
+    @DeleteMapping("/{boardID}/reply")
     public ResponseEntity<?> deleteReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
 
         replyService.deleteReply(replyDTO);

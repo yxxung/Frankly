@@ -20,21 +20,21 @@ import static java.time.LocalTime.now;
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/schedule")
+@RequestMapping("/api/infos")
 public class ConferenceScheduleController {
 
     private final ConferenceScheduleService conferenceScheduleService;
 
     //오늘의 국회 일정
-    @GetMapping("/{conferenceID}")
+    @GetMapping("/schedule")
     public ResponseEntity<List<ConferenceScheduleDTO>> readConferenceSchedule()
             throws Exception {
-        log.info("readConferenceSchedule - ");
+        log.info("readConferenceSchedule - "+now());
 
         return new ResponseEntity<>(conferenceScheduleService.readConferenceSchedule(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{conferenceID}")
+    @DeleteMapping("/schedule/{conferenceID}")
     public ResponseEntity<?>deleteConferenceSchedule(@PathVariable("conferenceID") int conferenceID)
             throws Exception{
         log.info("deleteConferenceSchedule : " + conferenceID);
