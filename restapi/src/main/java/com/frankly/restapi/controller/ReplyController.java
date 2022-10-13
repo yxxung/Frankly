@@ -23,21 +23,17 @@ public class ReplyController {
     private final ReplyService replyService;
 
     //댓글 달기
-    @PostMapping("/{boardID}/reply")
-    public ResponseEntity<BoardDTO> createReply(@Validated ReplyDTO replyDTO) throws Exception {
-        replyService.createReply(replyDTO);
+    @PostMapping("/create")
+    public ResponseEntity<ReplyDTO> createReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(replyDTO, HttpStatus.OK);
     }
 
     //댓글 보기
-    @GetMapping("/{boardID}/reply")
-    public ResponseEntity<List<BoardDTO>> readReply(@PathVariable("boardID") int boardID) throws Exception{
+    @GetMapping("/{boardID}/replyList")
+    public ResponseEntity<List<ReplyDTO>> readReply(@PathVariable("boardID") int boardID) throws Exception{
         log.info("readReply");
-
-        replyService.readReply(boardID);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(replyService.readReply(boardID), HttpStatus.OK);
     }
 
     //댓글 수정

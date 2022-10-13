@@ -38,7 +38,7 @@ public class BoardController {
 //
 //        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
 //    }
-    @PostMapping(value = "/{region}/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<BoardDTO> createBoard(@Validated BoardDTO boardDTO) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
         boardService.createBoard(boardDTO);

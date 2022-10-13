@@ -51,8 +51,9 @@
     </delete>
 
     <select id="getBoardList" resultMap="boardResultMap">
-        SELECT * FROM frankly.Board ORDER BY boardID DESC
+        SELECT * FROM frankly.Board
         WHERE region = #{region}
+        ORDER BY boardID DESC
     </select>
 
 </mapper>
