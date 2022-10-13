@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +32,11 @@ public class ConferenceScheduleController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ConferenceBillLawDTO> updateConferenceSchedule(@Validated @RequestBody ConferenceScheduleDTO conferenceScheduleDTO)
+    public ResponseEntity<ConferenceBillLawDTO> updateConferenceSchedule(@PathVariable("conferenceID") int conferenceID)
             throws Exception{
         log.info("updateConferenceSchedule");
 
-        conferenceScheduleService.updateConferenceSchedule(conferenceScheduleDTO);
+        conferenceScheduleService.updateConferenceSchedule(conferenceID);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

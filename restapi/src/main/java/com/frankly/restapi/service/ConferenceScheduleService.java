@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,8 +22,8 @@ public class ConferenceScheduleService implements ConferenceScheduleServiceInter
     }
 
     @Override
-    public void updateConferenceSchedule(ConferenceScheduleDTO conferenceScheduleDTO) throws Exception {
-        //버튼
+    public void updateConferenceSchedule(int conferenceID) throws Exception {
+        conferenceScheduleMapper.updateConferenceSchedule(conferenceID);
     }
 
     @Override
