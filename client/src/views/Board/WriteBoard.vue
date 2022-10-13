@@ -48,9 +48,9 @@
           placeholder="내용을 입력하세요."
           maxlength="2000"
         />
-        <!--이미지 업로드 !!수정하기!!-->
+        <!--이미지 업로드 !!수정하기!!
           <label for="file">첨부파일</label>
-          <input multiple @change="onInputImage()" id="file" ref="image" type="file" />
+          <input multiple @change="onInputImage()" id="file" ref="image" type="file" />-->
       </div>
     </div>
   </body>
@@ -202,7 +202,7 @@ export default {
   background: #fafafa;
   font-family: "Noto Sans KR", sans-serif;
   width: 530px;
-  height: 300px;
+  height: 350px;
   outline: none;
   resize: none;
   border: none;
