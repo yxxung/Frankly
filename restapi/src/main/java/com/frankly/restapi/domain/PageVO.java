@@ -1,6 +1,8 @@
 package com.frankly.restapi.domain;
 
+import lombok.Data;
 
+@Data
 public class PageVO {
 
     // 현재 페이지 번호
@@ -145,6 +147,9 @@ public class PageVO {
         return keyword;
     }
 
+
+    //politician search
+    private String searchName;
 
 
 }

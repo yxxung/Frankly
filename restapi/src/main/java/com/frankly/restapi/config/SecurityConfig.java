@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable() //security에서 기본으로 생성하는 login페이지 사용 안 함
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
-                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**",
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**","/api/politician/**",
                         "/api/billLaw/**", "/api/schedule/**", "/api/attendance/**", "/api/vote/**", "/api/news/**", "/api/property/**").permitAll()
                 //개발용 설정
 //                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
