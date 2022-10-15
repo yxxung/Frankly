@@ -2,7 +2,8 @@ package com.frankly.restapi.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +21,7 @@ public class NewsDTO {
 
     private String newsAbstract;
 
-    private DateTimeFormat newsDate;
+    private LocalDateTime newsDate;
 
     private String newsContents;
 

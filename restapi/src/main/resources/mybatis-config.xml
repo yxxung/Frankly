@@ -16,9 +16,6 @@
         <typeAlias type="com.frankly.restapi.domain.PropertyChangeDTO" alias="PropertyChangeDTO"/>
         <typeAlias type="com.frankly.restapi.domain.PropertyListDTO" alias="PropertyListDTO"/>
         <typeAlias type="com.frankly.restapi.domain.ReplyDTO" alias="ReplyDTO"/>
-        <typeAlias type="com.frankly.restapi.domain.ResponseDTO" alias="ResponseDTO"/>
-        <typeAlias type="com.frankly.restapi.domain.UserResponseDTO" alias="UserResponseDTO"/>
-        <typeAlias type="com.frankly.restapi.domain.UserRequestDTO" alias="UserRequestDTO"/>
         <typeAlias type="com.frankly.restapi.domain.NewsDTO" alias="NewsDTO"/>
         <typeAlias type="com.frankly.restapi.domain.NewsKeywordDTO" alias="NewsKeywordDTO"/>
 

@@ -4,7 +4,7 @@
 <mapper namespace="com.frankly.restapi.mapper.NewsMapper">
 
     <resultMap type="NewsDTO" id="newsResultMap">
-        <id column="NewsID" property="NewsID"/>
+        <id column="newsID" property="newsID"/>
         <result column="politicianID" property="politicianID"/>
         <result column="newsTitle" property="newsTitle"/>
         <result column="newsURL" property="newsURL"/>
@@ -22,10 +22,11 @@
 
     <!-- 뉴스랑 키워드 읽기 -->
     <select id="readNews" resultMap="newsResultMap">
-        SELECT *
+        SELECT N.*, K.newsKeyword AS keyword
         FROM frankly.News N LEFT JOIN frankly.NewsKeyword K
-        ON N.newsID = K.newsID DESC
-        WHERE politicianID = #{politicianID}
+        ON N.newsID = K.newsID
+        WHERE N.politicianID = #{politicianID}
+        ORDER BY N.newsID DESC
     </select>
 
     <!-- 뉴스 수정 -->

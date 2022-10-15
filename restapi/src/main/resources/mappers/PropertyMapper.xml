@@ -40,21 +40,27 @@
     <!--국회의원별 재산 보기-->
     <select id="readProperty" resultMap="propertyResultMap">
         SELECT *
-        FROM frankly.Property P JOIN frankly.PropertyList L
+        FROM frankly.Property P LEFT JOIN frankly.PropertyList L
         ON P.propertyListID = L.propertyListID
         WHERE politicianID = #{politicianID}
     </select>
 
-    <!--국회의원별 재산 변동사항-->
+    <!--국회의원별 재산 변동사항 안돌아감
     <select id="readPropertyChange" resultMap="propertyResultMap">
         SELECT *
-        FROM frankly.Property P JOIN frankly.PropertyChange C
+        FROM frankly.Property P LEFT JOIN frankly.PropertyChange C
         ON P.assetID = C.propertyID
-        WHERE politicianID = #{politicianID}
-        <if test='changeID!=propertyID'>
+        WHERE P.politicianID = #{politicianID}
+        <if test="C.changeID != P.assetID">
             AND C.price LIKE P.presentPrice
         </if>
-    </select>
+    </select>-->
+    <!-- SQL
+    SELECT *, if (C.changeID=P.assetID,"-",P.presentPrice) AS changed
+    FROM frankly.Property P LEFT JOIN frankly.PropertyChange C
+    ON P.assetID = C.propertyID
+    WHERE P.politicianID = 1;
+    -->
 
     <update id="updateProperty" parameterType="PropertyDTO">
         UPDATE frankly.Property, frankly.PropertyList
