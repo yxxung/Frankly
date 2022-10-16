@@ -50,10 +50,32 @@
         WHERE boardID = #{boardID}
     </delete>
 
+    <!-- 게시물 총 갯수 -->
+    <select id="countBoard" resultType="int">
+        SELECT count(boardID) FROM frankly.Board
+    </select>
+
     <select id="getBoardList" resultMap="boardResultMap">
         SELECT * FROM frankly.Board
         WHERE region = #{region}
         ORDER BY boardID DESC
+    </select>
+
+    <select id="searchBoard" resultMap="boardResultMap">
+        SELECT * FROM frankly.Board
+        WHERE region = #{region}
+            <if test='searchType.equals("title")'>
+                AND title LIKE concat('%', #{keyword}, '%')
+            </if>
+            <if test='searchType.equals("content")'>
+                AND content LIKE concat('%', #{keyword}, '%')
+            </if>
+            <if test='searchType.equals("title_content")'>
+                AND title LIKE concat('%', #{keyword}, '%')
+                or content LIKE concat('%', #{keyword}, '%')
+            </if>
+        ORDER BY boardID DESC
+
     </select>
 
 </mapper>

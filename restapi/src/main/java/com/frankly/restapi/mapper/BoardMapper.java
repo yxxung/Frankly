@@ -20,7 +20,11 @@ public interface BoardMapper {
 
     public List<BoardDTO> getBoardList(String region) throws  Exception;
 
-    //public List<BoardDTO> pageNumberBoardList(Long pageNumber) throws Exception;
+    public List<BoardDTO> searchBoard(String region, String searchType, String keyword) throws Exception;
+
+    // 게시물 총 갯수 + 검색 적용
+    public int searchCount(String searchType, String keyword) throws Exception;
+        //public List<BoardDTO> pageNumberBoardList(Long pageNumber) throws Exception;
 
 
 

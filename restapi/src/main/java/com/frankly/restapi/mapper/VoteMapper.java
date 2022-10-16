@@ -12,7 +12,7 @@ public interface VoteMapper {
 
     public List<VoteDTO> countVote(int politicianID) throws Exception;
 
-    public void updateVote(VoteDTO voteDTO) throws Exception;
+    public void updateVote(int voteID) throws Exception;
 
     public void deleteVote(int voteID) throws Exception;
 

@@ -1,6 +1,7 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.ConferenceAttendanceDTO;
+import com.frankly.restapi.domain.ConferenceBillLawDTO;
 import com.frankly.restapi.service.ConferenceAttendanceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,12 +15,12 @@ import java.util.List;
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/infos")
+@RequestMapping("/api/attendance")
 public class ConferenceAttendanceController {
 
     private final ConferenceAttendanceService conferenceAttendanceService;
 
-    @GetMapping ("/{politicianID}/attend")
+    @GetMapping ("/{politicianID}")
     public ResponseEntity<List<ConferenceAttendanceDTO>> readConferenceAttendance(@PathVariable("politicianID") int politicianID)
             throws Exception {
         log.info("readConferenceAttendance - politicianID : " + politicianID);
@@ -28,9 +29,18 @@ public class ConferenceAttendanceController {
     }
 
     //updateConferenceAttendance
+    @PutMapping("/update")
+    public ResponseEntity<ConferenceBillLawDTO> updateConferenceAttendance(@PathVariable("attendanceID") int attendanceID, @PathVariable("politicianID") int politicianID)
+            throws Exception{
+        log.info("updateConferenceAttendance : " + attendanceID);
+
+        conferenceAttendanceService.updateConferenceAttendance(attendanceID, politicianID);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //deleteConferenceAttendance
-    @DeleteMapping("/attend/{attendanceID}")
+    @DeleteMapping("/delete")
     public ResponseEntity<?>deleteConferenceAttendance(@PathVariable("attendanceID") int attendanceID)
             throws Exception{
         log.info("deleteConferenceAttendance : " + attendanceID);

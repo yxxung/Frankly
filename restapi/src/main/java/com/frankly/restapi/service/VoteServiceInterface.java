@@ -10,7 +10,7 @@ public interface VoteServiceInterface {
 
     List<VoteDTO> countVote(int politicianID) throws Exception;
 
-    void updateVote(VoteDTO voteDTO) throws Exception;
+    void updateVote(int voteID) throws Exception;
 
     void deleteVote(int voteID) throws Exception;
 }
