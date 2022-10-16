@@ -67,21 +67,6 @@ export default {
           console.log(error);
         });
     },
-    searchResultShow(searchKeyword) {
-      console.log('"', keyword, '"' + " 검색");
-      if (searchKeyword !== "") {
-        this.$router
-          .push({
-            name: "Politician",
-            params: {
-              searchKeyword: this.searchKeyword,
-            },
-          })
-          .catch(() => {});
-      } else {
-        alert("검색어를 입력해주세요 !");
-      }
-    },
     goToPoliticianDetail(politicianID) {
       this.$router.push({
         name: "PoliticianDetail",
@@ -89,9 +74,6 @@ export default {
           politicianID: politicianID,
         },
       });
-    },
-    searchKeywordChange() {
-      this.isResultShow = false;
     },
   },
 };
@@ -189,7 +171,7 @@ export default {
   font-weight: 500;
   color: #000000;
   display: flex;
-        justify-content: center;
-        align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 </style>

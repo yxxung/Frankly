@@ -10,8 +10,6 @@ public interface PoliticianServiceInterface {
 
     public PoliticianDTO getPoliticianById(int politicianID) throws Exception;
 
-    public List<PoliticianDTO> getPoliticianByName(String politicianName) throws Exception;
-
     public PoliticianDTO updatePolitician(int politicianID) throws Exception;
 
     public PoliticianDTO deletePolitician(int politicianID) throws Exception;

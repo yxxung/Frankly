@@ -31,13 +31,6 @@ public class PoliticianController {
 
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<PoliticianDTO>> getPoliticianByName(@PathVariable("politicianName")String politicianName) throws Exception{
-
-        return new ResponseEntity<>(politicianService.getPoliticianByName(politicianName), HttpStatus.OK);
-
-    }
-
     @GetMapping("/all")
     public ResponseEntity<List<PoliticianDTO>>politicianList()throws Exception{
 

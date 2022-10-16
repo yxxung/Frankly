@@ -39,8 +39,8 @@
 
     <select id="searchPolitician" resultMap="politicianResultMap">
         SELECT * FROM frankly.Politician
-        WHERE politicianName = #{politicianName}
-        ORDER BY politicianID
+        WHERE politicianName LIKE concat('%', #{searchName}, '%')
+        ORDER BY politicianID ASC
     </select>
 
     <insert id="createPolitician" parameterType="PoliticianDTO">
@@ -65,11 +65,4 @@
                , #{politicianImageURL}
                , #{politicianID})
     </insert>
-
-    <select id="searchPolitician" resultMap="politicianResultMap">
-        SELECT * FROM frankly.Politician
-        WHERE politicianName LIKE concat('%', #{searchName}, "%")
-        ORDER BY politicianID ASC
-
-    </select>
 </mapper>

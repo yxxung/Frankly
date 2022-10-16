@@ -1,21 +1,17 @@
 <template>
-  <div>
     <div class="politician-search">
       <form class="politician-search-form">
         <input
           class="politician-search-form__text-input"
           type="search"
           placeholder="국회의원 검색"
-          v-model="politicianInput"
+          @click.prevent="checkClick"
         />
-        <button class="search-button" type="submit" @click="searchResultShow">
-          <!--버튼 클릭시 searchresultshow 실행-->
+        <button class="search-button" type="submit">
           <img src="@/assets/icon/button.svg" />
         </button>
       </form>
     </div>
-    <Search v-bind:propPoliticianInput="politicianInput"></Search>
-  </div>
 </template>
 
 <script>
@@ -26,35 +22,13 @@ export default {
   components: {
     Search,
   },
-  data() {
-    return {
-      politicianInput: "",
-      searchPoliticians: []
-    };
-  },
   methods: {
-    searchResultShow() {
-      this.searchPoliticians = []
-      if (politicianInput !== "") { //검색어를 입력한 경우
-      axios.get(`/api/politician/` + this.politicianInput)
-        .then(response => {
-          if(response.data instanceof Array) {
-            this.searchPoliticians = response.data
-          }else{
-            this.searchPoliticians.push(response.data)
-          }
-          console.log(this.searchPoliticians)
-        })
-      } else {
-        alert('검색어를 입력해주세요 !')
-      }
-    },
-    doMouseOver() {
+    checkClick() {
       this.$router.push({
-        path: "/search",
+        path: "/Search",
       });
     },
-  },
+  }
 };
 </script>
 
@@ -64,7 +38,6 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 8px 24px;
   margin-top: -30px;
 }
 

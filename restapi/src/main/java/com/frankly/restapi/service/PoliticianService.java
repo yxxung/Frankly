@@ -29,12 +29,6 @@ public class PoliticianService implements PoliticianServiceInterface {
     }
 
     @Override
-    public List<PoliticianDTO> getPoliticianByName(String politicianName) throws Exception {
-        log.info("get politicianName:" + politicianName);
-        return politicianMapper.searchPolitician(politicianName);
-    }
-
-    @Override
     public PoliticianDTO updatePolitician(int politicianID) throws Exception {
         return politicianMapper.updatePolitician(politicianID);
     }
