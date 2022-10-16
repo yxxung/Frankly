@@ -3,9 +3,7 @@ package com.frankly.restapi.domain;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
-
 import static java.time.LocalDateTime.now;
 
 @Data

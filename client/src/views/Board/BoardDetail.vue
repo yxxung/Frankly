@@ -75,7 +75,7 @@
         class="enter-comment__textarea"
         v-model="replyInput"
       ></textarea>
-      <button class="enter-comment__submit" v-on@click.prevent="createReply">
+      <button class="enter-comment__submit" @click.prevent="createReply(DetailData.boardID)">
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
       </button>
     </div>
@@ -145,12 +145,12 @@ export default {
       });
     },
     //댓글 생성
-    createReply() {
+    createReply(boardID) {
       if (this.replyInput.trim()) {
         //앞 뒤 공백제거
         axios
           .post("/api/replys/create", {
-            boardID: this.DetailData.boardID,
+            boardID: boardID,
             reply: this.replyInput,
           })
           .then((response) => {

@@ -23,9 +23,9 @@ public class ReplyController {
     private final ReplyService replyService;
 
     //댓글 달기
-    @PostMapping("/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<ReplyDTO> createReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception {
-
+        replyService.createReply(replyDTO);
         return new ResponseEntity<>(replyDTO, HttpStatus.OK);
     }
 
