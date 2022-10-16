@@ -32,6 +32,7 @@ import JeonbukBoard from '../views/Board/region/JeonbukBoard.vue'
 import JeonnamBoard from '../views/Board/region/JeonnamBoard.vue'
 import UlsanBoard from '../views/Board/region/UlsanBoard.vue'
 import SejongBoard from '../views/Board/region/SejongBoard.vue'
+import PoliticianSearchView from "@/views/Politician/PoliticianSearchView.vue"
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
@@ -197,6 +198,11 @@ const routes = [
     path: '/PoliticianDetail/:politicianID',
     name: 'PoliticianDetail',
     component: PoliticianDetail
+  },
+  {
+    path: '/Search',
+    name: 'Search',
+    component: PoliticianSearchView
   }
 ]
 

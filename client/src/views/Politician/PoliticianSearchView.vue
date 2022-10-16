@@ -21,13 +21,14 @@
 import SearchBar from '@/components/SearchBar.vue'
 
 export default {
-  name: "PoliticianSearchView",
+  name: "Search",
   components: {
     SearchBar: SearchBar
   },
-  props: ["searchKeyword"], //상위 컴포넌트인 Politician.vue로부터 데이터 받음
   data() {
-    return {};
+    return {
+
+    };
   },
   methods: {},
 };

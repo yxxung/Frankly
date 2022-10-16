@@ -20,9 +20,9 @@
       <div class="post-header__kategorie">
         커뮤니티 > {{ DetailData.region }}
       </div>
-      <h3 class="post-header__title">{{ DetailDatatitle }}</h3>
+      <h3 class="post-header__title">{{ DetailData.title }}</h3>
       <div class="post-header__info">
-        <div class="post-header__writer">{{ DetailData.userID }}</div>
+        <div class="post-header__writer"> 익명</div>
         <div class="post-header__reg-date">
           {{ elapsedText(DetailData.regDate) }}
         </div>
@@ -34,10 +34,10 @@
       <p>{{ DetailData.content }}</p>
     </article>
 
-    <!--좋아요, 싫어요-->
+    <!--좋아요-->
     <div class="post-like">
-      <button><img src="@/assets/icon/Like.svg" /></button>
-      <button><img src="@/assets/icon/Unlike.svg" /></button>
+      <button @click="changeLike()"><img src="@/assets/icon/Like.svg" /></button>
+      <span>{{ DetailData.marked }}</span>
     </div>
 
     <!--댓글-->
@@ -51,7 +51,7 @@
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-              <h6>익명</h6>
+              <h6>익명{{reply.replyID}}</h6>
               <span class="comments__info__date">{{
                 elapsedText(reply.regDate)
               }}</span>
@@ -73,10 +73,9 @@
       <textarea
         placeholder="댓글 입력..."
         class="enter-comment__textarea"
-        :value="replyInput"
-        @input="replyInput = $event.target.value"
+        v-model="replyInput"
       ></textarea>
-      <button class="enter-comment__submit" v-on@click.prevent="createReply()">
+      <button class="enter-comment__submit" v-on@click.prevent="createReply">
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
       </button>
     </div>
@@ -103,7 +102,8 @@ export default {
         marked: "",
       },
       replys: {},
-      replyInput: ""
+      replyInput: "",
+      cntLike: null
     };
   },
   created() {
@@ -146,21 +146,29 @@ export default {
     },
     //댓글 생성
     createReply() {
-      if(this.replyInput.trim()) { //앞 뒤 공백제거
+      if (this.replyInput.trim()) {
+        //앞 뒤 공백제거
         axios
-        .post("/api/replys/create", {
-          boardID: this.DetailData.boardID,
-          reply: this.replyInput
-        })
-        .then((response) => {
-          console.log(response);
-          this.$router.go()
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+          .post("/api/replys/create", {
+            boardID: this.DetailData.boardID,
+            reply: this.replyInput,
+          })
+          .then((response) => {
+            console.log(response);
+            this.$router.go();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
+    async changeLike() {
+      //좋아요가 안눌러진 상태에서 좋아요를 누를 때
+        const response = await axios.post(`/api/boards/${boardID}`, {
+
+        })
+
+    }
   },
 };
 </script>
@@ -266,13 +274,32 @@ export default {
   padding: 0 16px;
 }
 
-/*게시글 좋아요, 싫어요*/
+/*게시글 좋아요*/
 .post-like {
   padding: 24px 16px;
 }
 .post-like button {
   margin-right: 8px;
-  background-color: #f3f3f3;
+  background-color: #ffffff;
+  width: 28px;
+  height: 28px;
+}
+.post-like img {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post-like span {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: right;
+  letter-spacing: -0.024em;
+
+  color: #7b7b7b;
 }
 
 /*댓글*/

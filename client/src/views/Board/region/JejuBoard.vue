@@ -23,7 +23,7 @@
         <div class="post-list__info">
           <span>{{ elapsedText(board.regDate) }}</span>
           <img src="@/assets/icon/Like.svg" alt="좋아요" />
-          <span>13</span>
+          <span>{{ board.marked }}</span>
         </div>
       </li>
     </ul>

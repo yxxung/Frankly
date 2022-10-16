@@ -22,10 +22,11 @@
     </resultMap>
 
     <insert id="createReply" parameterType="ReplyDTO">
-        INSERT INTO frankly.Reply(boardID, userID, reply)
+        INSERT INTO frankly.Reply(boardID, userID, reply, regDate)
         VALUES(#{boardID}
               ,#{userID}
-              ,#{reply})
+              ,#{reply}
+              ,now())
     </insert>
 
     <select id="readReply" resultMap="replyResultMap">

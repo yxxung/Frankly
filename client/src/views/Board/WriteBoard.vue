@@ -115,9 +115,11 @@ export default {
           content: this.content
         })
         .then((response) => {
-          //응답 처리
-          console.log(response)
-          this.$router.push({path:`/BoardDetail/${regionName}`})
+          // console.log(response);
+          if (response.status === 200) {
+            alert("게시글이 작성되었습니다!");
+          }
+          this.$router.go(-1);
         })
         .catch((error) => {
           console.error(error);

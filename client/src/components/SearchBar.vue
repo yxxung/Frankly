@@ -1,46 +1,58 @@
 <template>
-  <div class="politician-search">
-    <form class="politician-search-form" action="" method="get">
-      <input
-        class="politician-search-form__text-input"
-        type="text"
-        placeholder="국회의원 검색"
-        v-model="politicianKeyword"
-        @keyup.enter="searchResultShow(searchKeyword)"
-      /><!--엔터 클릭시 searchresultshow 실행-->
-      <button
-        class="search-button"
-        type="submit"
-        @click="searchResultShow(searchKeyword)"
-      ><!--버튼 클릭시 searchresultshow 실행-->
-        <img src="@/assets/icon/button.svg" />
-      </button>
-    </form>
+  <div>
+    <div class="politician-search">
+      <form class="politician-search-form">
+        <input
+          class="politician-search-form__text-input"
+          type="search"
+          placeholder="국회의원 검색"
+          v-model="politicianInput"
+        />
+        <button class="search-button" type="submit" @click="searchResultShow">
+          <!--버튼 클릭시 searchresultshow 실행-->
+          <img src="@/assets/icon/button.svg" />
+        </button>
+      </form>
+    </div>
+    <Search v-bind:propPoliticianInput="politicianInput"></Search>
   </div>
 </template>
 
 <script>
+import Search from "@/views/Politician/PoliticianSearchView.vue";
+import axios from "axios";
+
 export default {
+  components: {
+    Search,
+  },
   data() {
     return {
-      searchKeyword: "",
+      politicianInput: "",
+      searchPoliticians: []
     };
   },
   methods: {
-    searchResultShow(searchKeyword) {
-      if (searchKeyword !== "") { //검색어를 입력한 경우
-        this.$router.push({
-            name: 'PoliticianSearchResult',
-            params: {
-                searchKeyword: this.searchKeyword,
-                isResultShow: true
-            }
-        });
-        this.searchKeyword = ''
-        console.log('"', searchKeyword, '"' + '검색')
+    searchResultShow() {
+      this.searchPoliticians = []
+      if (politicianInput !== "") { //검색어를 입력한 경우
+      axios.get(`/api/politician/` + this.politicianInput)
+        .then(response => {
+          if(response.data instanceof Array) {
+            this.searchPoliticians = response.data
+          }else{
+            this.searchPoliticians.push(response.data)
+          }
+          console.log(this.searchPoliticians)
+        })
       } else {
         alert('검색어를 입력해주세요 !')
       }
+    },
+    doMouseOver() {
+      this.$router.push({
+        path: "/search",
+      });
     },
   },
 };
@@ -58,7 +70,7 @@ export default {
 
 .politician-search-form__text-input {
   align-items: center;
-  width: 448px;
+  width: 440px;
   height: 38px;
   left: 16px;
   top: 297px;
@@ -87,4 +99,22 @@ export default {
   vertical-align: middle;
 }
 
+.politician-search-view {
+  padding: 8px 24px;
+  max-width: 540px;
+  height: 100%;
+  top: 100px;
+}
+
+.politician-search-view > h2 {
+  padding-top: 10px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  letter-spacing: -0.024em;
+
+  color: #2b2b2b;
+}
 </style>

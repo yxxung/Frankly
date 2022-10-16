@@ -27,11 +27,6 @@
       </li>
     </ul>
 
-    <PoliticianSearchView
-      v-if="isResultShow"
-      v-bind:searchKeyword="searchKeyword"
-    ></PoliticianSearchView>
-
     <Navigation />
   </div>
 </template>
@@ -39,7 +34,6 @@
 <script>
 import Navigation from "@/components/Navigation.vue";
 import Slider from "@/components/Slider.vue";
-import PoliticianSearchView from "@/views/Politician/PoliticianSearchView.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import axios from "axios";
 
@@ -48,7 +42,6 @@ export default {
   components: {
     Navigation: Navigation,
     Slider: Slider,
-    PoliticianSearchView: PoliticianSearchView,
     SearchBar: SearchBar,
   },
   data() {

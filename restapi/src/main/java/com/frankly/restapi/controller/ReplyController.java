@@ -37,7 +37,7 @@ public class ReplyController {
     }
 
     //댓글 수정
-    @PutMapping("/{boardID}/reply")
+    @PutMapping("/{boardID}/update")
     public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{
         replyService.updateReply(replyDTO);
 
@@ -45,7 +45,7 @@ public class ReplyController {
     }
 
     //댓글 삭제
-    @DeleteMapping("/{boardID}/reply")
+    @DeleteMapping("/{boardID}/delete")
     public ResponseEntity<?> deleteReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
 
         replyService.deleteReply(replyDTO);

@@ -27,6 +27,14 @@ public class PoliticianController {
 
         return new ResponseEntity<>(politicianDTO, HttpStatus.OK);
 
+
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PoliticianDTO>> getPoliticianByName(@PathVariable("politicianName")String politicianName) throws Exception{
+
+        return new ResponseEntity<>(politicianService.getPoliticianByName(politicianName), HttpStatus.OK);
+
     }
 
     @GetMapping("/all")
