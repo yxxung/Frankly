@@ -105,7 +105,6 @@ import Navigation from "@/components/Navigation.vue";
 import Header from "@/components/Header.vue";
 import ImageSlider from "@/components/ImageSlider.vue";
 import SearchBar from "@/components/SearchBar.vue";
-
 export default {
   name: "Home",
   components: {
@@ -123,7 +122,6 @@ export default {
 
 <style>
 @import "@/assets/scss/style.scss";
-
 /* 슬라이드 */
 #slider {
   margin: 15px auto 40px auto;
@@ -132,16 +130,13 @@ export default {
   text-align: center;
   padding: 8px 24px;
 }
-
 #slider input[type="radio"] {
   display: none;
 }
-
 #slider label {
   cursor: pointer;
   text-decoration: none;
 }
-
 #slides {
   padding: 10px;
   border: 3px solid #f5f5f5;
@@ -154,7 +149,6 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-
 #slide1:checked ~ #slides .inner {
   margin-left: 0;
 }
@@ -164,14 +158,12 @@ export default {
 #slide3:checked ~ #slides .inner {
   margin-left: -200%;
 }
-
 #slides .inner {
   transition: margin-left 800ms cubic-bezier(0.077, 0, 0.175, 1);
   width: 300%; /* 아이템 수 * 100 */
   line-height: 0;
   height: 200px;
 }
-
 #slides .slide {
   width: 33.333%; /* 100 / 아이템 수 */
   float: left;
@@ -181,7 +173,6 @@ export default {
   height: 100%;
   color: #fff;
 }
-
 #slides .slide_1 {
   background-image: url("@/assets/home-slide.png");
   background-size: cover;
@@ -194,11 +185,9 @@ export default {
   background-image: url("@/assets/home-slide.png");
   background-size: cover;
 }
-
 .slide-content {
   padding: 10px;
 }
-
 #controls {
   margin: -130px 0 0 0;
   width: 100%;
@@ -216,7 +205,6 @@ export default {
 #controls label:hover {
   opacity: 1;
 }
-
 #slide1:checked ~ #controls label:nth-child(2),
 #slide2:checked ~ #controls label:nth-child(3),
 #slide3:checked ~ #controls label:nth-child(1) {
@@ -233,7 +221,6 @@ export default {
   margin: 0 0 0 -50px;
   display: block;
 }
-
 #bullets {
   margin: 80px 0 0;
   text-align: center;
@@ -246,13 +233,11 @@ export default {
   background: #f5f5f5;
   margin: 0 8px;
 }
-
 #slide1:checked ~ #bullets label:nth-child(1),
 #slide2:checked ~ #bullets label:nth-child(2),
 #slide3:checked ~ #bullets label:nth-child(3) {
   background: rgb(124, 124, 124);
 }
-
 /*인기 검색 국회의원*/
 .trend-top4-politician-title {
   max-width: 540px;
@@ -262,23 +247,19 @@ export default {
   position: relative;
   padding: 8px 24px;
 }
-
 .icon-button {
   position: absolute;
 }
-
 .icon-button img {
   width: 25px;
   height: 25px;
   filter: invert(12%) sepia(98%) saturate(7493%) hue-rotate(1deg)
-    brightness(102%) contrast(106%);
+  brightness(102%) contrast(106%);
 }
-
 .trend-top4-politician-title h2 {
   position: absolute;
   left: 55px;
   vertical-align: middle;
-
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -286,7 +267,6 @@ export default {
   line-height: 23px;
   color: #2b2b2b;
 }
-
 /*인기검색 국회의원 리스트*/
 .trend-top4-politician-list {
   padding: 8px 24px;
@@ -298,7 +278,6 @@ export default {
   display: flex;
   justify-content: center;
 }
-
 .trend-top4-politician {
   width: 100%;
   display: flex;
@@ -307,7 +286,6 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
 .background {
   box-sizing: border-box;
   border: 2px solid #d5e1e6;
@@ -316,11 +294,9 @@ export default {
   width: 74px;
   height: 74px;
   top: 12px;
-
   background-image: url(../assets/politician/정진석.png);
   background-size: cover;
 }
-
 .trend-top4-politician p {
   position: absolute;
   top: 92px;
@@ -330,7 +306,6 @@ export default {
   font-weight: 500;
   color: #000000;
 }
-
 /*오늘의 국회 일정*/
 .parliamentary-schedule-title {
   padding: 8px 24px;
@@ -340,23 +315,19 @@ export default {
   top: 120px;
   position: relative;
 }
-
 .icon-bookmark {
   position: absolute;
 }
-
 .icon-bookmark img {
   width: 30px;
   height: 30px;
   filter: invert(13%) sepia(100%) saturate(6592%) hue-rotate(259deg)
-    brightness(90%) contrast(126%);
+  brightness(90%) contrast(126%);
 }
-
 .parliamentary-schedule-title h2 {
   position: absolute;
   left: 60px;
   vertical-align: middle;
-
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 500;
@@ -364,11 +335,9 @@ export default {
   line-height: 23px;
   color: #2b2b2b;
 }
-
 .parliamentary-schedule-title h3 {
   position: absolute;
   left: 432px;
-
   vertical-align: middle;
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -377,7 +346,6 @@ export default {
   line-height: 23px;
   color: #818181;
 }
-
 .parliamentary-schedule-list {
   padding: 8px 24px;
   position: relative;
@@ -388,22 +356,18 @@ export default {
   display: flex;
   justify-content: center;
 }
-
 .parliamentary-schedule {
   width: 96px;
   height: 76px;
-
   position: relative;
   justify-content: space-between;
   margin: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   background: #f7f7f7;
   border-radius: 12px;
 }
-
 .parliamentary-schedule h2 {
   position: absolute;
   top: 12px;
@@ -416,7 +380,6 @@ export default {
   letter-spacing: -0.024em;
   color: #7b7b7b;
 }
-
 .parliamentary-schedule div {
   position: absolute;
   top: 35px;
@@ -427,7 +390,6 @@ export default {
   line-height: 23px;
   text-align: center;
   letter-spacing: -0.024em;
-
   color: #111111;
 }
 </style>
