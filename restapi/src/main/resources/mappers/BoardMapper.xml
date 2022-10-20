@@ -42,7 +42,7 @@
         SET marked = #{marked},
             title = #{title},
             content = #{content}
-        WHERE boardID = #{boardID} AND region = #{region}
+        WHERE boardID = #{boardID}
     </update>
 
     <delete id="deleteBoard" parameterType="BoardDTO">

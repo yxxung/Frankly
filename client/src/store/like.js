@@ -3,13 +3,12 @@ import BoardDetail from '@/views/Board/BoardDetail.vue';
 
 export default createStore({
     state: {
+        BoardDetail: BoardDetail
     },
     mutations: {
-        changeLikes(state, idx) {
-
-        },
-        changeBoards(state, boards) {
-
+        changeLikes(state) {
+            console.log(state.BoardDetail.marked);
+            
         }
     }
 

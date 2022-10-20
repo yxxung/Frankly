@@ -9,7 +9,7 @@
         <a class="icon-button-56">
           <img src="@/assets/icon/Share.svg" alt="공유하기" />
         </a>
-        <a class="icon-button-56">
+        <a class="icon-button-56" @click="edit_show = true">
           <img src="@/assets/icon/Other2.svg" alt="더보기" />
         </a>
       </div>
@@ -22,7 +22,7 @@
       </div>
       <h3 class="post-header__title">{{ DetailData.title }}</h3>
       <div class="post-header__info">
-        <div class="post-header__writer"> 익명</div>
+        <div class="post-header__writer">익명</div>
         <div class="post-header__reg-date">
           {{ elapsedText(DetailData.regDate) }}
         </div>
@@ -36,7 +36,13 @@
 
     <!--좋아요-->
     <div class="post-like">
-      <button @click="changeLike()"><img src="@/assets/icon/Like.svg" /></button>
+      <button @click="(marked = !marked), changeLike(DetailData.boardID)">
+        <div class="h2 mb-0">
+          <b-icon>
+            {{ marked ? "hand-thumbs-up-fill" : "hand-thumbs-up" }}
+          </b-icon>
+        </div>
+      </button>
       <span>{{ DetailData.marked }}</span>
     </div>
 
@@ -51,7 +57,7 @@
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-              <h6>익명{{reply.replyID}}</h6>
+              <h6>익명{{ reply.replyID }}</h6>
               <span class="comments__info__date">{{
                 elapsedText(reply.regDate)
               }}</span>
@@ -75,7 +81,10 @@
         class="enter-comment__textarea"
         v-model="replyInput"
       ></textarea>
-      <button class="enter-comment__submit" @click.prevent="createReply(DetailData.boardID)">
+      <button
+        class="enter-comment__submit"
+        @click.prevent="createReply(DetailData.boardID)"
+      >
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
       </button>
     </div>
@@ -99,11 +108,13 @@ export default {
         regDate: "",
         region: "",
         userID: "",
-        marked: "",
+        marked: "", //board db의 좋아요
       },
-      replys: {},
-      replyInput: "",
-      cntLike: null
+      replys: {}, //댓글 axios get
+      replyInput: "", //댓글 입력
+      marked: false, //좋아요
+      cntMarked: null, //좋아요 개수
+      edit_show: false,
     };
   },
   created() {
@@ -116,12 +127,14 @@ export default {
       this.DetailData.region = response.data.region;
       this.DetailData.userID = response.data.userID;
       this.DetailData.marked = response.data.marked;
-      console.log(boardID);
     });
+
     axios.get(`/api/replys/${boardID}/replyList`).then((response) => {
       this.replys = response.data;
       console.log(response.data);
     });
+
+    this.cntMarked = this.DetailData.marked;
   },
   methods: {
     //date format 변환
@@ -162,13 +175,24 @@ export default {
           });
       }
     },
-    async changeLike() {
+    async changeLike(boardID) {
       //좋아요가 안눌러진 상태에서 좋아요를 누를 때
-        const response = await axios.post(`/api/boards/${boardID}`, {
+      if (this.marked) {
+         // 해당 게시글의 좋아요 개수 1 증가시킨 걸로 수정 (put)
+        this.DetailData.marked += 1;
+        this.cntMarked = this.DetailData.marked;
 
+        axios.put(`/api/boards/${boardID}`, {
+          marked: this.cntMarked
         })
-
-    }
+        .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
   },
 };
 </script>

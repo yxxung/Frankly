@@ -60,9 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 한 유저 테스트기 때문에 CSRF 미적용 추후 수정.
@@ -71,6 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //배포용 설정
                 .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**","/api/politician/**",
                         "/api/billLaw/**", "/api/schedule/**", "/api/attendance/**", "/api/vote/**", "/api/news/**", "/api/property/**", "/api/replys/**").permitAll()
+                .antMatchers("/").hasRole("USER")
+                .antMatchers("/admin").hasRole("ADMIN")
                 //개발용 설정
 //                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
                 //cors 예외처리
