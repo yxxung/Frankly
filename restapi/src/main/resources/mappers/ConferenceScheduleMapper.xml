@@ -13,7 +13,7 @@
 
     <!-- 회의 정보 읽기  conferenceDate가 오늘 날짜와 같을때-->
     <select id="readConferenceSchedule" resultMap="conferenceScheduleResultMap">
-        SELECT generation, conferenceDate, conferenceTitle, conferenceSession
+        SELECT *
         FROM frankly.ConferenceSchedule
         WHERE conferenceDate = (SELECT SUBSTRING(now(), 1, 10))
         <!-- 오늘의 회의 일정

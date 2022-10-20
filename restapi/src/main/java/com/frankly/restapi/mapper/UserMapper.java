@@ -16,6 +16,10 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+    public List<UserDTO> userList() throws Exception;
+
+    public UserDTO getUserByEmail(String email) throws Exception;
+
     public void createUser(UserDTO userDTO) throws Exception;
 
     public UserDTO readUser(int userID) throws Exception;
@@ -24,11 +28,7 @@ public interface UserMapper {
 
     public void deleteUser(int userID) throws Exception;
 
-    public UserDTO getUserByEmail(String userEmail) throws Exception;
-
     public void selectAllUser(UserDTO userDTO) throws Exception;
-
-    public List<UserDTO> userList() throws Exception;
 
     public void loginUser(UserDTO userDTO) throws Exception;
 }

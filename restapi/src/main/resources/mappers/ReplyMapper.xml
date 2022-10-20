@@ -12,11 +12,11 @@
     </resultMap>
 
     <insert id="createReply" parameterType="ReplyDTO">
-        INSERT INTO frankly.Reply(boardID, userID, reply, regDate)
+        INSERT INTO frankly.Reply(boardID, userID, reply)
         VALUES(#{boardID}
               ,#{userID}
               ,#{reply}
-              ,#{regDate})
+              )
     </insert>
 
     <select id="readReply" resultMap="replyResultMap">
@@ -36,7 +36,6 @@
     </update>
 
     <delete id="deleteReply" parameterType="ReplyDTO">
-
         DELETE FROM frankly.Reply
         WHERE replyID = #{replyID} AND boardID = #{boardID}
     </delete>

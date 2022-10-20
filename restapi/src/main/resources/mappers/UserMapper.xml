@@ -7,6 +7,7 @@
     <resultMap type="UserDTO" id = "userResultMap">
         <id column="userID" property="userID"/>
         <result column="email" property="email"/>
+        <result column="contact" property="contact"/>
         <result column="name" property="name"/>
         <result column="password" property="password"/>
         <result column="district" property="district"/>
@@ -26,7 +27,7 @@
     </select>
 
     <select id="getUserByEmail" resultMap="userResultMap">
-        SELECT email,password,userAuth FROM frankly.User
+        SELECT email, password, userAuth FROM frankly.User
         WHERE email = #{email}
 
     </select>
@@ -44,7 +45,7 @@
 
     <select id="loginUser" resultMap="userResultMap">
         SELECT * FROM frankly.User
-        WHERE userID = #{userID}
+        WHERE email = #{email}
     </select>
 
     <delete id="deleteUser" parameterType="Long">
