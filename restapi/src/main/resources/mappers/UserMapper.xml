@@ -47,7 +47,7 @@
 
     <select id="loginUser" resultMap="userResultMap">
         SELECT * FROM frankly.User
-        WHERE email = #{email}, password = #{password}
+        WHERE email = #{email}
     </select>
 
     <delete id="deleteUser" parameterType="Long">
