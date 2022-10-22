@@ -72,6 +72,10 @@ public class UserDTO implements UserDetails {
         return name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getEmail() {
         return email;
     }

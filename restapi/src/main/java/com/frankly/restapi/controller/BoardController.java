@@ -32,7 +32,7 @@ public class BoardController {
 //                                                @RequestPart(required = false) MultipartFile file) throws Exception{
 //        log.info("게시물 생성" + boardDTO.getAuthor());
 //        boardService.createBoard(boardDTO);
-//        log.info("time: " + boardDTO.getRegDate());
+//        log.info("time: " + boardDTO.getBoardRegDate());
 //        log.info("dto: " + boardDTO);
 //        log.info("file: " + file);
 //

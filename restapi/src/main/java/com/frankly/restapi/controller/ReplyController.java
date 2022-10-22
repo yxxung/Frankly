@@ -1,8 +1,6 @@
 package com.frankly.restapi.controller;
 
-import com.frankly.restapi.domain.BoardDTO;
 import com.frankly.restapi.domain.ReplyDTO;
-import com.frankly.restapi.service.BoardService;
 import com.frankly.restapi.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,4 +63,3 @@ public class ReplyController {
 
 
 }
-

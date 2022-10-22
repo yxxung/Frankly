@@ -35,6 +35,15 @@
         WHERE boardID = #{boardID}
     </select>
 
+    <!--게시글과 댓글 총 갯수
+        <select id="countReply" resultMap="replyResultMap">
+            SELECT B.boardID, count(R.replyID)
+            FROM frankly.Reply R LEFT JOIN frankly.Board B
+            ON B.boardID = R.boardID
+            WHERE B.boardID = #{boardID}
+            GROUP BY B.boardID
+        </select>-->
+
     <select id="countReply" resultMap="replyResultMap">
         SELECT count(replyID) FROM frankly.Reply
         WHERE boardID = #{boardID}

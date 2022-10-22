@@ -1,11 +1,10 @@
 package com.frankly.restapi.domain;
 
-import lombok.*;
-import org.apache.tomcat.jni.Local;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static java.time.LocalDateTime.now;
 
@@ -30,10 +29,19 @@ public class BoardDTO {
     private String region;
 
 
+    private int replyID;
+
+    private String reply;
+
+    private LocalDateTime replyRegDate;
+    //count(R.replyID)
+    private int replyCount;
+
+
     @Builder
     public BoardDTO(int boardID, int userID, LocalDateTime boardRegDate,
                     int marked, String title, String content,
-                    String region){
+                    String region, int replyID, String reply, LocalDateTime replyRegDate, int replyCount){
         this.boardID = boardID;
         this.userID = userID;
         this.boardRegDate = now();
@@ -41,6 +49,12 @@ public class BoardDTO {
         this.title = title;
         this.content = content;
         this.region = region;
+
+        this.replyID = replyID;
+        this.reply = reply;
+        this.replyRegDate = replyRegDate;
+        this.replyCount = replyCount;
+
     }
 
     /*@Builder
