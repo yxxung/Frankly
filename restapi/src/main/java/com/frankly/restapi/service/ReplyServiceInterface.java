@@ -12,6 +12,8 @@ public interface ReplyServiceInterface {
 
     public List<ReplyDTO> readReply(int boardID) throws Exception;
 
+    public void countReply(int boardID) throws Exception;
+
     public void updateReply(ReplyDTO replyDTO) throws Exception;
 
     public void deleteReply(ReplyDTO replyDTO) throws Exception;

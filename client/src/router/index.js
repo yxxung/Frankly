@@ -61,7 +61,8 @@ const routes = [
   },
   /*board*/
   {
-    path: '/WriteBoard',
+    path: '/WriteBoard/:boardID?',
+    name: 'WriteBoard',
     component: WriteBoard
   },
   {

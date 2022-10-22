@@ -34,6 +34,11 @@ public class ReplyService implements ReplyServiceInterface {
     }
 
     @Override
+    public void countReply(int boardID) throws Exception {
+        replyMapper.countReply(boardID);
+    }
+
+    @Override
     public void updateReply(ReplyDTO replyDTO) throws Exception {
         replyMapper.updateReply(replyDTO);
     }

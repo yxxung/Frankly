@@ -17,19 +17,22 @@ public class ReplyDTO {
 
     private int userID;
 
-    private LocalDateTime regDate;
+    private LocalDateTime replyRegDate;
 
     private int boardID;
+
+    private int replyCount;
 
 
     @Builder
     public ReplyDTO(int replyID, String reply, int userID,
-                    LocalDateTime regDate, int boardID){
+                    LocalDateTime replyRegDate, int boardID, int replyCount){
         this.replyID = replyID;
         this.reply = reply;
-        this.regDate = now();
+        this.replyRegDate = now();
         this.userID = userID;
         this.boardID = boardID;
+        this.replyCount = replyCount;
     }
 
 }

@@ -36,6 +36,15 @@ public class ReplyController {
         return new ResponseEntity<>(replyService.readReply(boardID), HttpStatus.OK);
     }
 
+    //댓글 수
+    /*
+    @GetMapping("/{boardID}/replyCount")
+    public ResponseEntity<?> countReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{
+        replyService.countReply(replyDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }*/
+
     //댓글 수정
     @PutMapping("/{boardID}/update")
     public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{

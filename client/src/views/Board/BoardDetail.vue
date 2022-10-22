@@ -6,12 +6,25 @@
         <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
       </a>
       <div class="header-right-icon">
-        <a class="icon-button-56">
+        <!--<a class="icon-button-56">
           <img src="@/assets/icon/Share.svg" alt="공유하기" />
         </a>
-        <a class="icon-button-56" @click="edit_show = true">
+        <a class="icon-button-56">
           <img src="@/assets/icon/Other2.svg" alt="더보기" />
-        </a>
+        </a>-->
+        <a class="icon-button-56">
+        <b-dropdown
+          size="xs"
+          variant="link"
+          toggle-class="text-decoration-none"
+          no-caret
+        ><template #button-content>
+          <img src="@/assets/icon/Other2.svg" alt="더보기" />
+          <span class="visually-hidden"></span>
+          </template>
+          <b-dropdown-item @click="updateBoard(DetailData.boardID)">수정</b-dropdown-item>
+          <b-dropdown-item @click="deleteBoard">삭제</b-dropdown-item>
+        </b-dropdown></a>
       </div>
     </header>
 
@@ -24,7 +37,7 @@
       <div class="post-header__info">
         <div class="post-header__writer">익명</div>
         <div class="post-header__reg-date">
-          {{ elapsedText(DetailData.regDate) }}
+          {{ elapsedText(DetailData.boardRegDate) }}
         </div>
       </div>
     </div>
@@ -37,11 +50,8 @@
     <!--좋아요-->
     <div class="post-like">
       <button @click="(marked = !marked), changeLike(DetailData.boardID)">
-        <div class="h2 mb-0">
-          <b-icon>
-            {{ marked ? "hand-thumbs-up-fill" : "hand-thumbs-up" }}
-          </b-icon>
-        </div>
+        <img src="@/assets/icon/Like.svg" v-if="marked === false" />
+        <img src="@/assets/icon/Like_active.svg" v-if="marked === true" />
       </button>
       <span>{{ DetailData.marked }}</span>
     </div>
@@ -59,7 +69,7 @@
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
               <h6>익명{{ reply.replyID }}</h6>
               <span class="comments__info__date">{{
-                elapsedText(reply.regDate)
+                elapsedText(reply.replyRegDate)
               }}</span>
             </div>
 
@@ -83,7 +93,9 @@
       ></textarea>
       <button
         class="enter-comment__submit"
-        @click.prevent="createReply(DetailData.boardID)"
+        @click.prevent="
+          createReply(DetailData.boardID), countReply(this.cntReply)
+        "
       >
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
       </button>
@@ -105,12 +117,12 @@ export default {
         boardID: "",
         title: "",
         content: "",
-        regDate: "",
+        boardRegDate: "",
         region: "",
         userID: "",
         marked: "", //board db의 좋아요
       },
-      replys: {}, //댓글 axios get
+      replys: [], //댓글 axios get
       replyInput: "", //댓글 입력
       marked: false, //좋아요
       cntMarked: null, //좋아요 개수
@@ -123,7 +135,7 @@ export default {
       this.DetailData.boardID = response.data.boardID;
       this.DetailData.title = response.data.title;
       this.DetailData.content = response.data.content;
-      this.DetailData.regDate = response.data.regDate;
+      this.DetailData.boardRegDate = response.data.boardRegDate;
       this.DetailData.region = response.data.region;
       this.DetailData.userID = response.data.userID;
       this.DetailData.marked = response.data.marked;
@@ -134,26 +146,34 @@ export default {
       console.log(response.data);
     });
 
-    this.cntMarked = this.DetailData.marked;
+    this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
+
   },
   methods: {
     //date format 변환
     elapsedText(date) {
       return dateformat.elapsedText(new Date(date));
     },
-    // 특정인덱스인 값을 삭제할 때 사용함
-    deleteData() {
-      data.splice(this.index, 1);
-      this.$router.push({
-        path: "/",
-      });
+    // 게시글 삭제
+    deleteBoard() {
+      const boardID = this.$route.params.boardID;
+      axios.delete(`api/boards/delete/${boardID}`)
+      .then((response) => {
+        if(response.status === 200){
+          alert("게시글이 삭제되었습니다.");
+        }
+        this.$router.go(-1);
+      })
+      .catch(() =>{
+        console.log("삭제 요청 실패")
+      })
     },
-    // 특정인덱스인 값을 수정할 때 사용함
-    updateData() {
+    // 게시글 수정
+    updateBoard(boardID) {
       this.$router.push({
-        name: "Create",
+        name: "WriteBoard",
         params: {
-          boardID: this.index,
+          boardID: boardID
         },
       });
     },
@@ -178,14 +198,17 @@ export default {
     async changeLike(boardID) {
       //좋아요가 안눌러진 상태에서 좋아요를 누를 때
       if (this.marked) {
-         // 해당 게시글의 좋아요 개수 1 증가시킨 걸로 수정 (put)
+        // 해당 게시글의 좋아요 개수 1 증가시킨 걸로 수정 (put)
         this.DetailData.marked += 1;
         this.cntMarked = this.DetailData.marked;
 
-        axios.put(`/api/boards/${boardID}`, {
-          marked: this.cntMarked
-        })
-        .then((response) => {
+        axios
+          .put(`/api/boards/update/${boardID}`, {
+            title: this.DetailData.title,
+            content: this.DetailData.content,
+            marked: this.cntMarked,
+          })
+          .then((response) => {
             console.log(response);
           })
           .catch((error) => {
@@ -308,7 +331,7 @@ export default {
   width: 28px;
   height: 28px;
 }
-.post-like img {
+.post-like button img {
   background-color: #fff;
   width: 100%;
   height: 100%;

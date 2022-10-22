@@ -42,7 +42,7 @@ public class BoardController {
     public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
         boardService.createBoard(boardDTO);
-        log.info("time: " + boardDTO.getRegDate());
+        log.info("time: " + boardDTO.getBoardRegDate());
         log.info("dto: " + boardDTO);
 
         return new ResponseEntity<>(boardDTO, HttpStatus.OK);
@@ -66,6 +66,7 @@ public class BoardController {
         try{
             BoardDTO boardDTO = boardService.readBoard(boardID);
             replyService.readReply(boardID);
+            replyService.countReply(boardID);
 
             return new ResponseEntity<>(boardDTO, HttpStatus.OK);
         }catch (Exception e){

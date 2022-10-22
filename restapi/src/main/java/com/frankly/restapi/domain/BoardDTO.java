@@ -19,7 +19,7 @@ public class BoardDTO {
 
     private int userID;
 
-    private LocalDateTime regDate;
+    private LocalDateTime boardRegDate;
 
     private int marked;
 
@@ -31,12 +31,12 @@ public class BoardDTO {
 
 
     @Builder
-    public BoardDTO(int boardID, int userID, LocalDateTime regDate,
+    public BoardDTO(int boardID, int userID, LocalDateTime boardRegDate,
                     int marked, String title, String content,
                     String region){
         this.boardID = boardID;
         this.userID = userID;
-        this.regDate = now();
+        this.boardRegDate = now();
         this.marked = marked;
         this.title = title;
         this.content = content;

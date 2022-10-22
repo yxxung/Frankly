@@ -9,8 +9,22 @@
         <h2>글쓰기</h2>
         <div class="header--right">
           <!--제출 버튼-->
-          <button class="write-button" type="submit" @click="onClickSubmit()">
+          <button
+            v-if="writeFlag === 'write'"
+            class="write-button"
+            type="submit"
+            @click="onClickSubmit()"
+          >
             완료
+          </button>
+          <!--수정 제출 버튼-->
+          <button
+            v-else-if="writeFlag === 'update'"
+            class="write-button"
+            type="submit"
+            @click="onClickUpdate()"
+          >
+            수정
           </button>
         </div>
       </header>
@@ -19,10 +33,7 @@
       <div class="write-title">
         <!--카테고리-->
         <select v-model="regionName" class="region" @change="selected">
-          <option
-            v-for="region in regions"
-            :key="region.value"
-          >
+          <option v-for="region in regions" :key="region.value">
             {{ region.regionName }}
           </option>
         </select>
@@ -36,6 +47,7 @@
           placeholder="제목"
         />
       </div>
+      
       <div class="write-content">
         <!--내용-->
         <textarea
@@ -58,6 +70,7 @@
 import axios from "axios";
 
 export default {
+  name: "WriteBoard",
   data() {
     return {
       regions: [
@@ -83,11 +96,32 @@ export default {
       title: "",
       content: "",
       image: "",
+      writeFlag: "write",
     };
+  },
+  created() {
+    const boardID = this.$route.params.boardID;
+    if (boardID !== undefined) {
+      this.writeFlag = "update"
+      console.log(this.writeFlag);
+      axios
+        .get(`/api/boards/${boardID}`)
+        .then((response) => {
+          this.title = response.data.title;
+          this.content = response.data.content;
+          this.regionName = response.data.region;
+        })
+        .catch(() => {
+          console.log("보드 내용을 불러오지 못했습니다.");
+        });
+    } else {
+      this.writeFlag = "write"
+      console.log(this.writeFlag);
+    }
   },
   methods: {
     selected() {
-      console.log(this.regionName)
+      console.log(this.regionName);
     },
     /*onInputImage() {
       console.log(this.$refs);
@@ -107,22 +141,39 @@ export default {
       formdata.append("title", this.title);
       formdata.append("content", this.content);
       formdata.append("image", this.image);*/
-
       axios
         .post("/api/boards/create", {
           title: this.title,
           region: this.regionName,
-          content: this.content
+          content: this.content,
         })
         .then((response) => {
           // console.log(response);
           if (response.status === 200) {
-            alert("게시글이 작성되었습니다!");
+            alert("게시글이 작성되었습니다.");
           }
           this.$router.go(-1);
         })
         .catch((error) => {
           console.error(error);
+        });
+    },
+    onClickUpdate() {
+      const boardID = this.$route.params.boardID;
+      axios
+        .put(`/api/boards/update/${boardID}`, {
+          title: this.title,
+          content: this.content,
+          region: this.regionName,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            alert("게시글이 수정되었습니다.");
+          }
+          this.$router.go(-1);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
