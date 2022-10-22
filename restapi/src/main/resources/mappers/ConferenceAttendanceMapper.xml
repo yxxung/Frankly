@@ -21,7 +21,7 @@
 
     <!-- 회의 출석 정보 읽기 --> <!--희차 / 출석 / 결석 / 출장 / 신고서-->
     <select id="readConferenceAttendance" resultMap="conferenceAttendanceResultMap">
-        SELECT S.conferenceTitle, A.attendance, A.petitionLeave, A.businessTrip
+        SELECT *
         FROM frankly.ConferenceAttendance A JOIN frankly.ConferenceSchedule S
         ON A.conferenceID = S.conferenceID
         WHERE politicianID = #{politicianID}

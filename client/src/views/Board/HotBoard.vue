@@ -35,10 +35,8 @@
 <script>
 import Navigation from "@/components/Navigation.vue";
 import FloatingButton from "@/components/FloatingButton.vue";
-
 import axios from "axios";
 import dateformat from "@/commons/dateformat.js";
-
 export default {
   components: {
     Navigation: Navigation,
@@ -77,7 +75,6 @@ export default {
     elapsedText(date) {
       return dateformat.elapsedText(new Date(date));
     },
-
     // 무한 스크롤 정의
     handleNotificationListScroll(e) {
       const { scrollHeight, scrollTop, clientHeight } = e.target;
@@ -85,7 +82,6 @@ export default {
       // 일정 한도 밑으로 내려오면 함수 실행
       if (isAtTheBottom) this.handleLoadMore();
     },
-
     // 내려오면 api 호출하여 아래에 더 추가, total값 최대이면 호출 안함
     handleLoadMore() {
       if (this.notifications.length < this.total) {
@@ -100,18 +96,15 @@ export default {
         this.dispatchGetNotifications(false);
       }
     },
-
     // 스크롤을 맨위로 올리고 싶을 때
     handleClickTitle() {
       this.$refs["notification-list"].scroll({ top: 0, behavior: "smooth" });
     },
-
     // 새로고침
     handleClickRefresh() {
       this.$refs["notification-list"].scroll({ top: 0 });
       this.dispatchGetNotifications(true);
     },
-
     // 처음 렌더링시 이전 알림 불러오기 or reset=true시 새로고침, false시 이전 목록에 추가
     dispatchGetNotifications(reset) {
       this.$store.dispatch("notification/getNotifications", reset);
@@ -122,22 +115,18 @@ export default {
 
 <style>
 @import "@/assets/scss/style.scss";
-
 /*
 게시판 목록
 */
-
 .community-list {
   padding: 8px 24px;
 }
-
 .community-list > h4 {
   margin-bottom: 8px;
   font-size: 14px;
   font-weight: normal;
   color: #818181;
 }
-
 .community-list a {
   padding: 8px;
   display: flex;
@@ -151,15 +140,12 @@ export default {
 .community-list img {
   margin-right: 8px;
 }
-
 /*
 게시글 목록
 */
-
 .post-list {
   padding-top: 14px;
 }
-
 /* 게시글 박스 */
 .post-list__container {
   position: relative;
@@ -173,7 +159,6 @@ export default {
   background-color: #f8f8f8;
   cursor: pointer;
 }
-
 /* 게시글 제목 */
 .post-list__title {
   margin-bottom: 4px;
@@ -192,13 +177,11 @@ export default {
   font-weight: bold;
   color: #ff3a3a;
 }
-
 /* 게시글 내용 */
 .post-list__container > p {
   font-size: 14px;
   color: #7b7b7b;
 }
-
 /* 게시글 등록시간, 좋아요 수 */
 .post-list__info {
   position: absolute;
@@ -211,46 +194,37 @@ export default {
 .post-list__info > span {
   font-size: 12px;
 }
-
 /*
 게시글 페이지
 */
-
 .post-header {
   padding: 0 16px;
 }
-
 .post-header__kategorie {
   padding: 4px 0;
   font-size: 12px;
   color: #696969;
 }
-
 .post-header__title {
   font-size: 20px;
   color: #2b2b2b;
 }
-
 .post-header__info {
   margin: 8px 0;
   display: flex;
   justify-content: space-between;
 }
-
 .post-header__writer {
   font-size: 12px;
   color: #696969;
 }
-
 .post-header__reg-date {
   font-size: 12px;
   color: #696969;
 }
-
 .post-content {
   padding: 0 16px;
 }
-
 /*게시글 좋아요, 싫어요*/
 .post-like {
   padding: 24px 16px;
@@ -259,21 +233,17 @@ export default {
   margin-right: 8px;
   background-color: #f3f3f3;
 }
-
 /*댓글창*/
 .comments {
 }
-
 .comments__box {
   padding: 8px 16px;
   border-bottom: 1px solid #f6f6f6;
 }
-
 .comments__box--reply {
   padding-left: 32px;
   position: relative;
 }
-
 .comments__box--reply:before {
   position: absolute;
   top: 12px;
@@ -285,36 +255,29 @@ export default {
   background-image: url("@/assets/icon/Reply.svg");
   background-repeat: no-repeat;
 }
-
 .comments__info {
   margin-bottom: 4px;
   display: flex;
   justify-content: space-between;
 }
-
 .comments__info h6 {
   padding: 0 12px 0 8px;
   font-size: 14px;
   color: #696969;
 }
-
 .comments__info-left {
   display: flex;
   align-items: center;
 }
-
 .comments__info-right {
 }
-
 .comments__info__date {
   font-size: 12px;
   color: #696969;
 }
-
 .comments__plus {
   padding: 16px;
 }
-
 .comments__plus-button {
   padding: 14px 0;
   width: 100%;
@@ -322,11 +285,9 @@ export default {
   color: #424242;
   background-color: #f1f1f1;
 }
-
 .comments__plus-button:hover {
   background-color: #e7e7e7;
 }
-
 /*댓글 입력창*/
 .enter-comment {
   position: fixed;
@@ -337,7 +298,6 @@ export default {
   justify-content: center;
   background-color: rgb(255, 255, 255);
 }
-
 .enter-comment__textarea {
   margin: 8px 16px 0;
   padding: 8px 40px 0 24px;
@@ -350,12 +310,10 @@ export default {
   outline: 0;
   border: 0;
 }
-
 .enter-comment__textarea:focus-visible {
   outline: 0;
   /*box-shadow: 0 0 0 2px #000 inset;*/
 }
-
 .enter-comment__submit {
   position: absolute;
   top: 8px;
@@ -364,7 +322,6 @@ export default {
   height: 40px;
   border-radius: 40px;
 }
-
 .enter-comment__submit:hover {
   background-color: #cccccc;
 }

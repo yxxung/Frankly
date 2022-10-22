@@ -19,15 +19,75 @@
         <result column="price" property="price"/>
         <result column="reason" property="reason"/>
     </resultMap>
+    <!-- relation : 대분류 / kind : 소분류 / section : 소유자 -->
 
     <resultMap type="PropertyListDTO" id="propertyListResultMap">
-        <id column="relation" property="relation"/>
+        <id column="propertyListID" property="propertyListID"/>
+        <result column="relation" property="relation"/>
         <result column="kind" property="kind"/>
         <result column="section" property="section"/>
     </resultMap>
 
-    <!--재산 보가-->
-    <!--재산 삭제-->
+    <insert id="createProperty" parameterType="PropertyDTO">
+        INSERT INTO frankly.Property(assetID, propertyListID, politicianID, presentPrice, propertyDetail)
+        VALUES(#{assetID}
+              ,#{propertyListID}
+              ,#{politicianID}
+              ,#{presentPrice}
+              ,#{propertyDetail})
+    </insert>
 
+    <!--국회의원별 재산 보기-->
+    <select id="readProperty" resultMap="propertyResultMap">
+        SELECT *
+        FROM frankly.Property P LEFT JOIN frankly.PropertyList L
+        ON P.propertyListID = L.propertyListID
+        WHERE politicianID = #{politicianID}
+    </select>
+
+    <!--국회의원별 재산 변동사항 안돌아감
+    <select id="readPropertyChange" resultMap="propertyResultMap">
+        SELECT *
+        FROM frankly.Property P LEFT JOIN frankly.PropertyChange C
+        ON P.assetID = C.propertyID
+        WHERE P.politicianID = #{politicianID}
+        <if test="C.changeID != P.assetID">
+            AND C.price LIKE P.presentPrice
+        </if>
+    </select>-->
+    <!-- SQL
+    SELECT *, if (C.changeID=P.assetID,"-",P.presentPrice) AS changed
+    FROM frankly.Property P LEFT JOIN frankly.PropertyChange C
+    ON P.assetID = C.propertyID
+    WHERE P.politicianID = 1;
+    -->
+
+    <update id="updateProperty" parameterType="PropertyDTO">
+        UPDATE frankly.Property, frankly.PropertyList
+        SET assetID = #{assetID},
+            propertyListID = #{propertyListID},
+            presentPrice = frankly.PropertyChange.price,
+            propertyDetail = #{propertyDetail}
+        WHERE assetID = #{assetID}
+    </update>
+
+    <!--차피 외래키라 삭제가 안되는..?-->
+    <!--재산 삭제-->
+    <delete id="deleteProperty" parameterType="PropertyDTO">
+        DELETE FROM frankly.Property
+        WHERE assetID = #{assetID}
+    </delete>
+
+    <!--재산 변동 삭제-->
+    <delete id="deletePropertyChange" parameterType="PropertyChangeDTO">
+        DELETE FROM frankly.PropertyChange
+        WHERE changeID = #{changeID}
+    </delete>
+
+    <!--재산 리스트 삭제-->
+    <delete id="deletePropertyList" parameterType="PropertyListDTO">
+        DELETE FROM frankly.PropertyList
+        WHERE propertyListID = #{propertyListID}
+    </delete>
 
 </mapper>

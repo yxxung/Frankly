@@ -5,9 +5,9 @@
       type="text"
       placeholder="댓글 입력..."
       class="enter-comment__textarea"
-      v-model="commentInput"
+      v-model="replyInput"
     ></textarea>
-    <button class="enter-comment__submit" @click="onClickCommentSubmit()">
+    <button class="enter-comment__submit" @click="createReply">
       <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
     </button>
   </div>
@@ -17,9 +17,10 @@
 import axios from "axios";
 
 export default {
+  name: "Reply",
   data() {
     return {
-      commentInput: "",
+      replyInput: "",
       //작성자는 로컬 스트리지에서 받아옴
       userData: {
 
@@ -28,8 +29,11 @@ export default {
   },
   methods: {
     //댓글 입력
-    onClickCommentSubmit() {
-
+    createReply() {
+      if (this.replyInput.trim()) {
+        this.$emit("create-reply", this.replyInput);
+        this.replyInput = "";
+      }
     }
   },
 };

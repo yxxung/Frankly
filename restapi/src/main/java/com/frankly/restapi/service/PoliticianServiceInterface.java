@@ -16,4 +16,6 @@ public interface PoliticianServiceInterface {
 
     public List<PoliticianDTO> politicianList() throws Exception;
 
+    public List<PoliticianDTO> searchPolitician(String searchName) throws Exception;
+
 }

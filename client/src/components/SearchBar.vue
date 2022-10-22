@@ -28,9 +28,9 @@ export default {
   },
   methods: {
     searchResultShow(searchKeyword) {
-      if (searchKeyword !== "") { //검색어를 입력한 경우
-        this.$router.push({
-            name: 'PoliticianSearchResult',
+      if (searchKeyword !== "") {
+        this.router.push({
+            name: 'Politician',
             params: {
                 searchKeyword: this.searchKeyword,
                 isResultShow: true

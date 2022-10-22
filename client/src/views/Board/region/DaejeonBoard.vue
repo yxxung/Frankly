@@ -56,7 +56,7 @@ export default {
     getBoardList() {
       console.log(this.$axios);
       axios
-        .get("/api/boards/boardlist")
+        .get(`/api/boards/boardlist/대전광역시`)
         .then((response) => {
           console.log("boards", response.data);
           this.boards = response.data;

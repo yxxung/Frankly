@@ -1,56 +1,66 @@
 <template>
   <div class="wrap">
-    <!--헤더-->
-    <header class="header header--back">
-      <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
-        <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
-      </a>
-      <div class="header-right-icon">
-        <a class="icon-button-56">
-          <img src="@/assets/icon/Bookmark.svg" alt="북마크" />
+    <div class="content">
+      <!--헤더-->
+      <header class="politician-header header--back">
+        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
+          <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
         </a>
-        <a class="icon-button-56">
-          <img src="@/assets/icon/Other2.svg" alt="더보기" />
-        </a>
-      </div>
-    </header>
+        <div class="header-right-icon">
+          <a class="icon-button-56">
+            <img src="@/assets/icon/Bookmark.svg" alt="북마크" />
+          </a>
+          <a class="icon-button-56">
+            <img src="@/assets/icon/Other2.svg" alt="더보기" />
+          </a>
+        </div>
+      </header>
 
-    <div class="yellow-background" />
+      <div class="assembly-image" />
 
-    <div class="assembly-image" />
+      <div class="politician-detail-info">
+        <div class="politician-detail-region">충북 공주시 부여군 청양군</div>
+        <div class="politician-detail-image">
+          <img src="@/assets/politician/정진석.png" />
+        </div>
+        <div class="politician-detail-name">
+          {{ PoliticianDetailData.politicianName }}
+        </div>
+        <div class="politician-detail-party">
+          {{ PoliticianDetailData.partyName }}
+        </div>
+      </div>
+      <div class="assembly-text" />
 
-    <div class="politician-detail-info">
-      <div class="politician-detail-region">충북 공주시 부여군 청양군</div>
-      <div class="politician-detail-image">
-        <img src="@/assets/politician/정진석.png" />
+      <div class="assembly-infos">
+        <div class="assembly-detail">
+          <h2>국회 출석률</h2>
+          <h3>86%</h3>
+        </div>
+        <div class="assembly-detail">
+          <h2>표결건수</h2>
+          <h3>3147건</h3>
+        </div>
+        <div class="assembly-detail">
+          <h2>당선 횟수</h2>
+          <h3>4선</h3>
+        </div>
+        <router-link to="/statistics"
+          ><div class="assembly-detail">
+            <h4>> 통계<br />더보기</h4>
+          </div></router-link
+        >
       </div>
-      <div class="politician-detail-name">
-        {{ PoliticianDetailData.politicianName }}
-      </div>
-      <div class="politician-detail-party">
-        {{ PoliticianDetailData.partyName }}
-      </div>
-    </div>
-    <div class="assembly-text" />
 
-    <div class="assembly-infos">
-      <div class="assembly-detail">
-        <h2>국회 출석률</h2>
-        <h3>86%</h3>
+      <div class="assembly-law-info">
+        <div>
+          <b-nav pills align="center">
+            <b-nav-item>대표발의법률안</b-nav-item>
+            <b-nav-item>공동발의법률안</b-nav-item>
+            <b-nav-item>표결현황</b-nav-item>
+          </b-nav>
+        </div>
       </div>
-      <div class="assembly-detail">
-        <h2>표결건수</h2>
-        <h3>3147건</h3>
-      </div>
-      <div class="assembly-detail">
-        <h2>당선 횟수</h2>
-        <h3>4선</h3>
-      </div>
-      <router-link to="/statistics"
-        ><div class="link-statistics">통계 더보기</div></router-link
-      >
-        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보 보기</div>
-
     </div>
   </div>
 </template>
@@ -81,67 +91,63 @@ export default {
       this.PoliticianDetailData.selectInfo = response.data.selectInfo;
       console.log(response);
     });
-    // const politicianInfo = this.
   },
-  methods:{
-    goToPropertyDetail(politicianID) {
-      this.$router.push({
-        name: "PoliticianPropertyDetail",
-        params: {
-          politicianID: politicianID,
-          politicianInfo: this.PoliticianDetailData
-        },
-      });
-    }
-
-  }
-
 };
 </script>
 
 <style>
 @import "@/assets/scss/style.scss";
 
-.yellow-background {
-  width: 516px;
-  height: 228px;
-  margin: 0 auto;
-  background: rgba(246, 238, 225, 0.5);
-  position: relative;
+.politician-header {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  max-width: 540px; /*max-width*/
+  height: 56px;
+  z-index: 999;
+  background-color: #f9f3e9;
+}
+
+.content {
+  background: #f9f3e9;
 }
 
 /*국회의원 프로필*/
 .politician-detail-info {
-  z-index: 5;
-  position: absolute;
-  width: 374px;
+  margin: 54px auto 0 auto;
+  position: relative;
+  width: 500px;
   height: 254px;
-  margin: -200px 0 0 81px;
   background: #ffffff;
   /* red_lawmaker */
-
-  box-shadow: 0px 4px 16px rgba(255, 0, 0, 0.23);
   border-radius: 24px;
+  text-align: center;
 }
 
 .assembly-image {
   z-index: 10;
+  margin: 10px 0 0 247px;
   position: absolute;
   width: 49px;
   height: 48px;
+  background-image: url("@/assets/icon/assembly.svg");
 }
 
 .assembly-text {
+  margin: -90px 0 0 30px;
   position: absolute;
   width: 98.54px;
   height: 99.7px;
   z-index: 12;
-  width: 49px;
-  height: 48px;
+  width: 160px;
+  height: 80px;
+  background-image: url("@/assets/icon/assembly_text.svg");
+  background-size: cover;
 }
 
 .politician-detail-region {
-  margin: 20px auto;
+  display: inline-block;
+  margin: 20px auto 20px auto;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
@@ -199,7 +205,8 @@ export default {
 
 /*국회 정보*/
 .assembly-infos {
-  width: 375px;
+  margin: 30px auto;
+  width: 500px;
   height: 89px;
   background: #ffffff;
   border-radius: 24px;
@@ -207,6 +214,56 @@ export default {
 }
 
 .assembly-detail {
-  width: 33%;
+  margin-top: 20px;
+  width: 25%;
+  display: inline-block;
 }
+
+.assembly-detail h2 {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  text-align: center;
+  letter-spacing: -0.024em;
+
+  color: #000000;
+}
+
+.assembly-detail h3 {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 19px;
+  /* identical to box height */
+
+  text-align: center;
+  letter-spacing: -0.024em;
+  color: #000000;
+}
+.assembly-detail h4 {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: -0.024em;
+
+  color: #6e6e6e;
+}
+
+/*법률안*/
+.assembly-law-info {
+  margin: 30px auto 0 auto;
+  width: 500px;
+  height: 300px;
+  background: #ffffff;
+  border-radius: 24px;
+}
+
 </style>

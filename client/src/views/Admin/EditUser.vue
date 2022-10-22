@@ -28,7 +28,7 @@
           </b-row>
         </b-container>
       </b-form-group>
-<!--      <EditUserDetail v-bind:propInfos="infos"></EditUserDetail>-->
+      <EditUserDetail v-bind:propInfos="infos"></EditUserDetail>
       <!-- 페이징 처리-->
 
     </b-card>
@@ -38,13 +38,13 @@
 <script>
 import AdminNav from "@/components/AdminNav.vue";
 import axios from "axios";
-// import EditUserDetail from "@/views/Admin/EditUserDetail";
+import EditUserDetail from "@/views/Admin/EditUserDetail";
 
 export default {
   name: 'EditData',
   components: {
     AdminNav,
-    // EditUserDetail
+    EditUserDetail
   },
   data() {
 

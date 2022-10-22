@@ -46,7 +46,7 @@
 
     <!-- 법률안 발의 대표자 읽기-->
     <select id="readConferenceBillLaw" resultMap="conferenceBillLawResultMap">
-        select B.*, P.politicianID
+        select *
         FROM frankly.ConferenceBillLaw B LEFT JOIN frankly.Politician P
         on substring_index(proposer,'의원',1) = P.politicianName
         WHERE P.politicianID = #{politicianID}
