@@ -38,8 +38,8 @@ public class BoardController {
 //
 //        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
 //    }
-    @PostMapping(value = "/{region}/create")
-    public ResponseEntity<BoardDTO> createBoard(@Validated BoardDTO boardDTO) throws Exception{
+    @PostMapping(value = "/create")
+    public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
         boardService.createBoard(boardDTO);
         log.info("time: " + boardDTO.getBoardRegDate());
@@ -50,13 +50,12 @@ public class BoardController {
 
 
     //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
-    @PutMapping("/{boardID}")
+    @PutMapping("/update/{boardID}")
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                         @PathVariable("region") String region,
                                          @PathVariable("boardID")int boardID)throws Exception{
 
         log.info("게시물 수정 수정자 :"  + boardDTO.getAuthor());
-        boardService.updateBoard(boardDTO, region, boardID);
+        boardService.updateBoard(boardDTO, boardID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -67,7 +66,7 @@ public class BoardController {
         try{
             BoardDTO boardDTO = boardService.readBoard(boardID);
             replyService.readReply(boardID);
-            //replyService.countReply(boardID);
+            replyService.countReply(boardID);
 
             return new ResponseEntity<>(boardDTO, HttpStatus.OK);
         }catch (Exception e){
@@ -81,7 +80,7 @@ public class BoardController {
         return new ResponseEntity<>(boardService.getBoardList(region), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{boardID}")
+    @DeleteMapping("/delete/{boardID}")
     public ResponseEntity<?> deleteBoard(@PathVariable("boardID") int boardID) throws Exception{
 
         BoardDTO boardDTO = new BoardDTO();

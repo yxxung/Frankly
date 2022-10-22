@@ -10,7 +10,9 @@ public interface ReplyMapper {
 
     public void createReply(ReplyDTO replyDTO) throws Exception;
 
-    public List<ReplyDTO>readReply(int boardID) throws Exception;
+    public List<ReplyDTO> readReply(int boardID) throws Exception;
+
+    public void countReply(int boardID) throws Exception;
 
     public List<ReplyDTO> countReply(int boardID) throws Exception;
 

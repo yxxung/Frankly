@@ -3,7 +3,7 @@
     <!--헤더-->
     <header class="header header--back">
       <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
-        <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기">
+        <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
       </a>
     </header>
 
@@ -12,53 +12,70 @@
     </div>
 
     <form class="sign-up-form">
-      <!--이메일-->
+      <!--        이메일-->
       <label>
         <p class="sign-up-form__input-info">이메일</p>
-        <input class="sign-up-form__text-input" type="email" placeholder="example@gmail.com">
-        <p class="sign-up-form__error-message">올바른 이메일 형식을 입력해주세요.</p>
+        <input
+          class="sign-up-form__text-input"
+          type="email"
+          placeholder="example@gmail.com"
+        />
+        <p class="sign-up-form__error-message">
+          올바른 이메일 형식을 입력해주세요.
+        </p>
       </label>
 
-      <!--비밀번호-->
+      <!--        비밀번호-->
       <label>
         <p class="sign-up-form__input-info">비밀번호</p>
-        <input class="sign-up-form__text-input" type="email" placeholder="대소문자, 숫자, 특수문자 포함 8~16자리" maxlength="16">
-        <p class="sign-up-form__error-message">대소문자, 숫자, 특수문자 포함 8~16자리</p>
+        <input
+          class="sign-up-form__text-input"
+          type="email"
+          placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
+          maxlength="16"
+        />
+        <p class="sign-up-form__error-message">
+          대소문자, 숫자, 특수문자 포함 8~16자리
+        </p>
       </label>
 
-      <!--이메일 저장, 비밀번호 찾기-->
+      <!--        이메일 저장, 비밀번호 찾기-->
       <div class="log-in__check">
         <div class="remember-email">
-          <input type="checkbox" id="remember-email" class="input-checkbox">
+          <input type="checkbox" id="remember-email" class="input-checkbox" />
           <label for="remember-email"></label>
           이메일 저장
         </div>
         <a href="#">비밀번호 찾기</a>
       </div>
-      <button class="sign-up-form__button"
-              @click.prevent="doLogin">로그인</button>
+
+      <button
+        class="sign-up-form__button"
+        onclick="location.href='/index.html'"
+      >
+        로그인
+      </button>
     </form>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
-      userEmail: '',
-      userPassword: ''
-    }
+      userEmail: "",
+      userPassword: "",
+    };
   },
   methods: {
     doLogin() {
       let saveData = {};
       saveData.userEmail = this.userEmail;
       saveData.userPassword = this.userPassword;
-
-    }
+    },
   },
-}
+};
 </script>
 
 <style>
@@ -79,7 +96,7 @@ export default {
 }
 
 .sign-up-title p {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-weight: bold;
 }
@@ -97,21 +114,21 @@ export default {
 /*
 이메일, 비밀번호 입력 input / button
 */
-.sign-up-form__text-input[type=email],
-.sign-up-form__text-input[type=password] {
+.sign-up-form__text-input[type="email"],
+.sign-up-form__text-input[type="password"] {
   box-sizing: border-box;
   padding-left: 8px;
   width: 100%;
   height: 48px;
   cursor: text;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-.sign-up-form__text-input[type=email]:focus-visible,
-.sign-up-form__text-input[type=password]:focus-visible {
+.sign-up-form__text-input[type="email"]:focus-visible,
+.sign-up-form__text-input[type="password"]:focus-visible {
   outline: 0;
   box-shadow: inset 0 -2px 0 #000000;
 }
@@ -119,10 +136,12 @@ export default {
 .sign-up-form__input-info {
   margin: 2px 0;
   font-size: 14px;
-  color: #A9A9A9;
+  color: #a9a9a9;
 }
 
-.sign-up-form__error-message {display: none}
+.sign-up-form__error-message {
+  display: none;
+}
 .sign-up-form--error > .sign-up-form__error-message {
   margin-top: 4px;
   display: block;
@@ -155,7 +174,7 @@ export default {
 }
 
 .sign-up-form__button:disabled {
-  background-color: #C5C5C5;
+  background-color: #c5c5c5;
 }
 
 /*
@@ -171,10 +190,14 @@ export default {
   box-sizing: border-box;
   padding-left: 8px;
   height: 48px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
-.dropdown-container > .sign-up-form__dropdown:nth-child(2) { width: 100%; }
-.dropdown-container > .sign-up-form__dropdown:nth-child(1) { margin-right: 16px; }
+.dropdown-container > .sign-up-form__dropdown:nth-child(2) {
+  width: 100%;
+}
+.dropdown-container > .sign-up-form__dropdown:nth-child(1) {
+  margin-right: 16px;
+}
 
 .sign-up-form__dropdown:focus-visible {
   outline: 0;
@@ -192,7 +215,7 @@ export default {
 }
 
 .check-box-line {
-  border-bottom: 1px solid #BFBFBF;
+  border-bottom: 1px solid #bfbfbf;
 }
 
 .log-in__check {

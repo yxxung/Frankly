@@ -22,6 +22,7 @@ public class ReplyService implements ReplyServiceInterface {
 
     @Override
     public List<ReplyDTO> readReply(int boardID) throws Exception {
+        log.info("getReplyList");
         return replyMapper.readReply(boardID);
     }
 
@@ -29,7 +30,6 @@ public class ReplyService implements ReplyServiceInterface {
     public List<ReplyDTO> countReply(int boardID) throws Exception {
         return replyMapper.countReply(boardID);
     }
-
 
     @Override
     public void updateReply(ReplyDTO replyDTO) throws Exception {

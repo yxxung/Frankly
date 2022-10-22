@@ -1,120 +1,102 @@
 <template>
-  <div>
-    <div class="wrap">
-      <!--헤더-->
-      <header class="header header--back">
-        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
-          <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
+  <div class="wrap">
+    <!--헤더-->
+    <header class="header header--back">
+      <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
+        <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
+      </a>
+      <div class="header-right-icon">
+        <!--<a class="icon-button-56">
+          <img src="@/assets/icon/Share.svg" alt="공유하기" />
         </a>
-        <div class="header-right-icon">
-          <a class="icon-button-56">
-            <img src="@/assets/icon/Share.svg" alt="공유하기" />
-          </a>
-          <a class="icon-button-56">
-            <img src="@/assets/icon/Other2.svg" alt="더보기" />
-          </a>
-        </div>
-      </header>
-
-      <!--타이틀-->
-      <div class="post-header">
-        <div class="post-header__kategorie">커뮤니티 > {{ DetailData.region }}</div>
-        <h3 class="post-header__title">{{ DetailData.title }}</h3>
-        <div class="post-header__info">
-          <div class="post-header__writer">{{ DetailData.author }}</div>
-          <div class="post-header__reg-date">{{ DetailData.regDate }}</div>
-        </div>
+        <a class="icon-button-56">
+          <img src="@/assets/icon/Other2.svg" alt="더보기" />
+        </a>-->
+        <a class="icon-button-56">
+        <b-dropdown
+          size="xs"
+          variant="link"
+          toggle-class="text-decoration-none"
+          no-caret
+        ><template #button-content>
+          <img src="@/assets/icon/Other2.svg" alt="더보기" />
+          <span class="visually-hidden"></span>
+          </template>
+          <b-dropdown-item @click="updateBoard(DetailData.boardID)">수정</b-dropdown-item>
+          <b-dropdown-item @click="deleteBoard">삭제</b-dropdown-item>
+        </b-dropdown></a>
       </div>
+    </header>
 
-      <!--내용-->
-      <article class="post-content">
-        <p>{{ DetailData.content }}</p>
-      </article>
-
-      <!--좋아요, 싫어요-->
-      <div class="post-like">
-        <button>좋아요</button>
-        <button>싫어요</button>
+    <!--타이틀-->
+    <div class="post-header">
+      <div class="post-header__kategorie">
+        커뮤니티 > {{ DetailData.region }}
       </div>
-
-      <!--댓글-->
-      <div class="comments">
-        <ul>
-          <li class="comments__box">
-            <div class="comments__info">
-              <div class="comments__info-left">
-                <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-                <h6>익명</h6>
-                <span class="comments__info__date">36분전</span>
-              </div>
-
-              <div class="comments__info-right">
-                <button class="icon-button-24">
-                  <img src="@/assets/icon/Other1.svg" alt="더보기" />
-                </button>
-              </div>
-            </div>
-            <div class="comments__text">
-              나는
-              ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-            </div>
-          </li>
-
-          <li class="comments__box">
-            <div class="comments__info">
-              <div class="comments__info-left">
-                <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-                <h6>익명</h6>
-                <span class="comments__info__date">36분전</span>
-              </div>
-
-              <div class="comments__info-right">
-                <button class="icon-button-24">
-                  <img src="@/assets/icon/Other1.svg" alt="더보기" />
-                </button>
-              </div>
-            </div>
-            <div class="comments__text">ㅋㅋㅋㅋㅋ웃기</div>
-          </li>
-
-          <!--대댓글 class에 comments__box--reply 추가-->
-          <li class="comments__box comments__box--reply">
-            <div class="comments__info">
-              <div class="comments__info-left">
-                <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-                <h6>익명</h6>
-                <span class="comments__info__date">36분전</span>
-              </div>
-
-              <div class="comments__info-right">
-                <button class="icon-button-24">
-                  <img src="@/assets/icon/Other1.svg" alt="더보기" />
-                </button>
-              </div>
-            </div>
-            <div class="comments__text">
-              엌ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-            </div>
-          </li>
-        </ul>
-
-        <div class="comments__plus">
-          <button class="comments__plus-button">댓글 32개 더보기...</button>
+      <h3 class="post-header__title">{{ DetailData.title }}</h3>
+      <div class="post-header__info">
+        <div class="post-header__writer">익명</div>
+        <div class="post-header__reg-date">
+          {{ elapsedText(DetailData.boardRegDate) }}
         </div>
       </div>
+    </div>
+
+    <!--내용-->
+    <article class="post-content">
+      <p>{{ DetailData.content }}</p>
+    </article>
+
+    <!--좋아요-->
+    <div class="post-like">
+      <button @click="(marked = !marked), changeLike(DetailData.boardID)">
+        <img src="@/assets/icon/Like.svg" v-if="marked === false" />
+        <img src="@/assets/icon/Like_active.svg" v-if="marked === true" />
+      </button>
+      <span>{{ DetailData.marked }}</span>
+    </div>
+
+    <!--댓글-->
+    <div class="comments">
+      <ul>
+        <li
+          class="comments__box"
+          v-for="reply in replys"
+          v-bind:key="reply.replyID"
+        >
+          <div class="comments__info">
+            <div class="comments__info-left">
+              <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
+              <h6>익명{{ reply.replyID }}</h6>
+              <span class="comments__info__date">{{
+                elapsedText(reply.replyRegDate)
+              }}</span>
+            </div>
+
+            <div class="comments__info-right">
+              <button class="icon-button-24">
+                <img src="@/assets/icon/Other1.svg" alt="더보기" />
+              </button>
+            </div>
+          </div>
+          <div class="comments__text">{{ reply.reply }}</div>
+        </li>
+      </ul>
     </div>
 
     <!--댓글 입력창-->
     <div class="enter-comment">
       <textarea
-        name="comment"
-        id="comment"
-        cols="30"
-        rows="10"
         placeholder="댓글 입력..."
         class="enter-comment__textarea"
+        v-model="replyInput"
       ></textarea>
-      <button class="enter-comment__submit">
+      <button
+        class="enter-comment__submit"
+        @click.prevent="
+          createReply(DetailData.boardID), countReply(this.cntReply)
+        "
+      >
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
       </button>
     </div>
@@ -123,21 +105,28 @@
 
 <script>
 import axios from "axios";
+import dateformat from "@/commons/dateformat.js";
+import Reply from "@/views/Board/Reply.vue";
 
 export default {
   name: "BoardDetail",
-  props: ["boardID"],
+  components: { Reply },
   data() {
     return {
       DetailData: {
         boardID: "",
         title: "",
         content: "",
-        regDate: "",
+        boardRegDate: "",
         region: "",
-        author: "",
-        marked: ""
+        userID: "",
+        marked: "", //board db의 좋아요
       },
+      replys: [], //댓글 axios get
+      replyInput: "", //댓글 입력
+      marked: false, //좋아요
+      cntMarked: null, //좋아요 개수
+      edit_show: false,
     };
   },
   created() {
@@ -146,56 +135,86 @@ export default {
       this.DetailData.boardID = response.data.boardID;
       this.DetailData.title = response.data.title;
       this.DetailData.content = response.data.content;
-      this.DetailData.regDate = response.data.regDate;
+      this.DetailData.boardRegDate = response.data.boardRegDate;
       this.DetailData.region = response.data.region;
-      this.DetailData.author = response.data.userID;
+      this.DetailData.userID = response.data.userID;
       this.DetailData.marked = response.data.marked;
     });
+
+    axios.get(`/api/replys/${boardID}/replyList`).then((response) => {
+      this.replys = response.data;
+      console.log(response.data);
+    });
+
+    this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
+
   },
   methods: {
-    // 특정인덱스인 값을 삭제할 때 사용함
-    deleteData() {
-      data.splice(this.index, 1);
-      this.$router.push({
-        path: "/",
-      });
+    //date format 변환
+    elapsedText(date) {
+      return dateformat.elapsedText(new Date(date));
     },
-    // 특정인덱스인 값을 수정할 때 사용함
-    updateData() {
+    // 게시글 삭제
+    deleteBoard() {
+      const boardID = this.$route.params.boardID;
+      axios.delete(`api/boards/delete/${boardID}`)
+      .then((response) => {
+        if(response.status === 200){
+          alert("게시글이 삭제되었습니다.");
+        }
+        this.$router.go(-1);
+      })
+      .catch(() =>{
+        console.log("삭제 요청 실패")
+      })
+    },
+    // 게시글 수정
+    updateBoard(boardID) {
       this.$router.push({
-        name: "Create",
+        name: "WriteBoard",
         params: {
-          boardID: this.index,
+          boardID: boardID
         },
       });
     },
-    //댓글 작성
-    createReply(reply) {
-      axios
-        .post(
-          `${BACK_URL}/boards/replys`,
-          {
-            boardId: this.detailData.boardId,
-            commentContent: comment,
-          },
-          {
-            headers: { "jwt-auth-token": this.$cookies.get("token") },
-          }
-        )
-        .then((response) => {
-          // console.log(response);
-          if (response.status === 200) {
-            alert("댓글이 작성되었습니다!");
-            axios
-              .get(`${BACK_URL}/boards/${this.detailData.boardId}`)
-              .then((response) => {
-                this.detailData.comments = response.data.board.comments;
-              });
-          }
-        })
-        .catch((error) => {
-          alert(error);
-        });
+    //댓글 생성
+    createReply(boardID) {
+      if (this.replyInput.trim()) {
+        //앞 뒤 공백제거
+        axios
+          .post("/api/replys/create", {
+            boardID: boardID,
+            reply: this.replyInput,
+          })
+          .then((response) => {
+            console.log(response);
+            this.$router.go();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    async changeLike(boardID) {
+      //좋아요가 안눌러진 상태에서 좋아요를 누를 때
+      if (this.marked) {
+        // 해당 게시글의 좋아요 개수 1 증가시킨 걸로 수정 (put)
+        this.DetailData.marked += 1;
+        this.cntMarked = this.DetailData.marked;
+
+        axios
+          .put(`/api/boards/update/${boardID}`, {
+            title: this.DetailData.title,
+            content: this.DetailData.content,
+            marked: this.cntMarked,
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
@@ -302,15 +321,35 @@ export default {
   padding: 0 16px;
 }
 
-/*게시글 좋아요, 싫어요*/
+/*게시글 좋아요*/
 .post-like {
   padding: 24px 16px;
 }
 .post-like button {
   margin-right: 8px;
-  background-color: #f3f3f3;
+  background-color: #ffffff;
+  width: 28px;
+  height: 28px;
+}
+.post-like button img {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post-like span {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: right;
+  letter-spacing: -0.024em;
+
+  color: #7b7b7b;
 }
 
+/*댓글*/
 .comments__box {
   padding: 8px 16px;
   border-bottom: 1px solid #f6f6f6;
@@ -376,6 +415,7 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
+  max-width: 540px;
   height: 64px;
   display: flex;
   justify-content: center;
@@ -383,8 +423,6 @@ export default {
 }
 
 .enter-comment__textarea {
-  margin: 8px 16px 0;
-  padding: 8px 40px 0 24px;
   height: 32px;
   border-radius: 24px;
   font-family: "Noto Sans KR", sans-serif;
@@ -393,6 +431,7 @@ export default {
   background-color: #f8f8f8;
   outline: 0;
   border: 0;
+  resize: 0;
 }
 
 .enter-comment__textarea:focus-visible {

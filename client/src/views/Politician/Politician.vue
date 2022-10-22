@@ -1,43 +1,39 @@
 <template>
-  <body>
-    <div class="wrap">
-      <SearchBar />
+  <div class="wrap">
+    <SearchBar />
 
-      <div class="political-party-list">
-        <h2>대한민국 정당</h2>
-        <Slider />
-      </div>
-
-      <div class="politician-title">
-        <h2>전체 국회의원</h2>
-        <h3>가나다 순</h3>
-      </div>
-
-      <div class="all-politician-list">
-        <div
-          class="politician"
-          v-for="(politician, politicianID) in politicians"
-          v-bind:key="politicianID"
-        >
-        <!-- 정치인 리스트 출력 -->
-          <img
-            :src="require(`@/assets/politician/${politician.politicianImage}`)"
-          />
-          <h2>{{ politician.politicianName }}</h2>
-        </div>
-      </div>
-
-      <PoliticianSearchView v-if="isResultShow" v-bind:searchKeyword="searchKeyword"></PoliticianSearchView>
-
-      <Navigation />
+    <div class="political-party-list">
+      <h2>대한민국 정당</h2>
+      <Slider />
     </div>
-  </body>
+
+    <div class="politician-title">
+      <h2>전체 국회의원</h2>
+      <h3>가나다 순</h3>
+    </div>
+
+    <ul class="all-politician-list">
+      <li
+        class="politician"
+        v-for="politician in politicians"
+        v-bind:key="politician.politicianID"
+        @click="goToPoliticianDetail(politician.politicianID)"
+      >
+        <!-- 정치인 리스트 출력 이미지, 이름-->
+        <div class="politician-image">
+          <img src="@/assets/politician/정진석.png" />
+        </div>
+        <div class="politician-name">{{ politician.politicianName }}</div>
+      </li>
+    </ul>
+
+    <Navigation />
+  </div>
 </template>
 
 <script>
 import Navigation from "@/components/Navigation.vue";
 import Slider from "@/components/Slider.vue";
-import PoliticianSearchView from "@/views/Politician/PoliticianSearchView.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import axios from "axios";
 
@@ -46,93 +42,45 @@ export default {
   components: {
     Navigation: Navigation,
     Slider: Slider,
-    PoliticianSearchView: PoliticianSearchView,
-    SearchBar: SearchBar
+    SearchBar: SearchBar,
   },
   data() {
     return {
-      searchKeyword: '',
-      politicians: []
+      searchKeyword: "",
+      politicians: [],
     };
   },
   mounted() {
-    this.getPoliticianList()
+    this.getPoliticianList();
   },
   methods: {
     getPoliticianList() {
       axios
-      .get("/api/infos/all", {
-        headers: {}
-      })
-      .then((response) => {
-        console.log("politicians", response.data);
-        this.politicians = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
+        .get("/api/politician/all", {
+          headers: {},
+        })
+        .then((response) => {
+          console.log("politicians", response.data);
+          this.politicians = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    goToPoliticianDetail(politicianID) {
+      this.$router.push({
+        name: "PoliticianDetail",
+        params: {
+          politicianID: politicianID,
+        },
       });
     },
-    searchResultShow(searchKeyword) {
-      console.log('"',keyword,'"' + ' 검색')
-      if (searchKeyword !== '') {
-        this.$router.push({
-          name: "Politician",
-          params: {
-            searchKeyword: this.searchKeyword
-          },
-        }).catch(()=>{});
-      } else {
-        alert('검색어를 입력해주세요 !')
-      }
-    },
-    searchKeywordChange() {
-      this.isResultShow = false
-    }
-  }
+  },
 };
 </script>
 
 <style>
-@import '@/assets/scss/style.scss';
-
-/*국회의원 검색*/
-.politician-search {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  top: 0px;
-  padding: 8px 24px;
-}
-
-.politician-search-form__text-input {
-  align-items: center;
-  width: 448px;
-  height: 38px;
-  left: 16px;
-  top: 297px;
-  padding: 4px 0 4px 14px;
-
-  background: #f5f5f5;
-  border-radius: 55px;
-}
-
-.politician-search-form__text-input::placeholder {
-  font-family: "Noto Sans KR";
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 19px;
-
-  letter-spacing: -0.024em;
-  color: #a9a9a9;
-}
-
-.search-button img {
-  width: 25px;
-  height: 25px;
-  margin-left: 14px;
-  vertical-align: middle;
-}
+@import "@/assets/scss/style.scss";
 
 /*대한민국 정당*/
 .political-party-list {
@@ -182,7 +130,48 @@ export default {
   color: #818181;
 }
 
+/*전체 국회의원*/
 .all-politician-list {
-  padding: 8px 24px;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 520px;
+  display: table;
+}
+
+.politician {
+  display: inline-table;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.politician-image {
+  width: 75px;
+  height: 75px;
+  box-sizing: border-box;
+  border: 3px solid #00B5FF;
+  border-radius: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.politician-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.politician-name {
+  margin: 5px auto;
+  font-size: 16px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -33,7 +33,9 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation.vue'
+import axios from 'axios';
+import Navigation from '@/components/Navigation.vue';
+
 export default {
   name: 'Mypage',
   components: {
@@ -43,6 +45,10 @@ export default {
     return {
 
     }
+  },
+  created() {
+    axios
+    .get(`/api/users/`)
   },
   methods: {
 
