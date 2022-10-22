@@ -106,11 +106,9 @@
 <script>
 import axios from "axios";
 import dateformat from "@/commons/dateformat.js";
-import Reply from "@/views/Board/Reply.vue";
 
 export default {
   name: "BoardDetail",
-  components: { Reply },
   data() {
     return {
       DetailData: {
@@ -223,71 +221,10 @@ export default {
 <style>
 @import "@/assets/scss/style.scss";
 /*
-게시글 목록
-*/
-
-.post-list {
-  padding-top: 14px;
-}
-
-/* 게시글 박스 */
-.post-list__container {
-  position: relative;
-  padding: 16px 24px 30px;
-  border-bottom: 1px solid #e7e7e7;
-  -webkit-transition: all 0.08s ease-in-out;
-  -o-transition: all 0.08s ease-in-out;
-  transition: all 0.08s ease-in-out;
-}
-.post-list__container:hover {
-  background-color: #f8f8f8;
-  cursor: pointer;
-}
-
-/* 게시글 제목 */
-.post-list__title {
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-}
-.post-list__title > img {
-  margin-right: 8px;
-}
-.post-list__title > h3 {
-  font-size: 16px;
-}
-.post-list__title > h3 > span {
-  font-family: "Roboto", serif;
-  font-size: 14px;
-  font-weight: bold;
-  color: #ff3a3a;
-}
-
-/* 게시글 내용 */
-.post-list__container > p {
-  font-size: 14px;
-  color: #7b7b7b;
-}
-
-/* 게시글 등록시간, 좋아요 수 */
-.post-list__info {
-  position: absolute;
-  right: 24px;
-  bottom: 8px;
-  display: flex;
-  align-items: center;
-  color: #7b7b7b;
-}
-.post-list__info > span {
-  font-size: 12px;
-}
-
-/*
 게시글 페이지
 */
-
 .post-header {
-  padding: 0 16px;
+  padding: 0px 16px;
 }
 
 .post-header__kategorie {
@@ -302,23 +239,23 @@ export default {
 }
 
 .post-header__info {
-  margin: 8px 0;
+  margin: 12px 0;
   display: flex;
   justify-content: space-between;
 }
 
 .post-header__writer {
-  font-size: 12px;
+  font-size: 13px;
   color: #696969;
 }
 
 .post-header__reg-date {
-  font-size: 12px;
+  font-size: 13px;
   color: #696969;
 }
 
 .post-content {
-  padding: 0 16px;
+  padding: 0px 16px;
 }
 
 /*게시글 좋아요*/
@@ -340,16 +277,19 @@ export default {
 .post-like span {
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
-  line-height: 16px;
   text-align: right;
   letter-spacing: -0.024em;
 
-  color: #7b7b7b;
+  color: #646464;
 }
 
 /*댓글*/
+.comments ul {
+  padding-left: 0;
+}
+
 .comments__box {
   padding: 8px 16px;
   border-bottom: 1px solid #f6f6f6;
@@ -423,32 +363,38 @@ export default {
 }
 
 .enter-comment__textarea {
-  height: 32px;
+  height: 30px;
+  padding-left: 20px;
+  padding-top: 8px;
   border-radius: 24px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
   color: #2b2b2b;
   background-color: #f8f8f8;
-  outline: 0;
-  border: 0;
-  resize: 0;
+  outline: none;
+  border: none;
+  resize: none;
+  box-sizing: unset;
 }
 
 .enter-comment__textarea:focus-visible {
-  outline: 0;
+  outline: none;
   /*box-shadow: 0 0 0 2px #000 inset;*/
 }
 
 .enter-comment__submit {
   position: absolute;
-  top: 8px;
-  right: 16px;
-  width: 40px;
+  right: 0px;
+  width: 42px;
   height: 40px;
   border-radius: 40px;
 }
 
 .enter-comment__submit:hover {
   background-color: #cccccc;
+}
+
+.dropdown-menu {
+  min-width: 1rem !important;
 }
 </style>
