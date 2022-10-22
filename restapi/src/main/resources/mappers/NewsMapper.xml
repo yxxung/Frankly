@@ -22,7 +22,7 @@
 
     <!-- 뉴스랑 키워드 읽기 -->
     <select id="readNews" resultMap="newsResultMap">
-        SELECT N.*, K.newsKeyword AS keyword
+        SELECT N.*, K.newsKeyword
         FROM frankly.News N LEFT JOIN frankly.NewsKeyword K
         ON N.newsID = K.newsID
         WHERE N.politicianID = #{politicianID}

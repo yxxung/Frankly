@@ -3,8 +3,6 @@ package com.frankly.restapi.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 public class PropertyDTO {
@@ -19,4 +17,10 @@ public class PropertyDTO {
 
     private String propertyDetail;
 
+
+    private String relation;
+
+    private String kind;
+
+    private String section;
 }
