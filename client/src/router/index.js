@@ -33,13 +33,17 @@ import JeonnamBoard from '../views/Board/region/JeonnamBoard.vue'
 import UlsanBoard from '../views/Board/region/UlsanBoard.vue'
 import SejongBoard from '../views/Board/region/SejongBoard.vue'
 import PoliticianSearchView from "@/views/Politician/PoliticianSearchView.vue"
-
+import Vote from "@/views/Politician/Chart/Vote.vue"
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
   {
     path: '/',
     component: Home
+  },
+  {
+    path: '/Vote',
+    component: Vote
   },
   {
     path: '/Login',

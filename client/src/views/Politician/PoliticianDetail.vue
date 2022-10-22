@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="politician-detail-wrap">
     <div class="content">
       <!--헤더-->
       <header class="politician-header header--back">
@@ -32,6 +32,12 @@
       </div>
       <div class="assembly-text" />
 
+      <div class="politician-detail-info-2">
+        <PoliticianDetailInfo
+          v-bind:PoliticianDetailData="PoliticianDetailData"
+        />
+      </div>
+
       <div class="assembly-infos">
         <div class="assembly-detail">
           <h2>국회 출석률</h2>
@@ -43,7 +49,7 @@
         </div>
         <div class="assembly-detail">
           <h2>당선 횟수</h2>
-          <h3>4선</h3>
+          <h3>{{PoliticianDetailData.selectNumber}}선</h3>
         </div>
         <router-link to="/statistics"
           ><div class="assembly-detail">
@@ -51,44 +57,29 @@
           </div></router-link
         >
       </div>
-
-      <div class="assembly-law-info">
-        <div>
-          <b-nav pills align="center">
-            <b-nav-item>대표발의법률안</b-nav-item>
-            <b-nav-item>공동발의법률안</b-nav-item>
-            <b-nav-item>표결현황</b-nav-item>
-          </b-nav>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import PoliticianDetailInfo from "@/views/Politician/PoliticianDetailInfo.vue";
 
 export default {
   name: "PoliticianDetail",
+  components: {
+    PoliticianDetailInfo,
+  },
   data() {
     return {
-      PoliticianDetailData: {
-        politicianID: "",
-        politicianName: "",
-        partyName: "",
-        selectNumber: "",
-        selectInfo: "",
-      },
+      PoliticianDetailData: {},
     };
   },
   created() {
     const politicianID = this.$route.params.politicianID;
     axios.get(`/api/politician/${politicianID}`).then((response) => {
-      this.PoliticianDetailData.politicianID = response.data.politicianID;
-      this.PoliticianDetailData.politicianName = response.data.politicianName;
-      this.PoliticianDetailData.partyName = response.data.partyName;
-      this.PoliticianDetailData.selectNumber = response.data.selectNumber;
-      this.PoliticianDetailData.selectInfo = response.data.selectInfo;
+      this.PoliticianDetailData = response.data;
+
       console.log(response);
     });
   },
@@ -98,6 +89,14 @@ export default {
 <style>
 @import "@/assets/scss/style.scss";
 
+.politician-detail-wrap {
+  margin: 54px auto 0 auto;
+  max-width: 540px;
+  /*max-width*/
+  height: 100%;
+  background-color: #ffffff;
+}
+
 .politician-header {
   top: 0;
   position: fixed;
@@ -105,11 +104,11 @@ export default {
   max-width: 540px; /*max-width*/
   height: 56px;
   z-index: 999;
-  background-color: #f9f3e9;
+  background-color: rgb(250, 246, 240);
 }
 
 .content {
-  background: #f9f3e9;
+  background: rgba(246, 238, 225, 0.5);
 }
 
 /*국회의원 프로필*/
@@ -120,7 +119,16 @@ export default {
   height: 254px;
   background: #ffffff;
   /* red_lawmaker */
-  border-radius: 24px;
+  text-align: center;
+}
+
+.politician-detail-info-2 {
+  margin: 30px auto 0 auto;
+  padding: 10px 0 10px 0;
+  width: 500px;
+  height: 100%;
+  background: #ffffff;
+  /* red_lawmaker */
   text-align: center;
 }
 
@@ -205,11 +213,10 @@ export default {
 
 /*국회 정보*/
 .assembly-infos {
-  margin: 30px auto;
+  margin: 30px auto 0 auto;
   width: 500px;
   height: 89px;
   background: #ffffff;
-  border-radius: 24px;
   display: table;
 }
 
@@ -230,7 +237,7 @@ export default {
   text-align: center;
   letter-spacing: -0.024em;
 
-  color: #000000;
+  color: #2b2b2b;
 }
 
 .assembly-detail h3 {
@@ -243,27 +250,17 @@ export default {
 
   text-align: center;
   letter-spacing: -0.024em;
-  color: #000000;
+  color: #212121;
 }
 .assembly-detail h4 {
   font-family: "Noto Sans KR";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 19px;
   text-align: center;
   letter-spacing: -0.024em;
 
-  color: #6e6e6e;
+  color: #808080;
 }
-
-/*법률안*/
-.assembly-law-info {
-  margin: 30px auto 0 auto;
-  width: 500px;
-  height: 300px;
-  background: #ffffff;
-  border-radius: 24px;
-}
-
 </style>

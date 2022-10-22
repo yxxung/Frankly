@@ -229,7 +229,7 @@ export default {
 
 .post-header__kategorie {
   padding: 4px 0;
-  font-size: 12px;
+  font-size: 13px;
   color: #696969;
 }
 
