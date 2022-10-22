@@ -15,7 +15,7 @@ public class ReplyDTO {
 
     private int userID;
 
-    private LocalDateTime regDate;
+    private LocalDateTime replyRegDate;
 
     private int boardID;
 
