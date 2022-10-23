@@ -53,6 +53,9 @@
       </div>
 
       <div class="assembly-law-info">
+        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보 보기</div>
+        <div class="link-statistics" @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)">키워드 보기</div>
+
         <div>
           <b-nav pills align="center">
             <b-nav-item>대표발의법률안</b-nav-item>
@@ -62,14 +65,21 @@
         </div>
       </div>
     </div>
+    <Navigation />
   </div>
+
 </template>
 
 <script>
 import axios from "axios";
+import Navigation from "@/components/Navigation.vue";
 
 export default {
   name: "PoliticianDetail",
+  components:{
+    Navigation
+  }
+  ,
   data() {
     return {
       PoliticianDetailData: {
@@ -81,7 +91,30 @@ export default {
       },
     };
   },
-  created() {
+  methods:{
+    goToPropertyDetail(politicianID) {
+      this.$router.push({
+        name: "PoliticianPropertyDetail",
+        params: {
+          politicianInfo: JSON.stringify({
+            politicianID: politicianID,
+            PoliticianDetailData: this.PoliticianDetailData
+          })
+        },
+      });
+    },
+    goToNewsKeyword(politicianID) {
+      this.$router.push({
+        name: "PoliticianNewsKeyword",
+        params: {
+          politicianID: politicianID,
+          politicianInfo: this.PoliticianDetailData
+        },
+      });
+    }
+
+    },
+    created() {
     const politicianID = this.$route.params.politicianID;
     axios.get(`/api/politician/${politicianID}`).then((response) => {
       this.PoliticianDetailData.politicianID = response.data.politicianID;

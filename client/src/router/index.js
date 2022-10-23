@@ -34,6 +34,7 @@ import UlsanBoard from '../views/Board/region/UlsanBoard.vue'
 import SejongBoard from '../views/Board/region/SejongBoard.vue'
 import PoliticianPropertyDetail from "@/views/Politician/PoliticianPropertyDetail";
 import EditData from "@/views/Admin/EditData";
+import PoliticianNewsKeyword from "@/views/Politician/PoliticianNewsKeyword";
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
@@ -206,6 +207,12 @@ const routes = [
     component: PoliticianPropertyDetail,
     props: true
 
+  },
+  {
+    path:'/PoliticianDetail/:politicianID/keyword',
+    name: 'PoliticianNewsKeyword',
+    component: PoliticianNewsKeyword,
+    props: true
   }
 ]
 
