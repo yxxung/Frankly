@@ -1,5 +1,17 @@
 <template>
   <body>
+  <div class="wrap">
+    <!--헤더-->
+    <header class="header header--back">
+      <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
+        <img src="@/assets/icon/Out.svg" alt="나가기" />
+      </a>
+      <h2>글쓰기</h2>
+      <div class="header--right">
+        <!--제출 버튼-->
+        <button class="write-button" type="submit" @click="onClickSubmit()">
+          완료
+        </button>
     <div class="wrap">
       <!--헤더-->
       <header class="header header--back">

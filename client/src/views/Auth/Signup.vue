@@ -107,7 +107,6 @@
 <script>
 import axios from "axios";
 import signupObj from "@/store/signupObj.js";
-
 export default {
   name: "Signup",
   data() {
@@ -141,7 +140,6 @@ export default {
 
 <style>
 @import "@/assets/scss/style.scss";
-
 .sign-up-title {
   padding: 0 24px;
   height: 48px;
@@ -149,31 +147,25 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-
 .sign-up-title > h3 {
   font-size: 24px;
 }
-
 .sign-up-title > h3 > span {
   font-size: 16px;
 }
-
 .sign-up-title p {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-weight: bold;
 }
-
 .sign-up-form {
   margin-top: 24px;
   padding: 0 24px;
 }
-
 .sign-up-form > label {
   margin-top: 16px;
   display: block;
 }
-
 /*
 이메일, 비밀번호 입력 input / button
 */
@@ -189,19 +181,16 @@ export default {
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
-
 .sign-up-form__text-input[type="email"]:focus-visible,
 .sign-up-form__text-input[type="password"]:focus-visible {
   outline: 0;
   box-shadow: inset 0 -2px 0 #000000;
 }
-
 .sign-up-form__input-info {
   margin: 2px 0;
   font-size: 14px;
   color: #a9a9a9;
 }
-
 .sign-up-form__error-message {
   display: none;
 }
@@ -211,12 +200,10 @@ export default {
   font-size: 14px;
   color: #da8282;
 }
-
 .sign-up-form--error > input {
   outline: 0;
   box-shadow: inset 0 -2px 0 #ff3030;
 }
-
 .sign-up-form__button {
   margin-top: 24px;
   width: 100%;
@@ -231,15 +218,12 @@ export default {
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
-
 .sign-up-form__button:hover {
   background-color: #343434;
 }
-
 .sign-up-form__button:disabled {
   background-color: #c5c5c5;
 }
-
 /*
 회원가입 지역 선택 dropdown
 */
@@ -248,7 +232,6 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-
 .sign-up-form__dropdown {
   box-sizing: border-box;
   padding-left: 8px;
@@ -261,12 +244,10 @@ export default {
 .dropdown-container > .sign-up-form__dropdown:nth-child(1) {
   margin-right: 16px;
 }
-
 .sign-up-form__dropdown:focus-visible {
   outline: 0;
   box-shadow: inset 0 -2px 0 #000000;
 }
-
 .form__check {
   margin-top: 24px;
 }
@@ -276,11 +257,9 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-
 .check-box-line {
   border-bottom: 1px solid #bfbfbf;
 }
-
 .log-in__check {
   margin: 16px 0;
   display: flex;

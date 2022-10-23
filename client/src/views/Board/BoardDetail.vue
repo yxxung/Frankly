@@ -13,18 +13,18 @@
           <img src="@/assets/icon/Other2.svg" alt="더보기" />
         </a>-->
         <a class="icon-button-56">
-        <b-dropdown
-          size="xs"
-          variant="link"
-          toggle-class="text-decoration-none"
-          no-caret
-        ><template #button-content>
-          <img src="@/assets/icon/Other2.svg" alt="더보기" />
-          <span class="visually-hidden"></span>
+          <b-dropdown
+            size="xs"
+            variant="link"
+            toggle-class="text-decoration-none"
+            no-caret
+          ><template #button-content>
+            <img src="@/assets/icon/Other2.svg" alt="더보기" />
+            <span class="visually-hidden"></span>
           </template>
-          <b-dropdown-item @click="updateBoard(DetailData.boardID)">수정</b-dropdown-item>
-          <b-dropdown-item @click="deleteBoard">삭제</b-dropdown-item>
-        </b-dropdown></a>
+            <b-dropdown-item @click="updateBoard(DetailData.boardID)">수정</b-dropdown-item>
+            <b-dropdown-item @click="deleteBoard">삭제</b-dropdown-item>
+          </b-dropdown></a>
       </div>
     </header>
 
@@ -106,7 +106,6 @@
 <script>
 import axios from "axios";
 import dateformat from "@/commons/dateformat.js";
-
 export default {
   name: "BoardDetail",
   data() {
@@ -138,14 +137,11 @@ export default {
       this.DetailData.userID = response.data.userID;
       this.DetailData.marked = response.data.marked;
     });
-
     axios.get(`/api/replys/${boardID}/replyList`).then((response) => {
       this.replys = response.data;
       console.log(response.data);
     });
-
     this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
-
   },
   methods: {
     //date format 변환
@@ -156,15 +152,15 @@ export default {
     deleteBoard() {
       const boardID = this.$route.params.boardID;
       axios.delete(`api/boards/delete/${boardID}`)
-      .then((response) => {
-        if(response.status === 200){
-          alert("게시글이 삭제되었습니다.");
-        }
-        this.$router.go(-1);
-      })
-      .catch(() =>{
-        console.log("삭제 요청 실패")
-      })
+        .then((response) => {
+          if(response.status === 200){
+            alert("게시글이 삭제되었습니다.");
+          }
+          this.$router.go(-1);
+        })
+        .catch(() =>{
+          console.log("삭제 요청 실패")
+        })
     },
     // 게시글 수정
     updateBoard(boardID) {
@@ -199,7 +195,6 @@ export default {
         // 해당 게시글의 좋아요 개수 1 증가시킨 걸로 수정 (put)
         this.DetailData.marked += 1;
         this.cntMarked = this.DetailData.marked;
-
         axios
           .put(`/api/boards/update/${boardID}`, {
             title: this.DetailData.title,
@@ -251,7 +246,6 @@ export default {
 .post-content {
   padding: 0px 16px;
 }
-
 /*게시글 좋아요*/
 .post-like {
   padding: 24px 16px;
@@ -262,7 +256,6 @@ export default {
   width: 28px;
   height: 28px;
 }
-
 .post-like button img {
   background-color: #fff;
   width: 100%;
@@ -276,14 +269,12 @@ export default {
   font-size: 14px;
   text-align: right;
   letter-spacing: -0.024em;
-
   color: #646464;
 }
 /*댓글*/
 .comments ul {
   padding-left: 0;
 }
-
 .comments__box {
   padding: 8px 16px;
   border-bottom: 1px solid #f6f6f6;
@@ -373,7 +364,6 @@ export default {
 .enter-comment__submit:hover {
   background-color: #cccccc;
 }
-
 .dropdown-menu {
   min-width: 1rem !important;
 }

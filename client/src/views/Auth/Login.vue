@@ -120,23 +120,19 @@ export default {
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
-
 .sign-up-form__text-input[type="email"]:focus-visible,
 .sign-up-form__text-input[type="password"]:focus-visible {
   outline: 0;
   box-shadow: inset 0 -2px 0 #000000;
 }
-
 .sign-up-form__input-info {
   margin: 2px 0;
   font-size: 14px;
   color: #a9a9a9;
 }
-
 .sign-up-form__error-message {
   display: none;
 }
-
 .sign-up-form--error > .sign-up-form__error-message {
   margin-top: 4px;
   display: block;
@@ -187,7 +183,6 @@ export default {
 .dropdown-container > .sign-up-form__dropdown:nth-child(1) {
   margin-right: 16px;
 }
-
 .sign-up-form__dropdown:focus-visible {
   outline: 0;
   box-shadow: inset 0 -2px 0 #000000;
