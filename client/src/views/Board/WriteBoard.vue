@@ -74,49 +74,13 @@
           <label for="file">첨부파일</label>
           <input multiple @change="onInputImage()" id="file" ref="image" type="file" />-->
       </div>
-    </header>
-
-    <!--글쓰기 화면-->
-    <div class="write-title">
-      <!--카테고리-->
-      <select v-model="regionName" class="region" @change="selected">
-        <option
-          v-for="region in regions"
-          :key="region.value"
-        >
-          {{ region.regionName }}
-        </option>
-      </select>
-
-      <!--제목-->
-      <input
-        type="text"
-        v-model="title"
-        ref="title"
-        class="board-title"
-        placeholder="제목"
-      />
     </div>
-    <div class="write-content">
-      <!--내용-->
-      <textarea
-        type="text"
-        ref="content"
-        v-model="content"
-        class="board-content"
-        placeholder="내용을 입력하세요."
-        maxlength="2000"
-      />
-      <!--이미지 업로드 !!수정하기!!
-        <label for="file">첨부파일</label>
-        <input multiple @change="onInputImage()" id="file" ref="image" type="file" />-->
-    </div>
-  </div>
   </body>
 </template>
 
 <script>
 import axios from "axios";
+
 export default {
   name: "WriteBoard",
   data() {
@@ -230,6 +194,7 @@ export default {
 
 <style>
 @import "@/assets/scss/style.scss";
+
 .write-button {
   margin: 0;
   background: black;
@@ -241,11 +206,13 @@ export default {
   font-size: 18px;
   text-align: center;
   color: #ffffff;
+
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   transition: 0.5s;
 }
+
 .header > h2 {
   margin: 0%;
   font-family: "Noto Sans KR", sans-serif;
@@ -253,15 +220,19 @@ export default {
   font-weight: 600;
   font-size: 22px;
   /* identical to box height */
+
   text-align: center;
   letter-spacing: -0.024em;
+
   color: #2b2b2b;
 }
+
 .write-title {
   padding-left: 10px;
   margin-top: 70px;
   display: flex;
 }
+
 /*카테고리*/
 .region {
   width: 120px;
@@ -272,6 +243,7 @@ export default {
   background: #fafafa;
   border-radius: 0px; /* iOS 둥근모서리 제거 */
 }
+
 /*제목*/
 .board-title {
   margin-left: 10px;
@@ -282,15 +254,18 @@ export default {
   outline: none;
   padding-left: 10px;
 }
+
 .board-title::placeholder {
   color: #a9a9a9;
   font-size: 16px;
 }
+
 /*글쓰기*/
 .write-content {
   margin-top: 10px;
   padding: 0 10px 0 10px;
 }
+
 .board-content {
   background: #fafafa;
   font-family: "Noto Sans KR", sans-serif;
@@ -301,13 +276,16 @@ export default {
   border: none;
   padding: 10px;
 }
+
 .board-content:focus {
   border: none;
 }
+
 .board-content::placeholder {
   color: #a9a9a9;
   font-size: 16px;
 }
+
 /*파일 첨부*/
 .write-content label {
   display: inline-block;
@@ -319,6 +297,7 @@ export default {
   line-height: 45px;
   text-align: center;
 }
+
 .write-content input[type="file"] {
   position: absolute;
   width: 1px;

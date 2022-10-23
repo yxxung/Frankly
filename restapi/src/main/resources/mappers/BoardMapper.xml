@@ -37,7 +37,7 @@
     <select id="readBoard" resultMap="boardResultMap">
         SELECT B.*, count(R.replyID) as replyCount
         FROM frankly.Board B LEFT JOIN frankly.Reply R
-        ON B.boardID = R.boardID
+                                       ON B.boardID = R.boardID
         WHERE B.boardID = #{boardID}
         GROUP BY B.boardID
     </select>
@@ -63,7 +63,7 @@
     <select id="getBoardList" resultMap="boardResultMap">
         SELECT B.*, count(R.replyID) as replyCount
         FROM frankly.Board B LEFT JOIN frankly.Reply R
-        ON B.boardID = R.boardID
+                                       ON B.boardID = R.boardID
         WHERE B.region = #{region}
         GROUP BY B.boardID
         ORDER BY B.boardID DESC
