@@ -57,7 +57,7 @@
       </div>
 
       <div class="link-statistics-container">
-        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>
+<!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
         <div class="link-statistics" @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)">뉴스 키워드</div>
       </div>
     </div>
@@ -88,14 +88,11 @@ export default {
     };
   },
   methods:{
-    goToPropertyDetail(politicianID) {
+    goToNewsKeyword(politicianID) {
       this.$router.push({
-        name: "PoliticianPropertyDetail",
+        name: "PoliticianNewsKeyword",
         params: {
-          politicianInfo: JSON.stringify({
-            politicianID: politicianID,
-            PoliticianDetailData: this.PoliticianDetailData
-          })
+          politicianID: politicianID
         },
       });
     },
