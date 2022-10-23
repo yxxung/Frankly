@@ -15,12 +15,12 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
       :items="newsList"
       :fields="fields"
       :busy ="isBusy"
+      :fixed="true"
       stacked="md"
       show-empty
       empty-text = "날짜와 키워드를 선택해 주세요"
       sticky-header="300px"
       small
-      responsive
       @filtered="onFiltered"
       max
     >
@@ -39,8 +39,7 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
         <!--      <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">-->
         <!--        Info modal-->
         <!--      </b-button>-->
-
-        <b-button v-on:click="goLink(row.item)" size="sm" class="mr-1" variant="warning" >
+        <b-button v-on:click="goLink(row.item)" size="sm" class="mr-1" style="width: 3rem" variant="warning" >
           링크
        </b-button>
 
@@ -75,7 +74,7 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
 <!--    ></b-pagination>-->
 
   </b-container>
-
+  <div class="empty-box"></div>
 </template>
 
 <script>
@@ -146,6 +145,10 @@ export default {
 
 .btn-space {
   margin-bottom: 5px;
+}
+.empty-box {
+  height: 80px;
+
 }
 
 </style>
