@@ -26,4 +26,7 @@ public class NewsDTO {
     private String newsContents;
 
 
+    private int newsKeywordID;
+
+
 }

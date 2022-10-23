@@ -6,7 +6,7 @@
     <resultMap type="BoardDTO" id="boardResultMap">
         <id column="boardID" property="boardID"/>
         <result column="userID" property="userID"/>
-        <result column="regDate" property="regDate"/>
+        <result column="boardRegDate" property="boardRegDate"/>
         <result column="marked" property="marked"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
@@ -15,24 +15,34 @@
 
     <resultMap type="ReplyDTO" id="replyResultMap">
         <id column="replyID" property="replyID"/>
-        <result column="reply" property="reply"/>
+        <result column="replyRegDate" property="replyRegDate"/>
         <result column="userID" property="userID"/>
         <result column="regDate" property="regDate"/>
         <result column="boardID" property="boardID"/>
+        <result column="replyCount" property="replyCount"/>
     </resultMap>
 
     <insert id="createReply" parameterType="ReplyDTO">
-        INSERT INTO frankly.Reply(boardID, userID, reply)
+        INSERT INTO frankly.Reply(boardID, userID, reply, replyRegDate)
         VALUES(#{boardID}
               ,#{userID}
               ,#{reply}
-              )
+              ,now())
     </insert>
 
     <select id="readReply" resultMap="replyResultMap">
         SELECT * FROM frankly.Reply
         WHERE boardID = #{boardID}
     </select>
+
+    <!--게시글과 댓글 총 갯수
+        <select id="countReply" resultMap="replyResultMap">
+            SELECT B.boardID, count(R.replyID)
+            FROM frankly.Reply R LEFT JOIN frankly.Board B
+            ON B.boardID = R.boardID
+            WHERE B.boardID = #{boardID}
+            GROUP BY B.boardID
+        </select>-->
 
     <select id="countReply" resultMap="replyResultMap">
         SELECT count(replyID) FROM frankly.Reply

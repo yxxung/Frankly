@@ -28,6 +28,7 @@ public class PoliticianController {
 
         return new ResponseEntity<>(politicianDTO, HttpStatus.OK);
 
+
     }
 
     @GetMapping("/all")

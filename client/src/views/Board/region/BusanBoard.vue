@@ -17,13 +17,15 @@
       >
         <div class="post-list__title">
           <img src="@/assets/icon/Image.svg" alt="이미지 있음" />
-          <h3>{{ board.title }}<span>[110]</span></h3>
+          <h3>
+            {{ board.title }}<span> [110]</span>
+          </h3>
         </div>
         <p>{{ board.content }}</p>
         <div class="post-list__info">
-          <span>{{ elapsedText(board.regDate) }}</span>
+          <span>{{ elapsedText(board.boardRegDate) }}</span>
           <img src="@/assets/icon/Like.svg" alt="좋아요" />
-          <span>13</span>
+          <span>{{ board.marked }}</span>
         </div>
       </li>
     </ul>
@@ -46,7 +48,7 @@ export default {
   },
   data() {
     return {
-      boards: [],
+      boards: {},
     };
   },
   mounted() {
@@ -77,7 +79,7 @@ export default {
     elapsedText(date) {
       return dateformat.elapsedText(new Date(date));
     },
-
+    
     // 무한 스크롤 정의
     handleNotificationListScroll(e) {
       const { scrollHeight, scrollTop, clientHeight } = e.target;

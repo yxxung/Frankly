@@ -7,7 +7,7 @@
     <resultMap type="BoardDTO" id="boardResultMap">
         <id column="boardID" property="boardID"/>
         <result column="userID" property="userID"/>
-        <result column="regDate" property="regDate"/>
+        <result column="boardRegDate" property="boardRegDate"/>
         <result column="marked" property="marked"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
@@ -18,12 +18,13 @@
         <id column="replyID" property="replyID"/>
         <result column="reply" property="reply"/>
         <result column="userID" property="userID"/>
-        <result column="regDate" property="regDate"/>
+        <result column="replyRegDate" property="replyRegDate"/>
         <result column="boardID" property="boardID"/>
+        <result column="replyCount" property="replyCount"/>
     </resultMap>
 
     <insert id="createBoard" parameterType="BoardDTO">
-        INSERT INTO frankly.Board(userID, marked, title, content, region, regDate)
+        INSERT INTO frankly.Board(userID, marked, title, content, region, boardRegDate)
         VALUES(#{userID}
               ,#{marked}
               ,#{title}
@@ -32,9 +33,13 @@
               ,now())
     </insert>
 
+    <!-- board정보와 댓글 수-->
     <select id="readBoard" resultMap="boardResultMap">
-        SELECT * FROM frankly.Board
-        WHERE boardID = #{boardID}
+        SELECT B.*, count(R.replyID) as replyCount
+        FROM frankly.Board B LEFT JOIN frankly.Reply R
+        ON B.boardID = R.boardID
+        WHERE B.boardID = #{boardID}
+        GROUP BY B.boardID
     </select>
 
     <update id="updateBoard" parameterType="BoardDTO">
@@ -42,7 +47,7 @@
         SET marked = #{marked},
             title = #{title},
             content = #{content}
-        WHERE boardID = #{boardID} AND region = #{region}
+        WHERE boardID = #{boardID}
     </update>
 
     <delete id="deleteBoard" parameterType="BoardDTO">
@@ -56,8 +61,12 @@
     </select>
 
     <select id="getBoardList" resultMap="boardResultMap">
-        SELECT * FROM frankly.Board ORDER BY boardID DESC
-        WHERE region = #{region}
+        SELECT B.*, count(R.replyID) as replyCount
+        FROM frankly.Board B LEFT JOIN frankly.Reply R
+        ON B.boardID = R.boardID
+        WHERE B.region = #{region}
+        GROUP BY B.boardID
+        ORDER BY B.boardID DESC
     </select>
 
     <select id="searchBoard" resultMap="boardResultMap">
