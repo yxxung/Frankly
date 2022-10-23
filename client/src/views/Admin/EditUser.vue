@@ -38,13 +38,13 @@
 <script>
 import AdminNav from "@/components/AdminNav.vue";
 import axios from "axios";
-import EditUserDetail from "@/views/Admin/EditUserDetail";
+// import EditUserDetail from "@/views/Admin/EditUserDetail";
 
 export default {
   name: 'EditData',
   components: {
     AdminNav,
-    EditUserDetail
+    // EditUserDetail
   },
   data() {
 
@@ -71,7 +71,6 @@ export default {
           }else(
             this.infos.push(response.data)
           )
-
           console.log(this.infos)
         })
         .catch(e => {
