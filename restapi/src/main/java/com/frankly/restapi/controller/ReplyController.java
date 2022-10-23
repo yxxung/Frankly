@@ -28,10 +28,14 @@ public class ReplyController {
     }
 
     //댓글 보기
-    @GetMapping("/{boardID}/replyList")
-    public ResponseEntity<List<ReplyDTO>> readReply(@PathVariable("boardID") int boardID) throws Exception{
+
+    @GetMapping("/{boardID}/reply")
+    public ResponseEntity<List<BoardDTO>> readReply(@PathVariable("boardID") int boardID) throws Exception{
         log.info("readReply");
-        return new ResponseEntity<>(replyService.readReply(boardID), HttpStatus.OK);
+
+        replyService.readReply(boardID);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //댓글 수

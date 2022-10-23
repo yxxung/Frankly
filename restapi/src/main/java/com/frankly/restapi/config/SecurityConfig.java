@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").hasRole("ADMIN")
 
                 //개발용 설정
-//                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
+                                .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
                 //cors 예외처리
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 //다른 모든 request에는 auth작업 해주어야함.

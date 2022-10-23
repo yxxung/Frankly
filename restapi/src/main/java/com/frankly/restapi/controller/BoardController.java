@@ -45,6 +45,7 @@ public class BoardController {
         log.info("time: " + boardDTO.getBoardRegDate());
         log.info("dto: " + boardDTO);
 
+
         return new ResponseEntity<>(boardDTO, HttpStatus.OK);
     }
 
@@ -58,6 +59,7 @@ public class BoardController {
         boardService.updateBoard(boardDTO, boardID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     @GetMapping("/{boardID}")
     public ResponseEntity<BoardDTO> readBoard(@PathVariable("boardID") int boardID) throws Exception{
@@ -73,6 +75,7 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
     @GetMapping("/boardlist/{region}")
     public ResponseEntity<List<BoardDTO>> getBoardList(@PathVariable("region") String region) throws Exception{

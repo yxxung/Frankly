@@ -1,17 +1,13 @@
 package com.frankly.restapi.service;
 
 import com.frankly.restapi.domain.BoardDTO;
-import com.frankly.restapi.domain.PoliticianDTO;
 import com.frankly.restapi.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -60,7 +56,6 @@ public class BoardService implements BoardServiceInterface {
         log.info("getList");
         return boardMapper.getBoardList(region);
     }
-
 
     // 게시물 총 갯수
     @Override

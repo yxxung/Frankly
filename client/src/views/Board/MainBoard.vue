@@ -1,13 +1,13 @@
 <template>
-    <body>
-        <div class="wrap">
-            <!--헤더-->
-            <header class="header header__community">
-                <h2 class="community-title">커뮤니티</h2>
-                <a class="icon-button-56" href="/notice">
-                    <img src="@/assets/icon/Bullhorn.svg" alt="공지사항">
-                </a>
-            </header>
+  <body>
+  <div class="wrap">
+    <!--헤더-->
+    <header class="header header__community">
+      <h2 class="community-title">커뮤니티</h2>
+      <a class="icon-button-56" href="/notice">
+        <img src="@/assets/icon/Bullhorn.svg" alt="공지사항">
+      </a>
+    </header>
 
             <div class="community-list">
                 <h4>일반 커뮤니티</h4>
@@ -64,36 +64,32 @@ export default {
 
 <style>
 @import '@/assets/scss/style.scss';
-
 /*
 게시판 목록
 */
-
 .community-list {
-    padding: 8px 24px;
+  padding: 8px 24px;
 }
-
 .community-list > h4 {
-    font-family: 'Noto Sans KR';
-    margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: normal;
-    color: #818181;
+  font-family: 'Noto Sans KR';
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #818181;
 }
-
 .community-list a {
-    font-family: 'Noto Sans KR';
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    color: #2B2B2B;
-    font-size: 16px;
-    text-decoration: none;
+  font-family: 'Noto Sans KR';
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  color: #2B2B2B;
+  font-size: 16px;
+  text-decoration: none;
 }
 .community-list a:hover {
-    background-color: #f8f8f8;
+  background-color: #f8f8f8;
 }
 .community-list img {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 </style>

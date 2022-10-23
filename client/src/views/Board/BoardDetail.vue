@@ -9,7 +9,7 @@
         <!--<a class="icon-button-56">
           <img src="@/assets/icon/Share.svg" alt="공유하기" />
         </a>
-        <a class="icon-button-56">
+        <a class="icon-button-56" @click="edit_show = true">
           <img src="@/assets/icon/Other2.svg" alt="더보기" />
         </a>-->
         <a class="icon-button-56">
@@ -226,34 +226,28 @@ export default {
 .post-header {
   padding: 0px 16px;
 }
-
 .post-header__kategorie {
   padding: 4px 0;
   font-size: 13px;
   color: #696969;
 }
-
 .post-header__title {
   font-size: 20px;
   color: #2b2b2b;
 }
-
 .post-header__info {
   margin: 12px 0;
   display: flex;
   justify-content: space-between;
 }
-
 .post-header__writer {
   font-size: 13px;
   color: #696969;
 }
-
 .post-header__reg-date {
   font-size: 13px;
   color: #696969;
 }
-
 .post-content {
   padding: 0px 16px;
 }
@@ -268,6 +262,7 @@ export default {
   width: 28px;
   height: 28px;
 }
+
 .post-like button img {
   background-color: #fff;
   width: 100%;
@@ -284,7 +279,6 @@ export default {
 
   color: #646464;
 }
-
 /*댓글*/
 .comments ul {
   padding-left: 0;
@@ -294,12 +288,10 @@ export default {
   padding: 8px 16px;
   border-bottom: 1px solid #f6f6f6;
 }
-
 .comments__box--reply {
   padding-left: 32px;
   position: relative;
 }
-
 .comments__box--reply:before {
   position: absolute;
   top: 12px;
@@ -311,33 +303,27 @@ export default {
   background-image: url("@/assets/icon/Reply.svg");
   background-repeat: no-repeat;
 }
-
 .comments__info {
   margin-bottom: 4px;
   display: flex;
   justify-content: space-between;
 }
-
 .comments__info h6 {
   padding: 0 12px 0 8px;
   font-size: 14px;
   color: #696969;
 }
-
 .comments__info-left {
   display: flex;
   align-items: center;
 }
-
 .comments__info__date {
   font-size: 12px;
   color: #696969;
 }
-
 .comments__plus {
   padding: 16px;
 }
-
 .comments__plus-button {
   padding: 14px 0;
   width: 100%;
@@ -345,11 +331,9 @@ export default {
   color: #424242;
   background-color: #f1f1f1;
 }
-
 .comments__plus-button:hover {
   background-color: #e7e7e7;
 }
-
 /*댓글 입력창*/
 .enter-comment {
   position: fixed;
@@ -361,7 +345,6 @@ export default {
   justify-content: center;
   background-color: rgb(255, 255, 255);
 }
-
 .enter-comment__textarea {
   height: 30px;
   padding-left: 20px;
@@ -376,12 +359,10 @@ export default {
   resize: none;
   box-sizing: unset;
 }
-
 .enter-comment__textarea:focus-visible {
   outline: none;
   /*box-shadow: 0 0 0 2px #000 inset;*/
 }
-
 .enter-comment__submit {
   position: absolute;
   right: 0px;
@@ -389,7 +370,6 @@ export default {
   height: 40px;
   border-radius: 40px;
 }
-
 .enter-comment__submit:hover {
   background-color: #cccccc;
 }

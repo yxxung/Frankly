@@ -36,7 +36,6 @@ import Navigation from "@/components/Navigation.vue";
 import Slider from "@/components/Slider.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import axios from "axios";
-
 export default {
   name: "Politician",
   components: {
@@ -81,12 +80,10 @@ export default {
 
 <style>
 @import "@/assets/scss/style.scss";
-
 /*대한민국 정당*/
 .political-party-list {
   padding: 8px 24px;
 }
-
 .political-party-list > h2 {
   padding-top: 10px;
   font-family: "Noto Sans KR";
@@ -95,16 +92,13 @@ export default {
   font-size: 24px;
   line-height: 26px;
   letter-spacing: -0.024em;
-
   color: #2b2b2b;
 }
-
 .politician-title {
   display: flex;
   padding: 8px 24px;
   justify-content: space-between;
 }
-
 .politician-title > h2 {
   padding-top: 10px;
   font-family: "Noto Sans KR";
@@ -113,10 +107,8 @@ export default {
   font-size: 24px;
   line-height: 26px;
   letter-spacing: -0.024em;
-
   color: #2b2b2b;
 }
-
 .politician-title > h3 {
   padding-top: 18px;
   font-family: "Noto Sans KR";
@@ -126,10 +118,8 @@ export default {
   line-height: 26px;
   letter-spacing: -0.024em;
   font-weight: 300;
-
   color: #818181;
 }
-
 /*전체 국회의원*/
 .all-politician-list {
   margin: 10px auto;
@@ -137,13 +127,11 @@ export default {
   max-width: 520px;
   display: table;
 }
-
 .politician {
   display: inline-table;
   margin-bottom: 20px;
   padding: 0 20px;
 }
-
 .politician-image {
   width: 75px;
   height: 75px;
@@ -156,13 +144,11 @@ export default {
   align-items: center;
   cursor: pointer;
 }
-
 .politician-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .politician-name {
   margin: 5px auto;
   font-size: 16px;

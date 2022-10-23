@@ -1,5 +1,6 @@
 package com.frankly.restapi.controller;
 
+
 import com.frankly.restapi.domain.PropertyDTO;
 import com.frankly.restapi.domain.PropertyListDTO;
 import com.frankly.restapi.domain.PropertyChangeDTO;
@@ -22,7 +23,7 @@ public class PropertyController {
 
     private final PropertyService propertyService;
 
-    @GetMapping("/")
+    @GetMapping("/create")
     public ResponseEntity<PropertyDTO> createProperty(@Validated @RequestBody PropertyDTO propertyDTO)
             throws Exception {
         log.info("createProperty");

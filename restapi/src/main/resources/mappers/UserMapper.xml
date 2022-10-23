@@ -13,7 +13,6 @@
         <result column="district" property="district"/>
         <result column="sex" property="sex"/>
         <result column="userAuth" property="userAuth"/>
-
         <result column="contact" property="contact"/>
     </resultMap>
 
@@ -43,7 +42,6 @@
                #{userAuth},
                #{contact})
     </insert>
-
 
     <select id="loginUser" resultMap="userResultMap">
         SELECT * FROM frankly.User
