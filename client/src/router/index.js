@@ -34,6 +34,7 @@ import UlsanBoard from '../views/Board/region/UlsanBoard.vue'
 import SejongBoard from '../views/Board/region/SejongBoard.vue'
 import PoliticianSearchView from "@/views/Politician/PoliticianSearchView.vue"
 import Vote from "@/views/Politician/Chart/Vote.vue"
+import Statistics from "@/views/Politician/Chart/Statistics.vue"
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
@@ -209,6 +210,12 @@ const routes = [
     path: '/Search',
     name: 'Search',
     component: PoliticianSearchView
+  },
+  /*시각화*/
+  {
+    path: '/Statistics',
+    name: 'Statistics',
+    component: Statistics
   }
 ]
 

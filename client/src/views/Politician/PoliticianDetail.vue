@@ -51,11 +51,10 @@
           <h2>당선 횟수</h2>
           <h3>{{PoliticianDetailData.selectNumber}}선</h3>
         </div>
-        <router-link to="/statistics"
+        <router-link to="/Statistics"
           ><div class="assembly-detail">
             <h4>> 통계<br />더보기</h4>
-          </div></router-link
-        >
+          </div></router-link>
       </div>
     </div>
   </div>

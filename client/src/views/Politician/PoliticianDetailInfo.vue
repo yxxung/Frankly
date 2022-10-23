@@ -6,7 +6,7 @@
       <div class="detail-info-content">
         {{ elapsedText(PoliticianDetailData.birthday) }}
       </div>
-      <div class="detail-info-title">임기</div>
+      <div class="detail-info-title">당선이력</div>
       <div class="detail-info-content">
         {{ PoliticianDetailData.selectInfo }}
       </div>
