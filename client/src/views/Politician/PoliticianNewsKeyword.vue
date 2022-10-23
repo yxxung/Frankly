@@ -24,7 +24,7 @@
       <b-col sm="5"><b-form-select v-model="selected" :options="options" v-on:click="listReturn"></b-form-select></b-col>
     </b-row>
     <div style="height:70%" >
-      <PoliticianNewKeywordView v-bind:propInfos="infos" v-bind:fields="fields" v-bind:keywordList="keywordList" v-bind:isBusy="isBusy"></PoliticianNewKeywordView>
+      <PoliticianNewsKeywordView v-bind:propInfos="infos" v-bind:fields="fields" v-bind:keywordList="keywordList" v-bind:isBusy="isBusy"></PoliticianNewsKeywordView>
     </div>
 
     <Navigation/>
@@ -34,12 +34,12 @@
 <script>
 import { Bar } from 'vue-chartjs'
 import axios from "axios";
-import PoliticianNewKeywordView from "@/views/Politician/PoliticianNewKeywordView";
+import PoliticianNewsKeywordView from "@/views/Politician/PoliticianNewsKeywordView";
 import Navigation from "@/components/Navigation.vue";
 export default {
   name: "PoliticianPropertyDetail",
   components: {
-    PoliticianNewKeywordView,
+    PoliticianNewsKeywordView,
     Navigation
   },
   data() {

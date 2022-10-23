@@ -20,7 +20,8 @@
 
     <!-- 회의 표결 세기 -->
     <select id="countVote" resultMap="voteResultMap">
-        SELECT voteResult, count(voteResult) FROM frankly.Vote
+        SELECT voteResult, count(voteResult) as voteCount
+        FROM frankly.Vote
         WHERE politicianID = #{politicianID}
         GROUP BY voteResult
     </select>

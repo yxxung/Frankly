@@ -23,7 +23,13 @@ public class ReplyService implements ReplyServiceInterface {
 
     @Override
     public List<ReplyDTO> readReply(int boardID) throws Exception {
+        log.info("getReplyList");
         return replyMapper.readReply(boardID);
+    }
+
+    @Override
+    public List<ReplyDTO> countReply(int boardID) throws Exception {
+        return replyMapper.countReply(boardID);
     }
 
     @Override

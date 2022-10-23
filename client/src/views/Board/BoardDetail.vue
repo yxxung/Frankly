@@ -6,12 +6,25 @@
         <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
       </a>
       <div class="header-right-icon">
-        <a class="icon-button-56">
+        <!--<a class="icon-button-56">
           <img src="@/assets/icon/Share.svg" alt="공유하기" />
         </a>
         <a class="icon-button-56" @click="edit_show = true">
           <img src="@/assets/icon/Other2.svg" alt="더보기" />
-        </a>
+        </a>-->
+        <a class="icon-button-56">
+          <b-dropdown
+            size="xs"
+            variant="link"
+            toggle-class="text-decoration-none"
+            no-caret
+          ><template #button-content>
+            <img src="@/assets/icon/Other2.svg" alt="더보기" />
+            <span class="visually-hidden"></span>
+          </template>
+            <b-dropdown-item @click="updateBoard(DetailData.boardID)">수정</b-dropdown-item>
+            <b-dropdown-item @click="deleteBoard">삭제</b-dropdown-item>
+          </b-dropdown></a>
       </div>
     </header>
 
@@ -24,7 +37,7 @@
       <div class="post-header__info">
         <div class="post-header__writer">익명</div>
         <div class="post-header__reg-date">
-          {{ elapsedText(DetailData.regDate) }}
+          {{ elapsedText(DetailData.boardRegDate) }}
         </div>
       </div>
     </div>
@@ -37,11 +50,8 @@
     <!--좋아요-->
     <div class="post-like">
       <button @click="(marked = !marked), changeLike(DetailData.boardID)">
-        <div class="h2 mb-0">
-          <b-icon>
-            {{ marked ? "hand-thumbs-up-fill" : "hand-thumbs-up" }}
-          </b-icon>
-        </div>
+        <img src="@/assets/icon/Like.svg" v-if="marked === false" />
+        <img src="@/assets/icon/Like_active.svg" v-if="marked === true" />
       </button>
       <span>{{ DetailData.marked }}</span>
     </div>
@@ -59,8 +69,8 @@
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
               <h6>익명{{ reply.replyID }}</h6>
               <span class="comments__info__date">{{
-                  elapsedText(reply.regDate)
-                }}</span>
+                elapsedText(reply.replyRegDate)
+              }}</span>
             </div>
 
             <div class="comments__info-right">
@@ -83,7 +93,9 @@
       ></textarea>
       <button
         class="enter-comment__submit"
-        @click.prevent="createReply(DetailData.boardID)"
+        @click.prevent="
+          createReply(DetailData.boardID), countReply(this.cntReply)
+        "
       >
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
       </button>
@@ -94,22 +106,20 @@
 <script>
 import axios from "axios";
 import dateformat from "@/commons/dateformat.js";
-import Reply from "@/views/Board/Reply.vue";
 export default {
   name: "BoardDetail",
-  components: { Reply },
   data() {
     return {
       DetailData: {
         boardID: "",
         title: "",
         content: "",
-        regDate: "",
+        boardRegDate: "",
         region: "",
         userID: "",
         marked: "", //board db의 좋아요
       },
-      replys: {}, //댓글 axios get
+      replys: [], //댓글 axios get
       replyInput: "", //댓글 입력
       marked: false, //좋아요
       cntMarked: null, //좋아요 개수
@@ -122,7 +132,7 @@ export default {
       this.DetailData.boardID = response.data.boardID;
       this.DetailData.title = response.data.title;
       this.DetailData.content = response.data.content;
-      this.DetailData.regDate = response.data.regDate;
+      this.DetailData.boardRegDate = response.data.boardRegDate;
       this.DetailData.region = response.data.region;
       this.DetailData.userID = response.data.userID;
       this.DetailData.marked = response.data.marked;
@@ -131,26 +141,33 @@ export default {
       this.replys = response.data;
       console.log(response.data);
     });
-    this.cntMarked = this.DetailData.marked;
+    this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
   },
   methods: {
     //date format 변환
     elapsedText(date) {
       return dateformat.elapsedText(new Date(date));
     },
-    // 특정인덱스인 값을 삭제할 때 사용함
-    deleteData() {
-      data.splice(this.index, 1);
-      this.$router.push({
-        path: "/",
-      });
+    // 게시글 삭제
+    deleteBoard() {
+      const boardID = this.$route.params.boardID;
+      axios.delete(`api/boards/delete/${boardID}`)
+        .then((response) => {
+          if(response.status === 200){
+            alert("게시글이 삭제되었습니다.");
+          }
+          this.$router.go(-1);
+        })
+        .catch(() =>{
+          console.log("삭제 요청 실패")
+        })
     },
-    // 특정인덱스인 값을 수정할 때 사용함
-    updateData() {
+    // 게시글 수정
+    updateBoard(boardID) {
       this.$router.push({
-        name: "Create",
+        name: "WriteBoard",
         params: {
-          boardID: this.index,
+          boardID: boardID
         },
       });
     },
@@ -178,9 +195,12 @@ export default {
         // 해당 게시글의 좋아요 개수 1 증가시킨 걸로 수정 (put)
         this.DetailData.marked += 1;
         this.cntMarked = this.DetailData.marked;
-        axios.put(`/api/boards/${boardID}`, {
-          marked: this.cntMarked
-        })
+        axios
+          .put(`/api/boards/update/${boardID}`, {
+            title: this.DetailData.title,
+            content: this.DetailData.content,
+            marked: this.cntMarked,
+          })
           .then((response) => {
             console.log(response);
           })
@@ -196,68 +216,14 @@ export default {
 <style>
 @import "@/assets/scss/style.scss";
 /*
-게시글 목록
-*/
-.post-list {
-  padding-top: 14px;
-}
-/* 게시글 박스 */
-.post-list__container {
-  position: relative;
-  padding: 16px 24px 30px;
-  border-bottom: 1px solid #e7e7e7;
-  -webkit-transition: all 0.08s ease-in-out;
-  -o-transition: all 0.08s ease-in-out;
-  transition: all 0.08s ease-in-out;
-}
-.post-list__container:hover {
-  background-color: #f8f8f8;
-  cursor: pointer;
-}
-/* 게시글 제목 */
-.post-list__title {
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-}
-.post-list__title > img {
-  margin-right: 8px;
-}
-.post-list__title > h3 {
-  font-size: 16px;
-}
-.post-list__title > h3 > span {
-  font-family: "Roboto", serif;
-  font-size: 14px;
-  font-weight: bold;
-  color: #ff3a3a;
-}
-/* 게시글 내용 */
-.post-list__container > p {
-  font-size: 14px;
-  color: #7b7b7b;
-}
-/* 게시글 등록시간, 좋아요 수 */
-.post-list__info {
-  position: absolute;
-  right: 24px;
-  bottom: 8px;
-  display: flex;
-  align-items: center;
-  color: #7b7b7b;
-}
-.post-list__info > span {
-  font-size: 12px;
-}
-/*
 게시글 페이지
 */
 .post-header {
-  padding: 0 16px;
+  padding: 0px 16px;
 }
 .post-header__kategorie {
   padding: 4px 0;
-  font-size: 12px;
+  font-size: 13px;
   color: #696969;
 }
 .post-header__title {
@@ -265,20 +231,20 @@ export default {
   color: #2b2b2b;
 }
 .post-header__info {
-  margin: 8px 0;
+  margin: 12px 0;
   display: flex;
   justify-content: space-between;
 }
 .post-header__writer {
-  font-size: 12px;
+  font-size: 13px;
   color: #696969;
 }
 .post-header__reg-date {
-  font-size: 12px;
+  font-size: 13px;
   color: #696969;
 }
 .post-content {
-  padding: 0 16px;
+  padding: 0px 16px;
 }
 /*게시글 좋아요*/
 .post-like {
@@ -290,7 +256,7 @@ export default {
   width: 28px;
   height: 28px;
 }
-.post-like img {
+.post-like button img {
   background-color: #fff;
   width: 100%;
   height: 100%;
@@ -299,14 +265,16 @@ export default {
 .post-like span {
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
-  line-height: 16px;
   text-align: right;
   letter-spacing: -0.024em;
-  color: #7b7b7b;
+  color: #646464;
 }
 /*댓글*/
+.comments ul {
+  padding-left: 0;
+}
 .comments__box {
   padding: 8px 16px;
   border-bottom: 1px solid #f6f6f6;
@@ -369,29 +337,34 @@ export default {
   background-color: rgb(255, 255, 255);
 }
 .enter-comment__textarea {
-  height: 32px;
+  height: 30px;
+  padding-left: 20px;
+  padding-top: 8px;
   border-radius: 24px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
   color: #2b2b2b;
   background-color: #f8f8f8;
-  outline: 0;
-  border: 0;
-  resize: 0;
+  outline: none;
+  border: none;
+  resize: none;
+  box-sizing: unset;
 }
 .enter-comment__textarea:focus-visible {
-  outline: 0;
+  outline: none;
   /*box-shadow: 0 0 0 2px #000 inset;*/
 }
 .enter-comment__submit {
   position: absolute;
-  top: 8px;
-  right: 16px;
-  width: 40px;
+  right: 0px;
+  width: 42px;
   height: 40px;
   border-radius: 40px;
 }
 .enter-comment__submit:hover {
   background-color: #cccccc;
+}
+.dropdown-menu {
+  min-width: 1rem !important;
 }
 </style>

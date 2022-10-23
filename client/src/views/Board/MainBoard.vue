@@ -13,38 +13,38 @@
       <h4>일반 커뮤니티</h4>
       <ul>
         <li><router-link to="/HotBoard"><img src="@/assets/icon/Fire.svg" alt="">인기게시글</router-link></li>
-<!--        <li><router-link to="/FreeBoard"><img src="@/assets/icon/Document.svg" alt="">자유게시판</router-link></li>-->
+        <li><router-link to="/FreeBoard"><img src="@/assets/icon/Document.svg" alt="">자유게시판</router-link></li>
       </ul>
     </div>
 
     <div class="community-list">
       <h4>지역 커뮤니티</h4>
       <ul>
-<!--        <li><router-link to="/SeoulBoard"><img src="@/assets/icon/Location.svg" alt="">서울특별시</router-link></li>-->
-<!--        <li><router-link to="/BusanBoard"><img src="@/assets/icon/Location.svg" alt="">부산광역시</router-link></li>-->
-<!--        <li><router-link to="/DaeguBoard"><img src="@/assets/icon/Location.svg" alt="">대구광역시</router-link></li>-->
-<!--        <li><router-link to="/IncheonBoard"><img src="@/assets/icon/Location.svg" alt="">인천광역시</router-link></li>-->
-<!--        <li><router-link to="/GwangjuBoard"><img src="@/assets/icon/Location.svg" alt="">광주광역시</router-link></li>-->
-<!--        <li><router-link to="/DaejeonBoard"><img src="@/assets/icon/Location.svg" alt="">대전광역시</router-link></li>-->
-<!--        <li><router-link to="/UlsanBoard"><img src="@/assets/icon/Location.svg" alt="">울산광역시</router-link></li>-->
-<!--        <li><router-link to="/SejongBoard"><img src="@/assets/icon/Location.svg" alt="">세종특별자치시</router-link></li>-->
-<!--        <li><router-link to="/GyeonggiBoard"><img src="@/assets/icon/Location.svg" alt="">경기도</router-link></li>-->
-<!--        <li><router-link to="/GangwonBoard"><img src="@/assets/icon/Location.svg" alt="">강원도</router-link></li>-->
-<!--        <li><router-link to="/ChungbukBoard"><img src="@/assets/icon/Location.svg" alt="">충청북도</router-link></li>-->
-<!--        <li><router-link to="/ChungnamBoard"><img src="@/assets/icon/Location.svg" alt="">충청남도</router-link></li>-->
-<!--        <li><router-link to="/JeonbukBoard"><img src="@/assets/icon/Location.svg" alt="">전라북도</router-link></li>-->
-<!--        <li><router-link to="/JeonnamBoard"><img src="@/assets/icon/Location.svg" alt="">전라남도</router-link></li>-->
-<!--        <li><router-link to="/GyeongbukBoard"><img src="@/assets/icon/Location.svg" alt="">경상북도</router-link></li>-->
-<!--        <li><router-link to="/GyeongnamBoard"><img src="@/assets/icon/Location.svg" alt="">경상남도</router-link></li>-->
-<!--        <li><router-link to="/JejuBoard"><img src="@/assets/icon/Location.svg" alt="">제주특별자치도</router-link></li>-->
+        <li><router-link to="/SeoulBoard"><img src="@/assets/icon/Location.svg" alt="">서울특별시</router-link></li>
+        <li><router-link to="/BusanBoard"><img src="@/assets/icon/Location.svg" alt="">부산광역시</router-link></li>
+        <li><router-link to="/DaeguBoard"><img src="@/assets/icon/Location.svg" alt="">대구광역시</router-link></li>
+        <li><router-link to="/IncheonBoard"><img src="@/assets/icon/Location.svg" alt="">인천광역시</router-link></li>
+        <li><router-link to="/GwangjuBoard"><img src="@/assets/icon/Location.svg" alt="">광주광역시</router-link></li>
+        <li><router-link to="/DaejeonBoard"><img src="@/assets/icon/Location.svg" alt="">대전광역시</router-link></li>
+        <li><router-link to="/UlsanBoard"><img src="@/assets/icon/Location.svg" alt="">울산광역시</router-link></li>
+        <li><router-link to="/SejongBoard"><img src="@/assets/icon/Location.svg" alt="">세종특별자치시</router-link></li>
+        <li><router-link to="/GyeonggiBoard"><img src="@/assets/icon/Location.svg" alt="">경기도</router-link></li>
+        <li><router-link to="/GangwonBoard"><img src="@/assets/icon/Location.svg" alt="">강원도</router-link></li>
+        <li><router-link to="/ChungbukBoard"><img src="@/assets/icon/Location.svg" alt="">충청북도</router-link></li>
+        <li><router-link to="/ChungnamBoard"><img src="@/assets/icon/Location.svg" alt="">충청남도</router-link></li>
+        <li><router-link to="/JeonbukBoard"><img src="@/assets/icon/Location.svg" alt="">전라북도</router-link></li>
+        <li><router-link to="/JeonnamBoard"><img src="@/assets/icon/Location.svg" alt="">전라남도</router-link></li>
+        <li><router-link to="/GyeongbukBoard"><img src="@/assets/icon/Location.svg" alt="">경상북도</router-link></li>
+        <li><router-link to="/GyeongnamBoard"><img src="@/assets/icon/Location.svg" alt="">경상남도</router-link></li>
+        <li><router-link to="/JejuBoard"><img src="@/assets/icon/Location.svg" alt="">제주특별자치도</router-link></li>
       </ul>
     </div>
 
     <div class="community-list">
       <h4>내 기록</h4>
       <ul>
-<!--        <li><a href="#"><img src="@/assets/icon/Document.svg" alt="">내가 쓴 글</a></li>-->
-<!--        <li><a href="#"><img src="@/assets/icon/Document.svg" alt="">댓글 단 글</a></li>-->
+        <li><a href="#"><img src="@/assets/icon/Document.svg" alt="">내가 쓴 글</a></li>
+        <li><a href="#"><img src="@/assets/icon/Document.svg" alt="">댓글 단 글</a></li>
       </ul>
     </div>
     <Navigation />

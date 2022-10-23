@@ -1,7 +1,9 @@
 package com.frankly.restapi.controller;
 
-import com.frankly.restapi.domain.PropertyChangeDTO;
+
 import com.frankly.restapi.domain.PropertyDTO;
+import com.frankly.restapi.domain.PropertyListDTO;
+import com.frankly.restapi.domain.PropertyChangeDTO;
 import com.frankly.restapi.service.PropertyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

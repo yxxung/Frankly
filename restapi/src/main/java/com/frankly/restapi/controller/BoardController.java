@@ -32,36 +32,32 @@ public class BoardController {
 //                                                @RequestPart(required = false) MultipartFile file) throws Exception{
 //        log.info("게시물 생성" + boardDTO.getAuthor());
 //        boardService.createBoard(boardDTO);
-//        log.info("time: " + boardDTO.getRegDate());
+//        log.info("time: " + boardDTO.getBoardRegDate());
 //        log.info("dto: " + boardDTO);
 //        log.info("file: " + file);
 //
 //        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
 //    }
-    @PostMapping(value = "/{region}/create")
-    public ResponseEntity<BoardDTO> createBoard(@Validated BoardDTO boardDTO) throws Exception{
+    @PostMapping(value = "/create")
+    public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
         boardService.createBoard(boardDTO);
-        log.info("time: " + boardDTO.getRegDate());
+        log.info("time: " + boardDTO.getBoardRegDate());
         log.info("dto: " + boardDTO);
-
 
         return new ResponseEntity<>(boardDTO, HttpStatus.OK);
     }
 
 
     //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
-
-    @PutMapping("/{boardID}")
+    @PutMapping("/update/{boardID}")
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                         @PathVariable("region") String region,
                                          @PathVariable("boardID")int boardID)throws Exception{
 
         log.info("게시물 수정 수정자 :"  + boardDTO.getAuthor());
-        boardService.updateBoard(boardDTO, region, boardID);
+        boardService.updateBoard(boardDTO, boardID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     @GetMapping("/{boardID}")
     public ResponseEntity<BoardDTO> readBoard(@PathVariable("boardID") int boardID) throws Exception{
@@ -70,6 +66,7 @@ public class BoardController {
         try{
             BoardDTO boardDTO = boardService.readBoard(boardID);
             replyService.readReply(boardID);
+            replyService.countReply(boardID);
 
             return new ResponseEntity<>(boardDTO, HttpStatus.OK);
         }catch (Exception e){
@@ -77,14 +74,13 @@ public class BoardController {
         }
     }
 
-
     @GetMapping("/boardlist/{region}")
     public ResponseEntity<List<BoardDTO>> getBoardList(@PathVariable("region") String region) throws Exception{
 
         return new ResponseEntity<>(boardService.getBoardList(region), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{boardID}")
+    @DeleteMapping("/delete/{boardID}")
     public ResponseEntity<?> deleteBoard(@PathVariable("boardID") int boardID) throws Exception{
 
         BoardDTO boardDTO = new BoardDTO();
@@ -110,10 +106,6 @@ public class BoardController {
         pageVO.setSearchType(searchType);
         pageVO.setKeyword(keyword);
 
-
-
         return new ResponseEntity<>(boardService.searchBoard(region, searchType, keyword), HttpStatus.OK);
     }
-
-
 }
