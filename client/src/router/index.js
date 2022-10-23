@@ -37,6 +37,7 @@ import EditData from "@/views/Admin/EditData";
 import PoliticianNewsKeyword from "@/views/Politician/PoliticianNewsKeyword";
 import PoliticianSearchView from "@/views/Politician/PoliticianSearchView";
 import PoliticianStatistics from "@/views/Politician/PoliticianStatistics";
+import PoliticianAttendance from "@/views/Politician/PoliticianAttendance";
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
@@ -64,7 +65,8 @@ const routes = [
   },
   /*board*/
   {
-    path: '/WriteBoard',
+    path: '/WriteBoard/:boardID?',
+    name: 'WriteBoard',
     component: WriteBoard
   },
   {
@@ -208,12 +210,17 @@ const routes = [
     name: 'PoliticianPropertyDetail',
     component: PoliticianPropertyDetail,
     props: true
-
   },
   {
     path:'/PoliticianDetail/:politicianID/keyword',
     name: 'PoliticianNewsKeyword',
     component: PoliticianNewsKeyword,
+    props: true
+  },
+  {
+    path:'/PoliticianDetail/:politicianID/attendance',
+    name: 'PoliticianAttendance',
+    component: PoliticianAttendance,
     props: true
   },
   {

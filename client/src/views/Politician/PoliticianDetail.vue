@@ -41,29 +41,42 @@
       <div class="assembly-infos">
         <div class="assembly-detail">
           <h2>국회 출석률</h2>
-          <h3>{{this.attendancePercentage}}%</h3>
+          <h3>{{ this.attendancePercentage }}%</h3>
         </div>
         <div class="assembly-detail">
           <h2>표결건수</h2>
-          <h3>{{this.billLawNum}}건</h3>
+          <h3>{{ this.billLawNum }}건</h3>
         </div>
         <div class="assembly-detail">
           <h2>당선 횟수</h2>
-          <h3>{{PoliticianDetailData.selectNumber}}선</h3>
+          <h3>{{ PoliticianDetailData.selectNumber }}선</h3>
         </div>
-         <div class="assembly-detail" @click="goToDashboard(this.PoliticianDetailData.politicianID)">
-            <h4>> 통계<br />더보기</h4>
-          </div>
+        <div
+          class="assembly-detail"
+          @click="goToDashboard(this.PoliticianDetailData.politicianID)"
+        >
+          <h4>> 통계<br />더보기</h4>
+        </div>
       </div>
 
       <div class="link-statistics-container">
-<!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
-        <div class="link-statistics" @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)">뉴스 키워드</div>
+        <!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
+        <div
+          class="link-statistics"
+          @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)"
+        >
+          뉴스 키워드
+        </div>
+        <div
+          class="link-statistics"
+          @click="goToAttendance(this.PoliticianDetailData.politicianID)"
+        >
+          출석 정보
+        </div>
       </div>
     </div>
     <Navigation />
   </div>
-
 </template>
 
 <script>
@@ -73,26 +86,33 @@ import Navigation from "@/components/Navigation.vue";
 
 export default {
   name: "PoliticianDetail",
-  components:{
+  components: {
     Navigation,
-    PoliticianDetailInfo
-  }
-  ,
+    PoliticianDetailInfo,
+  },
   data() {
     return {
       PoliticianDetailData: {},
-      attendanceList:[],
-      attendancePercentage : 0,
-      billLawNum : 0,
-      billLawList : []
+      attendanceList: [],
+      attendancePercentage: 0,
+      billLawNum: 0,
+      billLawList: [],
     };
   },
-  methods:{
+  methods: {
     goToNewsKeyword(politicianID) {
       this.$router.push({
         name: "PoliticianNewsKeyword",
         params: {
-          politicianID: politicianID
+          politicianID: politicianID,
+        },
+      });
+    },
+    goToAttendance(politicianID) {
+      this.$router.push({
+        name: "PoliticianAttendance",
+        params: {
+          politicianID: politicianID,
         },
       });
     },
@@ -101,40 +121,42 @@ export default {
       this.$router.push({
         name: "PoliticianStatistics",
         params: {
-          politicianID: politicianID
-          },
+          politicianID: politicianID,
+        },
       });
     },
-
-    },
-    beforeCreate() {
+  },
+  beforeCreate() {
     const politicianID = this.$route.params.politicianID;
     axios.get(`/api/politician/${politicianID}`).then((response) => {
       this.PoliticianDetailData = response.data;
 
       console.log(response);
     });
-      axios.get(`/api/attendance/${politicianID}`).then((response) => {
-        let attendanceList = response.data;
-        let jsonss;
-        let count = 0;
-        for(jsonss of attendanceList){
-          let total = jsonss["businessTrip"] + jsonss["petitionLeave"] + jsonss["attendance"];
-          if(total === 0){
-            count++;
-          }
+    axios.get(`/api/attendance/${politicianID}`).then((response) => {
+      let attendanceList = response.data;
+      let jsonss;
+      let count = 0;
+      for (jsonss of attendanceList) {
+        let total =
+          jsonss["businessTrip"] +
+          jsonss["petitionLeave"] +
+          jsonss["attendance"];
+        if (total === 0) {
+          count++;
         }
+      }
 
-        let percentage = ((attendanceList.length - count) / attendanceList.length)*100;
-        this.attendancePercentage = percentage;
-        this.attendanceList = attendanceList
-
-      });
-      axios.get(`/api/billLaw/${politicianID}`).then((response) => {
-        let billLawList = response.data
-        this.billLawNum = billLawList.length
-        console.log(response.data)
-      });
+      let percentage =
+        ((attendanceList.length - count) / attendanceList.length) * 100;
+      this.attendancePercentage = percentage;
+      this.attendanceList = attendanceList;
+    });
+    axios.get(`/api/billLaw/${politicianID}`).then((response) => {
+      let billLawList = response.data;
+      this.billLawNum = billLawList.length;
+      console.log(response.data);
+    });
   },
 };
 </script>
