@@ -33,13 +33,18 @@ import JeonnamBoard from '../views/Board/region/JeonnamBoard.vue'
 import UlsanBoard from '../views/Board/region/UlsanBoard.vue'
 import SejongBoard from '../views/Board/region/SejongBoard.vue'
 import PoliticianSearchView from "@/views/Politician/PoliticianSearchView.vue"
-
+import Vote from "@/views/Politician/Chart/Vote.vue"
+import Statistics from "@/views/Politician/Chart/Statistics.vue"
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
   {
     path: '/',
     component: Home
+  },
+  {
+    path: '/Vote',
+    component: Vote
   },
   {
     path: '/Login',
@@ -191,20 +196,37 @@ const routes = [
     path: '/EditUser',
     component: EditUser
   },
-  /*
+
   {
     path: '/EditData',
     component: EditData
-  },*/
+  },
   {
     path: '/PoliticianDetail/:politicianID',
     name: 'PoliticianDetail',
     component: PoliticianDetail
   },
   {
+    path:'/PoliticianDetail/:politicianID/property',
+    name: 'PoliticianPropertyDetail',
+    component: PoliticianPropertyDetail,
+    props: true
+  },
+  {
+    path:'/PoliticianDetail/:politicianID/keyword',
+    name: 'PoliticianNewsKeyword',
+    component: PoliticianNewsKeyword,
+    props: true
+  },
     path: '/Search',
     name: 'Search',
     component: PoliticianSearchView
+  },
+  /*시각화*/
+  {
+    path: '/Statistics',
+    name: 'Statistics',
+    component: Statistics
   }
 ]
 

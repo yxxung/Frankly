@@ -65,4 +65,11 @@
                , #{politicianImageURL}
                , #{politicianID})
     </insert>
+
+    <select id="searchPolitician" resultMap="politicianResultMap">
+        SELECT * FROM frankly.Politician
+        WHERE politicianName LIKE concat('%', #{searchName}, "%")
+        ORDER BY politicianID ASC
+
+    </select>
 </mapper>

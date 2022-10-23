@@ -1,6 +1,5 @@
 <template>
   <body>
-<<<<<<< HEAD
   <div class="wrap">
     <!--헤더-->
     <header class="header header--back">
@@ -13,7 +12,6 @@
         <button class="write-button" type="submit" @click="onClickSubmit()">
           완료
         </button>
-=======
     <div class="wrap">
       <!--헤더-->
       <header class="header header--back">
@@ -61,7 +59,7 @@
           placeholder="제목"
         />
       </div>
-      
+
       <div class="write-content">
         <!--내용-->
         <textarea
@@ -75,7 +73,6 @@
         <!--이미지 업로드 !!수정하기!!
           <label for="file">첨부파일</label>
           <input multiple @change="onInputImage()" id="file" ref="image" type="file" />-->
->>>>>>> refactoring
       </div>
     </header>
 
@@ -172,11 +169,7 @@ export default {
   },
   methods: {
     selected() {
-<<<<<<< HEAD
-      console.log(this.regionName)
-=======
       console.log(this.regionName);
->>>>>>> refactoring
     },
     /*onInputImage() {
       console.log(this.$refs);
@@ -200,20 +193,12 @@ export default {
         .post("/api/boards/create", {
           title: this.title,
           region: this.regionName,
-<<<<<<< HEAD
-          content: this.content
-=======
           content: this.content,
->>>>>>> refactoring
         })
         .then((response) => {
           // console.log(response);
           if (response.status === 200) {
-<<<<<<< HEAD
-            alert("게시글이 작성되었습니다!");
-=======
             alert("게시글이 작성되었습니다.");
->>>>>>> refactoring
           }
           this.$router.go(-1);
         })

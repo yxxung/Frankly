@@ -59,13 +59,13 @@ export default {
 }
 
 .bottom-nav-area span {
-    color: #535353;
+    color: #3F3F3F;
 }
 
 .bottom-nav-area p {
     margin-top: 2px;
     font-size: 11px;
-    color: #535353;
+    color: #3F3F3F;
     font-family: 'Noto Sans KR';
     line-height: 14px;
 }

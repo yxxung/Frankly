@@ -69,8 +69,8 @@
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
               <h6>익명{{ reply.replyID }}</h6>
               <span class="comments__info__date">{{
-                  elapsedText(reply.replyRegDate)
-                }}</span>
+                elapsedText(reply.replyRegDate)
+              }}</span>
             </div>
 
             <div class="comments__info-right">

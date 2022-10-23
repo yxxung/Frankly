@@ -38,7 +38,6 @@ public class BoardController {
 //
 //        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
 //    }
-
     @PostMapping(value = "/create")
     public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
@@ -52,7 +51,6 @@ public class BoardController {
 
 
     //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
-
     @PutMapping("/update/{boardID}")
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
                                          @PathVariable("boardID")int boardID)throws Exception{
