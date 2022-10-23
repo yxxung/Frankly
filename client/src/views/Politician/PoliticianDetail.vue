@@ -52,10 +52,12 @@
         >
       </div>
 
-      <div class="assembly-law-info">
-        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보 보기</div>
-        <div class="link-statistics" @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)">키워드 보기</div>
+      <div class="link-statistics-container">
+        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>
+        <div class="link-statistics" @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)">뉴스 키워드</div>
+      </div>
 
+      <div class="assembly-law-info">
         <div>
           <b-nav pills align="center">
             <b-nav-item>대표발의법률안</b-nav-item>
@@ -297,6 +299,29 @@ export default {
   height: 300px;
   background: #ffffff;
   border-radius: 24px;
+}
+
+.link-statistics-container {
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 24px;
+  margin: 30px auto;
+  width: 500px;
+  padding: 24px 16px;
+  background: #ffffff;
+}
+
+.link-statistics {
+  padding: 8px 16px;
+  color: #3c3c3c;
+  border-radius: 8px;
+  border: 1px solid #ebe8e2;
+  margin-right: 8px;
+}
+
+.link-statistics:hover {
+  cursor: pointer;
+  background-color: #f2eee8;
 }
 
 </style>
