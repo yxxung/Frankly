@@ -35,21 +35,19 @@
       <div class="assembly-infos">
         <div class="assembly-detail">
           <h2>국회 출석률</h2>
-          <h3>86%</h3>
+          <h3>{{this.attendancePercentage}}%</h3>
         </div>
         <div class="assembly-detail">
           <h2>표결건수</h2>
-          <h3>3147건</h3>
+          <h3>{{this.billLawNum}}건</h3>
         </div>
         <div class="assembly-detail">
           <h2>당선 횟수</h2>
           <h3>4선</h3>
         </div>
-        <router-link to="/statistics"
-          ><div class="assembly-detail">
+         <div class="assembly-detail" @click="goToDashboard(this.PoliticianDetailData.politicianID)">
             <h4>> 통계<br />더보기</h4>
-          </div></router-link
-        >
+          </div>
       </div>
 
       <div class="link-statistics-container">
@@ -91,6 +89,10 @@ export default {
         selectNumber: "",
         selectInfo: "",
       },
+      attendanceList:[],
+      attendancePercentage : 0,
+      billLawNum : 0,
+      billLawList : []
     };
   },
   methods:{
@@ -105,18 +107,18 @@ export default {
         },
       });
     },
-    goToNewsKeyword(politicianID) {
+    goToDashboard(politicianID) {
+      // const router = useRouter()
       this.$router.push({
-        name: "PoliticianNewsKeyword",
+        name: "PoliticianStatistics",
         params: {
-          politicianID: politicianID,
-          politicianInfo: this.PoliticianDetailData
-        },
+          politicianID: politicianID
+          },
       });
-    }
+    },
 
     },
-    created() {
+    beforeCreate() {
     const politicianID = this.$route.params.politicianID;
     axios.get(`/api/politician/${politicianID}`).then((response) => {
       this.PoliticianDetailData.politicianID = response.data.politicianID;
@@ -124,8 +126,28 @@ export default {
       this.PoliticianDetailData.partyName = response.data.partyName;
       this.PoliticianDetailData.selectNumber = response.data.selectNumber;
       this.PoliticianDetailData.selectInfo = response.data.selectInfo;
-      console.log(response);
     });
+      axios.get(`/api/attendance/${politicianID}`).then((response) => {
+        let attendanceList = response.data;
+        let jsonss;
+        let count = 0;
+        for(jsonss of attendanceList){
+          let total = jsonss["businessTrip"] + jsonss["petitionLeave"] + jsonss["attendance"];
+          if(total === 0){
+            count++;
+          }
+        }
+
+        let percentage = ((attendanceList.length - count) / attendanceList.length)*100;
+        this.attendancePercentage = percentage;
+        this.attendanceList = attendanceList
+
+      });
+      axios.get(`/api/billLaw/${politicianID}`).then((response) => {
+        let billLawList = response.data
+        this.billLawNum = billLawList.length
+        console.log(response.data)
+      });
   },
 };
 </script>
