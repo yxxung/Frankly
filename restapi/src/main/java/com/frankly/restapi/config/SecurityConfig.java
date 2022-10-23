@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -61,16 +60,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 한 유저 테스트기 때문에 CSRF 미적용 추후 수정.
         http.csrf().disable() //security에서 기본으로 생성하는 login페이지 사용 안 함
                 //특정 request에는 auth 필요없음.
                 //배포용 설정
-//                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/users/signup", "/api/users/login", "/api/infos/**", "/api/boards/**","/api/politician/**",
+                        "/api/billLaw/**", "/api/schedule/**", "/api/attendance/**", "/api/vote/**", "/api/news/**", "/api/property/**", "/api/replys/**").permitAll()
+
+                .antMatchers("/").hasRole("USER")
+                .antMatchers("/admin").hasRole("ADMIN")
+
                 //개발용 설정
                                 .authorizeRequests().antMatchers("/api/**", "/api/users/user", "/api/auth/signin", "/**").permitAll()
                 //cors 예외처리

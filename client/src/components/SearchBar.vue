@@ -1,48 +1,34 @@
 <template>
-  <div class="politician-search">
-    <form class="politician-search-form" action="" method="get">
-      <input
-        class="politician-search-form__text-input"
-        type="text"
-        placeholder="국회의원 검색"
-        v-model="politicianKeyword"
-        @keyup.enter="searchResultShow(searchKeyword)"
-      /><!--엔터 클릭시 searchresultshow 실행-->
-      <button
-        class="search-button"
-        type="submit"
-        @click="searchResultShow(searchKeyword)"
-      ><!--버튼 클릭시 searchresultshow 실행-->
-        <img src="@/assets/icon/button.svg" />
-      </button>
-    </form>
-  </div>
+    <div class="politician-search">
+      <form class="politician-search-form">
+        <input
+          class="politician-search-form__text-input"
+          type="search"
+          placeholder="국회의원 검색"
+          @click.prevent="checkClick"
+        />
+        <button class="search-button" type="submit">
+          <img src="@/assets/icon/button.svg" />
+        </button>
+      </form>
+    </div>
 </template>
 
 <script>
+import Search from "@/views/Politician/PoliticianSearchView.vue";
+import axios from "axios";
+
 export default {
-  data() {
-    return {
-      searchKeyword: "",
-    };
+  components: {
+    Search,
   },
   methods: {
-    searchResultShow(searchKeyword) {
-      if (searchKeyword !== "") {
-        this.router.push({
-            name: 'Politician',
-            params: {
-                searchKeyword: this.searchKeyword,
-                isResultShow: true
-            }
-        });
-        this.searchKeyword = ''
-        console.log('"', searchKeyword, '"' + '검색')
-      } else {
-        alert('검색어를 입력해주세요 !')
-      }
+    checkClick() {
+      this.$router.push({
+        path: "/Search",
+      });
     },
-  },
+  }
 };
 </script>
 
@@ -52,13 +38,12 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 8px 24px;
   margin-top: -30px;
 }
 
 .politician-search-form__text-input {
   align-items: center;
-  width: 448px;
+  width: 440px;
   height: 38px;
   left: 16px;
   top: 297px;
@@ -87,4 +72,22 @@ export default {
   vertical-align: middle;
 }
 
+.politician-search-view {
+  padding: 8px 24px;
+  max-width: 540px;
+  height: 100%;
+  top: 100px;
+}
+
+.politician-search-view > h2 {
+  padding-top: 10px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  letter-spacing: -0.024em;
+
+  color: #2b2b2b;
+}
 </style>

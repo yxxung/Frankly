@@ -1,17 +1,66 @@
 <template>
   <body>
-  <div class="wrap">
-    <!--헤더-->
-    <header class="header header--back">
-      <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
-        <img src="@/assets/icon/Out.svg" alt="나가기" />
-      </a>
-      <h2>글쓰기</h2>
-      <div class="header--right">
-        <!--제출 버튼-->
-        <button class="write-button" type="submit" @click="onClickSubmit()">
-          완료
-        </button>
+    <div class="wrap">
+      <!--헤더-->
+      <header class="header header--back">
+        <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
+          <img src="@/assets/icon/Out.svg" alt="나가기" />
+        </a>
+        <h2>글쓰기</h2>
+        <div class="header--right">
+          <!--제출 버튼-->
+          <button
+            v-if="writeFlag === 'write'"
+            class="write-button"
+            type="submit"
+            @click="onClickSubmit()"
+          >
+            완료
+          </button>
+          <!--수정 제출 버튼-->
+          <button
+            v-else-if="writeFlag === 'update'"
+            class="write-button"
+            type="submit"
+            @click="onClickUpdate()"
+          >
+            수정
+          </button>
+        </div>
+      </header>
+
+      <!--글쓰기 화면-->
+      <div class="write-title">
+        <!--카테고리-->
+        <select v-model="regionName" class="region" @change="selected">
+          <option v-for="region in regions" :key="region.value">
+            {{ region.regionName }}
+          </option>
+        </select>
+
+        <!--제목-->
+        <input
+          type="text"
+          v-model="title"
+          ref="title"
+          class="board-title"
+          placeholder="제목"
+        />
+      </div>
+      
+      <div class="write-content">
+        <!--내용-->
+        <textarea
+          type="text"
+          ref="content"
+          v-model="content"
+          class="board-content"
+          placeholder="내용을 입력하세요."
+          maxlength="2000"
+        />
+        <!--이미지 업로드 !!수정하기!!
+          <label for="file">첨부파일</label>
+          <input multiple @change="onInputImage()" id="file" ref="image" type="file" />-->
       </div>
     </header>
 
@@ -57,6 +106,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "WriteBoard",
   data() {
     return {
       regions: [
@@ -82,11 +132,32 @@ export default {
       title: "",
       content: "",
       image: "",
+      writeFlag: "write",
     };
+  },
+  created() {
+    const boardID = this.$route.params.boardID;
+    if (boardID !== undefined) {
+      this.writeFlag = "update"
+      console.log(this.writeFlag);
+      axios
+        .get(`/api/boards/${boardID}`)
+        .then((response) => {
+          this.title = response.data.title;
+          this.content = response.data.content;
+          this.regionName = response.data.region;
+        })
+        .catch(() => {
+          console.log("보드 내용을 불러오지 못했습니다.");
+        });
+    } else {
+      this.writeFlag = "write"
+      console.log(this.writeFlag);
+    }
   },
   methods: {
     selected() {
-      console.log(this.regionName)
+      console.log(this.regionName);
     },
     /*onInputImage() {
       console.log(this.$refs);
@@ -110,17 +181,35 @@ export default {
         .post("/api/boards/create", {
           title: this.title,
           region: this.regionName,
-          content: this.content
+          content: this.content,
         })
         .then((response) => {
           // console.log(response);
           if (response.status === 200) {
-            alert("게시글이 작성되었습니다!");
+            alert("게시글이 작성되었습니다.");
           }
           this.$router.go(-1);
         })
         .catch((error) => {
           console.error(error);
+        });
+    },
+    onClickUpdate() {
+      const boardID = this.$route.params.boardID;
+      axios
+        .put(`/api/boards/update/${boardID}`, {
+          title: this.title,
+          content: this.content,
+          region: this.regionName,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            alert("게시글이 수정되었습니다.");
+          }
+          this.$router.go(-1);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },

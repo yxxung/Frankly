@@ -31,13 +31,17 @@
         FROM frankly.Politician
     </select>
 
-
     <!--    Mapper 매서드 이름과 Mapping-->
     <select id="readPolitician" resultMap="politicianResultMap">
         SELECT * FROM frankly.Politician
         WHERE politicianID = #{politicianID}
     </select>
 
+    <select id="searchPolitician" resultMap="politicianResultMap">
+        SELECT * FROM frankly.Politician
+        WHERE politicianName LIKE concat('%', #{searchName}, '%')
+        ORDER BY politicianID ASC
+    </select>
 
     <insert id="createPolitician" parameterType="PoliticianDTO">
         INSERT INTO frankly.Politician

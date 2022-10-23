@@ -1,5 +1,6 @@
 package com.frankly.restapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,7 +38,7 @@ public class UserDTO implements UserDetails {
      *
      * 예시 :
      * Member customer = Member.build()
-     * 	.name("홍길동")
+     *    .name("홍길동")
      *     .age(30)
      *     .build()
      *
@@ -45,13 +46,14 @@ public class UserDTO implements UserDetails {
 
     @Builder
     public UserDTO(String email, String name, String password,
-                   String district, String sex, String userAuth){
+                   String district, String sex, String userAuth, String contact){
         this.email = email;
         this.name = name;
         this.password = password;
         this.district = district;
         this.sex = sex;
         this.userAuth = userAuth;
+        this.contact = contact;
     }
 
     // 해당 유저의 권한을 컬렉션 형태로 반환

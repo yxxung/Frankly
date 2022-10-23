@@ -20,4 +20,7 @@ public class VoteDTO {
 
     private String voteURL;
 
+    //count(voteResult)
+    private int voteCount;
+
 }

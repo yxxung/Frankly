@@ -1,6 +1,5 @@
 package com.frankly.restapi.controller;
 
-import com.frankly.restapi.domain.BoardDTO;
 import com.frankly.restapi.domain.ReplyDTO;
 import com.frankly.restapi.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +14,17 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/boards")
+@RequestMapping("/api/replys")
 @RequiredArgsConstructor
 public class ReplyController {
 
     private final ReplyService replyService;
 
     //댓글 달기
-
-    @PostMapping("/{boardID}/reply")
-    public ResponseEntity<BoardDTO> createReply(@Validated ReplyDTO replyDTO) throws Exception {
+    @PostMapping(value = "/create")
+    public ResponseEntity<ReplyDTO> createReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception {
         replyService.createReply(replyDTO);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(replyDTO, HttpStatus.OK);
     }
 
     //댓글 보기
@@ -41,9 +38,17 @@ public class ReplyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //댓글 수정
+    //댓글 수
+    /*
+    @GetMapping("/{boardID}/replyCount")
+    public ResponseEntity<?> countReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{
+        replyService.countReply(replyDTO);
 
-    @PutMapping("/{boardID}/reply")
+        return new ResponseEntity<>(HttpStatus.OK);
+    }*/
+
+    //댓글 수정
+    @PutMapping("/{boardID}/update")
     public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{
         replyService.updateReply(replyDTO);
 
@@ -51,8 +56,7 @@ public class ReplyController {
     }
 
     //댓글 삭제
-
-    @DeleteMapping("/{boardID}/reply")
+    @DeleteMapping("/{boardID}/delete")
     public ResponseEntity<?> deleteReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
 
         replyService.deleteReply(replyDTO);
@@ -63,4 +67,3 @@ public class ReplyController {
 
 
 }
-
