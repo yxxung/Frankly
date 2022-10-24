@@ -7,7 +7,7 @@ import BootstrapVue3 from 'bootstrap-vue-3'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 
-axios.defaults.baseURL = 'http://192.168.35.72'
+axios.defaults.baseURL = 'http://teamfrankly.kr'
 
 //createApp(App).use(store).use(router).mount('#app')
 const app = createApp(App)
