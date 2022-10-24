@@ -1,17 +1,13 @@
 package com.frankly.restapi.service;
 
 import com.frankly.restapi.domain.BoardDTO;
-import com.frankly.restapi.domain.PoliticianDTO;
 import com.frankly.restapi.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -28,13 +24,12 @@ public class BoardService implements BoardServiceInterface {
     }
 
     @Override
-    public void updateBoard(BoardDTO boardDTO, String region, int boardID) throws Exception {
+    public void updateBoard(BoardDTO boardDTO, int boardID) throws Exception {
 
         BoardDTO targetBoard = boardMapper.readBoard(boardID);
         if(targetBoard.getAuthor() == (boardDTO.getAuthor())){
             try{
                 boardDTO.setBoardID(boardID);
-                boardDTO.setRegion(region);
                 boardMapper.updateBoard(boardDTO);
             }catch(SQLException e){
                 System.out.println(e);
@@ -62,6 +57,17 @@ public class BoardService implements BoardServiceInterface {
         return boardMapper.getBoardList(region);
     }
 
+    // 게시물 총 갯수
+    @Override
+    public int searchCount(String searchType, String keyword) throws Exception {
+        return boardMapper.searchCount(searchType, keyword);
+    }
+
+    @Override
+    public List<BoardDTO> searchBoard(String region, String searchType, String keyword) throws Exception {
+        log.info("getSearchList");
+        return boardMapper.searchBoard(region, searchType, keyword);
+    }
 //    @Override
 //    public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
 //        return null;

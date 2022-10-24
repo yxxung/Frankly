@@ -1,16 +1,16 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.BoardDTO;
+import com.frankly.restapi.domain.PageVO;
 import com.frankly.restapi.service.BoardService;
 import com.frankly.restapi.service.ReplyService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,17 +32,17 @@ public class BoardController {
 //                                                @RequestPart(required = false) MultipartFile file) throws Exception{
 //        log.info("게시물 생성" + boardDTO.getAuthor());
 //        boardService.createBoard(boardDTO);
-//        log.info("time: " + boardDTO.getRegDate());
+//        log.info("time: " + boardDTO.getBoardRegDate());
 //        log.info("dto: " + boardDTO);
 //        log.info("file: " + file);
 //
 //        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
 //    }
-    @PostMapping(value = "/{region}/create")
-    public ResponseEntity<BoardDTO> createBoard(@Validated BoardDTO boardDTO) throws Exception{
+    @PostMapping(value = "/create")
+    public ResponseEntity<BoardDTO> createBoard(@Validated @RequestBody BoardDTO boardDTO) throws Exception{
         log.info("게시물 생성" + boardDTO.getAuthor());
         boardService.createBoard(boardDTO);
-        log.info("time: " + boardDTO.getRegDate());
+        log.info("time: " + boardDTO.getBoardRegDate());
         log.info("dto: " + boardDTO);
 
         return new ResponseEntity<>(boardDTO, HttpStatus.OK);
@@ -50,13 +50,12 @@ public class BoardController {
 
 
     //본인이 쓴 글, 그리고 admin만 수정할 수 있음. 그걸 어떻게 판별할것인가?
-    @PutMapping("/{boardID}")
+    @PutMapping("/update/{boardID}")
     public ResponseEntity<?> updateBoard(@Validated @RequestBody BoardDTO boardDTO,
-                                         @PathVariable("region") String region,
                                          @PathVariable("boardID")int boardID)throws Exception{
 
         log.info("게시물 수정 수정자 :"  + boardDTO.getAuthor());
-        boardService.updateBoard(boardDTO, region, boardID);
+        boardService.updateBoard(boardDTO, boardID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -67,6 +66,7 @@ public class BoardController {
         try{
             BoardDTO boardDTO = boardService.readBoard(boardID);
             replyService.readReply(boardID);
+            replyService.countReply(boardID);
 
             return new ResponseEntity<>(boardDTO, HttpStatus.OK);
         }catch (Exception e){
@@ -80,7 +80,7 @@ public class BoardController {
         return new ResponseEntity<>(boardService.getBoardList(region), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{boardID}")
+    @DeleteMapping("/delete/{boardID}")
     public ResponseEntity<?> deleteBoard(@PathVariable("boardID") int boardID) throws Exception{
 
         BoardDTO boardDTO = new BoardDTO();
@@ -92,6 +92,20 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //게시물 검색
+    @GetMapping("/boardlist/{region}/search")
+    public ResponseEntity<List<BoardDTO>> searchBoard(@PathVariable("region") String region,
+                                                      @RequestParam(value = "searchType", required = false, defaultValue = "title") String searchType,
+                                                      @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) throws Exception{
 
+        PageVO pageVO = new PageVO();
 
+        //PageVO.setNum(num);
+        //PageVO.setCount(boardService.searchCount(searchType, keyword));
+        //pageVO.setSearchTypeKeyword(searchType, keyword);
+        pageVO.setSearchType(searchType);
+        pageVO.setKeyword(keyword);
+
+        return new ResponseEntity<>(boardService.searchBoard(region, searchType, keyword), HttpStatus.OK);
+    }
 }

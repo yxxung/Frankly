@@ -26,8 +26,8 @@ public class VoteService implements VoteServiceInterface{
     }
 
     @Override
-    public void updateVote(VoteDTO voteDTO) throws Exception {
-        voteMapper.updateVote(voteDTO);
+    public void updateVote(int voteID) throws Exception {
+        voteMapper.updateVote(voteID);
     }
 
     @Override

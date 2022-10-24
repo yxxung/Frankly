@@ -1,14 +1,12 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.config.JwtTokenUtil;
-import com.frankly.restapi.service.JwtUserDetailsService;
 import com.frankly.restapi.domain.JwtRequest;
 import com.frankly.restapi.domain.JwtResponse;
+import com.frankly.restapi.service.JwtUserDetailsService;
 import com.frankly.restapi.service.UserAuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,18 +29,18 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signin")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         try {
             userAuthProvider.authenticate(new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+                    authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
             UserDetails userDetails = userDetailsService
-                    .loadUserByUsername(authenticationRequest.getUsername());
+                    .loadUserByUsername(authenticationRequest.getEmail());
             String token = jwtTokenUtil.generateToken(userDetails);
 
 

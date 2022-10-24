@@ -3,9 +3,7 @@ package com.frankly.restapi.service;
 import com.frankly.restapi.domain.UserDTO;
 import com.frankly.restapi.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,26 +23,26 @@ public class JwtUserDetailsService implements UserDetailsService {
     private final UserMapper userMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         try {
-            UserDTO user = getUserByEmail(userName);
-            log.info("login User : " + userName);
-            if (user.getEmail().equals(userName)) {
+            UserDTO user = getUserByEmail(email);
+            log.info("login User : " + email);
+            if (user.getEmail().equals(email)) {
 
                 return new User(user.getEmail(),
                             user.getPassword(),
                             user.getAuthorities());
             } else{
-                throw new UsernameNotFoundException("유저 이름을 찾을 수 없습니다. 유저이름 : " + userName);
+                throw new UsernameNotFoundException("유저 이름을 찾을 수 없습니다. 유저이름 : " + email);
             }
         } catch (Exception e){
-            throw new UsernameNotFoundException("유저 이름을 찾을 수 없습니다. 유저이름 : " + userName);
+            throw new UsernameNotFoundException("유저 이름을 찾을 수 없습니다. 유저이름 : " + email);
         }
 
     }
 
-    public UserDTO getUserByEmail(String userEmail) throws Exception {
-        return userMapper.getUserByEmail(userEmail);
+    public UserDTO getUserByEmail(String email) throws Exception {
+        return userMapper.getUserByEmail(email);
     }
 }

@@ -1,13 +1,11 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.ConferenceBillLawDTO;
-import com.frankly.restapi.domain.VoteDTO;
 import com.frankly.restapi.service.ConferenceBillLawService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +14,12 @@ import java.util.List;
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/infos")
+@RequestMapping("/api/billLaw")
 public class ConferenceBillLawController {
 
     private final ConferenceBillLawService conferenceBillLawService;
 
-    @GetMapping("/{politicianID}/billLaw")
+    @GetMapping("/{politicianID}")
     public ResponseEntity<List<ConferenceBillLawDTO>> readConferenceBillLaw(@PathVariable("politicianID") int politicianID)
             throws Exception {
         log.info("readConferenceBillLaw - politicianID : " + politicianID);
@@ -29,17 +27,17 @@ public class ConferenceBillLawController {
         return new ResponseEntity<>(conferenceBillLawService.readConferenceBillLaw(politicianID), HttpStatus.OK);
     }
 
-    @PutMapping("/billLaw/{billID}")
+    @PutMapping("/update")
     public ResponseEntity<ConferenceBillLawDTO> updateConferenceBillLaw(@PathVariable("billID") int billID)
             throws Exception{
-        log.info("update Vote : " + billID);
+        log.info("updateConferenceBillLaw : " + billID);
 
         conferenceBillLawService.updateConferenceBillLaw(billID);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/billLaw/{billID}")
+    @DeleteMapping("/delete")
     public ResponseEntity<?>deleteConferenceBillLaw(@PathVariable("billID") int billID)
             throws Exception{
         log.info("deleteConferenceBillLaw : " + billID);

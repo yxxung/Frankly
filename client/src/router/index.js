@@ -32,6 +32,11 @@ import JeonbukBoard from '../views/Board/region/JeonbukBoard.vue'
 import JeonnamBoard from '../views/Board/region/JeonnamBoard.vue'
 import UlsanBoard from '../views/Board/region/UlsanBoard.vue'
 import SejongBoard from '../views/Board/region/SejongBoard.vue'
+import PoliticianPropertyDetail from "@/views/Politician/PoliticianPropertyDetail";
+import EditData from "@/views/Admin/EditData";
+import PoliticianNewsKeyword from "@/views/Politician/PoliticianNewsKeyword";
+import PoliticianSearchView from "@/views/Politician/PoliticianSearchView";
+import PoliticianStatistics from "@/views/Politician/PoliticianStatistics";
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
@@ -188,15 +193,39 @@ const routes = [
     path: '/EditUser',
     component: EditUser
   },
-  /*
+
   {
     path: '/EditData',
     component: EditData
-  },*/
+  },
   {
     path: '/PoliticianDetail/:politicianID',
     name: 'PoliticianDetail',
     component: PoliticianDetail
+  },
+  {
+    path:'/PoliticianDetail/:politicianID/property',
+    name: 'PoliticianPropertyDetail',
+    component: PoliticianPropertyDetail,
+    props: true
+
+  },
+  {
+    path:'/PoliticianDetail/:politicianID/keyword',
+    name: 'PoliticianNewsKeyword',
+    component: PoliticianNewsKeyword,
+    props: true
+  },
+  {
+    path: '/Search',
+    name: 'Search',
+    component: PoliticianSearchView
+  },
+  /*시각화*/
+  {
+    path:'/PoliticianDetail/:politicianID/statistics',
+    name: 'PoliticianStatistics',
+    component: PoliticianStatistics
   }
 ]
 

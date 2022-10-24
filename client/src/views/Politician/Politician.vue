@@ -27,11 +27,6 @@
       </li>
     </ul>
 
-    <PoliticianSearchView
-      v-if="isResultShow"
-      v-bind:searchKeyword="searchKeyword"
-    ></PoliticianSearchView>
-
     <Navigation />
   </div>
 </template>
@@ -39,16 +34,13 @@
 <script>
 import Navigation from "@/components/Navigation.vue";
 import Slider from "@/components/Slider.vue";
-import PoliticianSearchView from "@/views/Politician/PoliticianSearchView.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import axios from "axios";
-
 export default {
   name: "Politician",
   components: {
     Navigation: Navigation,
     Slider: Slider,
-    PoliticianSearchView: PoliticianSearchView,
     SearchBar: SearchBar,
   },
   data() {
@@ -74,21 +66,6 @@ export default {
           console.log(error);
         });
     },
-    searchResultShow(searchKeyword) {
-      console.log('"', keyword, '"' + " 검색");
-      if (searchKeyword !== "") {
-        this.$router
-          .push({
-            name: "Politician",
-            params: {
-              searchKeyword: this.searchKeyword,
-            },
-          })
-          .catch(() => {});
-      } else {
-        alert("검색어를 입력해주세요 !");
-      }
-    },
     goToPoliticianDetail(politicianID) {
       this.$router.push({
         name: "PoliticianDetail",
@@ -97,21 +74,16 @@ export default {
         },
       });
     },
-    searchKeywordChange() {
-      this.isResultShow = false;
-    },
   },
 };
 </script>
 
 <style>
 @import "@/assets/scss/style.scss";
-
 /*대한민국 정당*/
 .political-party-list {
   padding: 8px 24px;
 }
-
 .political-party-list > h2 {
   padding-top: 10px;
   font-family: "Noto Sans KR";
@@ -120,16 +92,13 @@ export default {
   font-size: 24px;
   line-height: 26px;
   letter-spacing: -0.024em;
-
   color: #2b2b2b;
 }
-
 .politician-title {
   display: flex;
   padding: 8px 24px;
   justify-content: space-between;
 }
-
 .politician-title > h2 {
   padding-top: 10px;
   font-family: "Noto Sans KR";
@@ -138,10 +107,8 @@ export default {
   font-size: 24px;
   line-height: 26px;
   letter-spacing: -0.024em;
-
   color: #2b2b2b;
 }
-
 .politician-title > h3 {
   padding-top: 18px;
   font-family: "Noto Sans KR";
@@ -151,10 +118,8 @@ export default {
   line-height: 26px;
   letter-spacing: -0.024em;
   font-weight: 300;
-
   color: #818181;
 }
-
 /*전체 국회의원*/
 .all-politician-list {
   margin: 10px auto;
@@ -162,13 +127,11 @@ export default {
   max-width: 520px;
   display: table;
 }
-
 .politician {
   display: inline-table;
   margin-bottom: 20px;
   padding: 0 20px;
 }
-
 .politician-image {
   width: 75px;
   height: 75px;
@@ -181,13 +144,11 @@ export default {
   align-items: center;
   cursor: pointer;
 }
-
 .politician-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .politician-name {
   margin: 5px auto;
   font-size: 16px;
@@ -196,7 +157,7 @@ export default {
   font-weight: 500;
   color: #000000;
   display: flex;
-        justify-content: center;
-        align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 </style>

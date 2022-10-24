@@ -28,7 +28,7 @@
           </b-row>
         </b-container>
       </b-form-group>
-<!--      <EditUserDetail v-bind:propInfos="infos"></EditUserDetail>-->
+      <EditUserDetail v-bind:propInfos="infos"></EditUserDetail>
       <!-- 페이징 처리-->
 
     </b-card>
@@ -71,7 +71,6 @@ export default {
           }else(
             this.infos.push(response.data)
           )
-
           console.log(this.infos)
         })
         .catch(e => {

@@ -1,9 +1,6 @@
 package com.frankly.restapi.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,16 +11,16 @@ public class JwtResponse implements Serializable {
 
     private static final long serialVersionUID = -8091879091924046844L;
     private final String jwttoken;
-    private final String userEmail;
-    private final String auth;
+    private final String email;
+    private final String userAuth;
 
 
 
-    public JwtResponse(String jwttoken, String userEmail, String auth) {
+    public JwtResponse(String jwttoken, String email, String userAuth) {
 
         this.jwttoken = jwttoken;
-        this.userEmail = userEmail;
-        this.auth = auth;
+        this.email = email;
+        this.userAuth = userAuth;
     }
 
     public String getToken() {
