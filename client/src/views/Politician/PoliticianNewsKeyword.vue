@@ -21,7 +21,10 @@
       </b-nav>
     </div>
     <b-row class="my-1">
-      <b-col sm="5"><b-form-select v-model="selected" :options="options" v-on:click="listReturn"></b-form-select></b-col>
+      <b-col sm="5"><b-form-select v-model="selected" :options="options" ></b-form-select></b-col>
+      <b-col sm="2">
+        <b-button variant="outline-secondary" v-on:click="listReturn()">검색</b-button>
+      </b-col>
     </b-row>
     <div style="height:70%" >
       <PoliticianNewsKeywordView v-bind:propInfos="infos" v-bind:fields="fields" v-bind:keywordList="keywordList" v-bind:isBusy="isBusy"></PoliticianNewsKeywordView>
@@ -137,11 +140,14 @@ export default {
           optionList.push(json);
         });
         this.options = optionList.reverse();
+        // 초기
         this.isBusy = false;
+        this.selected = optionList[0]["value"];
+        this.listReturn();
         // this.years = yearList
 
       })
-      .catch(e => {
+      .catch(e => {값
         console.log('error:', e)
       })
   },

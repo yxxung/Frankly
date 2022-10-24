@@ -21,7 +21,7 @@
       >
         <!-- 정치인 리스트 출력 이미지, 이름-->
         <div class="politician-image">
-          <img src="@/assets/politician/정진석.png" />
+          <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="politician-name">{{ politician.politicianName }}</div>
       </li>
