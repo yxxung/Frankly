@@ -21,7 +21,7 @@
       <div class="politician-detail-info">
         <div class="politician-detail-region">충북 공주시 부여군 청양군</div>
         <div class="politician-detail-image">
-          <img src="@/assets/politician/정진석.png" />
+          <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
         </div>
         <div class="politician-detail-name">
           {{ PoliticianDetailData.politicianName }}
@@ -126,7 +126,7 @@ export default {
         }
 
         let percentage = ((attendanceList.length - count) / attendanceList.length)*100;
-        this.attendancePercentage = percentage;
+        this.attendancePercentage = percentage.toFixed(1);
         this.attendanceList = attendanceList
 
       });
