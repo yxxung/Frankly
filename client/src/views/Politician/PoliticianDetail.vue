@@ -126,7 +126,7 @@ export default {
         }
 
         let percentage = ((attendanceList.length - count) / attendanceList.length)*100;
-        this.attendancePercentage = percentage;
+        this.attendancePercentage = percentage.toFixed(1);
         this.attendanceList = attendanceList
 
       });
