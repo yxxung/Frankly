@@ -27,7 +27,7 @@ import kss
 
 class KeywordExtract:
 
-    def keywordExtract(self):
+    def keywordExtract(self, date):
 
 
         f = open("stop.txt", 'r')
@@ -35,7 +35,7 @@ class KeywordExtract:
         f.close()
         con, cur = self.dbConnect()
         politicianList = Politician().selectALL(cursor=cur)
-        dateList = News().selectNewsDateList(cur)
+        dateList = News().selectNewsDateList(cur, date)
         for politician in politicianList:
             stopWord.append(politician.politicianName)
 
@@ -43,7 +43,9 @@ class KeywordExtract:
             print(politician.politicianName + " 키워드 추출 시작")
             preprocessor = Preprocessor()
 
+
             for date in dateList:
+
                 newsObjectList = News().selectByIDDate(cur,politician.politicianID, \
                                                        startdate=date[0], enddate=date[1])
                 if(len(newsObjectList) == 0):
@@ -85,26 +87,27 @@ class KeywordExtract:
                 print(ext_topic_cluster)
 
                 ext_topic_cluster = dict(sorted(ext_topic_cluster.items(), key=lambda x: len(x[1][1]), reverse=True))
+                try:
+                    for _, k in zip(range(len(keywords)), ext_topic_cluster.keys()):
+                        keywords = ""
+                        article_num = len(ext_topic_cluster[k][1])
 
-                for _, k in zip(range(len(keywords)), ext_topic_cluster.keys()):
-                    keywords = ""
-                    article_num = len(ext_topic_cluster[k][1])
+                        for keyword in ext_topic_cluster[k][0]:
+                            keywords = keywords + keyword + " "
 
-                    for keyword in ext_topic_cluster[k][0]:
-                        keywords = keywords + keyword + " "
-
-                    for key, value in ext_topic_cluster[k][1].items():
-                        newsKeyword = NewsKeyword()
-                        newsKeyword.politicianID = politician.politicianID
-                        newsKeyword.newsKeyword = keywords
-                        newsKeyword.newsID = key
-                        try:
+                        for key, value in ext_topic_cluster[k][1].items():
+                            newsKeyword = NewsKeyword()
+                            newsKeyword.politicianID = politician.politicianID
+                            newsKeyword.newsKeyword = keywords
+                            newsKeyword.newsID = key
                             newsKeyword.insert(cur)
                             con.commit()
-                        except:
-                #             추후 중복시 정지
-                #             exit()
-                            continue
+                except:
+                    print(politician.politicianName + " 완료")
+                    continue
+                print(politician.politicianName + " 완료")
+
+
 
                 # #     # topics, keywords 저장
                 # for value ,key in zip(range(len(keywords)), ext_topic_cluster.keys()):
@@ -116,8 +119,8 @@ class KeywordExtract:
 
     def dbConnect(self):
         # dbinfoDir = "E:\work\Frankly\pdfParser\InformationClass/dbinfo.info"
-        dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
-        # dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
+        # dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
+        dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
         with open(dbinfoDir, encoding="UTF8") as dbInfo:
 
             IP  = dbInfo.readline().split(" ")[1].replace("\n", "")
@@ -137,4 +140,4 @@ if __name__ == "__main__":
     freeze_support()
     key = KeywordExtract()
 
-    key.keywordExtract()
+    key.keywordExtract("2022-10-01")
