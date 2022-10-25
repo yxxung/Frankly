@@ -98,6 +98,7 @@
     </div>
     <Navigation />
   </div>
+  <div class="empty-box"></div>
 </template>
 
 <script>
@@ -391,5 +392,9 @@ export default {
   text-align: center;
   letter-spacing: -0.024em;
   color: #111111;
+}
+.empty-box {
+  height: 150px;
+
 }
 </style>

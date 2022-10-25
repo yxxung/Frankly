@@ -44,7 +44,7 @@
           <h3>{{this.attendancePercentage}}%</h3>
         </div>
         <div class="assembly-detail">
-          <h2>표결건수</h2>
+          <h2>법률안 대표 발의 건수</h2>
           <h3>{{this.billLawNum}}건</h3>
         </div>
         <div class="assembly-detail">
@@ -61,6 +61,7 @@
         <div class="link-statistics" @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)">뉴스 키워드</div>
       </div>
     </div>
+    <div class="empty-box"></div>
     <Navigation />
   </div>
 
@@ -92,7 +93,8 @@ export default {
       this.$router.push({
         name: "PoliticianNewsKeyword",
         params: {
-          politicianID: politicianID
+          politicianID: politicianID,
+          politicianName: this.PoliticianDetailData.politicianName
         },
       });
     },
@@ -338,5 +340,8 @@ export default {
 .link-statistics:hover {
   cursor: pointer;
   background-color: #f2eee8;
+}
+.empty-box {
+  height: 40px;
 }
 </style>

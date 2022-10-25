@@ -26,6 +26,7 @@
         FROM frankly.News N LEFT JOIN frankly.NewsKeyword K
         ON N.newsID = K.newsID
         WHERE N.politicianID = #{politicianID}
+        ORDER BY N.newsDate ASC
     </select>
 
     <!-- 뉴스 수정 -->
