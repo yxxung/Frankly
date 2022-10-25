@@ -73,6 +73,12 @@
         >
           출석 정보
         </div>
+        <div
+          class="link-statistics"
+          @click="goToAttendance(this.PoliticianDetailData.politicianID)"
+        >
+          출석 정보
+        </div>
       </div>
     </div>
     <Navigation />
@@ -149,7 +155,7 @@ export default {
 
       let percentage =
         ((attendanceList.length - count) / attendanceList.length) * 100;
-      this.attendancePercentage = percentage;
+      this.attendancePercentage = percentage.toFixed(1);
       this.attendanceList = attendanceList;
     });
     axios.get(`/api/billLaw/${politicianID}`).then((response) => {
