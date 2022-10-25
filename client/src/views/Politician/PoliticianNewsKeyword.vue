@@ -40,7 +40,7 @@ import axios from "axios";
 import PoliticianNewsKeywordView from "@/views/Politician/PoliticianNewsKeywordView";
 import Navigation from "@/components/Navigation.vue";
 export default {
-  name: "PoliticianPropertyDetail",
+  name: "PoliticianKeywordDetail",
   components: {
     PoliticianNewsKeywordView,
     Navigation
@@ -139,7 +139,7 @@ export default {
           let json = {value : val , text: splitString[0] + "년 " + splitString[1] + "월"}
           optionList.push(json);
         });
-        this.options = optionList.reverse();
+        this.options = optionList;
         // 초기
         this.isBusy = false;
         this.selected = optionList[0]["value"];
