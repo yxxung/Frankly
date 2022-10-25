@@ -21,13 +21,11 @@
       </b-nav>
     </div>
     <b-row class="my-1">
-      <b-col sm="5"
-        ><b-form-select
-          v-model="selected"
-          :options="options"
-          v-on:click="listReturn"
-        ></b-form-select
-      ></b-col>
+      <b-col sm="5"><b-form-select v-model="selected" :options="options" ></b-form-select></b-col>
+      <b-col sm="2">
+        <b-button variant="outline-secondary" v-on:click="listReturn()">검색</b-button>
+      </b-col>
+
     </b-row>
     <div style="height: 70%">
       <PoliticianNewsKeywordView
@@ -48,7 +46,7 @@ import axios from "axios";
 import PoliticianNewsKeywordView from "@/views/Politician/PoliticianNewsKeywordView";
 import Navigation from "@/components/Navigation.vue";
 export default {
-  name: "PoliticianPropertyDetail",
+  name: "PoliticianKeywordDetail",
   components: {
     PoliticianNewsKeywordView,
     Navigation,
@@ -147,9 +145,16 @@ export default {
           };
           optionList.push(json);
         });
-        this.options = optionList.reverse();
+        this.options = optionList;
+        // 초기
         this.isBusy = false;
+        this.selected = optionList[0]["value"];
+        this.listReturn();
         // this.years = yearList
+
+      })
+      .catch(e => {값
+        console.log('error:', e)
       })
       .catch((e) => {
         console.log("error:", e);

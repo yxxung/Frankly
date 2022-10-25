@@ -44,7 +44,7 @@ class News:
         self.politicianID = None
         self.newsTitle = None
         self.newsURL = None
-        self.newsKeyword = None
+        # self.newsKeyword = None
         self.newsAbstract = None
 
     @property
@@ -79,13 +79,13 @@ class News:
     def newsURL(self, newsURL):
         self._newsURL = newsURL
 
-    @property
-    def newsKeyword(self):
-        return self._newsKeyword
-
-    @newsKeyword.setter
-    def newsKeyword(self, newsKeyword):
-        self._newsKeyword = newsKeyword
+    # @property
+    # def newsKeyword(self):
+    #     return self._newsKeyword
+    #
+    # @newsKeyword.setter
+    # def newsKeyword(self, newsKeyword):
+    #     self._newsKeyword = newsKeyword
 
     @property
     def newsAbstract(self):
@@ -115,8 +115,8 @@ class News:
 
     def insert(self, cursor):
         try:
-            sql = "INSERT INTO News VALUE (%s,%s, %s, %s,%s,%s, %s, '')"
-            cursor.execute(sql,(None,self.politicianID, self.newsTitle, self.newsURL, self.newsKeyword, self.newsAbstract, self.newsDate))
+            sql = "INSERT INTO News VALUE (%s,%s, %s, %s,%s, %s, '')"
+            cursor.execute(sql,(None,self.politicianID, self.newsTitle, self.newsURL, self.newsAbstract, self.newsDate))
             return True
         except pymysql.err.IntegrityError as e:
             code, msg = e.args
@@ -127,7 +127,7 @@ class News:
             sql = "ALTER TABLE News AUTO_INCREMENT = %s"
             cursor.execute(sql,(selectcount[0]))
             print("auto increment set : " + str(selectcount[0]))
-            # raise Exception('News 중복')
+            raise Exception('News 중복')
         except Exception as e:
             traceback.print_exc()
 
@@ -153,10 +153,10 @@ class News:
             n.politicianID = news[1]
             n.newsTitle = news[2]
             n.newsURL = news[3]
-            n.newsKeyword = news[4]
-            n.newsAbstract = news[5]
+            # n.newsKeyword = news[4]
+            n.newsAbstract = news[4]
+            n.newsContent = news[5]
             n.newsContent = news[6]
-            n.newsContent = news[7]
             NewsList.append(n)
 
             return NewsList
@@ -174,10 +174,9 @@ class News:
             n.politicianID = news[1]
             n.newsTitle = news[2]
             n.newsURL = news[3]
-            n.newsKeyword = news[4]
-            n.newsAbstract = news[5]
-            n.newsDate = news[6]
-            n.newsContent = news[7]
+            n.newsAbstract = news[4]
+            n.newsDate = news[5]
+            n.newsContent = news[6]
             NewsList.append(n)
 
         return NewsList
@@ -195,21 +194,24 @@ class News:
             n.politicianID = news[1]
             n.newsTitle = news[2]
             n.newsURL = news[3]
-            n.newsKeyword = news[4]
-            n.newsAbstract = news[5]
-            n.newsDate = news[6]
-            n.newsContent = news[7]
+            # n.newsKeyword = news[4]
+            n.newsAbstract = news[4]
+            n.newsDate = news[5]
+            n.newsContent = news[6]
             NewsList.append(n)
 
         return NewsList
 
-    def selectNewsDateList(self, cursor):
-        sql = "SELECT DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-1) DAY), '%Y-%m-%d') as start,\
-                    DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-7) DAY), '%Y-%m-%d') as end,\
-                    DATE_FORMAT(`newsDate`, '%Y%u') AS `date`\
+    def selectNewsDateList(self, cursor, targetDate):
+
+        sql = "SELECT DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-1) DAY), '%%Y-%%m-%%d') as start,\
+                    DATE_FORMAT(DATE_SUB(`newsDate`, INTERVAL (DAYOFWEEK(`newsDate`)-7) DAY), '%%Y-%%m-%%d') as end,\
+                    DATE_FORMAT(`newsDate`, '%%Y%%u') AS `date`\
                     FROM frankly.News\
+                    WHERE newsDate > %s \
                     GROUP BY date;"
-        cursor.execute(sql)
+
+        cursor.execute(sql, targetDate)
         result = cursor.fetchall()
 
         return result
@@ -322,20 +324,29 @@ class News:
                         except:
                             continue
 
+                try:
+                    for item in content["items"]:
+                        if(item["link"].startswith("https://n.news.naver.com/")):
+                            newNews = News()
+                            newNews.newsURL = item["link"]
+                            newNews.newsTitle = item['title'].replace("&quot;","").replace("<b>","").replace("&apos;", "")
+                            newNews.newsDate = datetime.datetime.strptime(item['pubDate'], '%a, %d %b %Y %H:%M:%S %z')
+                            newNews.newsAbstract = item['description']
+                            newNews.politicianID = politicain.politicianID
 
-                for item in content["items"]:
-                    if(item["link"].startswith("https://n.news.naver.com/")):
-                        newNews = News()
-                        newNews.newsURL = item["link"]
-                        newNews.newsTitle = item['title'].replace("&quot;","").replace("<b>","").replace("&apos;", "")
-                        newNews.newsDate = datetime.datetime.strptime(item['pubDate'], '%a, %d %b %Y %H:%M:%S %z')
-                        newNews.newsAbstract = item['description']
-                        newNews.politicianID = politicain.politicianID
+                            if(newNews.newsDate < targetDate):
+                                startPage = total
+                                break
 
-                        if(newNews.newsDate < targetDate):
-                            startPage = total
-                            break
-                        newNews.insert(cur)
+                            newNews.insert(cur)
+                except:
+                    con.commit()
+
+                    # 'https://n.news.naver.com/mnews/article/088/0000774104?sid=100'
+                    # xpath] /html/body/div/div[2]/div/div[1]/div[1]/div[2]
+                    # selector] newsct_article
+                    print(politicain.politicianName + " 뉴스 삽입완료")
+                    break
                 con.commit()
 
                     # 'https://n.news.naver.com/mnews/article/088/0000774104?sid=100'
@@ -359,8 +370,8 @@ class News:
 
     def dbConnect(self):
         # dbinfoDir = "E:\work\Frankly\pdfParser\InformationClass/dbinfo.info"
-        dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
-        # dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
+        # dbinfoDir = "D:\code\Frankly\pdfParser\InformationClass/dbinfo.info"
+        dbinfoDir = "/home/hanpaa/IdeaProjects/Frankly/pdfParser/dbinfo.info"
         with open(dbinfoDir, encoding="UTF8") as dbInfo:
 
             IP  = dbInfo.readline().split(" ")[1].replace("\n", "")
@@ -426,5 +437,5 @@ class News:
 
 if __name__ == "__main__":
     n = News()
-    n.getNewsFromAPI(targetDate="2020-06-01")
+    n.getNewsFromAPI(targetDate="2022-10-01")
     n.newsCrawling()

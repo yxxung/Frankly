@@ -21,7 +21,7 @@
       <div class="politician-detail-info">
         <div class="politician-detail-region">충북 공주시 부여군 청양군</div>
         <div class="politician-detail-image">
-          <img src="@/assets/politician/정진석.png" />
+          <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
         </div>
         <div class="politician-detail-name">
           {{ PoliticianDetailData.politicianName }}
@@ -44,8 +44,8 @@
           <h3>{{ this.attendancePercentage }}%</h3>
         </div>
         <div class="assembly-detail">
-          <h2>표결건수</h2>
-          <h3>{{ this.billLawNum }}건</h3>
+          <h2>법률안 대표 발의 건수</h2>
+          <h3>{{this.billLawNum}}건</h3>
         </div>
         <div class="assembly-detail">
           <h2>당선 횟수</h2>
@@ -81,6 +81,7 @@
         </div>
       </div>
     </div>
+    <div class="empty-box"></div>
     <Navigation />
   </div>
 </template>
@@ -111,6 +112,7 @@ export default {
         name: "PoliticianNewsKeyword",
         params: {
           politicianID: politicianID,
+          politicianName: this.PoliticianDetailData.politicianName
         },
       });
     },
@@ -153,16 +155,17 @@ export default {
         }
       }
 
-      let percentage =
-        ((attendanceList.length - count) / attendanceList.length) * 100;
-      this.attendancePercentage = percentage.toFixed(1);
-      this.attendanceList = attendanceList;
-    });
-    axios.get(`/api/billLaw/${politicianID}`).then((response) => {
-      let billLawList = response.data;
-      this.billLawNum = billLawList.length;
-      console.log(response.data);
-    });
+
+        let percentage = ((attendanceList.length - count) / attendanceList.length)*100;
+        this.attendancePercentage = percentage.toFixed(1);
+        this.attendanceList = attendanceList
+
+      });
+      axios.get(`/api/billLaw/${politicianID}`).then((response) => {
+        let billLawList = response.data
+        this.billLawNum = billLawList.length
+        console.log(response.data)
+      });
   },
 };
 </script>
@@ -366,5 +369,8 @@ export default {
 .link-statistics:hover {
   cursor: pointer;
   background-color: #f2eee8;
+}
+.empty-box {
+  height: 40px;
 }
 </style>
