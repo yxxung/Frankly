@@ -41,7 +41,9 @@
     </select>
 
     <select id="searchPolitician" resultMap="politicianResultMap">
-        SELECT * FROM frankly.Politician
+        SELECT * , R.regionName
+        FROM frankly.Politician P JOIN Region R
+        on P.regionID = R.regionID
         WHERE politicianName LIKE concat('%', #{searchName}, '%')
         ORDER BY politicianID ASC
     </select>
