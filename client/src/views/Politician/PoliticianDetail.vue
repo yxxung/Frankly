@@ -19,7 +19,7 @@
       <div class="assembly-image" />
 
       <div class="politician-detail-info">
-        <div class="politician-detail-region">충북 공주시 부여군 청양군</div>
+        <div class="politician-detail-region">{{ PoliticianDetailData.regionName }}</div>
         <div class="politician-detail-image">
           <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
         </div>

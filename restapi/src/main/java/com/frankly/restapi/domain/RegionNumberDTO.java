@@ -12,7 +12,7 @@ public class RegionNumberDTO {
 
     private Long regionID;
 
-    private Integer regionName;
+    private String regionName;
 
 
 }

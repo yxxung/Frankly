@@ -5,7 +5,6 @@
 
     <resultMap type="RegionNumberDTO" id = "regionResultMap">
         <id column="regionID" property="regionID"/>
-        <result column="district" property="district"/>
         <result column="regionName" property="regionName"/>
     </resultMap>
 
