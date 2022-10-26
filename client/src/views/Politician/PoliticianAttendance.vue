@@ -5,20 +5,20 @@
       <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
         <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
       </a>
-      <h2>출석정보</h2>
+      <h2>국회 출석 정보</h2>
     </header>
 
-    <canvas id="chart" width="400" height="400"></canvas>
-
-
     <PoliticianAttendanceChart
-      :attendanceData="attendanceData"
+      v-bind:propsAttendanceTotal="attendanceTotal"
+      v-bind:propsPetitionLeaveTotal="petitionLeaveTotal"
+      v-bind:propsBusinessTripTotal="businessTripTotal"
     >
     </PoliticianAttendanceChart>
 
     <!-- 출석 표-->
     <PoliticianAttendanceTable
-      :politicianAttendance="politicianAttendance">
+      :politicianAttendance="politicianAttendance"
+      v-bind:propsConferenceAttendanceResultList="conferenceAttendanceResultList">
     </PoliticianAttendanceTable>
   </div>
 </template>
@@ -28,9 +28,6 @@ import axios from "axios";
 import PoliticianAttendanceChart from "@/views/Politician/PoliticianAttendanceChart.vue";
 import PoliticianAttendanceTable from "@/views/Politician/PoliticianAttendanceTable.vue";
 
-import {Chart, BarElement, BarController, LinearScale, CategotyScale } from 'cahrt.js';
-Chart.register(BarElement, BarController, LinearScale, CategotyScale);
-
 export default {
   name: "PoliticianAttendance",
   components: {
@@ -39,20 +36,20 @@ export default {
   },
   data() {
     return {
+      componentKey: 0,
       //시각화에 쓸 데이터
-      attendanceData: [],
-      attendanceTotal: "",
-      petitionLeaveTotal: "",
-      businessTripTotal: "",
+      attendanceTotal: null,
+      petitionLeaveTotal: null,
+      businessTripTotal: null,
       //표에 쓸 데이터
-      politicianAttendance: {}
+      politicianAttendance: {},
+      conferenceAttendanceResultList: []
     };
   },
   beforeCreate() {
     const politicianID = this.$route.params.politicianID;
     axios.get(`/api/attendance/${politicianID}`).then((response) => {
-      let attendanceData = response.data;
-      console.log(attendanceData);
+      //시각화//
       let businessTripTotal = 0;
       let attendanceTotal = 0;
       let petitionLeaveTotal = 0;
@@ -69,19 +66,55 @@ export default {
       console.log("businessTripTotal", this.petitionLeaveTotal);
       console.log("petitionLeaveTotal", this.businessTripTotal);
 
-      this.attendanceData.push(attendanceTotal, petitionLeaveTotal, businessTripTotal);
-
-      console.log("array", this.attendanceData);
-
-      //테이블
-      for(let titleJson of response.data) {
-
+    //표//
+      this.politicianAttendance = response.data
+      let attendanceData = response.data
+      console.log(attendanceData)
+/*
+      let conferenceAttendanceResultList = [];
+      let conferenceSet = new Set();
+      let attendanceJsons;
+      for (attendanceJsons of attendanceData){
+        conferenceSet.add(attendanceJsons["conferenceTitle"])
       }
 
+      conferenceSet.forEach(function (val) {
+        let perConferenceAttendaceDataList;
+        let newJson = {
+          "totalNumber": 0,
+          "conferenceTitle" : val,
+          "attendanceTotal" : 0,
+          "petitionLeaveTotal" : 0,
+          "businessTripTotal" : 0,
+          "absenceTotal" : 0
+        }
+
+        perConferenceAttendaceDataList = attendanceData.filter(function(e){
+
+            return e.conferenceTitle === val
+          }
+        )
+        for(let conferenceAttendanceData of perConferenceAttendaceDataList){
+          if(conferenceAttendanceData["attendance"] == 1){
+            newJson["attendanceTotal"] += 1;
+          }
+          else if(conferenceAttendanceData["businessTrip"] == 1){
+            newJson["businessTripTotal"] += 1;
+          }
+          else if(conferenceAttendanceData["petitionLeave"] == 1){
+            newJson["petitionLeaveTotal"] += 1;
+          }
+          else{
+            newJson["absenceTotal"] += 1;
+          }
+          newJson["totalNumber"] += 1;
+        }
+        conferenceAttendanceResultList.push(newJson);
+        this.conferenceAttendanceResultList = conferenceAttendanceResultList;
+
+        console.log("conferenceAttendanceResultList",this.conferenceAttendanceResultList);
+      });*/
     });
-  },
-  methods: {
-    
   },
 };
 </script>

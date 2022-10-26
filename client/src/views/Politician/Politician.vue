@@ -73,7 +73,7 @@ export default {
           politicianID: politicianID,
         },
       });
-    },
+    }
   },
 };
 </script>

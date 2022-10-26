@@ -10,7 +10,8 @@
         <div class="header--right">
           <!--제출 버튼-->
           <button
-            v-if="writeFlag === 'write'"
+            @reload="reload"
+            v-if="writeFlag === false"
             class="write-button"
             type="submit"
             @click="onClickSubmit()"
@@ -19,7 +20,8 @@
           </button>
           <!--수정 제출 버튼-->
           <button
-            v-else-if="writeFlag === 'update'"
+            @reload="reload"
+            v-if="writeFlag === true"
             class="write-button"
             type="submit"
             @click="onClickUpdate()"
@@ -72,6 +74,7 @@ import axios from "axios";
 export default {
   name: "WriteBoard",
   data() {
+    const boardID = this.$route.params.boardID;
     return {
       regions: [
         { value: "0", regionName: "서울특별시" },
@@ -96,13 +99,13 @@ export default {
       title: "",
       content: "",
       image: "",
-      writeFlag: "write",
+      writeFlag: false,
     };
   },
-  created() {
+  beforeCreate() {
     const boardID = this.$route.params.boardID;
     if (boardID !== undefined) {
-      this.writeFlag = "update"
+      this.writeFlag = true
       console.log(this.writeFlag);
       axios
         .get(`/api/boards/${boardID}`)
@@ -114,8 +117,8 @@ export default {
         .catch(() => {
           console.log("보드 내용을 불러오지 못했습니다.");
         });
-    } else {
-      this.writeFlag = "write"
+    } else if(boardID === undefined) {
+      this.writeFlag = false
       console.log(this.writeFlag);
     }
   },
@@ -131,7 +134,6 @@ export default {
       //입력된 내용이 없을 시
       if (this.title.length <= 0 || this.content.length <= 0) {
         window.alert("모든 내용을 입력해주세요!");
-        return false;
       }
       /*
       const formdata = new FormData();
@@ -176,6 +178,10 @@ export default {
           console.log(error);
         });
     },
+    reload() {
+      // 목록을 재로딩을 위해 이벤트 emit
+      this.$emit('reload');
+    }
   },
 };
 </script>

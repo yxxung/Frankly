@@ -1,80 +1,153 @@
+<template>
+  <div class="container" @forceUpdate="handleForceUpdate">
+    <Doughnut
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height"
+    />
+  </div>
+</template>
+
 <script>
-import DoughnutChart from "@/commons/doughnutChart.js";
-import { Doughnut } from 'vue-chartjs';
+import axios from "axios";
+import { Doughnut } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+} from "chart.js";
+
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
 export default {
   name: "PoliticianAttendanceChart",
-  type: "Doughnut",
-  components: {
-    DoughnutChart
-  },
+  components: { Doughnut },
   props: {
-
+    propsAttendanceTotal: {
+      type: Number,
+    },
+    propsPetitionLeaveTotal: {
+      type: Number,
+    },
+    propsBusinessTripTotal: {
+      type: Number,
+    },
+    chartId: {
+      type: String,
+      default: "doughnut-chart",
+    },
+    datasetIdKey: {
+      type: String,
+      default: "label",
+    },
+    width: {
+      type: Number,
+      default: 200,
+    },
+    height: {
+      type: Number,
+      default: 200,
+    },
+    cssClasses: {
+      default: "",
+      type: String,
+    },
+    styles: {
+      type: Object,
+      default: () => {},
+    },
+    plugins: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  watch: {
+    /*
+    handler() {
+      this.chartData.datasets[0].data = [
+        parseInt(this.propsAttendanceTotal),
+        //parseInt(this.propsPetitionLeaveTotal),
+        //parseInt(this.propsBusinessTripTotal),
+      ];
+      this.chartData.datasets[1].data = [
+        //(this.propsAttendanceTotal),
+        parseInt(this.propsPetitionLeaveTotal),
+        //(this.propsBusinessTripTotal),
+      ];
+      this.chartData.datasets[2].data = [
+        //parseInt(this.propsAttendanceTotal),
+        //parseInt(this.propsPetitionLeaveTotal),
+        parseInt(this.propsBusinessTripTotal),
+      ];
+    },*/
+    propsAttendanceTotal() {
+      this.chartData.datasets[0].data = [
+        parseInt(this.propsAttendanceTotal),
+        parseInt(this.propsPetitionLeaveTotal),
+        parseInt(this.propsBusinessTripTotal),
+      ];
+    },
+    deep: true,
   },
   data() {
     return {
-      chart: {
-        data: {
-          labels: ["딸기", "자두", "수박", "복숭아", "메론", "망고"],
-          datasets: [
-            {
-              backgroundColor: [
-                "#A684B7",
-                "#DD7445",
-                "#DE9D11",
-                "#E0D295",
-                "#B1D166",
-                "#78BAA1"
-              ],
-              borderColor: "#eee",
-              hoverBorderColor: "#eee",
-              data: [50, 30, 20, 40, 60, 10]
-            }
-          ]
-        },
-        options: {
-          plugins: {
-            legend: {
-              display: true,
-              position: "left",
-              labels: {
-                boxWidth: 8,
-                padding: 10,
-                usePointStyle: true,
-                pointStyle: "circle",
-                font: {
-                  size: 14
-                }
-              },
-              fullSize: true,
-              align: "center"
-            },
-            tooltip: {
-              boxWidth: 15,
-              bodyFont: {
-                size: 14
-              }
-            }
+      componentKey: 0,
+      chartData: {
+        labels: ["출석", "결석", "출장"],
+        datasets: [
+          {
+            backgroundColor: ["#ffce56", "#37a2eb", "#fe6484"],
+            //data: [this.attendanceTotal, this.petitionLeaveTotal, this.businessTripTotal],
+            data: [
+              this.propsAttendanceTotal,
+              this.propsPetitionLeaveTotal,
+              this.propsBusinessTripTotal,
+            ],
           },
+        ],
+      },
+      chartOptions: {
         responsive: true,
-          maintainAspectRatio: false,
-          layout: {
-            padding: {
-              top: 50,
-              bottom: 50
-            }
-          },
-          elements: {
-            arc: {
-              borderWidth: 2
-            }
-          },
-          animation: {
-            duration: 5000
-          }
-        }
-      }
-    }
+        maintainAspectRatio: false,
+      },
+    };
   },
-}
+
+  beforeCreate() {
+    const politicianID = this.$route.params.politicianID;
+    axios.get(`/api/attendance/${politicianID}`).then((response) => {
+      //시각화//
+      let businessTripTotal = 0;
+      let attendanceTotal = 0;
+      let petitionLeaveTotal = 0;
+      for (let i = 0; i < response.data.length; i++) {
+        attendanceTotal = response.data[i].attendance + attendanceTotal;
+        petitionLeaveTotal =
+          response.data[i].petitionLeave + petitionLeaveTotal;
+        businessTripTotal = response.data[i].businessTrip + businessTripTotal;
+      }
+      this.attendanceTotal = attendanceTotal;
+      this.petitionLeaveTotal = petitionLeaveTotal;
+      this.businessTripTotal = businessTripTotal;
+
+      console.log("attendanceTotal", this.attendanceTotal);
+      console.log("businessTripTotal", this.petitionLeaveTotal);
+      console.log("petitionLeaveTotal", this.businessTripTotal);
+    });
+  },
+  methods: {
+    handleForceUpdate() {
+      this.$forceUpdate();
+    },
+  },
+};
 </script>
