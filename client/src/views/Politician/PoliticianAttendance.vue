@@ -17,10 +17,7 @@
 
     <!-- 출석 표-->
     <PoliticianAttendanceTable
-      :politicianAttendance="politicianAttendance"
-      v-bind:propsConferenceAttendanceResultList="
-        conferenceAttendanceResultList
-      "
+      :politicianAttendance="conferenceAttendanceList"
     >
     </PoliticianAttendanceTable>
   </div>
@@ -108,14 +105,15 @@ export default {
           }
           newJson["totalNumber"] += 1;
         }
+
+        conferenceAttendanceResultList.push(newJson);
       });
 
-      conferenceAttendanceResultList.push(newJson);
+
       this.conferenceAttendanceList = conferenceAttendanceResultList;
 
       console.log(
-        "conferenceAttendanceResultList",
-        this.conferenceAttendanceList
+       conferenceAttendanceResultList
       );
     });
   },

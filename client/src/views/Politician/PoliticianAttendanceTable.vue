@@ -8,15 +8,17 @@
             <th class="attendance">출석</th>
             <th class="leave">결석</th>
             <th class="trip">출장</th>
+            <th class="petitionLeave">결석신고서 제출</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="(i,key) in propsConferenceAttendanceResultList" v-bind:key="key">
+            v-for="(i,key) in politicianAttendance" v-bind:key="conferenceTitle">
             <th>{{ i.conferenceTitle }}</th>
-            <td>{{ i.attendance }}</td>
-            <td>{{ i.petitionLeave }}</td>
-            <td>{{ i.businessTrip }}</td>
+            <td>{{ i.attendanceTotal }}</td>
+            <td>{{ i.absenceTotal }}</td>
+            <td>{{ i.businessTripTotal }}</td>
+            <td>{{ i.petitionLeaveTotal }}</td>
           </tr>
         </tbody>
       </table>
@@ -30,63 +32,20 @@ import axios from 'axios';
 export default {
   props: {
     politicianAttendance: Array,
-    propsConferenceAttendanceResultList: Array,
+    conferenceAttendanceResultList: Array,
   },
   data() {
     return {
-        conferenceAttendanceResultList: [],
+
     };
   },
-  beforeCreate() {
-    const politicianID = this.$route.params.politicianID;
-    axios.get(`/api/attendance/${politicianID}`).then((response) => {
-    //표//
-      let attendanceData = response.data;
-
-      let conferenceAttendanceResultList = [];
-      let conferenceSet = new Set();
-      let attendanceJsons;
-      for (attendanceJsons of attendanceData){
-        conferenceSet.add(attendanceJsons["conferenceTitle"])
-      }
-
-      conferenceSet.forEach(function (val) {
-        let perConferenceAttendaceDataList;
-        let newJson = {
-          "totalNumber": 0,
-          "conferenceTitle" : val,
-          "attendanceTotal" : 0,
-          "petitionLeaveTotal" : 0,
-          "businessTripTotal" : 0,
-          "absenceTotal" : 0
-        }
-
-        perConferenceAttendaceDataList = attendanceData.filter(function(e){
-
-            return e.conferenceTitle === val
-          }
-        )
-        for(let conferenceAttendanceData of perConferenceAttendaceDataList){
-          if(conferenceAttendanceData["attendance"] == 1){
-            newJson["attendanceTotal"] += 1;
-          }
-          else if(conferenceAttendanceData["businessTrip"] == 1){
-            newJson["businessTripTotal"] += 1;
-          }
-          else if(conferenceAttendanceData["petitionLeave"] == 1){
-            newJson["petitionLeaveTotal"] += 1;
-          }
-          else{
-            newJson["absenceTotal"] += 1;
-          }
-          newJson["totalNumber"] += 1;
-        }
-        conferenceAttendanceResultList.push(newJson);
-
-        console.log("conferenceAttendanceResultList",conferenceAttendanceResultList);
-      });
-    });
-  },
+  // beforeCreate() {
+  //   const politicianID = this.$route.params.politicianID;
+  //   axios.get(`/api/attendance/${politicianID}`).then((response) => {
+  //   //표//
+  //
+  //   });
+  // },
 };
 </script>
 
