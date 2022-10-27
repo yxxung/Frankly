@@ -53,10 +53,10 @@ export default {
       let businessTripTotal = 0;
       let attendanceTotal = 0;
       let petitionLeaveTotal = 0;
+      let absenceTotal = 0;
       for (let i = 0; i < response.data.length; i++) {
         attendanceTotal = response.data[i].attendance + attendanceTotal;
-        petitionLeaveTotal =
-          response.data[i].petitionLeave + petitionLeaveTotal;
+        petitionLeaveTotal = response.data[i].petitionLeave + petitionLeaveTotal;
         businessTripTotal = response.data[i].businessTrip + businessTripTotal;
       }
       this.attendanceTotal = attendanceTotal;

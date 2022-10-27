@@ -10,7 +10,8 @@
     :slideImageInside="true">
     <vueper-slide v-for="(slide, i) in slides"
                   :key="i"
-                  :image="slide.image"/>
+                  :image="slide.image"
+                  :url="'http://www.naver.com'"/>
   </vueper-slides>
 </template>
 

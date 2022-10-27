@@ -51,12 +51,6 @@
           <h2>당선 횟수</h2>
           <h3>{{ PoliticianDetailData.selectNumber }}선</h3>
         </div>
-        <div
-          class="assembly-detail"
-          @click="goToDashboard(this.PoliticianDetailData.politicianID)"
-        >
-          <h4>> 통계<br />더보기</h4>
-        </div>
       </div>
 
       <div class="link-statistics-container">
@@ -131,16 +125,7 @@ export default {
           politicianID: politicianID,
         },
       });
-    },
-    goToDashboard(politicianID) {
-      // const router = useRouter()
-      this.$router.push({
-        name: "PoliticianStatistics",
-        params: {
-          politicianID: politicianID,
-        },
-      });
-    },
+    }
   },
   beforeCreate() {
     const politicianID = this.$route.params.politicianID;
@@ -314,7 +299,7 @@ export default {
 
 .assembly-detail {
   margin-top: 20px;
-  width: 25%;
+  width: 33%;
   display: inline-block;
 }
 
