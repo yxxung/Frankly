@@ -23,29 +23,34 @@
         <result column="secretary" property="secretary"/>
         <result column="personalAssistant" property="personalAssistant"/>
         <result column="politicianImageURL" property="politicianImageURL"/>
-
+        <result column="regionName" property="regionName"/>
     </resultMap>
 
     <select id="politicianList" resultMap="politicianResultMap">
-        SELECT *
-        FROM frankly.Politician
+        SELECT P.*, R.regionName
+        FROM frankly.Politician P JOIN Region R
+        on R.regionID = P.regionID
     </select>
 
     <!--    Mapper 매서드 이름과 Mapping-->
     <select id="readPolitician" resultMap="politicianResultMap">
-        SELECT * FROM frankly.Politician
+        SELECT P.*, R.regionName
+        FROM frankly.Politician P JOIN Region R
+        on R.regionID = P.regionID
         WHERE politicianID = #{politicianID}
     </select>
 
     <select id="searchPolitician" resultMap="politicianResultMap">
-        SELECT * FROM frankly.Politician
+        SELECT * , R.regionName
+        FROM frankly.Politician P JOIN Region R
+        on P.regionID = R.regionID
         WHERE politicianName LIKE concat('%', #{searchName}, '%')
         ORDER BY politicianID ASC
     </select>
 
     <insert id="createPolitician" parameterType="PoliticianDTO">
         INSERT INTO frankly.Politician
-        VALUES (#{politicianName}
+        VALUES (#{politicianN   ame}
                , #{hanName}
                , #{engName}
                , #{lunar}
