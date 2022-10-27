@@ -75,9 +75,9 @@
         </div>
         <div
           class="link-statistics"
-          @click="goToAttendance(this.PoliticianDetailData.politicianID)"
+          @click="goToBillLaw(this.PoliticianDetailData.politicianID)"
         >
-          출석 정보
+          대표 발의 법률안
         </div>
       </div>
     </div>
@@ -119,6 +119,14 @@ export default {
     goToAttendance(politicianID) {
       this.$router.push({
         name: "PoliticianAttendance",
+        params: {
+          politicianID: politicianID,
+        },
+      });
+    },
+    goToBillLaw(politicianID) {
+      this.$router.push({
+        name: "PoliticianBillLaw",
         params: {
           politicianID: politicianID,
         },
@@ -351,7 +359,6 @@ export default {
 .link-statistics-container {
   display: flex;
   justify-content: flex-start;
-  border-radius: 24px;
   margin: 30px auto;
   width: 500px;
   padding: 24px 16px;

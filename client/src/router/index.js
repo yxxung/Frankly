@@ -38,6 +38,7 @@ import PoliticianNewsKeyword from "@/views/Politician/PoliticianNewsKeyword";
 import PoliticianSearchView from "@/views/Politician/PoliticianSearchView";
 import PoliticianStatistics from "@/views/Politician/PoliticianStatistics";
 import PoliticianAttendance from "@/views/Politician/PoliticianAttendance";
+import PoliticianBillLaw from "@/views/Politician/PoliticianBillLaw";
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
@@ -221,6 +222,12 @@ const routes = [
     path:'/PoliticianDetail/:politicianID/attendance',
     name: 'PoliticianAttendance',
     component: PoliticianAttendance,
+    props: true
+  },
+  {
+    path:'/PoliticianDetail/:politicianID/billlaw',
+    name: 'PoliticianBillLaw',
+    component: PoliticianBillLaw,
     props: true
   },
   {

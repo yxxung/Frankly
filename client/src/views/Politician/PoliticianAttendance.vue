@@ -18,7 +18,10 @@
     <!-- 출석 표-->
     <PoliticianAttendanceTable
       :politicianAttendance="politicianAttendance"
-      v-bind:propsConferenceAttendanceResultList="conferenceAttendanceResultList">
+      v-bind:propsConferenceAttendanceResultList="
+        conferenceAttendanceResultList
+      "
+    >
     </PoliticianAttendanceTable>
   </div>
 </template>
@@ -32,7 +35,7 @@ export default {
   name: "PoliticianAttendance",
   components: {
     PoliticianAttendanceChart,
-    PoliticianAttendanceTable
+    PoliticianAttendanceTable,
   },
   data() {
     return {
@@ -43,7 +46,7 @@ export default {
       businessTripTotal: null,
       //표에 쓸 데이터
       politicianAttendance: {},
-      conferenceAttendanceResultList: []
+      conferenceAttendanceList: [],
     };
   },
   beforeCreate() {
@@ -55,7 +58,8 @@ export default {
       let petitionLeaveTotal = 0;
       for (let i = 0; i < response.data.length; i++) {
         attendanceTotal = response.data[i].attendance + attendanceTotal;
-        petitionLeaveTotal = response.data[i].petitionLeave + petitionLeaveTotal;
+        petitionLeaveTotal =
+          response.data[i].petitionLeave + petitionLeaveTotal;
         businessTripTotal = response.data[i].businessTrip + businessTripTotal;
       }
       this.attendanceTotal = attendanceTotal;
@@ -66,54 +70,53 @@ export default {
       console.log("businessTripTotal", this.petitionLeaveTotal);
       console.log("petitionLeaveTotal", this.businessTripTotal);
 
-    //표//
-      this.politicianAttendance = response.data
-      let attendanceData = response.data
-      console.log(attendanceData)
-/*
+      //표//
+      this.politicianAttendance = response.data;
+      let attendanceData = response.data;
+      console.log(attendanceData);
+
       let conferenceAttendanceResultList = [];
       let conferenceSet = new Set();
       let attendanceJsons;
-      for (attendanceJsons of attendanceData){
-        conferenceSet.add(attendanceJsons["conferenceTitle"])
+      for (attendanceJsons of attendanceData) {
+        conferenceSet.add(attendanceJsons["conferenceTitle"]);
       }
 
       conferenceSet.forEach(function (val) {
         let perConferenceAttendaceDataList;
         let newJson = {
-          "totalNumber": 0,
-          "conferenceTitle" : val,
-          "attendanceTotal" : 0,
-          "petitionLeaveTotal" : 0,
-          "businessTripTotal" : 0,
-          "absenceTotal" : 0
-        }
+          totalNumber: 0,
+          conferenceTitle: val,
+          attendanceTotal: 0,
+          petitionLeaveTotal: 0,
+          businessTripTotal: 0,
+          absenceTotal: 0,
+        };
 
-        perConferenceAttendaceDataList = attendanceData.filter(function(e){
-
-            return e.conferenceTitle === val
-          }
-        )
-        for(let conferenceAttendanceData of perConferenceAttendaceDataList){
-          if(conferenceAttendanceData["attendance"] == 1){
+        perConferenceAttendaceDataList = attendanceData.filter(function (e) {
+          return e.conferenceTitle === val;
+        });
+        for (let conferenceAttendanceData of perConferenceAttendaceDataList) {
+          if (conferenceAttendanceData["attendance"] == 1) {
             newJson["attendanceTotal"] += 1;
-          }
-          else if(conferenceAttendanceData["businessTrip"] == 1){
+          } else if (conferenceAttendanceData["businessTrip"] == 1) {
             newJson["businessTripTotal"] += 1;
-          }
-          else if(conferenceAttendanceData["petitionLeave"] == 1){
+          } else if (conferenceAttendanceData["petitionLeave"] == 1) {
             newJson["petitionLeaveTotal"] += 1;
-          }
-          else{
+          } else {
             newJson["absenceTotal"] += 1;
           }
           newJson["totalNumber"] += 1;
         }
-        conferenceAttendanceResultList.push(newJson);
-        this.conferenceAttendanceResultList = conferenceAttendanceResultList;
+      });
 
-        console.log("conferenceAttendanceResultList",this.conferenceAttendanceResultList);
-      });*/
+      conferenceAttendanceResultList.push(newJson);
+      this.conferenceAttendanceList = conferenceAttendanceResultList;
+
+      console.log(
+        "conferenceAttendanceResultList",
+        this.conferenceAttendanceList
+      );
     });
   },
 };

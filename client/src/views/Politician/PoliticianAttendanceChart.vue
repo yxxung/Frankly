@@ -121,7 +121,7 @@ export default {
       },
     };
   },
-
+/*
   beforeCreate() {
     const politicianID = this.$route.params.politicianID;
     axios.get(`/api/attendance/${politicianID}`).then((response) => {
@@ -143,11 +143,6 @@ export default {
       console.log("businessTripTotal", this.petitionLeaveTotal);
       console.log("petitionLeaveTotal", this.businessTripTotal);
     });
-  },
-  methods: {
-    handleForceUpdate() {
-      this.$forceUpdate();
-    },
-  },
+  },*/
 };
 </script>

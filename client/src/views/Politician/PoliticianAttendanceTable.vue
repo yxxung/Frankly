@@ -12,7 +12,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="i in politicianAttendance" v-bind:key="i.attendanceID">
+            v-for="(i,key) in propsConferenceAttendanceResultList" v-bind:key="key">
             <th>{{ i.conferenceTitle }}</th>
             <td>{{ i.attendance }}</td>
             <td>{{ i.petitionLeave }}</td>

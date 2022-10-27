@@ -1,18 +1,11 @@
 <template>
-  <!--헤더-->
   <div class="wrap">
-    <header class="politician-header header--back">
+    <!--헤더-->
+    <header class="header header--back">
       <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
         <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
       </a>
-      <div class="header-right-icon">
-        <a class="icon-button-56">
-          <img src="@/assets/icon/Bookmark.svg" alt="북마크" />
-        </a>
-        <a class="icon-button-56">
-          <img src="@/assets/icon/Other2.svg" alt="더보기" />
-        </a>
-      </div>
+      <h2>국회의원 뉴스</h2>
     </header>
 
     <div>
@@ -199,5 +192,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@import '@/assets/scss/style.scss';
 </style>
