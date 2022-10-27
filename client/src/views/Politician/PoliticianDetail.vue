@@ -15,7 +15,7 @@
           </a>
         </div>
       </header>
-
+<!---->
       <div class="assembly-image" />
 
       <div class="politician-detail-info">

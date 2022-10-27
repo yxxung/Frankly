@@ -78,7 +78,7 @@ export default {
       for (attendanceJsons of attendanceData) {
         conferenceSet.add(attendanceJsons["conferenceTitle"]);
       }
-
+      // conference set 에 저장된 출석정보 불러오기.
       conferenceSet.forEach(function (val) {
         let perConferenceAttendaceDataList;
         let newJson = {
