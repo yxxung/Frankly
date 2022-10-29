@@ -165,7 +165,7 @@ export default {
     // 게시글 수정
     updateBoard(boardID) {
       this.$router.push({
-        name: "WriteBoard",
+        name: "UpdateBoard",
         params: {
           boardID: boardID
         },

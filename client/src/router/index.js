@@ -15,6 +15,7 @@ import EditBoard from '../views/Admin/EditBoard.vue'
 import EditUser from '../views/Admin/EditUser.vue'
 import PoliticianDetail from '../views/Politician/PoliticianDetail.vue'
 import WriteBoard from '../views/Board/WriteBoard.vue'
+import UpdateBoard from '../views/Board/UpdateBoard.vue'
 import SeoulBoard from '../views/Board/region/SeoulBoard.vue'
 import BusanBoard from '../views/Board/region/BusanBoard.vue'
 import ChungbukBoard from '../views/Board/region/ChungbukBoard.vue'
@@ -66,9 +67,14 @@ const routes = [
   },
   /*board*/
   {
-    path: '/WriteBoard/:boardID?',
+    path: '/WriteBoard',
     name: 'WriteBoard',
     component: WriteBoard
+  },
+  {
+    path: '/UpdateBoard/:boardID',
+    name: 'UpdateBoard',
+    component: UpdateBoard
   },
   {
     path: '/MainBoard',

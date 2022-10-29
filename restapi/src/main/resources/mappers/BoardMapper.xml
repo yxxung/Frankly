@@ -73,6 +73,7 @@
         SELECT B.*, count(R.replyID) as replyCount
         FROM frankly.Board B LEFT JOIN frankly.Reply R
                                        ON B.boardID = R.boardID
+        WHERE B.marked  > 10
         GROUP BY B.boardID
         ORDER BY B.boardID DESC
     </select>
