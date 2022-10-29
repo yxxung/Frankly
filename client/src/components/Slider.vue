@@ -7,10 +7,12 @@
     :gap="4"
     :dragging-distance="50"
     :bullets="false"
-    :slideImageInside="true">
+    :slideImageInside="true"
+    >
     <vueper-slide v-for="(slide, i) in slides"
                   :key="i"
-                  :image="slide.image"/>
+                  :image="slide.image"
+                  :link="slide.link"/>
   </vueper-slides>
 </template>
 
@@ -25,13 +27,16 @@ export default {
   },
   data: () => ({
     slides: [
-      { image: require('@/assets/party/국민의당.svg') },
-      { image: require('@/assets/party/국민의힘.svg') },
-      { image: require('@/assets/party/기본소득당.svg') },
-      { image: require('@/assets/party/더불어민주당.svg') },
-      { image: require('@/assets/party/시대전환.svg') },
-      { image: require('@/assets/party/열린민주당.svg') },
-      { image: require('@/assets/party/정의당.svg') },
+      { image: require('@/assets/party/국민의힘.svg'),
+        link: 'https://www.peoplepowerparty.kr/intro.jsp'},
+      { image: require('@/assets/party/기본소득당.svg'),
+        link: 'https://www.basicincomeparty.kr/'},
+      { image: require('@/assets/party/더불어민주당.svg'),
+        link: 'https://theminjoo.kr/'},
+      { image: require('@/assets/party/시대전환.svg'),
+        link: 'https://www.transition.kr/home/'},
+      { image: require('@/assets/party/정의당.svg'),
+        link: 'https://www.justice21.org/newhome/main/default.html'},
     ]
   })
 }

@@ -7,7 +7,7 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
     <div>
     <b-col >
       <b-row class="m-1" v-for="(value, key) in this.keywordList" :key="key">
-        <b-button  variant="primary" size="sm" v-on:click="getFinalNewsList(value)" v-if="!(value === 'else' ) ">{{value}}</b-button>
+        <b-button  variant="outline-secondary" size="sm" v-on:click="getFinalNewsList(value)" v-if="!(value === 'else' ) ">{{value}}</b-button>
       </b-row>
     </b-col>
     </div>

@@ -16,9 +16,10 @@
         </div>
       </header>
 <!---->
-      <div class="assembly-image" />
-
       <div class="politician-detail-info">
+        <div class="assembly-image-wrap">
+          <div class="assembly-image" />
+        </div>
         <div class="politician-detail-region">{{ PoliticianDetailData.regionName }}</div>
         <div class="politician-detail-image">
           <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
@@ -44,18 +45,12 @@
           <h3>{{ this.attendancePercentage }}%</h3>
         </div>
         <div class="assembly-detail">
-          <h2>법률안 대표 발의 건수</h2>
+          <h2>법률안 대표 발의</h2>
           <h3>{{this.billLawNum}}건</h3>
         </div>
         <div class="assembly-detail">
           <h2>당선 횟수</h2>
           <h3>{{ PoliticianDetailData.selectNumber }}선</h3>
-        </div>
-        <div
-          class="assembly-detail"
-          @click="goToDashboard(this.PoliticianDetailData.politicianID)"
-        >
-          <h4>> 통계<br />더보기</h4>
         </div>
       </div>
 
@@ -207,8 +202,9 @@ export default {
 .politician-detail-info {
   margin: 54px auto 0 auto;
   position: relative;
-  width: 500px;
-  height: 254px;
+  width: 100%;
+  max-width: 540px;
+  max_height: 254px;
   background: #ffffff;
   /* red_lawmaker */
   text-align: center;
@@ -217,7 +213,7 @@ export default {
 .politician-detail-info-2 {
   margin: 30px auto 0 auto;
   padding: 10px 0 10px 0;
-  width: 500px;
+  width: 100%;
   height: 100%;
   background: #ffffff;
   /* red_lawmaker */
@@ -225,19 +221,22 @@ export default {
 }
 
 .assembly-image {
+  margin-top: 5px;
   z-index: 10;
-  margin: 10px 0 0 247px;
+  /*margin: 10px 0 0 247px;*/
   position: absolute;
   width: 49px;
   height: 48px;
-  background-image: url("@/assets/icon/assembly.svg");
+  background-image: url("@/assets/icon/assembly.svg");}
+
+.assembly-image-wrap{
+  display: flex;
+  justify-content: center;
 }
 
 .assembly-text {
   margin: -90px 0 0 30px;
   position: absolute;
-  width: 98.54px;
-  height: 99.7px;
   z-index: 12;
   width: 160px;
   height: 80px;
@@ -305,11 +304,38 @@ export default {
 
 /*국회 정보*/
 .assembly-infos {
-  margin: 30px auto 0 auto;
-  width: 500px;
+  justify-content: flex-start;
+  margin: 30px auto;
+  width: 100%;
   height: 89px;
+  max-width: 540px;
   background: #ffffff;
-  display: table;
+  text-align:center;
+  vertical-align:middle;
+  padding-bottom: 50px;
+}
+
+.link-statistics-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  width: 100%;
+  max-width: 540px;
+  padding: 24px 16px;
+  background: #ffffff;
+}
+
+.link-statistics {
+  padding: 8px 16px;
+  color: #3c3c3c;
+  border-radius: 8px;
+  border: 1px solid #ebe8e2;
+  margin-right: 8px;
+}
+
+.link-statistics:hover {
+  cursor: pointer;
+  background-color: #f2eee8;
 }
 
 .assembly-detail {
@@ -356,27 +382,9 @@ export default {
   color: #808080;
 }
 
-.link-statistics-container {
-  display: flex;
-  justify-content: flex-start;
-  margin: 30px auto;
-  width: 500px;
-  padding: 24px 16px;
-  background: #ffffff;
-}
 
-.link-statistics {
-  padding: 8px 16px;
-  color: #3c3c3c;
-  border-radius: 8px;
-  border: 1px solid #ebe8e2;
-  margin-right: 8px;
-}
 
-.link-statistics:hover {
-  cursor: pointer;
-  background-color: #f2eee8;
-}
+
 .empty-box {
   height: 40px;
 }

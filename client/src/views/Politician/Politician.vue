@@ -3,7 +3,7 @@
     <SearchBar />
 
     <div class="political-party-list">
-      <h2>대한민국 정당</h2>
+      <h2>대한민국 원내 정당</h2>
       <Slider />
     </div>
 

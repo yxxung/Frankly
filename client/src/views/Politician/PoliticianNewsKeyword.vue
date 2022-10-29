@@ -5,21 +5,21 @@
       <a class="icon-button-56 header__back-button" @click="$router.go(-1)">
         <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
       </a>
-      <h2>국회의원 뉴스</h2>
+      <h2>국회의원 뉴스 키워드</h2>
     </header>
 
     <div>
       <b-nav tabs align="center">
-        <b-nav-item active>뉴스 키워드 보기</b-nav-item>
       </b-nav>
     </div>
-    <b-row class="my-1">
-      <b-col sm="5"><b-form-select v-model="selected" :options="options" ></b-form-select></b-col>
-      <b-col sm="2">
-        <b-button variant="outline-secondary" v-on:click="listReturn()">검색</b-button>
-      </b-col>
 
-    </b-row>
+      <b-row class="my-1" style="max-width: 540px">
+        <b-col sm="4" style="width: 80%"><b-form-select v-model="selected" :options="options" style="width: 50%"></b-form-select></b-col>
+        <b-col sm="2" style="width: 20%">
+          <b-button variant="primary" v-on:click="listReturn()">검색</b-button>
+        </b-col>
+      </b-row>
+
     <div style="height: 70%">
       <PoliticianNewsKeywordView
         v-bind:propInfos="infos"
