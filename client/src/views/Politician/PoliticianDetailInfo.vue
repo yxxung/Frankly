@@ -49,14 +49,14 @@ export default {
 @import "@/assets/scss/style.scss";
 
 .detail-info-wrap {
-  padding: 20px 30px 0px 30px;
+  padding: 10px 30px 0px 15px;
   position: relative;
   background: #ffffff;
 }
 
 .detail-info-title {
   float: left;
-  width: 100px;
+  width: 20%;
   height: 50px;
   text-align: left;
 
@@ -72,9 +72,8 @@ export default {
 .detail-info-content {
   display: inline-block;
   text-align: right;
-  width: 70%;
+  width: 75%;
   height: 50px;
-
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;

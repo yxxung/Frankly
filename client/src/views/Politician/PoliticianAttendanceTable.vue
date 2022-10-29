@@ -8,7 +8,7 @@
             <th class="attendance">출석</th>
             <th class="leave">결석</th>
             <th class="trip">출장</th>
-            <th class="petitionLeave">결석신고서 제출</th>
+            <th class="petitionLeave">공결</th>
           </tr>
         </thead>
         <tbody>
@@ -70,10 +70,16 @@ tbody tr:last-child td {
 thead {
   position: relative;
 }
-th,
+th{
+  /*width: 30%;*/
+  padding: 0.6rem;
+  min-width: 3rem;
+  text-align: center;
+  margin: 0;
+}
 td {
   padding: 0.6rem;
-  min-width: 6rem;
+  min-width: 3rem;
   text-align: center;
   margin: 0;
 }
@@ -126,5 +132,13 @@ tbody td {
   text-align: center;
 
   color: #444444;
+}
+
+.table-wrap{
+  display: flex;
+  width: 100%;
+  max-width: 540px;
+  justify-items: center;
+  justify-content: center;
 }
 </style>

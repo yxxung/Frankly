@@ -177,7 +177,7 @@ export default {
 @import "@/assets/scss/style.scss";
 
 .politician-detail-wrap {
-  margin: 54px auto 0 auto;
+  margin: 18px auto 0 auto;
   max-width: 540px;
   /*max-width*/
   height: 100%;
@@ -321,7 +321,7 @@ export default {
   margin: 30px auto;
   width: 100%;
   max-width: 540px;
-  padding: 24px 16px;
+  padding: 12px 8px;
   background: #ffffff;
 }
 

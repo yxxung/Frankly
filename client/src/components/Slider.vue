@@ -46,12 +46,17 @@ export default {
 .vueper-slides {
   padding: 8px 24px;
 }
+.vueperslides__track-inner{
+  padding-left: 15px;
+  width: 100%;
+  height: 100%;
+}
 .vueperslide {
   top: 10px;
   background: #FFFFFF;
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.12);
-  height: 96px;
-  width: 144px;
+  height: 75%;
+  width: 75%;
   margin: 0 auto;
 }
 </style>
