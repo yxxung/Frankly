@@ -80,6 +80,12 @@ public class BoardController {
         return new ResponseEntity<>(boardService.getBoardList(region), HttpStatus.OK);
     }
 
+    @GetMapping("/boardlist/all")
+    public ResponseEntity<List<BoardDTO>> getBoardListAll() throws Exception{
+
+        return new ResponseEntity<>(boardService.getBoardListAll(), HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{boardID}")
     public ResponseEntity<?> deleteBoard(@PathVariable("boardID") int boardID) throws Exception{
 

@@ -69,6 +69,14 @@
         ORDER BY B.boardID DESC
     </select>
 
+    <select id="getBoardListAll" resultMap="boardResultMap">
+        SELECT B.*, count(R.replyID) as replyCount
+        FROM frankly.Board B LEFT JOIN frankly.Reply R
+                                       ON B.boardID = R.boardID
+        GROUP BY B.boardID
+        ORDER BY B.boardID DESC
+    </select>
+
     <select id="searchBoard" resultMap="boardResultMap">
         SELECT * FROM frankly.Board
         WHERE region = #{region}

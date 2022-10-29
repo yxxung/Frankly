@@ -8,7 +8,7 @@
       <h2>인기게시글</h2>
     </header>
 
-    <ul class="post-list">
+    <ul class="post-list" >
       <li
         class="post-list__container"
         v-for="board in boards"
@@ -17,13 +17,13 @@
       >
         <div class="post-list__title">
           <img src="@/assets/icon/Image.svg" alt="이미지 있음" />
-          <h3>{{ board.title }}<span>[110]</span></h3>
+          <h3>{{ board.title }}<span>[{{board.replyCount}}]</span></h3>
         </div>
         <p>{{ board.content }}</p>
         <div class="post-list__info">
           <span>{{ elapsedText(board.boardRegDate) }}</span>
           <img src="@/assets/icon/Like.svg" alt="좋아요" />
-          <span>13</span>
+          <span>{{board.marked}}</span>
         </div>
       </li>
     </ul>
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       boards: [],
+      marked: '',
     };
   },
   mounted() {
@@ -54,10 +55,11 @@ export default {
     getBoardList() {
       console.log(this.$axios);
       axios
-        .get("/api/boards/boardlist")
+        .get("/api/boards/boardlist/all")
         .then((response) => {
           console.log("boards", response.data);
           this.boards = response.data;
+          this.marked = response.data.marked
         })
         .catch((error) => {
           console.log(error);
