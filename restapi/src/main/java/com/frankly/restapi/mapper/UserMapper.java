@@ -30,5 +30,4 @@ public interface UserMapper {
 
     public void selectAllUser(UserDTO userDTO) throws Exception;
 
-    public void loginUser(UserDTO userDTO) throws Exception;
 }
