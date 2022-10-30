@@ -1,6 +1,5 @@
 package com.frankly.restapi;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +19,8 @@ public class RestapiApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://teamfrankly.kr");
-//                registry.addMapping("/**").allowedOrigins("http://localhost:8080");
+//                registry.addMapping("/**").allowedOrigins("http://teamfrankly.kr");
+                registry.addMapping("/**").allowedOrigins("http://localhost:8080");
             }
         };
     }

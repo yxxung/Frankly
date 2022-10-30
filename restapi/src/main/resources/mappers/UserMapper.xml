@@ -43,11 +43,6 @@
                #{contact})
     </insert>
 
-    <select id="loginUser" resultMap="userResultMap">
-        SELECT * FROM frankly.User
-        WHERE email = #{email}
-    </select>
-
     <delete id="deleteUser" parameterType="Long">
         DELETE FROM frankly.User
         WHERE userID = #{userID}
