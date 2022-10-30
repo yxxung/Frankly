@@ -52,7 +52,7 @@ public class ReplyController {
     }
 
     //댓글 삭제
-    @DeleteMapping("/{boardID}/delete")
+    @DeleteMapping("/{boardID}/{replyID}/delete")
     public ResponseEntity<?> deleteReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
 
         replyService.deleteReply(replyDTO);

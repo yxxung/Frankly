@@ -9,17 +9,11 @@
       </div>
 
       <div class="auth-login-wrap">
-        <div class="loginbox">
-          <img src="@/assets/icon/kakao_talk.svg" />
-          <h2>카카오로 시작하기</h2>
-        </div>
-        <div class="loginbox">
-          <img src="@/assets/icon/google.svg" />
-          <h2>구글로 시작하기</h2>
-        </div>
-        <div class="loginbox" @click.prevent="$router.push('/Login')">
-          <img src="@/assets/icon/Mobile-phone.svg" />
+        <div class="loginbox" @click.prevent="$router.push('/signup')">
           <h2>이메일로 시작하기</h2>
+        </div>
+        <div class="loginbox">
+          <h2>로그인</h2>
         </div>
       </div>
     </div>
@@ -35,10 +29,11 @@ export default {};
 
 .auth-content {
   padding: 8px 24px;
+  width: 100%;
+  height: 100%;
   position: relative;
   margin: 0 auto;
-  max-width: 540px;
-
+  max-width: 450px;
 }
 
 .background-image {
@@ -46,9 +41,10 @@ export default {};
   background-size: cover;
   transform: rotate(-135deg);
   position: absolute;
-  width: 330px;
-  height: 330px;
-  margin: auto;
+  width: 405px;
+  height: 405px;
+  top: 151.05px;
+  left: 350px;
 }
 
 .fran-logo-wrap {
@@ -113,9 +109,9 @@ export default {};
 }
 
 .loginbox img {
-    position: absolute;
-    width: 30px;
-    height: 30px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
 }
 
 .loginbox h2 {

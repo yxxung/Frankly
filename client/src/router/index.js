@@ -44,7 +44,7 @@ import PoliticianBillLaw from "@/views/Politician/PoliticianBillLaw";
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     component: Home
   },
   {
@@ -57,7 +57,7 @@ const routes = [
   },
   {
     // 중첩된 라우트 : 한 페이지에 url에 따라서 다른 컴포넌트를 보여야 할 때 사용.
-    path: '/Auth',
+    path: '/',
     component: AuthPage
   },
   {
