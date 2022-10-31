@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="detail-info-wrap">
-      <div class="assembly-image-2" />
-      <div class="detail-info-title">생년월일</div>
+      <div class="assembly-image-2-wrap">
+        <div class="assembly-image-2" />
+      </div>
+        <div class="detail-info-title">생년월일</div>
       <div class="detail-info-content">
         {{ elapsedText(PoliticianDetailData.birthday) }}
       </div>
@@ -47,14 +49,14 @@ export default {
 @import "@/assets/scss/style.scss";
 
 .detail-info-wrap {
-  padding: 20px 30px 0px 30px;
+  padding: 10px 30px 0px 15px;
   position: relative;
   background: #ffffff;
 }
 
 .detail-info-title {
   float: left;
-  width: 100px;
+  width: 20%;
   height: 50px;
   text-align: left;
 
@@ -70,9 +72,8 @@ export default {
 .detail-info-content {
   display: inline-block;
   text-align: right;
-  width: 330px;
+  width: 75%;
   height: 50px;
-
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
@@ -81,6 +82,16 @@ export default {
   letter-spacing: -0.024em;
 
   color: #1b1b1b;
+}
+.content{
+  width: 100%;
+  max-width: 540px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.detail-info-wrap{
+  width: 100%;
+  max-width: 540px;
 }
 .detail-info-wrap h2 {
   text-align: left;
@@ -108,11 +119,17 @@ export default {
 }
 
 .assembly-image-2 {
-  margin: 25px 0 0 100px;
+  /*margin: 25px 0 0 100px;*/
   position: absolute;
   width: 245px;
   height: 238px;
   background-image: url("@/assets/icon/assembly.svg");
   background-size: cover;
+}
+
+.assembly-image-2-wrap{
+  display: flex;
+  justify-content: center;
+  justify-items: center;
 }
 </style>
