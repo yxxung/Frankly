@@ -1,20 +1,18 @@
 <template>
-  <div class="wrap">
-    <div class="auth-page">
-      <div class="background-image"></div>
-      <div class="fran-logo-wrap">
-        <img src="@/assets/icon/franlogo_black.svg" />
-        <h2 class="auth-title">Frankly</h2>
-        <h2 class="auth-title-2">대한민국 정치 플랫폼 프랭클리</h2>
-      </div>
+  <div class="auth-page">
+    <div class="background-image"></div>
+    <div class="fran-logo-wrap">
+      <img src="@/assets/icon/franlogo_black.svg" />
+      <h2 class="auth-title">Frankly</h2>
+      <h2 class="auth-title-2">대한민국 정치 플랫폼 프랭클리</h2>
+    </div>
 
-      <div class="auth-login-wrap">
-        <div class="loginbox" @click.prevent="$router.push('/signup')">
-          <h2>이메일로 시작하기</h2>
-        </div>
-        <div class="loginbox">
-          <h2>로그인</h2>
-        </div>
+    <div class="auth-login-wrap">
+      <div class="loginbox" @click.prevent="$router.push('/signup')">
+        <h2>이메일로 회원가입</h2>
+      </div>
+      <div class="loginbox" @click.prevent="$router.push('/login')">
+        <h2>이메일로 로그인</h2>
       </div>
     </div>
   </div>
@@ -27,66 +25,62 @@ export default {};
 <style>
 @import "@/assets/scss/style.scss";
 
-.auth-content {
-  padding: 8px 24px;
+.auth-page {
+  margin: 54px auto 0 auto;
   width: 100%;
   height: 100%;
-  position: relative;
   margin: 0 auto;
-  max-width: 450px;
+  max-width: 540px;
 }
 
 .background-image {
   background-image: url("@/assets/icon/franlogo_background.svg");
   background-size: cover;
-  transform: rotate(-135deg);
+  background-position: center;
+  background-repeat: no-repeat;
   position: absolute;
-  width: 405px;
-  height: 405px;
-  top: 151.05px;
-  left: 350px;
+  width: 100%;
 }
 
 .fran-logo-wrap {
-  padding: 8px 24px;
-  position: relative;
-  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }
 
 .fran-logo-wrap img {
   position: absolute;
-  width: 77px;
-  height: 77px;
+  width: 100px;
+  height: 100px;
 }
 
 .auth-title {
   position: absolute;
-  width: 85px;
+  width: 95px;
   height: 30px;
-  left: 145px;
-  top: 235px;
+  top: 210px;
 
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 700;
-  font-size: 26px;
+  font-weight: 800;
+  font-size: 30px;
   line-height: 30px;
-  letter-spacing: -0.005em;
 
   color: #393939;
 }
 
 .auth-title-2 {
   position: absolute;
-  width: 127px;
+  width: 170px;
   height: 14px;
-  left: 125px;
-  top: 269px;
+  top: 250px;
 
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
-  font-size: 10px;
+  font-size: 13px;
   line-height: 14px;
   text-align: center;
 
@@ -101,29 +95,30 @@ export default {};
 
 .loginbox {
   box-sizing: border-box;
-  border: 2px solid #000000;
-  width: 380px;
-  height: 46px;
+  background-color: #000000;
+  width: 450px;
+  height: 50px;
   margin: 0 auto 20px auto;
   position: relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
 }
 
-.loginbox img {
-  position: absolute;
-  width: 30px;
-  height: 30px;
+.loginbox:hover {
+  background: #2e2e2e;
 }
 
 .loginbox h2 {
-  left: 60px;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   text-align: center;
+  line-height: 46px;
   letter-spacing: -0.024em;
-  vertical-align: middle;
+  align-items: center;
 
-  color: #000000;
+  color: #fff;
 }
 </style>

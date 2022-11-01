@@ -19,7 +19,7 @@
           class="sign-up-form__text-input"
           type="email"
           placeholder="example@gmail.com"
-          v-model="credentials.userEmail"
+          v-model="user.userEmail"
         />
         <p class="sign-up-form__error-message">
           올바른 이메일 형식을 입력해주세요.
@@ -34,7 +34,7 @@
           type="email"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
-          v-model="credentials.userPasword"
+          v-model="user.userPasword"
         />
         <p class="sign-up-form__error-message">
           대소문자, 숫자, 특수문자 포함 8~16자리
@@ -63,20 +63,42 @@
 
 <script>
 import axios from 'axios';
+import {login} from '@/api/users.js'
 
 export default {
   name: "Login",
   data() {
     return {
-      credentials: {
+      user: {
         userEmail: null,
         userPassword: null,
-      }
+      },
+      isLoginError: false,
     };
   },
   methods: {
     doLogin() {
-      try {
+      localStorage.setItem('access-token', ''); // 로컬 스토리지에 access-token을 set함.
+      console.log('클릭');
+      login(
+        this.user,
+        (response) => {
+          console.log('여기까지옴'); // 확인용
+          if (response.data.message === 'success') {
+            // success 메세지가 돌아오면
+            let token = response.data['access-token'];
+            this.$store.commit('setIsLogined', true); // isLogin에 true값넣음.
+            localStorage.setItem('access-token', token);
+            this.$store.dispatch('GET_USER_INFO', token);
+          } else {
+            this.isLoginError = true;
+          }
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+      /*try {
         axios.post('/api/auth/signin', this.credentials, {
           headers: {
             "Content-Type": `application/json`,
@@ -87,12 +109,12 @@ export default {
             // 로컬스토리지에 토큰 저장
           localStorage.setItem("jwt", response.data.token);
             //로그인 성공시 처리
-            this.$router.push({name: '/home'})
+            this.$router.push({name: 'home'})
           }
         })
       } catch (error) {
         console.log(error);
-      }
+      }*/
     },
   },
 };

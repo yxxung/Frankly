@@ -51,7 +51,7 @@
           대소문자, 숫자, 특수문자 포함 8~16자리
         </p>
       </label>
-      <!--input 양식 에러발생 시 label 태그에 sign-up-form--error 클래스-->
+      <!--input 양식 에러발생 시 label 태그에 sign-up-form--error 클래스
       <label class="sign-up-form--error">
         <input
           class="sign-up-form__text-input"
@@ -65,7 +65,7 @@
         <p class="sign-up-form__error-message" v-show="checkPassword === true">
           비밀번호가 같습니다.
         </p>
-      </label>
+      </label>-->
 
       <!--        지역-->
       <label>
@@ -169,7 +169,7 @@ export default {
         if(response.status === 200) {
           alert('회원가입이 완료되었습니다.')
         }
-        this.$router.push({name: '/Login'})
+        this.$router.push({name: 'Login'})
       })
       .catch((error) => {
         console.log(error);
