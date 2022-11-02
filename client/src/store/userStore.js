@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
+import router from '@/router'
 
-export default createStore({
+const userStore = {
   //여러 컴포넌트에서 공유할 공동의 상태
   state: {
     userEmail: null,
@@ -34,4 +35,6 @@ export default createStore({
   },
   modules: {
   }
-})
+}
+
+export default userStore

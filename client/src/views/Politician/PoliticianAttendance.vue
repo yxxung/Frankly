@@ -12,6 +12,7 @@
       v-bind:propsAttendanceTotal="attendanceTotal"
       v-bind:propsPetitionLeaveTotal="petitionLeaveTotal"
       v-bind:propsBusinessTripTotal="businessTripTotal"
+      v-bind:propsAbsenceTotal="absenceTotal"
     >
     </PoliticianAttendanceChart>
 
@@ -39,6 +40,7 @@ export default {
       componentKey: 0,
       //시각화에 쓸 데이터
       attendanceTotal: null,
+      absenceTotal: null,
       petitionLeaveTotal: null,
       businessTripTotal: null,
       //표에 쓸 데이터
@@ -58,14 +60,19 @@ export default {
         attendanceTotal = response.data[i].attendance + attendanceTotal;
         petitionLeaveTotal = response.data[i].petitionLeave + petitionLeaveTotal;
         businessTripTotal = response.data[i].businessTrip + businessTripTotal;
+        if((response.data[i].businessTrip + response.data[i].petitionLeave + response.data[i].attendance) === 0) {
+          absenceTotal += 1;
+        }
       }
       this.attendanceTotal = attendanceTotal;
       this.petitionLeaveTotal = petitionLeaveTotal;
       this.businessTripTotal = businessTripTotal;
+      this.absenceTotal = absenceTotal;
 
       console.log("attendanceTotal", this.attendanceTotal);
       console.log("businessTripTotal", this.petitionLeaveTotal);
       console.log("petitionLeaveTotal", this.businessTripTotal);
+      console.log("absenceTotal", this.absenceTotal);
 
       //표//
       this.politicianAttendance = response.data;
