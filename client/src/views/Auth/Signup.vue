@@ -131,7 +131,7 @@ export default {
         userName: null,
         userEmail: null,
         userPassword: null,
-        userAuth: "ROLE_USER"
+        userAuth: "ROLE_USER",
       },
       userPasswordCheck: null,
       checkPassword: false,
@@ -158,22 +158,23 @@ export default {
   },
   methods: {
     doSignup() {
-      axios.post('/api/users/signup', {
-        name: this.user.userName,
-        email: this.user.userEmail,
-        password: this.user.userPassword,
-        district: this.districtName,
-        userAuth: this.user.userAuth
-      })
-      .then((response) => {
-        if(response.status === 200) {
-          alert('회원가입이 완료되었습니다.')
-        }
-        this.$router.push({name: 'Login'})
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+      axios
+        .post("/api/users/signup", {
+          name: this.user.userName,
+          email: this.user.userEmail,
+          password: this.user.userPassword,
+          district: this.districtName,
+          userAuth: this.user.userAuth,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            alert("회원가입이 완료되었습니다.");
+            this.$router.push("/Login");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     async checkPasswordMethod() {
       if (this.userPassword === this.userPasswordCheck) {

@@ -15,8 +15,8 @@
                 <div class="mypage-info-image">
                   <img src="@/assets/politician/정진석.png">
                 </div>
-                <h2 class="mypage-info-name">익명1</h2>
-                <h4 class="mypage-info-region">충남 아산시을1</h4>
+                <h2 class="mypage-info-name">박지영</h2>
+                <h4 class="mypage-info-region">충청북도</h4>
             </div>
 
             <div class="mypage-bookmark">

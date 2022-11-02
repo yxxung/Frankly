@@ -89,7 +89,7 @@ export default {};
 
 .auth-login-wrap {
   padding: 8px 24px;
-  margin-top: 400px;
+  margin-top: 420px;
   align-items: center;
 }
 

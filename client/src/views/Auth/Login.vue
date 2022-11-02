@@ -19,7 +19,7 @@
           class="sign-up-form__text-input"
           type="email"
           placeholder="example@gmail.com"
-          v-model="user.userEmail"
+          v-model="userEmail"
         />
         <p class="sign-up-form__error-message">
           올바른 이메일 형식을 입력해주세요.
@@ -34,7 +34,7 @@
           type="email"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
-          v-model="user.userPasword"
+          v-model="userPassword"
         />
         <p class="sign-up-form__error-message">
           대소문자, 숫자, 특수문자 포함 8~16자리
@@ -51,10 +51,7 @@
         <a href="#">비밀번호 찾기</a>
       </div>
 
-      <button
-        class="sign-up-form__button"
-        @click.prevent="doLogin"
-      >
+      <button class="sign-up-form__button" @click.prevent="doLogin">
         로그인
       </button>
     </form>
@@ -62,42 +59,44 @@
 </template>
 
 <script>
-import axios from 'axios';
-import {login} from '@/api/users.js'
+import axios from "axios";
 
 export default {
   name: "Login",
   data() {
     return {
-      user: {
-        userEmail: null,
-        userPassword: null,
-      },
-      isLoginError: false,
+      userEmail: null,
+      userPassword: null,
     };
-  },
+  },/*
+  computed: {
+    isUserEmailValid() {
+      return validateEmail(this.user.userEmail);
+    },
+  },*/
   methods: {
     doLogin() {
-      localStorage.setItem('access-token', ''); // 로컬 스토리지에 access-token을 set함.
-      console.log('클릭');
-      login(
-        this.user,
-        (response) => {
-          console.log('여기까지옴'); // 확인용
-          if (response.data.message === 'success') {
-            // success 메세지가 돌아오면
-            let token = response.data['access-token'];
-            this.$store.commit('setIsLogined', true); // isLogin에 true값넣음.
-            localStorage.setItem('access-token', token);
-            this.$store.dispatch('GET_USER_INFO', token);
-          } else {
-            this.isLoginError = true;
-          }
+      const userData = {
+        email: this.userEmail,
+        password: this.userPassword,
+      };
+
+      try {
+      axios.post("/api/auth/signin", JSON.stringify(userData), {
+        headers: {
+          "Content-Type": `application/json`,
         },
-        (error) => {
-          console.log(error)
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          this.$store.commit("login", res.data);
+          this.$router.push("/home")
         }
-      )
+
+      })
+      } catch (error) {
+        console.log(error)
+      }
       /*try {
         axios.post('/api/auth/signin', this.credentials, {
           headers: {
