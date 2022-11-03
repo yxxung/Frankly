@@ -354,8 +354,8 @@ export default {
 
 .link-statistics-container {
   display: flex;
-  justify-content: flex-start;
-  margin: 30px auto;
+  justify-content: center;
+  margin: 30px auto 20px auto;
   width: 500px;
   padding: 24px 16px;
   background: #ffffff;
