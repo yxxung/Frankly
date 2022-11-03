@@ -61,4 +61,17 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    @GetMapping("/userTest")
+    public ResponseEntity<?> userTest() throws Exception{
+        log.info("ROLE_USER TEST");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/adminTest")
+    public ResponseEntity<?> adminTest() throws Exception{
+        log.info("ROLE_ADMIN TEST");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

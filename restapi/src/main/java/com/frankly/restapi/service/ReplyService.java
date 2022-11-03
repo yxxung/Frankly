@@ -16,7 +16,6 @@ public class ReplyService implements ReplyServiceInterface {
     private final ReplyMapper replyMapper;
 
     @Override
-
     public void createReply(ReplyDTO replyDTO) throws Exception {
         replyMapper.createReply(replyDTO);
     }
@@ -28,13 +27,32 @@ public class ReplyService implements ReplyServiceInterface {
     }
 
     @Override
+    public ReplyDTO getReply(int replyID) throws Exception {
+        return replyMapper.getReply(replyID);
+    }
+
+    @Override
     public List<ReplyDTO> countReply(int boardID) throws Exception {
         return replyMapper.countReply(boardID);
     }
 
     @Override
-    public void updateReply(ReplyDTO replyDTO) throws Exception {
+    public void updateReply(ReplyDTO replyDTO, int replyID) throws Exception {
         replyMapper.updateReply(replyDTO);
+        /*ReplyDTO targetReply = replyMapper.getReply(replyID);
+
+        if(targetReply.getUserID() == (replyDTO.getUserID())){
+            try{
+                replyDTO.setBoardID(boardID);
+                replyMapper.updateReply(replyDTO);
+            }catch(SQLException e){
+                System.out.println(e);
+                e.printStackTrace();
+            }
+
+        }else{
+            throw new Exception("author is different - "+targetReply.getUserID()+" and "+replyDTO.getUserID());
+        }*/
     }
 
     @Override

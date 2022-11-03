@@ -44,16 +44,27 @@ public class ReplyController {
     }*/
 
     //댓글 수정
-    @PutMapping("/{boardID}/update")
-    public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO)throws Exception{
-        replyService.updateReply(replyDTO);
+    @PatchMapping("/{replyID}/update")
+    public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO,
+                                        @PathVariable("replyID") int replyID)throws Exception{
+        //replyDTO.setBoardID(boardID);
+        replyDTO.setReplyID(replyID);
+        //replyDTO.setReply(reply);
 
+        log.info(replyID +"번째 댓글 수정");
+        replyService.updateReply(replyDTO, replyID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //댓글 삭제
-    @DeleteMapping("/{boardID}/delete")
-    public ResponseEntity<?> deleteReply(@Validated @RequestBody ReplyDTO replyDTO) throws Exception{
+    @DeleteMapping("/{boardID}/{replyID}/delete")
+    public ResponseEntity<?> deleteReply(@PathVariable("boardID") int boardID,
+                                         @PathVariable("replyID") int replyID) throws Exception{
+        ReplyDTO replyDTO = new ReplyDTO();
+        replyDTO.setBoardID(boardID);
+        replyDTO.setReplyID(replyID);
+
+        log.info(boardID + "번째 게시글 " + replyID +"번째 댓글 삭제");
 
         replyService.deleteReply(replyDTO);
 
