@@ -69,11 +69,6 @@ export default {
       this.businessTripTotal = businessTripTotal;
       this.absenceTotal = absenceTotal;
 
-      console.log("attendanceTotal", this.attendanceTotal);
-      console.log("businessTripTotal", this.petitionLeaveTotal);
-      console.log("petitionLeaveTotal", this.businessTripTotal);
-      console.log("absenceTotal", this.absenceTotal);
-
       //표//
       this.politicianAttendance = response.data;
       let attendanceData = response.data;

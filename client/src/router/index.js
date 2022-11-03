@@ -39,7 +39,7 @@ import PoliticianNewsKeyword from "@/views/Politician/PoliticianNewsKeyword";
 import PoliticianSearchView from "@/views/Politician/PoliticianSearchView";
 import PoliticianStatistics from "@/views/Politician/PoliticianStatistics";
 import PoliticianAttendance from "@/views/Politician/PoliticianAttendance";
-import PoliticianBillLaw from "@/views/Politician/PoliticianBillLaw";
+import PoliticianVote from "@/views/Politician/PoliticianVote";
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
@@ -230,9 +230,9 @@ const routes = [
     props: true
   },
   {
-    path:'/PoliticianDetail/:politicianID/billlaw',
-    name: 'PoliticianBillLaw',
-    component: PoliticianBillLaw,
+    path:'/PoliticianDetail/:politicianID/vote',
+    name: 'PoliticianVote',
+    component: PoliticianVote,
     props: true
   },
   {

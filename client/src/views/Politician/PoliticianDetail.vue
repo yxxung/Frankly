@@ -53,6 +53,13 @@
         </div>
       </div>
 
+      <div class="politician-detail-info-2">
+        <PoliticianBillLaw
+          v-bind:billLawList="billLawList"
+          v-bind:billLawNum="billLawNum"
+        />
+      </div>
+
       <div class="link-statistics-container">
         <!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
         <div
@@ -69,9 +76,9 @@
         </div>
         <div
           class="link-statistics"
-          @click="goToBillLaw(this.PoliticianDetailData.politicianID)"
+          @click="goToVote(this.PoliticianDetailData.politicianID)"
         >
-          대표 발의 법률안
+          법안 표결 이력
         </div>
       </div>
     </div>
@@ -83,6 +90,7 @@
 <script>
 import axios from "axios";
 import PoliticianDetailInfo from "@/views/Politician/PoliticianDetailInfo.vue";
+import PoliticianBillLaw from "@/views/Politician/PoliticianBillLaw.vue";
 import Navigation from "@/components/Navigation.vue";
 
 export default {
@@ -90,6 +98,7 @@ export default {
   components: {
     Navigation,
     PoliticianDetailInfo,
+    PoliticianBillLaw
   },
   data() {
     return {
@@ -118,9 +127,9 @@ export default {
         },
       });
     },
-    goToBillLaw(politicianID) {
+    goToVote(politicianID) {
       this.$router.push({
-        name: "PoliticianBillLaw",
+        name: "PoliticianVote",
         params: {
           politicianID: politicianID,
         },
@@ -157,7 +166,9 @@ export default {
       axios.get(`/api/billLaw/${politicianID}`).then((response) => {
         let billLawList = response.data
         this.billLawNum = billLawList.length
-        console.log(response.data)
+
+        this.billLawList = billLawList
+        console.log("billLaw", response.data)
       });
   },
 };
