@@ -11,11 +11,14 @@
         {{ PoliticianDetailData.selectInfo }}
       </div>
       <div class="detail-info-title">이메일</div>
-      <div class="detail-info-content">{{ PoliticianDetailData.email }}</div>
+      <div class="detail-info-content" v-if="PoliticianDetailData.email !== 'null'">{{ PoliticianDetailData.email }}</div>
+      <div class="detail-info-content" v-if="PoliticianDetailData.email === 'null'">없음</div>
       <div class="detail-info-title">홈페이지</div>
-      <div class="detail-info-content">{{ PoliticianDetailData.homepage }}</div>
+      <div class="detail-info-content" v-if="PoliticianDetailData.homepage !== 'null'"><a :href="PoliticianDetailData.homepage">{{PoliticianDetailData.homepage}}</a></div>
+      <div class="detail-info-content" v-if="PoliticianDetailData.homepage === 'null'">없음</div>
       <div class="detail-info-title">전화번호</div>
-      <div class="detail-info-content">{{ PoliticianDetailData.contact }}</div>
+      <div class="detail-info-content" v-if="PoliticianDetailData.contact !== 'null'">{{ PoliticianDetailData.contact }}</div>
+      <div class="detail-info-content" v-if="PoliticianDetailData.contact === 'null'">없음</div>
       <div class="detail-info-title">보좌관</div>
       <div class="detail-info-content">{{ PoliticianDetailData.aide }}</div>
       <div class="detail-info-title">비서관</div>
@@ -82,6 +85,15 @@ export default {
 
   color: #1b1b1b;
 }
+
+.detail-info-content > a {
+  text-decoration: none;
+  color: #1b1b1b;
+}
+.detail-info-content > a:hover {
+  color: #00B5FF;
+}
+
 .detail-info-wrap h2 {
   text-align: left;
   font-family: "Noto Sans KR";
