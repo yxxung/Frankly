@@ -74,7 +74,14 @@ export default {
       return validateEmail(this.user.userEmail);
     },
   },*/
+  computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError"]),
+  },
   methods: {
+    ...mapActions(userStore, [
+      "userConfirm",
+      "getUserInfo",
+    ]),
     doLogin() {
       const userData = {
         email: this.userEmail,
