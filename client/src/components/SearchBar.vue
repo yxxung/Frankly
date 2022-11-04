@@ -1,6 +1,6 @@
 <template>
   <div class="politician-search">
-    <form class="politician-search-form">
+    <form class="politician-search-form" style="width: 100%;">
       <input
         class="politician-search-form__text-input"
         type="search"
@@ -35,13 +35,20 @@ export default {
 /*국회의원 검색*/
 .politician-search {
   display: flex;
+  width: 100%;
   justify-content: space-evenly;
   align-items: center;
   margin-top: -30px;
 }
+
+.politician-search-form{
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
 .politician-search-form__text-input {
   align-items: center;
-  width: 440px;
+  width: 75%;
   height: 38px;
   left: 16px;
   top: 297px;

@@ -15,10 +15,11 @@
           </a>
         </div>
       </header>
-
-      <div class="assembly-image" />
-
+<!---->
       <div class="politician-detail-info">
+        <div class="assembly-image-wrap">
+          <div class="assembly-image" />
+        </div>
         <div class="politician-detail-region">{{ PoliticianDetailData.regionName }}</div>
         <div class="politician-detail-image">
           <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
@@ -44,7 +45,7 @@
           <h3>{{ this.attendancePercentage }}%</h3>
         </div>
         <div class="assembly-detail">
-          <h2>법률안 대표 발의 건수</h2>
+          <h2>법률안 대표 발의</h2>
           <h3>{{this.billLawNum}}건</h3>
         </div>
         <div class="assembly-detail">
@@ -58,33 +59,39 @@
           v-bind:billLawList="billLawList"
           v-bind:billLawNum="billLawNum"
         />
+        </div>
+
+      <div class="statics-wrap">
+        <div class="link-statistics-container">
+          <!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
+          <div
+            class="link-statistics"
+            @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)"
+          >
+            뉴스 키워드
+          </div>
+          <div
+            class="link-statistics"
+            @click="goToAttendance(this.PoliticianDetailData.politicianID)"
+          >
+            출석 정보
+          </div>
+          <div
+            class="link-statistics"
+            @click="goToVote(this.PoliticianDetailData.politicianID)"
+          >
+            법안 표결 이력
+          </div>
+        </div>
+
       </div>
 
-      <div class="link-statistics-container">
-        <!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
-        <div
-          class="link-statistics"
-          @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)"
-        >
-          뉴스 키워드
-        </div>
-        <div
-          class="link-statistics"
-          @click="goToAttendance(this.PoliticianDetailData.politicianID)"
-        >
-          출석 정보
-        </div>
-        <div
-          class="link-statistics"
-          @click="goToVote(this.PoliticianDetailData.politicianID)"
-        >
-          법안 표결 이력
-        </div>
-      </div>
     </div>
+      </div>
+
+
     <div class="empty-box"></div>
     <Navigation />
-  </div>
 </template>
 
 <script>
@@ -178,7 +185,7 @@ export default {
 @import "@/assets/scss/style.scss";
 
 .politician-detail-wrap {
-  margin: 54px auto 0 auto;
+  margin: 18px auto 0 auto;
   max-width: 540px;
   /*max-width*/
   height: 100%;
@@ -203,8 +210,9 @@ export default {
 .politician-detail-info {
   margin: 54px auto 0 auto;
   position: relative;
-  width: 500px;
-  height: 254px;
+  width: 100%;
+  max-width: 540px;
+  max_height: 254px;
   background: #ffffff;
   /* red_lawmaker */
   text-align: center;
@@ -213,7 +221,7 @@ export default {
 .politician-detail-info-2 {
   margin: 30px auto 0 auto;
   padding: 10px 0 10px 0;
-  width: 500px;
+  width: 100%;
   height: 100%;
   background: #ffffff;
   /* red_lawmaker */
@@ -221,19 +229,22 @@ export default {
 }
 
 .assembly-image {
+  margin-top: 5px;
   z-index: 10;
-  margin: 10px 0 0 247px;
+  /*margin: 10px 0 0 247px;*/
   position: absolute;
   width: 49px;
   height: 48px;
-  background-image: url("@/assets/icon/assembly.svg");
+  background-image: url("@/assets/icon/assembly.svg");}
+
+.assembly-image-wrap{
+  display: flex;
+  justify-content: center;
 }
 
 .assembly-text {
   margin: -90px 0 0 30px;
   position: absolute;
-  width: 98.54px;
-  height: 99.7px;
   z-index: 12;
   width: 160px;
   height: 80px;
@@ -301,11 +312,44 @@ export default {
 
 /*국회 정보*/
 .assembly-infos {
-  margin: 30px auto 0 auto;
-  width: 500px;
+  justify-content: flex-start;
+  margin: 30px auto;
+  width: 100%;
   height: 89px;
+  max-width: 540px;
   background: #ffffff;
-  display: table;
+  text-align:center;
+  vertical-align:middle;
+  padding-bottom: 50px;
+}
+.statics-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.link-statistics-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  width: 100%;
+  max-width: 540px;
+  padding: 12px 8px;
+  background: #ffffff;
+}
+
+.link-statistics {
+  padding: 8px 16px;
+  color: #3c3c3c;
+  border-radius: 8px;
+  border: 1px solid #ebe8e2;
+  margin-right: 8px;
+}
+
+.link-statistics:hover {
+  cursor: pointer;
+  background-color: #f2eee8;
 }
 
 .assembly-detail {

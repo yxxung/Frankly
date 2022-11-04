@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @forceUpdate="handleForceUpdate">
+  <div class="chart-container" @forceUpdate="handleForceUpdate">
     <Doughnut
       :chart-options="chartOptions"
       :chart-data="chartData"
@@ -150,4 +150,16 @@ export default {
     });
   },*/
 };
+
 </script>
+
+<style>
+.chart-container{
+  display: flex;
+  width: 100%;
+  max-width: 540px;
+  justify-content: center;
+  justify-items: center;
+}
+
+</style>
