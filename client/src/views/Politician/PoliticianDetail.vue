@@ -60,30 +60,36 @@
           v-bind:billLawNum="billLawNum"
         />
         </div>
+
+      <div class="statics-wrap">
+        <div class="link-statistics-container">
+          <!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
+          <div
+            class="link-statistics"
+            @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)"
+          >
+            뉴스 키워드
+          </div>
+          <div
+            class="link-statistics"
+            @click="goToAttendance(this.PoliticianDetailData.politicianID)"
+          >
+            출석 정보
+          </div>
+          <div
+            class="link-statistics"
+            @click="goToVote(this.PoliticianDetailData.politicianID)"
+          >
+            법안 표결 이력
+          </div>
+        </div>
+
       </div>
 
-      <div class="link-statistics-container">
-        <!--        <div class="link-statistics" @click="goToPropertyDetail(this.PoliticianDetailData.politicianID)">재산정보</div>-->
-        <div
-          class="link-statistics"
-          @click="goToNewsKeyword(this.PoliticianDetailData.politicianID)"
-        >
-          뉴스 키워드
-        </div>
-        <div
-          class="link-statistics"
-          @click="goToAttendance(this.PoliticianDetailData.politicianID)"
-        >
-          출석 정보
-        </div>
-        <div
-          class="link-statistics"
-          @click="goToVote(this.PoliticianDetailData.politicianID)"
-        >
-          법안 표결 이력
-        </div>
-      </div>
     </div>
+      </div>
+
+
     <div class="empty-box"></div>
     <Navigation />
 </template>
@@ -315,6 +321,12 @@ export default {
   text-align:center;
   vertical-align:middle;
   padding-bottom: 50px;
+}
+.statics-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
 }
 
 .link-statistics-container {

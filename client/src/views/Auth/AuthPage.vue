@@ -1,4 +1,6 @@
 <template>
+  <div class="auth-wrap">
+
   <div class="auth-page">
     <div class="background-image"></div>
     <div class="fran-logo-wrap">
@@ -16,6 +18,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -24,6 +27,14 @@ export default {};
 
 <style>
 @import "@/assets/scss/style.scss";
+
+.auth-wrap{
+  display: flex;
+  width: 100%;
+  max-width: 540px;
+  justify-items: center;
+  justify-content: center;
+}
 
 .auth-page {
   margin: 54px auto 0 auto;
@@ -96,7 +107,7 @@ export default {};
 .loginbox {
   box-sizing: border-box;
   background-color: #000000;
-  width: 450px;
+  width: 100%;
   height: 50px;
   margin: 0 auto 20px auto;
   position: relative;
