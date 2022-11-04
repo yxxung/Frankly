@@ -13,7 +13,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="(i,key) in politicianAttendance" v-bind:key="conferenceTitle">
+            v-for="(i,key) in politicianAttendance" v-bind:key="key">
             <th>{{ i.conferenceTitle }}</th>
             <td>{{ i.attendanceTotal }}</td>
             <td>{{ i.absenceTotal }}</td>

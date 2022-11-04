@@ -23,4 +23,7 @@ public class VoteDTO {
     //count(voteResult)
     private int voteCount;
 
+    //conferenceBillLawDTO
+    private String billTitle;
+
 }

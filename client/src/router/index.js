@@ -15,6 +15,7 @@ import EditBoard from '../views/Admin/EditBoard.vue'
 import EditUser from '../views/Admin/EditUser.vue'
 import PoliticianDetail from '../views/Politician/PoliticianDetail.vue'
 import WriteBoard from '../views/Board/WriteBoard.vue'
+import UpdateBoard from '../views/Board/UpdateBoard.vue'
 import SeoulBoard from '../views/Board/region/SeoulBoard.vue'
 import BusanBoard from '../views/Board/region/BusanBoard.vue'
 import ChungbukBoard from '../views/Board/region/ChungbukBoard.vue'
@@ -38,25 +39,24 @@ import PoliticianNewsKeyword from "@/views/Politician/PoliticianNewsKeyword";
 import PoliticianSearchView from "@/views/Politician/PoliticianSearchView";
 import PoliticianStatistics from "@/views/Politician/PoliticianStatistics";
 import PoliticianAttendance from "@/views/Politician/PoliticianAttendance";
-import PoliticianBillLaw from "@/views/Politician/PoliticianBillLaw";
+import PoliticianVote from "@/views/Politician/PoliticianVote";
 //import EditData from "@/views/Admin/EditData"
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     component: Home
   },
   {
     path: '/Login',
-    component: Login
+    component: Login,
   },
   {
     path: '/Signup',
     component: Signup
   },
   {
-    // 중첩된 라우트 : 한 페이지에 url에 따라서 다른 컴포넌트를 보여야 할 때 사용.
-    path: '/Auth',
+    path: '/',
     component: AuthPage
   },
   {
@@ -66,9 +66,14 @@ const routes = [
   },
   /*board*/
   {
-    path: '/WriteBoard/:boardID?',
+    path: '/WriteBoard',
     name: 'WriteBoard',
     component: WriteBoard
+  },
+  {
+    path: '/UpdateBoard/:boardID',
+    name: 'UpdateBoard',
+    component: UpdateBoard
   },
   {
     path: '/MainBoard',
@@ -225,9 +230,9 @@ const routes = [
     props: true
   },
   {
-    path:'/PoliticianDetail/:politicianID/billlaw',
-    name: 'PoliticianBillLaw',
-    component: PoliticianBillLaw,
+    path:'/PoliticianDetail/:politicianID/vote',
+    name: 'PoliticianVote',
+    component: PoliticianVote,
     props: true
   },
   {

@@ -18,13 +18,16 @@
             variant="link"
             toggle-class="text-decoration-none"
             no-caret
-          ><template #button-content>
-            <img src="@/assets/icon/Other2.svg" alt="더보기" />
-            <span class="visually-hidden"></span>
-          </template>
-            <b-dropdown-item @click="updateBoard(DetailData.boardID)">수정</b-dropdown-item>
+            ><template #button-content>
+              <img src="@/assets/icon/Other2.svg" alt="더보기" />
+              <span class="visually-hidden"></span>
+            </template>
+            <b-dropdown-item @click="updateBoard(DetailData.boardID)"
+              >수정</b-dropdown-item
+            >
             <b-dropdown-item @click="deleteBoard">삭제</b-dropdown-item>
-          </b-dropdown></a>
+          </b-dropdown></a
+        >
       </div>
     </header>
 
@@ -75,7 +78,20 @@
 
             <div class="comments__info-right">
               <button class="icon-button-24">
-                <img src="@/assets/icon/Other1.svg" alt="더보기" />
+                <b-dropdown
+                  size="xs"
+                  variant="link"
+                  toggle-class="text-decoration-none"
+                  no-caret
+                  ><template #button-content>
+                    <img src="@/assets/icon/Other1.svg" alt="더보기" />
+                    <span class="visually-hidden"></span>
+                  </template>
+                  <b-dropdown-item @click="updateReply(reply.replyID)"
+                    >수정</b-dropdown-item
+                  >
+                  <b-dropdown-item @click="deleteReply(reply.replyID)">삭제</b-dropdown-item>
+                </b-dropdown>
               </button>
             </div>
           </div>
@@ -151,23 +167,24 @@ export default {
     // 게시글 삭제
     deleteBoard() {
       const boardID = this.$route.params.boardID;
-      axios.delete(`api/boards/delete/${boardID}`)
+      axios
+        .delete(`api/boards/delete/${boardID}`)
         .then((response) => {
-          if(response.status === 200){
+          if (response.status === 200) {
             alert("게시글이 삭제되었습니다.");
           }
           this.$router.go(-1);
         })
-        .catch(() =>{
-          console.log("삭제 요청 실패")
-        })
+        .catch(() => {
+          console.log("삭제 요청 실패");
+        });
     },
     // 게시글 수정
     updateBoard(boardID) {
       this.$router.push({
-        name: "WriteBoard",
+        name: "UpdateBoard",
         params: {
-          boardID: boardID
+          boardID: boardID,
         },
       });
     },
@@ -188,6 +205,21 @@ export default {
             console.log(error);
           });
       }
+    },
+    //댓글 삭제
+    deleteReply(replyID) {
+      const boardID = this.$route.params.boardID;
+      axios
+        .delete(`/api/replys/${boardID}/${replyID}/delete`)
+        .then((response) => {
+          if (response.status === 200) {
+            alert("댓글이 삭제되었습니다.");
+          }
+          this.$router.go();
+        })
+        .catch(() => {
+          console.log("삭제 요청 실패");
+        });
     },
     async changeLike(boardID) {
       //좋아요가 안눌러진 상태에서 좋아요를 누를 때

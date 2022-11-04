@@ -19,6 +19,7 @@
           class="sign-up-form__text-input"
           type="email"
           placeholder="example@gmail.com"
+          v-model="userEmail"
         />
         <p class="sign-up-form__error-message">
           올바른 이메일 형식을 입력해주세요.
@@ -33,6 +34,7 @@
           type="email"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
+          v-model="userPassword"
         />
         <p class="sign-up-form__error-message">
           대소문자, 숫자, 특수문자 포함 8~16자리
@@ -49,10 +51,7 @@
         <a href="#">비밀번호 찾기</a>
       </div>
 
-      <button
-        class="sign-up-form__button"
-        onclick="location.href='/index.html'"
-      >
+      <button class="sign-up-form__button" @click.prevent="doLogin">
         로그인
       </button>
     </form>
@@ -60,19 +59,61 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Login",
   data() {
     return {
-      userEmail: "",
-      userPassword: "",
+      userEmail: null,
+      userPassword: null,
     };
-  },
+  },/*
+  computed: {
+    isUserEmailValid() {
+      return validateEmail(this.user.userEmail);
+    },
+  },*/
   methods: {
     doLogin() {
-      let saveData = {};
-      saveData.userEmail = this.userEmail;
-      saveData.userPassword = this.userPassword;
+      const userData = {
+        email: this.userEmail,
+        password: this.userPassword,
+      };
+
+      try {
+      axios.post("/api/auth/signin", JSON.stringify(userData), {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          this.$store.commit("login", res.data);
+          this.$router.push("/home")
+        }
+
+      })
+      } catch (error) {
+        console.log(error)
+      }
+      /*try {
+        axios.post('/api/auth/signin', this.credentials, {
+          headers: {
+            "Content-Type": `application/json`,
+          }
+        })
+        .then((response) => {
+          if(response.status === 200) {
+            // 로컬스토리지에 토큰 저장
+          localStorage.setItem("jwt", response.data.token);
+            //로그인 성공시 처리
+            this.$router.push({name: 'home'})
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }*/
     },
   },
 };

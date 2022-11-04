@@ -8,13 +8,13 @@
         </a>
         <h2>글쓰기</h2>
         <div class="header--right">
-          <!--제출 버튼-->
+          <!--수정 제출 버튼-->
           <button
-            class="write-button"
+            class="update-button"
             type="submit"
-            @click="onClickSubmit()"
+            @click="onClickUpdate()"
           >
-            완료
+            수정
           </button>
         </div>
       </header>
@@ -60,7 +60,7 @@
 import axios from "axios";
 
 export default {
-  name: "WriteBoard",
+  name: "UpdateBoard",
   data() {
     return {
       regions: [
@@ -88,6 +88,21 @@ export default {
       image: "",
     };
   },
+  beforeCreate() {
+    const boardID = this.$route.params.boardID;
+    if (boardID !== undefined) {
+      axios
+        .get(`/api/boards/${boardID}`)
+        .then((response) => {
+          this.title = response.data.title;
+          this.content = response.data.content;
+          this.regionName = response.data.region;
+        })
+        .catch(() => {
+          console.log("보드 내용을 불러오지 못했습니다.");
+        });
+    }
+  },
   methods: {
     selected() {
       console.log(this.regionName);
@@ -96,34 +111,22 @@ export default {
       console.log(this.$refs);
       this.image = this.$refs.image.files[0];
     },*/
-    onClickSubmit() {
-      //입력된 내용이 없을 시
-      if (this.title.length <= 0 || this.content.length <= 0) {
-        window.alert("모든 내용을 입력해주세요!");
-      }
-      /*
-      const formdata = new FormData();
-      this.image = this.$refs.image.files[0];
-      formdata.append("region", this.region);
-      formdata.append("region", this.regionName)
-      formdata.append("title", this.title);
-      formdata.append("content", this.content);
-      formdata.append("image", this.image);*/
+    onClickUpdate() {
+      const boardID = this.$route.params.boardID;
       axios
-        .post("/api/boards/create", {
+        .put(`/api/boards/update/${boardID}`, {
           title: this.title,
-          region: this.regionName,
           content: this.content,
+          region: this.regionName,
         })
         .then((response) => {
-          // console.log(response);
           if (response.status === 200) {
-            alert("게시글이 작성되었습니다.");
+            alert("게시글이 수정되었습니다.");
           }
           this.$router.go(-1);
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     },
   },
@@ -133,7 +136,7 @@ export default {
 <style>
 @import "@/assets/scss/style.scss";
 
-.write-button {
+.update-button {
   margin: 0;
   background: black;
   width: 68px;

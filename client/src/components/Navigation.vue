@@ -1,7 +1,7 @@
 <template>
     <nav class="bottom-nav">
         <div class="bottom-nav-area">
-            <router-link to="/">
+            <router-link to="/home">
                 <img src="@/assets/icon/nav/Home.svg" alt="홈으로 이동" id="home" >
                 <p>홈</p>
             </router-link>

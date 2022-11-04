@@ -12,10 +12,25 @@
         <result column="voteURL" property="voteURL"/>
     </resultMap>
 
+    <resultMap type="ConferenceBillLawDTO" id="conferenceBillLawResultMap">
+        <id column="billID" property="billID"/>
+        <result column="generation" property="generation"/>
+        <result column="billTitle" property="billTitle"/>
+        <result column="proposer" property="proposer"/>
+        <result column="billResult" property="billResult"/>
+        <result column="effectiveDate" property="effectiveDate"/>
+        <result column="proposalDate" property="proposalDate"/>
+        <result column="competentCommittee" property="competentCommittee"/>
+        <result column="billNumber" property="billNumber"/>
+        <result column="billLawAPIID" property="billLawAPIID"/>
+    </resultMap>
+
     <!-- 회의 표결 읽기 -->
     <select id="readVote" resultMap="voteResultMap">
-        SELECT * FROM frankly.Vote
-        WHERE politicianID = #{politicianID}
+        SELECT V.*, B.billTitle
+        FROM frankly.Vote V LEFT JOIN frankly.ConferenceBillLaw B
+        ON V.billNumber = B.billNumber
+        WHERE politicianID = #{politicianID};
     </select>
 
     <!-- 회의 표결 세기 -->

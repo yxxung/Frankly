@@ -17,5 +17,4 @@ public interface UserServiceInterface {
 
     public List<UserDTO> userList() throws Exception;
 
-    public void loginUser(UserDTO userDTO) throws Exception;
 }
