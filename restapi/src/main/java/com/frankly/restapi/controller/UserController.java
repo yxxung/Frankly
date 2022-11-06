@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @CrossOrigin(origins = "http://localhost:8080")
 @Slf4j
@@ -30,17 +28,6 @@ public class UserController {
         UserDTO userDTO = userService.getUser(userID);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<UserDTO> loginUser(@Validated @RequestBody UserDTO userDTO)
-            throws Exception{
-        log.info("login User " + userDTO.getEmail());
-
-        userService.loginUser(userDTO);
-
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-
     }
 
     @PostMapping("/signup")
@@ -71,6 +58,19 @@ public class UserController {
 
         userService.deleteUser(userID);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @GetMapping("/userTest")
+    public ResponseEntity<?> userTest() throws Exception{
+        log.info("ROLE_USER TEST");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/adminTest")
+    public ResponseEntity<?> adminTest() throws Exception{
+        log.info("ROLE_ADMIN TEST");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

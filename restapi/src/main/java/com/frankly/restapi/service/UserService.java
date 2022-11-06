@@ -4,9 +4,6 @@ import com.frankly.restapi.domain.UserDTO;
 import com.frankly.restapi.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,10 +47,5 @@ public class UserService implements UserServiceInterface {
     @Override
     public List<UserDTO> userList() throws Exception {
         return null;
-    }
-
-    @Override
-    public void loginUser(UserDTO userDTO) throws Exception {
-        userMapper.loginUser(userDTO);
     }
 }
