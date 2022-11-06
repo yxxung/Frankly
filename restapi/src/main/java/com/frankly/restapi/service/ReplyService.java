@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -38,12 +39,11 @@ public class ReplyService implements ReplyServiceInterface {
 
     @Override
     public void updateReply(ReplyDTO replyDTO, int replyID) throws Exception {
-        replyMapper.updateReply(replyDTO);
-        /*ReplyDTO targetReply = replyMapper.getReply(replyID);
 
+        ReplyDTO targetReply = replyMapper.getReply(replyID);
         if(targetReply.getUserID() == (replyDTO.getUserID())){
             try{
-                replyDTO.setBoardID(boardID);
+                replyDTO.setReplyID(replyID);
                 replyMapper.updateReply(replyDTO);
             }catch(SQLException e){
                 System.out.println(e);
@@ -52,7 +52,7 @@ public class ReplyService implements ReplyServiceInterface {
 
         }else{
             throw new Exception("author is different - "+targetReply.getUserID()+" and "+replyDTO.getUserID());
-        }*/
+        }
     }
 
     @Override

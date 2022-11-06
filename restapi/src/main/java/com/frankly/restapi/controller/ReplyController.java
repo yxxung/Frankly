@@ -44,12 +44,10 @@ public class ReplyController {
     }*/
 
     //댓글 수정
-    @PatchMapping("/{replyID}/update")
+    @PutMapping("/{replyID}/update")
     public ResponseEntity<?> updateReply(@Validated @RequestBody ReplyDTO replyDTO,
                                         @PathVariable("replyID") int replyID)throws Exception{
-        //replyDTO.setBoardID(boardID);
         replyDTO.setReplyID(replyID);
-        //replyDTO.setReply(reply);
 
         log.info(replyID +"번째 댓글 수정");
         replyService.updateReply(replyDTO, replyID);
