@@ -35,13 +35,15 @@ export default {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   z-index: 999;
   top: 75%;
-  /*margin: auto 0 0 auto;*/
-  margin-left: 70%;
+  margin: auto 0 0 auto;
+  /*margin-left: 40%;*/
+  /*mar*/
+  /*float: right;*/
 }
 .floating-button-wrap{
   display: flex;
   /*align-items: r;*/
-  margin-left: auto;
+  /*margin-left: auto;*/
   width: 100%;
   max-width: 520px;
 }

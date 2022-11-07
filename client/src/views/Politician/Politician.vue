@@ -20,7 +20,8 @@
         @click="goToPoliticianDetail(politician.politicianID)"
       >
         <!-- 정치인 리스트 출력 이미지, 이름-->
-        <div class="politician-image">
+        <div class="politician-image" v-bind:style="{border : getPoliticianColor(politician)}">
+
           <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="politician-name">{{ politician.politicianName }}</div>
@@ -47,6 +48,7 @@ export default {
     return {
       searchKeyword: "",
       politicians: [],
+      border: "3px solid #0d6efd"
     };
   },
   mounted() {
@@ -73,6 +75,23 @@ export default {
           politicianID: politicianID,
         },
       });
+    },
+    getPoliticianColor(politician){
+      if(politician.partyName === "국민의힘"){
+        return "3px solid #aa0000";
+      }
+      else if(politician.partyName === "더불어민주당"){
+        return "3px solid #0d6efd"
+      }
+      else if(politician.partyName === "시대전환"){
+        return "3px solid #8B00FF"
+      }
+      else if(politician.partyName === "정의당"){
+        return "3px solid #FFD400"
+      }
+      else if(politician.partyName === "기본소득당"){
+        return "3px solid #000000"
+      }
     }
   },
 };
@@ -135,15 +154,16 @@ export default {
 .politician-image {
   width: 75px;
   height: 75px;
-  box-sizing: border-box;
-  border: 3px solid #00B5FF;
-  border-radius: 100%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  box-sizing: border-box;
+  border: 3px solid #0d6efd;
+  border-radius: 100%;
 }
+
 .politician-image img {
   border-radius: 100%;
   width: 100%;
