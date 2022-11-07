@@ -7,8 +7,11 @@
       <b-list-group-item
         class="d-flex justify-content-between align-items-center"
       >
-        {{ vote.billTitle }}
-        <b-badge variant="primary" pill>{{ vote.voteResult }}</b-badge>
+        <b-link v-on:click = "goToLink(vote)" class="b-link-style">{{ vote.billTitle }}</b-link>
+        <b-badge v-if="vote.voteResult === '찬성'" variant="info" pill>{{ vote.voteResult }}</b-badge>
+        <b-badge v-else-if="vote.voteResult === '반대'" variant="danger" pill>{{ vote.voteResult }}</b-badge>
+        <b-badge v-else-if="vote.voteResult === '불참'" variant="warning" pill>{{ vote.voteResult }}</b-badge>
+        <b-badge v-else-if="vote.voteResult === '기권'" variant="primary" pill>{{ vote.voteResult }}</b-badge>
       </b-list-group-item>
     </b-list-group>
 
@@ -33,6 +36,12 @@ export default {
       currentPage: 1,
     };
   },
+  methods:{
+    goToLink(vote){
+      window.open(vote["voteURL"])
+    }
+  }
+  ,
   computed: {
     VoteList() {
       const votes = this.VoteList
@@ -50,4 +59,11 @@ export default {
 
 <style>
 @import "@/assets/scss/style.scss";
+.b-link-style{
+  color: #111111;
+  text-decoration: none;
+}
+.b-link-style:hover{
+  color: #a00;
+}
 </style>

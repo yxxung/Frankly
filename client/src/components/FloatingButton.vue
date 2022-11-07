@@ -1,7 +1,9 @@
 <template>
-  <div class="floating-button"
-       @click="write">
-    <img src="@/assets/icon/Write.svg" />
+  <div class="floating-button-wrap">
+    <div class="floating-button"
+         @click="write">
+      <img src="@/assets/icon/Write.svg" />
+    </div>
   </div>
 </template>
 
@@ -32,8 +34,16 @@ export default {
   cursor: pointer;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   z-index: 999;
-  top: 520px;
-  margin-left: 450px;
+  top: 75%;
+  /*margin: auto 0 0 auto;*/
+  margin-left: 70%;
+}
+.floating-button-wrap{
+  display: flex;
+  /*align-items: r;*/
+  margin-left: auto;
+  width: 100%;
+  max-width: 520px;
 }
 .floating-button:hover {
   background: #4a4a4a;
