@@ -30,6 +30,11 @@ public class PoliticianController {
 
 
     }
+    @GetMapping("/party/{partyID}")
+    public ResponseEntity<List<PoliticianDTO>> readParty(@PathVariable("partyID")int partyID) throws Exception{
+
+        return new ResponseEntity<>(politicianService.readParty(partyID), HttpStatus.OK);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<PoliticianDTO>>politicianList()throws Exception{

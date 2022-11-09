@@ -27,5 +27,7 @@ public interface PoliticianMapper {
 
     public List<PoliticianDTO> searchPolitician(String searchName) throws Exception;
 
+    public List<PoliticianDTO> readParty(int partyID) throws Exception;
+
 
 }
