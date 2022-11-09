@@ -13,6 +13,8 @@
       <h3 v-if="politicianOrder === 2" v-on:click="politicianOrdering" style="cursor:pointer;">정당 순</h3>
       <h3 v-if="politicianOrder === 3" v-on:click="politicianOrdering" style="cursor:pointer;">지역구 순</h3>
     </div>
+    <div class="politician-list-wrap">
+
 
     <ul class="all-politician-list">
       <li
@@ -31,7 +33,7 @@
         <div class="politician-region" v-if="politicianOrder === 2">{{ politician.partyName }}</div>
       </li>
     </ul>
-
+    </div>
     <Navigation />
   </div>
 </template>
@@ -186,7 +188,7 @@ export default {
 }
 /*전체 국회의원*/
 .all-politician-list {
-  margin: 10px auto;
+  margin: auto auto;
   width: 100%;
   max-width: 520px;
   display: table;
@@ -233,6 +235,12 @@ export default {
   font-style: normal;
   font-weight: 500;
   color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.politician-list-wrap{
   display: flex;
   justify-content: center;
   align-items: center;
