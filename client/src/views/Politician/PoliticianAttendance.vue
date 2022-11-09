@@ -12,6 +12,7 @@
       v-bind:propsAttendanceTotal="attendanceTotal"
       v-bind:propsPetitionLeaveTotal="petitionLeaveTotal"
       v-bind:propsBusinessTripTotal="businessTripTotal"
+      v-bind:propsAbsenceTotal="absenceTotal"
     >
     </PoliticianAttendanceChart>
 
@@ -20,6 +21,7 @@
       :politicianAttendance="conferenceAttendanceList"
     >
     </PoliticianAttendanceTable>
+    <Navigation />
   </div>
 </template>
 
@@ -27,10 +29,12 @@
 import axios from "axios";
 import PoliticianAttendanceChart from "@/views/Politician/PoliticianAttendanceChart.vue";
 import PoliticianAttendanceTable from "@/views/Politician/PoliticianAttendanceTable.vue";
+import Navigation from "@/components/Navigation";
 
 export default {
   name: "PoliticianAttendance",
   components: {
+    Navigation: Navigation,
     PoliticianAttendanceChart,
     PoliticianAttendanceTable,
   },
@@ -39,6 +43,7 @@ export default {
       componentKey: 0,
       //시각화에 쓸 데이터
       attendanceTotal: null,
+      absenceTotal: null,
       petitionLeaveTotal: null,
       businessTripTotal: null,
       //표에 쓸 데이터
@@ -53,19 +58,19 @@ export default {
       let businessTripTotal = 0;
       let attendanceTotal = 0;
       let petitionLeaveTotal = 0;
+      let absenceTotal = 0;
       for (let i = 0; i < response.data.length; i++) {
         attendanceTotal = response.data[i].attendance + attendanceTotal;
-        petitionLeaveTotal =
-          response.data[i].petitionLeave + petitionLeaveTotal;
+        petitionLeaveTotal = response.data[i].petitionLeave + petitionLeaveTotal;
         businessTripTotal = response.data[i].businessTrip + businessTripTotal;
+        if((response.data[i].businessTrip + response.data[i].petitionLeave + response.data[i].attendance) === 0) {
+          absenceTotal += 1;
+        }
       }
       this.attendanceTotal = attendanceTotal;
       this.petitionLeaveTotal = petitionLeaveTotal;
       this.businessTripTotal = businessTripTotal;
-
-      console.log("attendanceTotal", this.attendanceTotal);
-      console.log("businessTripTotal", this.petitionLeaveTotal);
-      console.log("petitionLeaveTotal", this.businessTripTotal);
+      this.absenceTotal = absenceTotal;
 
       //표//
       this.politicianAttendance = response.data;
@@ -94,11 +99,11 @@ export default {
           return e.conferenceTitle === val;
         });
         for (let conferenceAttendanceData of perConferenceAttendaceDataList) {
-          if (conferenceAttendanceData["attendance"] == 1) {
+          if (conferenceAttendanceData["attendance"] === 1) {
             newJson["attendanceTotal"] += 1;
-          } else if (conferenceAttendanceData["businessTrip"] == 1) {
+          } else if (conferenceAttendanceData["businessTrip"] === 1) {
             newJson["businessTripTotal"] += 1;
-          } else if (conferenceAttendanceData["petitionLeave"] == 1) {
+          } else if (conferenceAttendanceData["petitionLeave"] === 1) {
             newJson["petitionLeaveTotal"] += 1;
           } else {
             newJson["absenceTotal"] += 1;

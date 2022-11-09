@@ -1,0 +1,41 @@
+---
+- hosts: allDeployNodes
+  become: true
+  tasks:
+    - name: docker login
+      shell: docker login -u {{dockerID}} -p {{dockerPW}}
+
+
+- hosts: frontNodes
+  become: true
+  tasks:
+    - name: clear container
+      shell: |
+        docker stop /$(docker ps -a -q)
+        docker rm /$(docker ps -a -q)
+
+    - name: backup image
+      shell: docker image tag {{dockerID}}/frankly_frontend:latest {{dockerID}}/frankly_frontend:successor
+
+    - name: pull frontend image
+      shell: docker pull {{dockerID}}/frankly_frontend:latest
+
+    - name: deploy frontend image
+      shell: docker run -d --restart unless-stopped -p 8080:80 --name frankly_frontend_deploy {{dockerID}}/frankly_frontend:latest
+
+- hosts: backNodes
+  become: true
+  tasks:
+    - name: clear container
+      shell: |
+        docker stop /$(docker ps -a -q)
+        docker rm /$(docker ps -a -q)
+
+    - name: backup image
+      shell: docker image tag {{dockerID}}/frankly_backend:latest {{dockerID}}/frankly_backend:successor
+
+    - name: pull backend image
+      shell: docker pull {{dockerID}}/frankly_backend:latest
+
+    - name: deploy backend image
+      shell: docker run -d --restart unless-stopped -p 8081:8081 --name frankly_backend {{dockerID}}/frankly_backend:latest

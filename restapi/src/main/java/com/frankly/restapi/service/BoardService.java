@@ -57,6 +57,12 @@ public class BoardService implements BoardServiceInterface {
         return boardMapper.getBoardList(region);
     }
 
+    @Override
+    public List<BoardDTO> getBoardListAll() throws Exception {
+        log.info("getAllList");
+        return boardMapper.getBoardListAll();
+    }
+
     // 게시물 총 갯수
     @Override
     public int searchCount(String searchType, String keyword) throws Exception {

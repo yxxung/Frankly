@@ -1,7 +1,8 @@
 <template>
+  <div class="empty-box"></div>
     <nav class="bottom-nav">
         <div class="bottom-nav-area">
-            <router-link to="/">
+            <router-link to="/home">
                 <img src="@/assets/icon/nav/Home.svg" alt="홈으로 이동" id="home" >
                 <p>홈</p>
             </router-link>
@@ -90,5 +91,9 @@ export default {
 #mypage:hover,
 .route-active #mypage {
     background-image: url("@/assets/icon/nav/UserHover.svg");
+}
+.empty-box {
+  height: 90px;
+
 }
 </style>

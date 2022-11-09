@@ -14,11 +14,23 @@
     <form class="sign-up-form">
       <!--        이메일-->
       <label>
+        <p class="sign-up-form__input-info">이름</p>
+        <input
+          class="sign-up-form__text-input"
+          type="text"
+          placeholder="홍길동"
+          v-model="user.userName"
+        />
+      </label>
+
+      <!--        이메일-->
+      <label>
         <p class="sign-up-form__input-info">이메일</p>
         <input
           class="sign-up-form__text-input"
           type="email"
           placeholder="example@gmail.com"
+          v-model="user.userEmail"
         />
         <p class="sign-up-form__error-message">
           올바른 이메일 형식을 입력해주세요.
@@ -31,6 +43,7 @@
         <input
           class="sign-up-form__text-input"
           type="email"
+          v-model="user.userPassword"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
         />
@@ -38,15 +51,21 @@
           대소문자, 숫자, 특수문자 포함 8~16자리
         </p>
       </label>
-      <!--input 양식 에러발생 시 label 태그에 sign-up-form--error 클래스-->
+      <!--input 양식 에러발생 시 label 태그에 sign-up-form--error 클래스
       <label class="sign-up-form--error">
         <input
           class="sign-up-form__text-input"
           type="password"
+          v-model="userPasswordCheck"
           placeholder="비밀번호 확인"
         />
-        <p class="sign-up-form__error-message">비밀번호가 같지 않습니다.</p>
-      </label>
+        <p class="sign-up-form__error-message" v-show="checkPassword === false">
+          비밀번호가 같지 않습니다.
+        </p>
+        <p class="sign-up-form__error-message" v-show="checkPassword === true">
+          비밀번호가 같습니다.
+        </p>
+      </label>-->
 
       <!--        지역-->
       <label>
@@ -54,7 +73,7 @@
         <div class="dropdown-container">
           <select
             class="sign-up-form__dropdown"
-            v-model="regionName"
+            v-model="districtName"
             @change="selected"
           >
             <option v-for="district in districts" :key="district.value">
@@ -94,10 +113,7 @@
           </li>
         </ul>
       </div>
-      <button
-        class="sign-up-form__button"
-        onclick="location.href='/index.html'"
-      >
+      <button class="sign-up-form__button" @click.prevent="doSignup">
         가입완료
       </button>
     </form>
@@ -106,11 +122,19 @@
 
 <script>
 import axios from "axios";
-import signupObj from "@/store/signupObj.js";
+
 export default {
   name: "Signup",
   data() {
     return {
+      user: {
+        userName: null,
+        userEmail: null,
+        userPassword: null,
+        userAuth: "ROLE_USER",
+      },
+      userPasswordCheck: null,
+      checkPassword: false,
       districts: [
         { value: "0", districtName: "서울특별시" },
         { value: "1", districtName: "부산광역시" },
@@ -133,7 +157,30 @@ export default {
     };
   },
   methods: {
-    doSignup() {},
+    doSignup() {
+      axios
+        .post("/api/users/signup", {
+          name: this.user.userName,
+          email: this.user.userEmail,
+          password: this.user.userPassword,
+          district: this.districtName,
+          userAuth: this.user.userAuth,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            alert("회원가입이 완료되었습니다.");
+            this.$router.push("/Login");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async checkPasswordMethod() {
+      if (this.userPassword === this.userPasswordCheck) {
+        this.checkPassword = true;
+      }
+    },
   },
 };
 </script>
@@ -169,6 +216,7 @@ export default {
 /*
 이메일, 비밀번호 입력 input / button
 */
+.sign-up-form__text-input[type="text"],
 .sign-up-form__text-input[type="email"],
 .sign-up-form__text-input[type="password"] {
   box-sizing: border-box;
@@ -181,6 +229,7 @@ export default {
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
+.sign-up-form__text-input[type="text"]:focus-visible,
 .sign-up-form__text-input[type="email"]:focus-visible,
 .sign-up-form__text-input[type="password"]:focus-visible {
   outline: 0;

@@ -18,7 +18,7 @@
         <div class="post-list__title">
           <img src="@/assets/icon/Image.svg" alt="이미지 있음" />
           <h3>
-            {{ board.title }}<span> [110]</span>
+            {{ board.title }}<span> [{{board.replyCount}}]</span>
           </h3>
         </div>
         <p>{{ board.content }}</p>

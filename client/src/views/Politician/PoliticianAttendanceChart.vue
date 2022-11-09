@@ -35,6 +35,9 @@ export default {
     propsAttendanceTotal: {
       type: Number,
     },
+    propsAbsenceTotal: {
+      type: Number,
+    },
     propsPetitionLeaveTotal: {
       type: Number,
     },
@@ -92,8 +95,9 @@ export default {
     propsAttendanceTotal() {
       this.chartData.datasets[0].data = [
         parseInt(this.propsAttendanceTotal),
-        parseInt(this.propsPetitionLeaveTotal),
+        parseInt(this.propsAbsenceTotal),
         parseInt(this.propsBusinessTripTotal),
+        parseInt(this.propsPetitionLeaveTotal),
       ];
     },
     deep: true,
@@ -102,15 +106,16 @@ export default {
     return {
       componentKey: 0,
       chartData: {
-        labels: ["출석", "결석", "출장"],
+        labels: ["출석", "결석", "출장", "결석신고서"],
         datasets: [
           {
-            backgroundColor: ["#ffce56", "#37a2eb", "#fe6484"],
+            backgroundColor: ["#8ed2cd", "#ff9797", "#b9bfff", "#f8d374"],
             //data: [this.attendanceTotal, this.petitionLeaveTotal, this.businessTripTotal],
             data: [
               this.propsAttendanceTotal,
-              this.propsPetitionLeaveTotal,
+              this.propsAbsenceTotal,
               this.propsBusinessTripTotal,
+              this.propsPetitionLeaveTotal,
             ],
           },
         ],

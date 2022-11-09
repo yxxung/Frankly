@@ -33,14 +33,12 @@
     </select>
 
     <insert id="createUser" parameterType="UserDTO">
-        INSERT INTO frankly.User(email, name, password, district, sex, userAuth, contact)
+        INSERT INTO frankly.User(email, name, password, district, userAuth)
         VALUES(#{email},
                #{name},
                #{password},
                #{district},
-               #{sex},
-               #{userAuth},
-               #{contact})
+               #{userAuth})
     </insert>
 
     <delete id="deleteUser" parameterType="Long">
