@@ -87,11 +87,9 @@
       </div>
 
     </div>
-      </div>
-
-
     <div class="empty-box"></div>
     <Navigation />
+  </div>
 </template>
 
 <script>

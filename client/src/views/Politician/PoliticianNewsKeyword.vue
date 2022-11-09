@@ -28,7 +28,6 @@
         v-bind:isBusy="isBusy"
       ></PoliticianNewsKeywordView>
     </div>
-
     <Navigation />
   </div>
 </template>
