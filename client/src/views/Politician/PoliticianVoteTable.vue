@@ -7,7 +7,7 @@
       <b-list-group-item
         class="d-flex justify-content-between align-items-center"
       >
-        <b-link v-on:click = "goToLink(vote)" class="b-link-style">{{ vote.billTitle }}</b-link>
+        <b-link v-on:click = "goLink(vote)" class="b-link-style">{{ vote.billTitle }}</b-link>
         <b-badge v-if="vote.voteResult === '찬성'" variant="info" pill>{{ vote.voteResult }}</b-badge>
         <b-badge v-else-if="vote.voteResult === '반대'" variant="danger" pill>{{ vote.voteResult }}</b-badge>
         <b-badge v-else-if="vote.voteResult === '불참'" variant="warning" pill>{{ vote.voteResult }}</b-badge>
@@ -37,7 +37,7 @@ export default {
     };
   },
   methods:{
-    goToLink(vote){
+    goLink(vote){
       window.open(vote["voteURL"])
     }
   }

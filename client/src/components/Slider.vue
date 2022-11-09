@@ -12,7 +12,7 @@
     <vueper-slide v-for="(slide, i) in slides"
                   :key="i"
                   :image="slide.image"
-                  :link="slide.link"/>
+                  v-on:click="goLink(slide.link)"/>
   </vueper-slides>
 </template>
 
@@ -38,7 +38,12 @@ export default {
       { image: require('@/assets/party/정의당.svg'),
         link: 'https://www.justice21.org/newhome/main/default.html'},
     ]
-  })
+  }),
+  methods:{
+    goLink(link){
+      window.open(link)
+    }
+  }
 }
 </script>
 

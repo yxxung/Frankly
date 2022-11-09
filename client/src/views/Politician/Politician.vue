@@ -9,7 +9,9 @@
 
     <div class="politician-title">
       <h2>전체 국회의원</h2>
-      <h3>가나다 순</h3>
+      <h3 v-if="politicianOrder === 1" v-on:click="politicianOrdering" style="cursor:pointer;">가나다 순</h3>
+      <h3 v-if="politicianOrder === 2" v-on:click="politicianOrdering" style="cursor:pointer;">정당 순</h3>
+      <h3 v-if="politicianOrder === 3" v-on:click="politicianOrdering" style="cursor:pointer;">지역구 순</h3>
     </div>
 
     <ul class="all-politician-list">
@@ -25,6 +27,8 @@
           <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="politician-name">{{ politician.politicianName }}</div>
+        <div class="politician-region" v-if="politicianOrder === 3">{{ politician.regionName }}</div>
+        <div class="politician-region" v-if="politicianOrder === 2">{{ politician.partyName }}</div>
       </li>
     </ul>
 
@@ -48,7 +52,8 @@ export default {
     return {
       searchKeyword: "",
       politicians: [],
-      border: "3px solid #0d6efd"
+      border: "3px solid #0d6efd",
+      politicianOrder: 1
     };
   },
   mounted() {
@@ -92,6 +97,46 @@ export default {
       else if(politician.partyName === "기본소득당"){
         return "3px solid #000000"
       }
+    },
+    politicianOrdering(){
+      this.politicianOrder ++;
+      if(this.politicianOrder === 4) this.politicianOrder = 1;
+
+      if(this.politicianOrder === 1){
+        this.politicians.sort((a, b) =>{
+          if(a.politicianName > b.politicianName) return 1;
+          else return -1;
+        })
+      }
+      else if(this.politicianOrder === 2){
+        this.politicians.sort((a, b) =>{
+          if(a.partyName > b.partyName) return 1;
+          else return -1;
+        })
+      }
+      else if(this.politicianOrder === 3){
+        // let resultArray = this.politicians;
+        let politicianJson;
+        for(politicianJson of this.politicians){
+
+          let index = -1;
+          index = politicianJson.regionName.indexOf("시")
+          if(index === -1) index = politicianJson.regionName.indexOf("군")
+          if(index === -1) index = politicianJson.regionName.indexOf("구")
+
+
+          if(politicianJson.regionName.length > 11){
+            politicianJson.regionName = politicianJson.regionName.substr(0, index+1) + " 등"
+          }else if (politicianJson.regionName.length > 9){
+            politicianJson.regionName = politicianJson.regionName.substr(0, index+1)
+          }
+        }
+        this.politicians.sort((a, b) =>{
+          if(a.regionName > b.regionName) return 1;
+          else return -1;
+        })
+      }
+
     }
   },
 };
@@ -149,7 +194,7 @@ export default {
 .politician {
   display: inline-table;
   margin-bottom: 20px;
-  padding: 0 20px;
+  padding: 0 17px;
 }
 .politician-image {
   width: 75px;
@@ -173,6 +218,17 @@ export default {
 .politician-name {
   margin: 5px auto;
   font-size: 16px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.politician-region{
+  margin: 5px auto;
+  font-size: 10px;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 500;
