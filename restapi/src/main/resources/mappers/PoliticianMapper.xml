@@ -50,7 +50,7 @@
 
     <insert id="createPolitician" parameterType="PoliticianDTO">
         INSERT INTO frankly.Politician
-        VALUES (#{politicianN   ame}
+        VALUES (#{politicianName}
                , #{hanName}
                , #{engName}
                , #{lunar}
@@ -70,4 +70,11 @@
                , #{politicianImageURL}
                , #{politicianID})
     </insert>
+
+    <select id="readParty" resultMap="politicianResultMap">
+        SELECT *
+        FROM frankly.Politician
+        WHERE partyID = #{partyID}
+    </select>
+
 </mapper>

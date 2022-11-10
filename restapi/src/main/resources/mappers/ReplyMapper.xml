@@ -15,9 +15,9 @@
 
     <resultMap type="ReplyDTO" id="replyResultMap">
         <id column="replyID" property="replyID"/>
+        <result column="reply" property="reply"/>
         <result column="replyRegDate" property="replyRegDate"/>
         <result column="userID" property="userID"/>
-        <result column="regDate" property="regDate"/>
         <result column="boardID" property="boardID"/>
         <result column="replyCount" property="replyCount"/>
     </resultMap>
@@ -33,6 +33,11 @@
     <select id="readReply" resultMap="replyResultMap">
         SELECT * FROM frankly.Reply
         WHERE boardID = #{boardID}
+    </select>
+
+    <select id="getReply" resultMap="replyResultMap">
+        SELECT * FROM frankly.Reply
+        WHERE replyID = #{replyID}
     </select>
 
     <!--게시글과 댓글 총 갯수
@@ -52,7 +57,7 @@
     <update id="updateReply" parameterType="ReplyDTO">
         UPDATE frankly.Reply
         SET reply = #{reply}
-        WHERE replyID = #{replyID} AND boardID = #{boardID}
+        WHERE replyID = #{replyID}
     </update>
 
     <delete id="deleteReply" parameterType="ReplyDTO">

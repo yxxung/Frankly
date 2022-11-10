@@ -1,4 +1,5 @@
 <template>
+  <div class="empty-box"></div>
     <nav class="bottom-nav">
         <div class="bottom-nav-area">
             <router-link to="/home">
@@ -90,5 +91,9 @@ export default {
 #mypage:hover,
 .route-active #mypage {
     background-image: url("@/assets/icon/nav/UserHover.svg");
+}
+.empty-box {
+  height: 90px;
+
 }
 </style>

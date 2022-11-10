@@ -18,6 +18,8 @@
     <PoliticianVoteTable :VoteList="VoteList">
 
     </PoliticianVoteTable>
+
+    <Navigation />
   </div>
 </template>
 
@@ -25,9 +27,11 @@
 import axios from "axios";
 import PoliticianVoteTable from "@/views/Politician/PoliticianVoteTable.vue";
 import PoliticianVoteChart from "@/views/Politician/PoliticianVoteChart.vue";
+import Navigation from "@/components/Navigation";
 
 export default {
   components: {
+    Navigation: Navigation,
     PoliticianVoteTable,
     PoliticianVoteChart,
   },

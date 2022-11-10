@@ -21,6 +21,7 @@
       :politicianAttendance="conferenceAttendanceList"
     >
     </PoliticianAttendanceTable>
+    <Navigation />
   </div>
 </template>
 
@@ -28,10 +29,12 @@
 import axios from "axios";
 import PoliticianAttendanceChart from "@/views/Politician/PoliticianAttendanceChart.vue";
 import PoliticianAttendanceTable from "@/views/Politician/PoliticianAttendanceTable.vue";
+import Navigation from "@/components/Navigation";
 
 export default {
   name: "PoliticianAttendance",
   components: {
+    Navigation: Navigation,
     PoliticianAttendanceChart,
     PoliticianAttendanceTable,
   },
@@ -96,11 +99,11 @@ export default {
           return e.conferenceTitle === val;
         });
         for (let conferenceAttendanceData of perConferenceAttendaceDataList) {
-          if (conferenceAttendanceData["attendance"] == 1) {
+          if (conferenceAttendanceData["attendance"] === 1) {
             newJson["attendanceTotal"] += 1;
-          } else if (conferenceAttendanceData["businessTrip"] == 1) {
+          } else if (conferenceAttendanceData["businessTrip"] === 1) {
             newJson["businessTripTotal"] += 1;
-          } else if (conferenceAttendanceData["petitionLeave"] == 1) {
+          } else if (conferenceAttendanceData["petitionLeave"] === 1) {
             newJson["petitionLeaveTotal"] += 1;
           } else {
             newJson["absenceTotal"] += 1;

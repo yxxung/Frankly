@@ -48,5 +48,9 @@ public class PoliticianService implements PoliticianServiceInterface {
         return politicianMapper.searchPolitician(searchName);
 
     }
+    @Override
+    public List<PoliticianDTO> readParty(int partyID) throws Exception {
+        return politicianMapper.readParty(partyID);
+    }
 
 }

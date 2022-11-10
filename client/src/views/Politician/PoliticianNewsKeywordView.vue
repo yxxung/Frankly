@@ -146,9 +146,5 @@ export default {
 .btn-space {
   margin-bottom: 5px;
 }
-.empty-box {
-  height: 80px;
-
-}
 
 </style>

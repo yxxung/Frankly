@@ -37,7 +37,7 @@ public class BoardService implements BoardServiceInterface {
             }
 
         }else{
-            throw new Exception("author is different");
+            throw new Exception("author is different - "+targetBoard.getAuthor()+" and "+boardDTO.getAuthor());
         }
 
     }
