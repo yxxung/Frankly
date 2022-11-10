@@ -17,6 +17,7 @@
       :total-rows="rows"
       :per-page="perPage"
       align="center"
+      margin="20px auto"
     ></b-pagination>
   </div>
 </template>
@@ -50,4 +51,5 @@ export default {
 
 <style>
 @import "@/assets/scss/style.scss";
+
 </style>

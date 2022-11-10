@@ -45,14 +45,17 @@ import PoliticianVote from "@/views/Politician/PoliticianVote";
 const routes = [
   {
     path: '/home',
+    name: 'Home',
     component: Home
   },
   {
     path: '/Login',
+    name: 'Login',
     component: Login,
   },
   {
     path: '/Signup',
+    name: 'Signup',
     component: Signup
   },
   {

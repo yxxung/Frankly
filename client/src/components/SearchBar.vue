@@ -36,6 +36,7 @@ export default {
 .politician-search {
   display: flex;
   width: 100%;
+  max-width: 540px;
   justify-content: space-evenly;
   align-items: center;
   margin-top: -30px;
@@ -43,6 +44,8 @@ export default {
 
 .politician-search-form{
   display: flex;
+  width: 100%;
+  max-width: 540px;
   justify-items: center;
   justify-content: center;
 }

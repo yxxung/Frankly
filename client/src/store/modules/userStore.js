@@ -1,11 +1,13 @@
 import jwt_decode from "jwt-decode";
 import { login, findById } from "@/js/user.js";
 
-const userStore = {
+export const userStore = {
     namespaced: true,
     state: {
         isLogin: false,
+        //로그인 오류
         isLoginError: false,
+        //유저정보
         userInfo: null,
     },
     getters: {
@@ -14,6 +16,7 @@ const userStore = {
         },
     },
     mutations: {
+        //로그인 여부 상태 저장
         SET_IS_LOGIN: (state, isLogin) => {
             state.isLogin = isLogin;
 
@@ -27,25 +30,18 @@ const userStore = {
             }
             state.userInfo = userInfo;
         },
-        SET_KAKAO_USER_INFO(state, kakaoInfo) {
-            state.kakaoUserInfo = [];
-            state.kakaoUserInfo.push(kakaoInfo);
-        }
     },
     actions: {
-        async setKakaoUserInfo({commit}, kakaoInfo) {
-            commit('SET_KAKAO_USER_INFO', kakaoInfo);
-            console.log("userStore: setKakaoUserInfo"+kakaoInfo);
-        },
         async userConfirm({ commit }, user) {
             await login(
                 user,
                 (response) => {
-                    if (response.data.message === "success") {
-                        let token = response.data["Authorization"];
+                    console.log(response);
+                    if (response.status === 200) {
+                        let token = response.data["jwttoken"];
                         commit("SET_IS_LOGIN", true);
                         commit("SET_IS_LOGIN_ERROR", false);
-                        sessionStorage.setItem("Authorization", token);
+                        sessionStorage.setItem("jwttoken", token);
                     } else {
                         commit("SET_IS_LOGIN", false);
                         commit("SET_IS_LOGIN_ERROR", true);
@@ -56,7 +52,7 @@ const userStore = {
         async getUserInfo({ commit }, token) {
             let decode_token = jwt_decode(token);
             await findById(
-                decode_token.userid,
+                decode_token.userID,
                 (response) => {
                     if (response.data.message === "success") {
                         console.log(response.data.userInfo); //로그인한 userInfo 확인
@@ -73,5 +69,3 @@ const userStore = {
         },
     }
 };
-
-export default userStore;

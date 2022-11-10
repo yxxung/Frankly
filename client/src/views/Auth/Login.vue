@@ -19,7 +19,7 @@
           class="sign-up-form__text-input"
           type="email"
           placeholder="example@gmail.com"
-          v-model="userEmail"
+          v-model="user.userEmail"
         />
         <p class="sign-up-form__error-message">
           올바른 이메일 형식을 입력해주세요.
@@ -34,7 +34,7 @@
           type="email"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
-          v-model="userPassword"
+          v-model="user.userPassword"
         />
         <p class="sign-up-form__error-message">
           대소문자, 숫자, 특수문자 포함 8~16자리
@@ -51,7 +51,7 @@
         <a href="#">비밀번호 찾기</a>
       </div>
 
-      <button class="sign-up-form__button" @click.prevent="doLogin">
+      <button class="sign-up-form__button" @click.prevent="confirm()">
         로그인
       </button>
     </form>
@@ -60,20 +60,21 @@
 
 <script>
 import axios from "axios";
+import { http } from "@/js/http.js";
+import {mapActions, mapState} from 'vuex';
+
+const userStore = 'userStore';
 
 export default {
   name: "Login",
   data() {
     return {
-      userEmail: null,
-      userPassword: null,
+      user: {
+        userEmail: "",
+        userPassword: "",
+      }
     };
-  },/*
-  computed: {
-    isUserEmailValid() {
-      return validateEmail(this.user.userEmail);
-    },
-  },*/
+  },
   computed: {
     ...mapState(userStore, ["isLogin", "isLoginError"]),
   },
@@ -82,28 +83,18 @@ export default {
       "userConfirm",
       "getUserInfo",
     ]),
-    doLogin() {
-      const userData = {
-        email: this.userEmail,
-        password: this.userPassword,
-      };
-
-      try {
-      axios.post("/api/auth/signin", JSON.stringify(userData), {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-      })
-      .then((res) => {
-        if(res.status === 200) {
-          this.$store.commit("login", res.data);
-          this.$router.push("/home")
-        }
-
-      })
-      } catch (error) {
-        console.log(error)
+    async confirm() {
+      // 토큰 서버에서 생성 후 저장
+      await this.userConfirm(this.user);
+      // 토큰 받아오기
+      let token = sessionStorage.getItem("jwttoken");
+      if (this.isLogin) {
+        // 현재 토큰과 로그인한 유저가 일치하는지 확인
+        await this.getUserInfo(token);
+        // 메인 화면으로 이동
+        this.$router.push({ name: "Home" });
       }
+    },
       /*try {
         axios.post('/api/auth/signin', this.credentials, {
           headers: {
@@ -121,7 +112,6 @@ export default {
       } catch (error) {
         console.log(error);
       }*/
-    },
   },
 };
 </script>
