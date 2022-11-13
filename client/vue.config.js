@@ -18,7 +18,7 @@ devServer: {
   port: 8080,
   proxy: {
     '/api': {
-      target:'http://localhost:8081', //요청할 서버 주소
+      target:'https://localhost:8081', //요청할 서버 주소
       changeOrigin: true,
       logLevel: 'debug', //터미널에 proxy 로그가 찍힌다.
       ws: false
