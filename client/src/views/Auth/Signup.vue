@@ -51,6 +51,20 @@
           대소문자, 숫자, 특수문자 포함 8~16자리
         </p>
       </label>
+
+      <!--        전화번호-->
+      <label>
+        <p class="sign-up-form__input-info">전화번호</p>
+        <input
+          class="sign-up-form__text-input"
+          type="text"
+          placeholder="하이픈(-)을 제외하고 입력해주세요."
+          v-model="user.userContact"
+        />
+        <p class="sign-up-form__error-message">
+          올바른 전화번호 형식을 입력해주세요.
+        </p>
+      </label>
       <!--input 양식 에러발생 시 label 태그에 sign-up-form--error 클래스
       <label class="sign-up-form--error">
         <input
@@ -131,6 +145,7 @@ export default {
         userName: null,
         userEmail: null,
         userPassword: null,
+        userContact: null,
         userAuth: "ROLE_USER",
       },
       userPasswordCheck: null,
@@ -165,6 +180,7 @@ export default {
           password: this.user.userPassword,
           district: this.districtName,
           userAuth: this.user.userAuth,
+          contact: this.user.userContact
         })
         .then((response) => {
           if (response.status === 200) {

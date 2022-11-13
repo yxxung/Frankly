@@ -70,7 +70,7 @@
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-              <h6>익명{{ reply.replyID }}</h6>
+              <h6>익명</h6>
               <span class="comments__info__date">{{
                 elapsedText(reply.replyRegDate)
               }}</span>

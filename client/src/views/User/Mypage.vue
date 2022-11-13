@@ -120,6 +120,7 @@ export default {
   },
   computed: {
     ...mapState({ userStore: "userStore" }),
+    ...mapMutations(["userStore/SET_IS_LOGIN", "userStore/SET_USER_INFO"])
   },
   created() {
     axios
@@ -172,6 +173,16 @@ export default {
           console.log("탈퇴 요청 실패");
         });
     },
+    logoutUser() {
+      this.userStore/SET_IS_LOGIN(false);
+      this.userStore/SET_USER_INFO(null);
+
+      sessionStorage.removeItem("token");
+
+      if (this.$route.path != "/") {
+        this.$router.push({ name: "Login" });
+      }
+    }
   },
 };
 </script>
@@ -203,7 +214,7 @@ export default {
 }
 
 .mypage-user-detail {
-  margin: auto 0 auto 4%;
+  margin: auto 0 auto 10px;
   flex: 1;
   width: 50%;
   vertical-align:middle;
@@ -224,14 +235,14 @@ export default {
   width: 100%;
   max-width: 540px;
   height: 100%;
-  margin: 20px auto;
+  margin: 30px auto;
 }
 
 .mypage-detail-list > h2 {
   margin: 20px auto;
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 23px;
   letter-spacing: -0.024em;
 

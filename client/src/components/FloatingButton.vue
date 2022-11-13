@@ -35,9 +35,8 @@ export default {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   z-index: 999;
   top: 75%;
-  margin: auto 0 0 auto;
-  /*margin-left: 40%;*/
-  /*mar*/
+  /*margin: auto 0 0 auto;*/
+  margin-left: 60%;
   /*float: right;*/
 }
 .floating-button-wrap{
