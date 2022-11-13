@@ -33,8 +33,8 @@ export default {
     $route(to) {
       if (
         !(
-          to.name == "login" ||
-          to.name == "signUp" ||
+          to.name == "Login" ||
+          to.name == "SignUp" ||
           to.name == "findPass"
         )
       ) {

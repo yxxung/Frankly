@@ -4,7 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 import {userStore} from "@/store/modules/userStore.js";
 import {userLogStore} from "@/store/modules/userLogStore.js";
 
-const store = createStore({
+export const store = createStore({
     modules: { userStore, userLogStore },
     state: {},
     getters: {},

@@ -28,51 +28,60 @@
       </header>
 
       <b-modal v-model="modifyFlag" hide-footer title="개인정보 수정">
-        <b-form-group
-          label="Street:"
-          label-for="nested-street"
-          label-cols-sm="3"
-          label-align-sm="end"
-        >
-          <b-form-input id="nested-street"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="City:"
-          label-for="nested-city"
-          label-cols-sm="3"
-          label-align-sm="end"
-        >
-          <b-form-input id="nested-city"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="State:"
-          label-for="nested-state"
-          label-cols-sm="3"
-          label-align-sm="end"
-        >
-          <b-form-input id="nested-state"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="Country:"
-          label-for="nested-country"
-          label-cols-sm="3"
-          label-align-sm="end"
-        >
-        </b-form-group>
-        <b-button
-          class="mt-3"
-          variant="outline-danger"
-          block
-          @click="CancelModifyBtn"
+        <b-container fluid>
+          <b-row>
+            <b-col sm="2">
+              <label for="textarea-small">이름:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-textarea
+                id="textarea-small"
+                size="sm"
+                v-model="userInfo.name"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="2">
+              <label for="textarea-small">이름:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-textarea
+                id="textarea-small"
+                size="sm"
+                v-model="userInfo.name"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="2">
+              <label for="textarea-small">이름:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-textarea
+                id="textarea-small"
+                size="sm"
+                v-model="userInfo.name"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="2">
+              <label for="textarea-small">이름:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-textarea
+                id="textarea-small"
+                size="sm"
+                v-model="userInfo.name"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+        </b-container>
+        <b-button size="sm" variant="Light" @click="CancelModifyBtn"
           >취소</b-button
         >
-        <b-button
-          class="mt-2"
-          variant="outline-warning"
-          block
-          @click="updateUser"
-          >수정</b-button
-        >
+        <b-button size="sm" variant="dark" @click="updateUser">수정</b-button>
       </b-modal>
       <div class="mypage">
         <div class="mypage-info">
@@ -105,7 +114,7 @@
 <script>
 import axios from "axios";
 import Navigation from "@/components/Navigation.vue";
-import { mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Mypage",
@@ -120,7 +129,6 @@ export default {
   },
   computed: {
     ...mapState({ userStore: "userStore" }),
-    ...mapMutations(["userStore/SET_IS_LOGIN", "userStore/SET_USER_INFO"])
   },
   created() {
     axios
@@ -141,7 +149,6 @@ export default {
     // 취소 버튼 클릭 시
     CancelModifyBtn() {
       this.modifyFlag = false;
-      location.href = "/Mypage";
     },
     //회원 정보 수정
     updateUser() {
@@ -174,15 +181,17 @@ export default {
         });
     },
     logoutUser() {
-      this.userStore/SET_IS_LOGIN(false);
-      this.userStore/SET_USER_INFO(null);
+      this.$store.commit("userStore/SET_IS_LOGIN", false);
+      this.$store.commit("userStore/SET_USER_INFO", null);
+      this.$store.commit("userStore/SET_USER_ID", null);
 
       sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userID");
 
       if (this.$route.path != "/") {
         this.$router.push({ name: "Login" });
       }
-    }
+    },
   },
 };
 </script>
@@ -217,7 +226,7 @@ export default {
   margin: auto 0 auto 10px;
   flex: 1;
   width: 50%;
-  vertical-align:middle;
+  vertical-align: middle;
 }
 
 .mypage-user-name {

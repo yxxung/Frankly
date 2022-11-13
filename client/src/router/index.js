@@ -42,6 +42,40 @@ import PoliticianAttendance from "@/views/Politician/PoliticianAttendance";
 import PoliticianVote from "@/views/Politician/PoliticianVote";
 //import EditData from "@/views/Admin/EditData"
 
+import store from '@/store/index.js'
+
+const onlyAuthUser = async (to, from, next) => {
+  const userID = sessionStorage.getItem("userID");
+
+  //const checkUserInfo = store.getters("userStore/checkUserInfo");
+
+  if (store.getters["userStore/checkUserInfo"] == null && userID) {
+    await store.dispatch("userStore/getUserInfo", userID);
+  }
+
+  if (store.getters["userStore/checkUserInfo"] === null) {
+    alert("로그인이 필요한 페이지입니다.");
+    next({ name: "Login" });
+  } else {
+    next();
+  }
+};
+
+const onlyNoAuthUser = async (to, from, next) => {
+  //const checkUserInfo = store.getters["userStore/checkUserInfo"];
+  let userID = sessionStorage.getItem("userID");
+
+  if (store.getters["userStore/checkUserInfo"] == null && userID) {
+    store.dispatch("userStore/getUserInfo", userID);
+  }
+
+  if (store.getters["userStore/checkUserInfo"] === null) {
+    next();
+  } else {
+    next({ name: "Home" });
+  }
+};
+
 const routes = [
   {
     path: '/home',
@@ -51,140 +85,168 @@ const routes = [
   {
     path: '/Login',
     name: 'Login',
+    beforeEnter: onlyNoAuthUser,
     component: Login,
   },
   {
     path: '/Signup',
     name: 'Signup',
+    beforeEnter: onlyNoAuthUser,
     component: Signup
   },
   {
     path: '/',
+    beforeEnter: onlyNoAuthUser,
     component: AuthPage
   },
   {
     path: '/Mypage',
     name: 'Mypage',
+    beforeEnter: onlyAuthUser,
     component: Mypage
   },
   /*board*/
   {
     path: '/WriteBoard',
     name: 'WriteBoard',
+    beforeEnter: onlyAuthUser,
     component: WriteBoard
   },
   {
     path: '/UpdateBoard/:boardID',
     name: 'UpdateBoard',
+    beforeEnter: onlyAuthUser,
     component: UpdateBoard
   },
   {
     path: '/MainBoard',
+    beforeEnter: onlyAuthUser,
     component: MainBoard,
   },
   {
     path: '/Politician',
     name: 'Politician',
+    beforeEnter: onlyAuthUser,
     component: Politician
   },
   {
     path: '/FreeBoard',
     name: 'FreeBoard',
+    beforeEnter: onlyAuthUser,
     component: FreeBoard
   },
   {
     path: '/HotBoard',
     name: 'HotBoard',
+    beforeEnter: onlyAuthUser,
     component: HotBoard
   },
   {
     path: '/SeoulBoard',
     name: 'SeoulBoard',
+    beforeEnter: onlyAuthUser,
     component: SeoulBoard
   },
   {
     path: '/BusanBoard',
     name: 'BusanBoard',
+    beforeEnter: onlyAuthUser,
     component: BusanBoard
   },
   {
     path: '/ChungbukBoard',
     name: 'ChungbukBoard',
+    beforeEnter: onlyAuthUser,
     component: ChungbukBoard
   },
   {
     path: '/ChungnamBoard',
     name: 'ChungnamBoard',
+    beforeEnter: onlyAuthUser,
     component: ChungnamBoard
   },
   {
     path: '/DaeguBoard',
     name: 'DaeguBoard',
+    beforeEnter: onlyAuthUser,
     component: DaeguBoard
   },
   {
     path: '/DaejeonBoard',
     name: 'DaejeonBoard',
+    beforeEnter: onlyAuthUser,
     component: DaejeonBoard
   },
   {
     path: '/GangwonBoard',
     name: 'GangwonBoard',
+    beforeEnter: onlyAuthUser,
     component: GangwonBoard
   },
   {
     path: '/GwangjuBoard',
     name: 'GwangjuBoard',
+    beforeEnter: onlyAuthUser,
     component: GwangjuBoard
   },
   {
     path: '/GyeongbukBoard',
     name: 'GyeongbukBoard',
+    beforeEnter: onlyAuthUser,
     component: GyeongbukBoard
   },
   {
     path: '/GyeonggiBoard',
     name: 'GyeonggiBoard',
+    beforeEnter: onlyAuthUser,
     component: GyeonggiBoard
   },
   {
     path: '/GyeongnamBoard',
     name: 'GyeongnamBoard',
+    beforeEnter: onlyAuthUser,
     component: GyeongnamBoard
   },
   {
     path: '/IncheonBoard',
     name: 'IncheonBoard',
+    beforeEnter: onlyAuthUser,
     component: IncheonBoard
   },
   {
     path: '/JejuBoard',
     name: 'JejuBoard',
+    beforeEnter: onlyAuthUser,
     component: JejuBoard
   },
   {
     path: '/JeonbukBoard',
     name: 'JeonbukBoard',
+    beforeEnter: onlyAuthUser,
     component: JeonbukBoard
   },
   {
     path: '/JeonnamBoard',
     name: 'JeonnamBoard',
+    beforeEnter: onlyAuthUser,
     component: JeonnamBoard
   },
   {
     path: '/SejongBoard',
     name: 'SejongBoard',
+    beforeEnter: onlyAuthUser,
     component: SejongBoard
   },
   {
     path: '/UlsanBoard',
     name: 'UlsanBoard',
+    beforeEnter: onlyAuthUser,
     component: UlsanBoard
   },
   {
     path: '/BoardDetail/:boardID',
     name: 'BoardDetail',
+    beforeEnter: onlyAuthUser,
     component: BoardDetail
   },
   /*admin*/
@@ -242,12 +304,6 @@ const routes = [
     path: '/Search',
     name: 'Search',
     component: PoliticianSearchView
-  },
-  /*시각화*/
-  {
-    path:'/PoliticianDetail/:politicianID/statistics',
-    name: 'PoliticianStatistics',
-    component: PoliticianStatistics
   }
 ]
 

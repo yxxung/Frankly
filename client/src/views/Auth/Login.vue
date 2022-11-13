@@ -87,10 +87,11 @@ export default {
 
           sessionStorage.setItem("token", token);
           sessionStorage.setItem("userID", userID);
-          
+
           this.$store.dispatch("userStore/getUserInfo", userID);
-          this.$router.push({ name: "Home" });
+          this.$router.push({ name: "Home"});
         } else {
+          alert('아이디 또는 비밀번호가 일치하지 않습니다.')
           this.$store.commit("userStore/SET_IS_LOGIN", false);
           this.$store.commit("userStore/SET_IS_LOGIN_ERROR", true);
         }
@@ -99,33 +100,7 @@ export default {
         cosole.error(error)
         alert('아이디 또는 비밀번호가 일치하지 않습니다.')
       });
-      // 토큰 받아오기
-      /*let userID = sessionStorage.getItem("userID");
-      console.log(userID);
-      if (this.isLogin) {
-        // 현재 토큰과 로그인한 유저가 일치하는지 확인
-        await this.$store.getUserInfo(userID);
-        // 메인 화면으로 이동
-        this.$router.push({ name: "Home" });
-      }*/
     },
-    /*try {
-        axios.post('/api/auth/signin', this.credentials, {
-          headers: {
-            "Content-Type": `application/json`,
-          }
-        })
-        .then((response) => {
-          if(response.status === 200) {
-            // 로컬스토리지에 토큰 저장
-          localStorage.setItem("jwt", response.data.token);
-            //로그인 성공시 처리
-            this.$router.push({name: 'home'})
-          }
-        })
-      } catch (error) {
-        console.log(error);
-      }*/
   },
 };
 </script>
