@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import { login, findById } from "@/js/user.js";
 
 export const userStore = {
@@ -10,6 +9,8 @@ export const userStore = {
         isLoginError: false,
         //유저정보
         userInfo: null,
+        //userID
+        userID: null
     },
     getters: {
         checkUserInfo: function (state) {
@@ -18,46 +19,52 @@ export const userStore = {
     },
     mutations: {
         //로그인 여부 상태 저장
-        SET_IS_LOGIN: (state, isLogin) => {
+        SET_IS_LOGIN(state, isLogin) {
             state.isLogin = isLogin;
 
         },
-        SET_IS_LOGIN_ERROR: (state, isLoginError) => {
+        SET_IS_LOGIN_ERROR(state, isLoginError){
             state.isLoginError = isLoginError;
         },
         //유저 정보 저장
-        SET_USER_INFO: (state, userInfo) => {
+        SET_USER_INFO(state, userInfo) {
             if (userInfo != null) {
                 state.isLogin = true;
             }
             state.userInfo = userInfo;
         },
+        //유저 아이디 저장
+        SET_USER_ID(state, userID) {
+            state.userID = userID
+        }
     },
     actions: {
-        async userConfirm({ commit }, user) {
+        /*async userConfirm({ commit }, user) {
             await login(
                 user,
                 (response) => {
-                    console.log(response);
+                    console.log("userConfirm", response);
                     if (response.data.status === 200) {
-                        let token = response.data.jwttoken;
+                        let token = response.data.token;
+                        let userID = response.data.userID;
                         commit("SET_IS_LOGIN", true);
                         commit("SET_IS_LOGIN_ERROR", false);
-                        sessionStorage.setItem("jwttoken", token);
+                        commit("SET_USER_ID", response.data.userID);
+                        sessionStorage.setItem("token", token);
+                        sessionStorage.setItem("userID", userID);
                     } else {
                         commit("SET_IS_LOGIN", false);
                         commit("SET_IS_LOGIN_ERROR", true);
                     }
                 }
             );
-        },
-        async getUserInfo({ commit }, token) {
-            let decode_token = jwt_decode(token);
-            console.log(decode_token)
+        },*/
+        async getUserInfo({ commit }, userID) {
             await findById(
-                decode_token.userID,
+                userID,
                 (response) => {
-                    if (response.data.status === 200) {
+                    console.log(userID);
+                    if (response.status === 200) {
                         console.log(response.data.userInfo); //로그인한 userInfo 확인
                         commit("SET_USER_INFO", response.data.userInfo);
                         console.log(response.data.userInfo)

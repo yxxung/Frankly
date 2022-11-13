@@ -9,6 +9,7 @@ export default {
   name: 'app',
   data() {
     return {
+      show: false,
       id: ''
     }
   },
@@ -25,9 +26,25 @@ export default {
       this.show = true;
       this.id = JSON.parse(
         sessionStorage.getItem("vuex")
-      ).userStore.userInfo.userID;
+      ).userStore.userID;
     }
-  }
+  },
+  watch: {
+    $route(to) {
+      if (
+        !(
+          to.name == "login" ||
+          to.name == "signUp" ||
+          to.name == "findPass" ||
+          to.name == "resetPass"
+        )
+      ) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
+    },
+  },
 }
 </script>
 

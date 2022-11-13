@@ -32,19 +32,6 @@
         hide-footer
         title="개인정보 수정"
       >
-        <b-form-group
-      label-cols-lg="3"
-      label="Shipping Address"
-      label-size="lg"
-      label-class="fw-bold pt-0"
-      class="mb-0"
-    >
-      <b-form-group
-        label="Street:"
-        label-for="nested-street"
-        label-cols-sm="3"
-        label-align-sm="end"
-      >
         <b-button
           class="mt-3"
           variant="outline-danger"

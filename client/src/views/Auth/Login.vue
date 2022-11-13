@@ -59,45 +59,57 @@
 </template>
 
 <script>
-import axios from "axios";
 import { http } from "@/js/http.js";
-import {mapActions, mapState} from 'vuex';
-
-const userStore = 'userStore';
+import { login, findById } from "@/js/user.js";
 
 export default {
   name: "Login",
   data() {
     return {
       userEmail: "",
-      userPassword: ""
+      userPassword: "",
     };
   },
-  computed: {
-    ...mapState(userStore, ["isLogin", "isLoginError"]),
-  },
   methods: {
-    ...mapActions(userStore, [
-      "userConfirm",
-      "getUserInfo",
-    ]),
     async confirm() {
       const user = {
         email: this.userEmail,
-        password: this.userPassword
-      }
-      // 토큰 서버에서 생성 후 저장
-      await this.userConfirm(user);
+        password: this.userPassword,
+      };
+      login(user, (response) => {
+        console.log("userConfirm", response);
+        if (response.status === 200) {
+          let token = response.data.token;
+          let userID = response.data.userID;
+          this.$store.commit("userStore/SET_IS_LOGIN", true);
+          this.$store.commit("userStore/SET_IS_LOGIN_ERROR", false);
+          this.$store.commit("userStore/SET_USER_ID", userID);
+
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("userID", userID);
+          
+          this.$store.dispatch("userStore/getUserInfo", userID);
+          this.$router.push({ name: "Home" });
+        } else {
+          this.$store.commit("userStore/SET_IS_LOGIN", false);
+          this.$store.commit("userStore/SET_IS_LOGIN_ERROR", true);
+        }
+      },
+      (error) => {
+        cosole.error(error)
+        alert('아이디 또는 비밀번호가 일치하지 않습니다.')
+      });
       // 토큰 받아오기
-      let token = sessionStorage.getItem("jwttoken");
+      /*let userID = sessionStorage.getItem("userID");
+      console.log(userID);
       if (this.isLogin) {
         // 현재 토큰과 로그인한 유저가 일치하는지 확인
-        await this.getUserInfo(token);
+        await this.$store.getUserInfo(userID);
         // 메인 화면으로 이동
         this.$router.push({ name: "Home" });
-      }
+      }*/
     },
-      /*try {
+    /*try {
         axios.post('/api/auth/signin', this.credentials, {
           headers: {
             "Content-Type": `application/json`,

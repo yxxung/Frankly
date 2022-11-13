@@ -3,7 +3,7 @@ import createPersistedState from "vuex-persistedstate";
 
 import {userStore} from "@/store/modules/userStore.js";
 
-export default createStore({
+const store = createStore({
     modules: { userStore },
     state: {},
     getters: {},
@@ -17,3 +17,5 @@ export default createStore({
       })
     ]
   });
+
+  export default store
