@@ -31,57 +31,92 @@
         <b-container fluid>
           <b-row>
             <b-col sm="2">
-              <label for="textarea-small">이름:</label>
+              <label for="textarea-auto-height">이름</label>
             </b-col>
             <b-col sm="10">
               <b-form-textarea
-                id="textarea-small"
+                id="textarea-auto-height"
+                class="mt-3"
+                disabled
+                v-model="user.name"
                 size="sm"
-                v-model="userInfo.name"
+                rows="3"
+                max-rows="8"
               ></b-form-textarea>
             </b-col>
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label for="textarea-small">이름:</label>
+              <label for="textarea-auto-height">이메일</label>
             </b-col>
             <b-col sm="10">
               <b-form-textarea
-                id="textarea-small"
+                id="textarea-auto-height"
+                class="mt-3"
+                disabled
+                v-model="user.email"
                 size="sm"
-                v-model="userInfo.name"
+                rows="3"
+                max-rows="8"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+          <!--<b-row>
+            <b-col sm="2">
+              <label for="textarea-auto-height">비밀번호</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-textarea
+                id="textarea-auto-height"
+                class="mt-3"
+                v-model="user.password"
+                size="sm"
+                rows="3"
+                max-rows="8"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>-->
+          <b-row>
+            <b-col sm="2">
+              <label for="textarea-auto-height">전화번호</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-textarea
+                id="textarea-auto-height"
+                class="mt-3"
+                v-model="user.contact"
+                size="sm"
+                rows="3"
+                max-rows="8"
               ></b-form-textarea>
             </b-col>
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label for="textarea-small">이름:</label>
+              <label for="textarea-auto-height">지역</label>
             </b-col>
             <b-col sm="10">
               <b-form-textarea
-                id="textarea-small"
+                id="textarea-auto-height"
+                class="mt-3"
+                v-model="user.district"
                 size="sm"
-                v-model="userInfo.name"
-              ></b-form-textarea>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col sm="2">
-              <label for="textarea-small">이름:</label>
-            </b-col>
-            <b-col sm="10">
-              <b-form-textarea
-                id="textarea-small"
-                size="sm"
-                v-model="userInfo.name"
+                rows="3"
+                max-rows="8"
               ></b-form-textarea>
             </b-col>
           </b-row>
         </b-container>
-        <b-button size="sm" variant="Light" @click="CancelModifyBtn"
+        <b-button
+          class="mt-3"
+          size="sm"
+          variant="Light"
+          @click="CancelModifyBtn"
           >취소</b-button
         >
-        <b-button size="sm" variant="dark" @click="updateUser">수정</b-button>
+        <b-button class="mt-3" size="sm" variant="dark" @click="updateUser"
+          >수정</b-button
+        >
       </b-modal>
       <div class="mypage">
         <div class="mypage-info">
@@ -89,8 +124,8 @@
             <img src="@/assets/icon/Anonymous_user.svg" />
           </div>
           <div class="mypage-user-detail">
-            <h2 class="mypage-user-name">{{ userInfo.name }}</h2>
-            <h4 class="mypage-user-region">{{ userInfo.district }}</h4>
+            <h2 class="mypage-user-name">{{ user.name }}</h2>
+            <h4 class="mypage-user-region">{{ user.district }}</h4>
           </div>
         </div>
 
@@ -124,18 +159,19 @@ export default {
   data() {
     return {
       modifyFlag: false,
-      userInfo: {},
+      user: {},
     };
   },
   computed: {
     ...mapState({ userStore: "userStore" }),
+    //...mapState([ 'userInfo', 'isLogin' ])
   },
   created() {
     axios
-      .get(`/api/users/${this.userStore.userID}`)
+      .get(`/api/users/${this.userStore.userInfo.userID}`)
       .then((response) => {
         console.log("users", response.data);
-        this.userInfo = response.data;
+        this.user = response.data;
       })
       .catch((error) => {
         console.log(error);
@@ -153,33 +189,50 @@ export default {
     //회원 정보 수정
     updateUser() {
       axios
-        .put(`/api/users/${this.userStore.userID}/update`)
+        .put(`/api/users/${this.userStore.userInfo.userID}/update`, {
+          userID: this.user.userID,
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password,
+          contact: this.user.contact,
+          district: this.user.district,
+          userAuth: this.userStore.userInfo.userAuth,
+        })
         .then((response) => {
+          this.modifyFlag = false;
           if (response.status === 200) {
             alert("회원 정보 수정이 완료됐습니다.");
           }
-          this.$router.go();
         })
         .catch(() => {
           console.log("수정 요청 실패");
         });
     },
-
     //회원탈퇴
     deleteUser() {
-      const userID = 2;
       axios
-        .delete(`/api/users/${userID}/delete`)
+        .delete(`/api/users/${this.userStore.userID}/delete`)
         .then((response) => {
           if (response.status === 200) {
             alert("회원 탈퇴가 완료됐습니다.");
+
+            this.$store.commit("userStore/SET_IS_LOGIN", false);
+            this.$store.commit("userStore/SET_USER_INFO", null);
+            this.$store.commit("userStore/SET_USER_ID", null);
+
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("userID");
+
+            if (this.$route.path != "/") {
+              this.$router.push({ name: "AuthPage", component: 'AuthPage' });
+            }
           }
-          this.$router.go();
         })
-        .catch(() => {
-          console.log("탈퇴 요청 실패");
+        .catch((error) => {
+          console.log("탈퇴 요청 실패", error);
         });
     },
+    //로그아웃
     logoutUser() {
       this.$store.commit("userStore/SET_IS_LOGIN", false);
       this.$store.commit("userStore/SET_USER_INFO", null);

@@ -96,6 +96,7 @@ const routes = [
   },
   {
     path: '/',
+    name: 'AuthPage',
     beforeEnter: onlyNoAuthUser,
     component: AuthPage
   },
