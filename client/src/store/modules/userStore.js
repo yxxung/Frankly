@@ -64,9 +64,9 @@ export const userStore = {
                 userID,
                 (response) => {
                     console.log(userID);
+                    console.log("getUserInfo", response);
                     if (response.status === 200) {
-                        console.log(response.data.userInfo); //로그인한 userInfo 확인
-                        commit("SET_USER_INFO", response.data.userInfo);
+                        commit("SET_USER_INFO", response.data);
                         console.log(response.data.userInfo)
                     } else {
                         console.log("유저 정보 없음");
