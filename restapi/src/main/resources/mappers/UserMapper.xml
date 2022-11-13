@@ -27,7 +27,7 @@
     </select>
 
     <select id="getUserByEmail" resultMap="userResultMap">
-        SELECT email, password, userAuth FROM frankly.User
+        SELECT userID, email, password, userAuth FROM frankly.User
         WHERE email = #{email}
 
     </select>
