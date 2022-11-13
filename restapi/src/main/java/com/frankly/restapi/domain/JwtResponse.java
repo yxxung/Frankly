@@ -10,21 +10,24 @@ import java.io.Serializable;
 public class JwtResponse implements Serializable {
 
     private static final long serialVersionUID = -8091879091924046844L;
-    private final String jwttoken;
+    private final String token;
     private final String email;
     private final String userAuth;
 
+    private final int userID;
 
 
-    public JwtResponse(String jwttoken, String email, String userAuth) {
 
-        this.jwttoken = jwttoken;
+    public JwtResponse(String token, String email, String userAuth, int userID) {
+
+        this.token = token;
         this.email = email;
         this.userAuth = userAuth;
+        this.userID = userID;
     }
 
     public String getToken() {
-        return this.jwttoken;
+        return this.token;
     }
 
 
