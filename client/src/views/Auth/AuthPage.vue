@@ -34,10 +34,10 @@ export default {};
   max-width: 540px;
   justify-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .auth-page {
-  margin: 54px auto 0 auto;
   width: 100%;
   height: 100%;
   margin: 0 auto;

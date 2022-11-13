@@ -6,7 +6,44 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+      show: false,
+      id: ''
+    }
+  },
+  computed: {
+    isLogin() {
+      if (sessionStorage.length != 0) {
+        return JSON.parse(sessionStorage.getItem("vuex")).userStore.isLogin;
+      }
+      return false;
+    },
+  },
+  created() {
+    if (this.isLogin) {
+      this.show = true;
+      this.id = JSON.parse(
+        sessionStorage.getItem("vuex")
+      ).userStore.userID;
+    }
+  },
+  watch: {
+    $route(to) {
+      if (
+        !(
+          to.name == "login" ||
+          to.name == "signUp" ||
+          to.name == "findPass"
+        )
+      ) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
+    },
+  },
 }
 </script>
 

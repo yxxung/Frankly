@@ -87,9 +87,10 @@
       </div>
 
     </div>
+
     <div class="empty-box"></div>
     <Navigation />
-  </div>
+    </div>
 </template>
 
 <script>
@@ -210,7 +211,7 @@ export default {
   position: relative;
   width: 100%;
   max-width: 540px;
-  max_height: 254px;
+  max-height: 254px;
   background: #ffffff;
   /* red_lawmaker */
   text-align: center;

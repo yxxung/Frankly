@@ -40,7 +40,7 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
 
     }
-    @PutMapping("/{userID}")
+    @PutMapping("/{userID}/update")
     public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody UserDTO userDTO)
             throws Exception{
         log.info("update User " + userDTO.getName());
@@ -51,7 +51,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/{userID}")
+    @DeleteMapping("/{userID}/delete")
     public ResponseEntity<?> deleteUser(@PathVariable("userID")int userID)
             throws Exception{
         log.info("delete user : " + userID);

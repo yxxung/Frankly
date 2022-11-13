@@ -87,7 +87,10 @@ export default {
 
 .politician-search-view {
   padding: 8px 24px;
-  margin: 100px auto 0 auto;
+  margin: 100px auto;
+  justify-content: center;
+  justify-items: center;
+  width: 100%;
   max-width: 540px;  /*max-width*/
   height: 100%;
   background-color: #ffffff;
@@ -138,6 +141,7 @@ export default {
 .search-politician-image img {
   width: 100%;
   height: 100%;
+  border-radius: 100%;
   object-fit: cover;
 }
 
