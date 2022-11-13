@@ -63,7 +63,6 @@ export const userStore = {
             await findById(
                 userID,
                 (response) => {
-                    console.log(userID);
                     console.log("getUserInfo", response);
                     if (response.status === 200) {
                         commit("SET_USER_INFO", response.data);

@@ -35,8 +35,7 @@ export default {
         !(
           to.name == "login" ||
           to.name == "signUp" ||
-          to.name == "findPass" ||
-          to.name == "resetPass"
+          to.name == "findPass"
         )
       ) {
         this.show = true;

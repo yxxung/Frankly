@@ -124,8 +124,6 @@ import axios from "axios";
 import dateformat from "@/commons/dateformat.js";
 import { mapState } from "vuex";
 
-const userStore = "userStore";
-
 export default {
   name: "BoardDetail",
   data() {
@@ -147,7 +145,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(userStore, ["userInfo"]),
+    ...mapState({userStore: "userStore"}),
   },
   created() {
     const boardID = this.$route.params.boardID;

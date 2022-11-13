@@ -27,11 +27,38 @@
         >
       </header>
 
-      <b-modal
-        v-model="modifyFlag"
-        hide-footer
-        title="개인정보 수정"
-      >
+      <b-modal v-model="modifyFlag" hide-footer title="개인정보 수정">
+        <b-form-group
+          label="Street:"
+          label-for="nested-street"
+          label-cols-sm="3"
+          label-align-sm="end"
+        >
+          <b-form-input id="nested-street"></b-form-input>
+        </b-form-group>
+        <b-form-group
+          label="City:"
+          label-for="nested-city"
+          label-cols-sm="3"
+          label-align-sm="end"
+        >
+          <b-form-input id="nested-city"></b-form-input>
+        </b-form-group>
+        <b-form-group
+          label="State:"
+          label-for="nested-state"
+          label-cols-sm="3"
+          label-align-sm="end"
+        >
+          <b-form-input id="nested-state"></b-form-input>
+        </b-form-group>
+        <b-form-group
+          label="Country:"
+          label-for="nested-country"
+          label-cols-sm="3"
+          label-align-sm="end"
+        >
+        </b-form-group>
         <b-button
           class="mt-3"
           variant="outline-danger"
@@ -47,48 +74,27 @@
           >수정</b-button
         >
       </b-modal>
-
-      <div class="mypage-info">
-        <div class="mypage-user">
-          <h2 class="mypage-user-name">
-            <img src="@/assets/icon/Anonymous_user.svg" alt="" />{{
-              user.userName
-            }}
-          </h2>
-          <h4 class="mypage-user-email">{{ user.userEmail }}</h4>
-          <h4 class="mypage-user-region">{{ user.district }}</h4>
-        </div>
-
-        <div class="mypage-bookmark">
-          <a href="#"
-            ><img src="@/assets/icon/Bookmark.svg" alt="" />북마크 국회의원</a
-          >
-          <div class="mypage-bookmark-politician">
-            <!--<div class="politician-detail-image">
-                  <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
-                </div>
-                <div class="politician-detail-name">
-                  {{ PoliticianDetailData.politicianName }}-->
+      <div class="mypage">
+        <div class="mypage-info">
+          <div class="mypage-image">
+            <img src="@/assets/icon/Anonymous_user.svg" />
+          </div>
+          <div class="mypage-user-detail">
+            <h2 class="mypage-user-name">{{ userInfo.name }}</h2>
+            <h4 class="mypage-user-region">{{ userInfo.district }}</h4>
           </div>
         </div>
 
-        <div class="mypage-board">
-          <li>
-            <a href="/posted"
-              ><img src="@/assets/icon/Document.svg" alt="" />내가 쓴 글</a
-            >
-          </li>
-          <li>
-            <a href="/replied"
-              ><img src="@/assets/icon/Comment.svg" alt="" />내가 쓴 댓글</a
-            >
-          </li>
-          <li>
-            <a href="/liked"
-              ><img src="@/assets/icon/Like_active.svg" alt="" />내가 좋아한
-              글</a
-            >
-          </li>
+        <div class="mypage-detail">
+          <div class="mypage-detail-list">
+            <h2>북마크 국회의원</h2>
+            <BookmarkPolitician />
+          </div>
+
+          <div class="mypage-detail-list">
+            <h2>좋아요한 글</h2>
+            <LikeBoard />
+          </div>
         </div>
       </div>
       <Navigation />
@@ -99,8 +105,7 @@
 <script>
 import axios from "axios";
 import Navigation from "@/components/Navigation.vue";
-
-const userStore = "userStore";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Mypage",
@@ -110,22 +115,18 @@ export default {
   data() {
     return {
       modifyFlag: false,
-      user: {
-        userName: "",
-        userEmail: "",
-        district: "",
-      },
+      userInfo: {},
     };
   },
+  computed: {
+    ...mapState({ userStore: "userStore" }),
+  },
   created() {
-    const userID = 2;
     axios
-      .get(`/api/users/${userID}`)
+      .get(`/api/users/${this.userStore.userID}`)
       .then((response) => {
         console.log("users", response.data);
-        this.user.userName = response.data.name;
-        this.user.userEmail = response.data.email;
-        this.user.district = response.data.district;
+        this.userInfo = response.data;
       })
       .catch((error) => {
         console.log(error);
@@ -135,7 +136,6 @@ export default {
     //수정 버튼 클릭 시
     clickModifyBtn() {
       this.modifyFlag = true;
-
     },
     // 취소 버튼 클릭 시
     CancelModifyBtn() {
@@ -144,17 +144,16 @@ export default {
     },
     //회원 정보 수정
     updateUser() {
-      const userID = 2;
       axios
-        .put(`/api/users/${userID}/update`)
+        .put(`/api/users/${this.userStore.userID}/update`)
         .then((response) => {
           if (response.status === 200) {
-            alert("회원 탈퇴가 완료됐습니다.");
+            alert("회원 정보 수정이 완료됐습니다.");
           }
           this.$router.go();
         })
         .catch(() => {
-          console.log("탈퇴 요청 실패");
+          console.log("수정 요청 실패");
         });
     },
 
@@ -183,45 +182,59 @@ export default {
 .wrap {
   font-family: "Noto Sans KR";
 }
-.mypage-user {
+.mypage {
   padding: 8px 24px;
 }
-.mypage-user > h2 {
-  padding: 8px 12px;
-  color: #2b2b2b;
-  font-size: 16px;
+.mypage-info {
+  display: flex;
 }
+
+.mypage-image {
+  flex: 1;
+  width: 50%;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.mypage-image > img {
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.mypage-user-detail {
+  margin: auto 0 auto 4%;
+  flex: 1;
+  width: 50%;
+  vertical-align:middle;
+}
+
 .mypage-user-name {
+  font-size: 19px;
   margin: 0;
 }
-.mypage-user-name img {
-  padding: 0px 10px 0px 0px;
-  width: 30px;
-  height: 30px;
+
+.mypage-user-region {
+  font-size: 14px;
+  color: #7e7e7e;
+  margin: 6px 0;
 }
-.mypage-user > h4 {
-  padding: 0px 12px;
-  color: #818181;
-  font-size: 12px;
+
+.mypage-detail {
+  width: 100%;
+  max-width: 540px;
+  height: 100%;
+  margin: 20px auto;
 }
-.mypage-bookmark {
-  padding: 8px 24px;
-}
-.mypage-bookmark a {
-  padding: 8px;
-  color: #2b2b2b;
-  font-size: 16px;
-  text-decoration: none;
-}
-.mypage-board {
-  padding: 8px 24px;
-}
-.mypage-board a {
-  color: #2b2b2b;
-  font-size: 16px;
-  text-decoration: none;
-}
-.mypage-board li {
-  padding: 8px;
+
+.mypage-detail-list > h2 {
+  margin: 20px auto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: -0.024em;
+
+  color: #383838;
 }
 </style>
