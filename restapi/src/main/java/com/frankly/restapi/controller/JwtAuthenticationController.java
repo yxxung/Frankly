@@ -3,6 +3,7 @@ package com.frankly.restapi.controller;
 import com.frankly.restapi.config.JwtTokenUtil;
 import com.frankly.restapi.domain.JwtRequest;
 import com.frankly.restapi.domain.JwtResponse;
+import com.frankly.restapi.domain.UserDTO;
 import com.frankly.restapi.service.JwtUserDetailsService;
 import com.frankly.restapi.service.UserAuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,9 @@ public class JwtAuthenticationController {
             UserDetails userDetails = userDetailsService
                     .loadUserByUsername(authenticationRequest.getEmail());
             String token = jwtTokenUtil.generateToken(userDetails);
+            UserDTO user = userDetailsService.getUserByEmail(authenticationRequest.getEmail());
 
-
-            return ResponseEntity.ok(new JwtResponse(token, null, null));
+            return ResponseEntity.ok(new JwtResponse(token, user.getEmail(), user.getUserAuth(), user.getUserID()));
 
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
