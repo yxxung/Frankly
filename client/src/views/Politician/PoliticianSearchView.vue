@@ -35,7 +35,7 @@
       >
         <!-- 정치인 리스트 출력 이미지, 이름-->
         <div class="search-politician-image">
-          <img :src="'https://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
+          <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="search-politician-name">{{ politician.politicianName }}</div>
       </li>

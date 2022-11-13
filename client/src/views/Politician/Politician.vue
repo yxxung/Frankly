@@ -26,7 +26,7 @@
         <!-- 정치인 리스트 출력 이미지, 이름-->
         <div class="politician-image" v-bind:style="{border : getPoliticianColor(politician)}">
 
-          <img :src="'https://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
+          <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="politician-name">{{ politician.politicianName }}</div>
         <div class="politician-region" v-if="politicianOrder === 3">{{ politician.regionName }}</div>

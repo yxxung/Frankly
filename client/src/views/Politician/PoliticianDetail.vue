@@ -22,7 +22,7 @@
         </div>
         <div class="politician-detail-region">{{ PoliticianDetailData.regionName }}</div>
         <div class="politician-detail-image">
-          <img :src="'https://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
+          <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
         </div>
         <div class="politician-detail-name">
           {{ PoliticianDetailData.politicianName }}
