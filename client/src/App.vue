@@ -6,7 +6,28 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+      id: ''
+    }
+  },
+  computed: {
+    isLogin() {
+      if (sessionStorage.length != 0) {
+        return JSON.parse(sessionStorage.getItem("vuex")).userStore.isLogin;
+      }
+      return false;
+    },
+  },
+  created() {
+    if (this.isLogin) {
+      this.show = true;
+      this.id = JSON.parse(
+        sessionStorage.getItem("vuex")
+      ).userStore.userInfo.userID;
+    }
+  }
 }
 </script>
 

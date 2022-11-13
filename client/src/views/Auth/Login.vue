@@ -19,7 +19,7 @@
           class="sign-up-form__text-input"
           type="email"
           placeholder="example@gmail.com"
-          v-model="user.userEmail"
+          v-model="userEmail"
         />
         <p class="sign-up-form__error-message">
           올바른 이메일 형식을 입력해주세요.
@@ -34,7 +34,7 @@
           type="email"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
-          v-model="user.userPassword"
+          v-model="userPassword"
         />
         <p class="sign-up-form__error-message">
           대소문자, 숫자, 특수문자 포함 8~16자리
@@ -69,10 +69,8 @@ export default {
   name: "Login",
   data() {
     return {
-      user: {
-        userEmail: "",
-        userPassword: "",
-      }
+      userEmail: "",
+      userPassword: ""
     };
   },
   computed: {
@@ -84,8 +82,12 @@ export default {
       "getUserInfo",
     ]),
     async confirm() {
+      const user = {
+        email: this.userEmail,
+        password: this.userPassword
+      }
       // 토큰 서버에서 생성 후 저장
-      await this.userConfirm(this.user);
+      await this.userConfirm(user);
       // 토큰 받아오기
       let token = sessionStorage.getItem("jwttoken");
       if (this.isLogin) {

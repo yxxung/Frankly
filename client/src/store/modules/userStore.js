@@ -4,6 +4,7 @@ import { login, findById } from "@/js/user.js";
 export const userStore = {
     namespaced: true,
     state: {
+        //로그인 여부
         isLogin: false,
         //로그인 오류
         isLoginError: false,
@@ -24,6 +25,7 @@ export const userStore = {
         SET_IS_LOGIN_ERROR: (state, isLoginError) => {
             state.isLoginError = isLoginError;
         },
+        //유저 정보 저장
         SET_USER_INFO: (state, userInfo) => {
             if (userInfo != null) {
                 state.isLogin = true;
@@ -37,8 +39,8 @@ export const userStore = {
                 user,
                 (response) => {
                     console.log(response);
-                    if (response.status === 200) {
-                        let token = response.data["jwttoken"];
+                    if (response.data.status === 200) {
+                        let token = response.data.jwttoken;
                         commit("SET_IS_LOGIN", true);
                         commit("SET_IS_LOGIN_ERROR", false);
                         sessionStorage.setItem("jwttoken", token);
@@ -51,10 +53,11 @@ export const userStore = {
         },
         async getUserInfo({ commit }, token) {
             let decode_token = jwt_decode(token);
+            console.log(decode_token)
             await findById(
                 decode_token.userID,
                 (response) => {
-                    if (response.data.message === "success") {
+                    if (response.data.status === 200) {
                         console.log(response.data.userInfo); //로그인한 userInfo 확인
                         commit("SET_USER_INFO", response.data.userInfo);
                         console.log(response.data.userInfo)
