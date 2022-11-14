@@ -13,9 +13,9 @@
       <h3 v-if="politicianOrder === 2" v-on:click="politicianOrdering" style="cursor:pointer;">정당 순</h3>
       <h3 v-if="politicianOrder === 3" v-on:click="politicianOrdering" style="cursor:pointer;">지역구 순</h3>
     </div>
+
+
     <div class="politician-list-wrap">
-
-
     <ul class="all-politician-list">
       <li
         class="politician"
@@ -26,7 +26,7 @@
         <!-- 정치인 리스트 출력 이미지, 이름-->
         <div class="politician-image" v-bind:style="{border : getPoliticianColor(politician)}">
 
-          <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
+          <img :src="'https://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="politician-name">{{ politician.politicianName }}</div>
         <div class="politician-region" v-if="politicianOrder === 3">{{ politician.regionName }}</div>
@@ -34,6 +34,7 @@
       </li>
     </ul>
     </div>
+
     <Navigation />
   </div>
 </template>
@@ -188,14 +189,16 @@ export default {
 }
 /*전체 국회의원*/
 .all-politician-list {
-  margin: 0 20px 0 20px;
+  margin: 0 auto 0 auto;
   width: 100%;
   max-width: 540px;
   display: table;
+  text-align: center;
   padding: 0;
 }
 .politician {
   display: inline-table;
+  /*align-items: center;*/
   margin-bottom: 20px;
   padding: 0 5%;
 }
@@ -243,7 +246,8 @@ export default {
 
 .politician-list-wrap{
   display: flex;
-  justify-content: center;
+  margin: auto;
+  justify-content: space-evenly;
   align-items: center;
 }
 </style>
