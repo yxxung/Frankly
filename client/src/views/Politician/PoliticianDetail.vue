@@ -84,6 +84,7 @@
           </div>
         </div>
       </div>
+      <div class="empty-box"></div>
     </div>
     <Navigation />
     </div>

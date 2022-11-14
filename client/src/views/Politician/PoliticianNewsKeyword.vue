@@ -13,14 +13,14 @@
       </b-nav>
     </div>
 
-      <b-row class="my-1" style="max-width: 540px">
-        <b-col sm="4" style="width: 80%"><b-form-select v-model="selected" :options="options" style="width: 50%"></b-form-select></b-col>
-        <b-col sm="2" style="width: 20%">
-          <b-button variant="primary" v-on:click="listReturn()">검색</b-button>
+      <b-row class="my-3" align="center" style="padding: 0 12px 0 12px">
+        <b-col cols="8" align="left"><b-form-select v-model="selected" :options="options" style="width: 50%"></b-form-select></b-col>
+        <b-col cols="4" align="right">
+          <b-button variant="dark" v-on:click="listReturn()">검색</b-button>
         </b-col>
       </b-row>
 
-    <div style="height: 70%">
+    <div style="width: 100% max-width: 540px margin: 10px auto" align="center">
       <PoliticianNewsKeywordView
         v-bind:propInfos="infos"
         v-bind:fields="fields"

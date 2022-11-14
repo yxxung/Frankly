@@ -31,7 +31,7 @@
         <p class="sign-up-form__input-info">비밀번호</p>
         <input
           class="sign-up-form__text-input"
-          type="email"
+          type="password"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
           v-model="userPassword"
@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import { http } from "@/js/http.js";
 import { login, findById } from "@/js/user.js";
+import { validateEmail, validatePassword } from "@/commons/validation.js"
 
 export default {
   name: "Login",

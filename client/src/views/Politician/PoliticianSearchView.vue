@@ -34,7 +34,7 @@
         @click="goToPoliticianDetail(politician.politicianID)"
       >
         <!-- 정치인 리스트 출력 이미지, 이름-->
-        <div class="search-politician-image">
+        <div class="search-politician-image" v-bind:style="{border : getPoliticianColor(politician)}">
           <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="search-politician-name">{{ politician.politicianName }}</div>
@@ -78,6 +78,23 @@ export default {
         },
       });
     },
+    getPoliticianColor(politician){
+      if(politician.partyName === "국민의힘"){
+        return "3px solid #aa0000";
+      }
+      else if(politician.partyName === "더불어민주당"){
+        return "3px solid #0d6efd"
+      }
+      else if(politician.partyName === "시대전환"){
+        return "3px solid #8B00FF"
+      }
+      else if(politician.partyName === "정의당"){
+        return "3px solid #FFD400"
+      }
+      else if(politician.partyName === "기본소득당"){
+        return "3px solid #000000"
+      }
+    },
   },
 };
 </script>
@@ -108,7 +125,7 @@ export default {
 
 /*전체 국회의원*/
 .search-all-politician-list {
-  margin: 30px auto;
+  margin: 30px 0;
   max-width: 540px;
   width: 100%;
   height: 100%;
@@ -120,8 +137,7 @@ export default {
 
 .search-politician {
   display: inline-table;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   padding: 0 24px;
 }
 
