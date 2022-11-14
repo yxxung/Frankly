@@ -12,7 +12,7 @@
     </div>
 
     <form class="sign-up-form">
-      <!--        이메일-->
+      <!--        이름-->
       <label>
         <p class="sign-up-form__input-info">이름</p>
         <input
@@ -42,7 +42,7 @@
         <p class="sign-up-form__input-info">비밀번호</p>
         <input
           class="sign-up-form__text-input"
-          type="email"
+          type="password"
           v-model="user.userPassword"
           placeholder="대소문자, 숫자, 특수문자 포함 8~16자리"
           maxlength="16"
@@ -315,6 +315,9 @@ export default {
 }
 .form__check {
   margin-top: 24px;
+}
+.form__check > ul {
+  padding: 0;
 }
 .form__check > ul > li {
   padding: 8px 0;
