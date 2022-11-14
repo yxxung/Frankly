@@ -146,5 +146,4 @@ export default {
 .btn-space {
   margin-bottom: 5px;
 }
-
 </style>

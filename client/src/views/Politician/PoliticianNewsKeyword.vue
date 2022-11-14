@@ -20,7 +20,7 @@
         </b-col>
       </b-row>
 
-    <div style="width: 100% height: 70% max-width: 540px margin: 0 auto" align="center">
+    <div style="width: 100% max-width: 540px margin: 10px auto" align="center">
       <PoliticianNewsKeywordView
         v-bind:propInfos="infos"
         v-bind:fields="fields"
