@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import { http } from "@/js/http.js";
 import { login, findById } from "@/js/user.js";
+import { validateEmail, validatePassword } from "@/commons/validation.js"
 
 export default {
   name: "Login",
