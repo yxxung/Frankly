@@ -122,6 +122,12 @@ public class BoardController {
         return new ResponseEntity<>(boardService.searchBoard(region, searchType, keyword), HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userID}")
+    public ResponseEntity<List<BoardDTO>> userBoard(@PathVariable("userID") int userID) throws Exception{
+
+        return new ResponseEntity<>(boardService.userBoard(userID), HttpStatus.OK);
+    }
+
     //좋아요 누르기
     @PostMapping("/create/like")
     public ResponseEntity<LikeDTO> createLike(@Validated @RequestBody LikeDTO likeDTO) throws Exception {

@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface ReplyServiceInterface {
 
-
-
     public void createReply(ReplyDTO replyDTO) throws Exception;
 
     public List<ReplyDTO> readReply(int boardID) throws Exception;
@@ -21,5 +19,6 @@ public interface ReplyServiceInterface {
 
     public void deleteReply(ReplyDTO replyDTO) throws Exception;
 
+    public List<ReplyDTO> userReply(int userID) throws Exception;
 
 }

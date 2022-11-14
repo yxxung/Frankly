@@ -54,6 +54,13 @@
         WHERE boardID = #{boardID}
     </select>
 
+    <!-- 내가 쓴 댓글 -->
+    <select id="userReply" resultMap="replyResultMap">
+        SELECT *
+        FROM frankly.Reply
+        WHERE userID = #{userID}
+    </select>
+
     <update id="updateReply" parameterType="ReplyDTO">
         UPDATE frankly.Reply
         SET reply = #{reply}

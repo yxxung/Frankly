@@ -61,6 +61,13 @@
         WHERE boardID = #{boardID}
     </delete>
 
+    <!-- 내가 쓴 게시글 -->
+    <select id="userBoard" resultMap="boardResultMap">
+        SELECT *
+        FROM frankly.Board
+        WHERE userID = #{userID}
+    </select>
+
     <!-- 게시물 총 갯수 -->
     <select id="countBoard" resultType="int">
         SELECT count(boardID) FROM frankly.Board

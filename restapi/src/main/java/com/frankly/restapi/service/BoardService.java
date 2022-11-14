@@ -79,5 +79,8 @@ public class BoardService implements BoardServiceInterface {
 //        return null;
 //    }
 
+    public List<BoardDTO> userBoard(int userID) throws Exception{
+        return boardMapper.userBoard(userID);
+    }
 
 }
