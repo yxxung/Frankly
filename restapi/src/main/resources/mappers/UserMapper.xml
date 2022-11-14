@@ -41,7 +41,7 @@
                #{userAuth})
     </insert>
 
-    <delete id="deleteUser" parameterType="Long">
+    <delete id="deleteUser" parameterType="UserDTO">
         DELETE FROM frankly.User
         WHERE userID = #{userID}
     </delete>

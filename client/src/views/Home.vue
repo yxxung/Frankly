@@ -98,7 +98,6 @@
     </div>
     <Navigation />
   </div>
-  <div class="empty-box"></div>
 </template>
 
 <script>
