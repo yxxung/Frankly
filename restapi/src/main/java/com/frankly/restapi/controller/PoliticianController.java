@@ -1,12 +1,15 @@
 package com.frankly.restapi.controller;
 
+import com.frankly.restapi.domain.BookmarkDTO;
 import com.frankly.restapi.domain.PageVO;
 import com.frankly.restapi.domain.PoliticianDTO;
+import com.frankly.restapi.service.BookmarkService;
 import com.frankly.restapi.service.PoliticianService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 public class PoliticianController {
 
     private final PoliticianService politicianService;
+    private final BookmarkService bookmarkService;
 
 
     @GetMapping("/{politicianID}")
@@ -49,4 +53,23 @@ public class PoliticianController {
         pageVO.setSearchName(searchName);
         return new ResponseEntity<>(politicianService.searchPolitician(searchName), HttpStatus.OK);
     }
+
+    //북마크 누르기
+    @PostMapping("/create/bookmark")
+    public ResponseEntity<BookmarkDTO> createBookmark(@Validated @RequestBody BookmarkDTO bookmarkDTO) throws Exception {
+
+        bookmarkService.createBookmark(bookmarkDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //북마크 취소
+    @DeleteMapping("/delete/bookmark")
+    public ResponseEntity<BookmarkDTO> deleteBookmark(@Validated @RequestBody BookmarkDTO bookmarkDTO) throws Exception {
+
+        bookmarkService.deleteBookmark(bookmarkDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

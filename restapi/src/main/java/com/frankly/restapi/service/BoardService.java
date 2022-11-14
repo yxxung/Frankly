@@ -78,4 +78,6 @@ public class BoardService implements BoardServiceInterface {
 //    public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
 //        return null;
 //    }
+
+
 }

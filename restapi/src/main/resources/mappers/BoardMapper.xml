@@ -23,6 +23,12 @@
         <result column="replyCount" property="replyCount"/>
     </resultMap>
 
+    <resultMap type="LikeDTO" id="likeResultMap">
+        <id column="likeID" property="likeID"/>
+        <result column="userID" property="userID"/>
+        <result column="likeCount" property="likeCount"/>
+    </resultMap>
+
     <insert id="createBoard" parameterType="BoardDTO">
         INSERT INTO frankly.Board(userID, marked, title, content, region, boardRegDate)
         VALUES(#{userID}
