@@ -1,8 +1,10 @@
 <template>
+<div class="wrap-fl">
   <div class="floating-button-wrap">
     <div class="floating-button" @click="write">
       <img src="@/assets/icon/Write.svg" />
     </div>
+  </div>
   </div>
 </template>
 
@@ -20,15 +22,17 @@ export default {
 </script>
 
 <style>
+
 .floating-button-wrap {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
+  max-width: 540px;
   height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
+
 .floating-button {
-  position: fixed;
   line-height: 63px;
   width: 62px;
   height: 62px;
@@ -40,8 +44,6 @@ export default {
   cursor: pointer;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   z-index: 999;
-  top: 80%;
-  right: 0%;
 }
 
 .floating-button:hover {

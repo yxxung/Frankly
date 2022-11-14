@@ -1,5 +1,4 @@
 <template>
-  <div class="empty-box"></div>
     <nav class="bottom-nav">
         <div class="bottom-nav-area">
             <router-link to="/home">
