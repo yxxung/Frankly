@@ -108,13 +108,13 @@
           </b-row>
         </b-container>
         <b-button
-          class="mt-3"
+          class="mt-5"
           size="sm"
           variant="Light"
           @click="CancelModifyBtn"
           >취소</b-button
         >
-        <b-button class="mt-3" size="sm" variant="dark" @click="updateUser"
+        <b-button class="mt-5" size="sm" variant="dark" @click="updateUser"
           >수정</b-button
         >
       </b-modal>

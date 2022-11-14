@@ -5,7 +5,7 @@
       :key="vote.voteID"
     >
       <b-list-group-item
-        class="d-flex justify-content-between align-items-center"
+        class="mt-1 d-flex justify-content-between align-items-center"
       >
         <b-link v-on:click = "goLink(vote)" class="b-link-style">{{ vote.billTitle }}</b-link>
         <b-badge v-if="vote.voteResult === '찬성'" variant="info" pill>{{ vote.voteResult }}</b-badge>
@@ -20,7 +20,9 @@
       :total-rows="rows"
       :per-page="perPage"
       align="center"
-      margin="20px auto"
+      first-number
+      last-number
+      class="mt-5 b-pagination-style"
     ></b-pagination>
   </div>
 </template>
@@ -33,7 +35,7 @@ export default {
   },
   data() {
     return {
-      perPage: 100,
+      perPage: 80,
       currentPage: 1,
     };
   },

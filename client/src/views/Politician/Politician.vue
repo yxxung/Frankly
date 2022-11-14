@@ -188,15 +188,16 @@ export default {
 }
 /*전체 국회의원*/
 .all-politician-list {
-  margin: auto auto;
+  margin: 0 20px 0 20px;
   width: 100%;
-  max-width: 520px;
+  max-width: 540px;
   display: table;
+  padding: 0;
 }
 .politician {
   display: inline-table;
   margin-bottom: 20px;
-  padding: 0 17px;
+  padding: 0 5%;
 }
 .politician-image {
   width: 75px;
