@@ -13,7 +13,7 @@ export const userStore = {
         userID: null
     },
     getters: {
-        checkUserInfo: function (state) {
+        checkUserInfo(state) {
             return state.userInfo;
         },
     },
@@ -66,7 +66,7 @@ export const userStore = {
                     console.log("getUserInfo", response);
                     if (response.status === 200) {
                         commit("SET_USER_INFO", response.data);
-                        console.log(response.data.userInfo)
+                        console.log("SET_USER_INFO", response.data)
                     } else {
                         console.log("유저 정보 없음");
                     }

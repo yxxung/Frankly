@@ -83,12 +83,8 @@
             법안 표결 이력
           </div>
         </div>
-
       </div>
-
     </div>
-
-    <div class="empty-box"></div>
     <Navigation />
     </div>
 </template>
@@ -184,7 +180,7 @@ export default {
 @import "@/assets/scss/style.scss";
 
 .politician-detail-wrap {
-  margin: 18px auto 0 auto;
+  margin: 0 auto;
   max-width: 540px;
   /*max-width*/
   height: 100%;
@@ -207,11 +203,11 @@ export default {
 
 /*국회의원 프로필*/
 .politician-detail-info {
-  margin: 54px auto 0 auto;
+  margin: 54px auto 30px auto;
   position: relative;
   width: 100%;
   max-width: 540px;
-  max-height: 254px;
+  height: 100%;
   background: #ffffff;
   /* red_lawmaker */
   text-align: center;
@@ -228,7 +224,7 @@ export default {
 }
 
 .assembly-image {
-  margin-top: 5px;
+  margin-top: 15px;
   z-index: 10;
   /*margin: 10px 0 0 247px;*/
   position: absolute;
@@ -242,18 +238,18 @@ export default {
 }
 
 .assembly-text {
-  margin: -90px 0 0 30px;
+  margin: -130px 0 0 10px;
   position: absolute;
   z-index: 12;
-  width: 160px;
-  height: 80px;
+  width: 170px;
+  height: 90px;
   background-image: url("@/assets/icon/assembly_text.svg");
   background-size: cover;
 }
 
 .politician-detail-region {
   display: inline-block;
-  margin: 20px auto 20px auto;
+  margin: 30px auto 20px auto;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
@@ -296,6 +292,8 @@ export default {
 }
 
 .politician-detail-party {
+  margin: 10px 0 20px 0;
+  padding: 0 0 20px 0;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
@@ -321,6 +319,7 @@ export default {
   vertical-align:middle;
   padding-bottom: 50px;
 }
+
 .statics-wrap{
   width: 100%;
   display: flex;
@@ -399,7 +398,7 @@ export default {
   display: flex;
   justify-content: center;
   margin: 30px auto 20px auto;
-  width: 500px;
+  width: 540px;
   padding: 24px 16px;
   background: #ffffff;
 }

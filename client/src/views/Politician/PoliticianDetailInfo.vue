@@ -52,7 +52,7 @@ export default {
 @import "@/assets/scss/style.scss";
 
 .detail-info-wrap {
-  padding: 10px 30px 0px 15px;
+  padding: 20px 15px 0px 15px;
   position: relative;
   background: #ffffff;
 }
@@ -75,7 +75,7 @@ export default {
 .detail-info-content {
   display: inline-block;
   text-align: right;
-  width: 75%;
+  width: 80%;
   height: 50px;
   font-family: "Noto Sans KR";
   font-style: normal;
