@@ -321,7 +321,7 @@ export default {
 
 .mypage-user-name {
   font-size: 19px;
-  margin: 0;
+  margin: 3px 0;
 }
 
 .mypage-user-region {

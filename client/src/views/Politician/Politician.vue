@@ -21,7 +21,7 @@
         class="politician"
         v-for="politician in politicians"
         v-bind:key="politician.politicianID"
-        @click="goToPoliticianDetail(politician.politicianID), countPoliticianClick()"
+        @click="goToPoliticianDetail(politician.politicianID), countPoliticianClick(politician.politicianID)"
       >
         <!-- 정치인 리스트 출력 이미지, 이름-->
         <div class="politician-image" v-bind:style="{border : getPoliticianColor(politician)}">
@@ -85,8 +85,17 @@ export default {
         },
       });
     },
-    countPoliticianClick() {
-
+    countPoliticianClick(politicianID) {
+      clickCount += 1;
+      axios
+        .post(`/api/politician/${politicianID}`, {
+          viewCont: clickCount
+        })
+        .then((response) => {
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getPoliticianColor(politician){
       if(politician.partyName === "국민의힘"){

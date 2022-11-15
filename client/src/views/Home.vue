@@ -48,23 +48,31 @@
       <h2>인기 검색 국회의원 TOP4</h2>
     </div>
 
-    <div class="trend-top4-politician-list">
-      <div class="trend-top4-politician">
-        <div class="background"></div>
-        <p>정진석</p>
-      </div>
-      <div class="trend-top4-politician">
-        <div class="background"></div>
-        <p>정진석</p>
-      </div>
-      <div class="trend-top4-politician">
-        <div class="background"></div>
-        <p>정진석</p>
-      </div>
-      <div class="trend-top4-politician">
-        <div class="background"></div>
-        <p>정진석</p>
-      </div>
+    <div class="trend-politician-list-wrap">
+      <ul class="trend-politician-list">
+        <li
+          class="politician"
+          v-for="politician in topPoliticians"
+          v-bind:key="politician.politicianID"
+          @click="
+            goToPoliticianDetail(politician.politicianID)"
+        >
+          <!-- 정치인 리스트 출력 이미지, 이름-->
+          <div
+            class="politician-image"
+            v-bind:style="{ border: getPoliticianColor(politician) }"
+          >
+            <img
+              :src="
+                'https://teamfrankly.kr/images/' +
+                politician.politicianID +
+                '.png'
+              "
+            />
+          </div>
+          <div class="politician-name">{{ politician.politicianName }}</div>
+        </li>
+      </ul>
     </div>
     <Navigation />
   </div>
@@ -75,6 +83,8 @@ import Navigation from "@/components/Navigation.vue";
 import Header from "@/components/Header.vue";
 import ImageSlider from "@/components/ImageSlider.vue";
 import SearchBar from "@/components/SearchBar.vue";
+import axios from "axios";
+
 export default {
   name: "Home",
   components: {
@@ -83,10 +93,52 @@ export default {
     ImageSlider: ImageSlider,
     SearchBar: SearchBar,
   },
-  data() {
-    return {};
+  mounted() {
+    this.getTrendPoliticianList();
   },
-  methods: {},
+  data() {
+    return {
+      topPoliticians: {}
+    };
+  },
+  methods: {
+    getTrendPoliticianList() {
+      axios
+        .get("/api/politician/rank")
+        .then((response) => {
+          console.log("politicians", response.data);
+          this.topPoliticians = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getPoliticianColor(politician){
+      if(politician.partyName === "국민의힘"){
+        return "3px solid #aa0000";
+      }
+      else if(politician.partyName === "더불어민주당"){
+        return "3px solid #0d6efd"
+      }
+      else if(politician.partyName === "시대전환"){
+        return "3px solid #8B00FF"
+      }
+      else if(politician.partyName === "정의당"){
+        return "3px solid #FFD400"
+      }
+      else if(politician.partyName === "기본소득당"){
+        return "3px solid #000000"
+      }
+    },
+    goToPoliticianDetail(politicianID) {
+      this.$router.push({
+        name: "PoliticianDetail",
+        params: {
+          politicianID: politicianID,
+        },
+      });
+    },
+  },
 };
 </script>
 
@@ -224,7 +276,7 @@ export default {
   width: 25px;
   height: 25px;
   filter: invert(12%) sepia(98%) saturate(7493%) hue-rotate(1deg)
-  brightness(102%) contrast(106%);
+    brightness(102%) contrast(106%);
 }
 .trend-top4-politician-title h2 {
   position: absolute;
@@ -237,44 +289,56 @@ export default {
   line-height: 23px;
   color: #2b2b2b;
 }
+
 /*인기검색 국회의원 리스트*/
-.trend-top4-politician-list {
-  padding: 8px 24px;
-  position: relative;
-  top: 65px;
-  width: 100%;
-  max-width: 540px;
-  height: 120px;
+.trend-politician-list-wrap{
   display: flex;
-  justify-content: center;
-}
-.trend-top4-politician {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column;
+  margin: 85px auto;
+  justify-content: space-evenly;
   align-items: center;
 }
-.background {
-  box-sizing: border-box;
-  border: 2px solid #d5e1e6;
-  border-radius: 100%;
-  position: relative;
-  width: 74px;
-  height: 74px;
-  top: 12px;
-  background-image: url(../assets/politician/정진석.png);
-  background-size: cover;
+.trend-politician-list {
+  margin: 0 auto 0 auto;
+  width: 100%;
+  max-width: 540px;
+  display: table;
+  text-align: center;
+  padding: 0;
 }
-.trend-top4-politician p {
-  position: absolute;
-  top: 92px;
-  font-size: 18px;
+.politician {
+  display: inline-table;
+  /*align-items: center;*/
+  margin-bottom: 20px;
+  padding: 0 5%;
+}
+.politician-image {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 3px solid #0d6efd;
+  border-radius: 100%;
+}
+
+.politician-image img {
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.politician-name {
+  margin: 5px auto;
+  font-size: 16px;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 500;
   color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 </style>
