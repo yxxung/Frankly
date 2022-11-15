@@ -30,4 +30,6 @@ public interface BoardMapper {
 
     public List<BoardDTO> userBoard(int userID) throws Exception;
 
+    public List<BoardDTO> userReply(int userID) throws Exception;
+
 }

@@ -60,9 +60,4 @@ public class ReplyService implements ReplyServiceInterface {
         replyMapper.deleteReply(replyDTO);
     }
 
-    @Override
-    public List<ReplyDTO> userReply(int userID) throws Exception {
-        return replyMapper.userReply(userID);
-    }
-
 }

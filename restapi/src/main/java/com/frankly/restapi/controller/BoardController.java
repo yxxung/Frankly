@@ -122,10 +122,18 @@ public class BoardController {
         return new ResponseEntity<>(boardService.searchBoard(region, searchType, keyword), HttpStatus.OK);
     }
 
+    //내가 쓴 글
     @GetMapping("/user/{userID}")
     public ResponseEntity<List<BoardDTO>> userBoard(@PathVariable("userID") int userID) throws Exception{
 
         return new ResponseEntity<>(boardService.userBoard(userID), HttpStatus.OK);
+    }
+
+    //내가 쓴 댓글의 글
+    @GetMapping("/replys/user/{userID}")
+    public ResponseEntity<List<BoardDTO>> userReply(@PathVariable("userID") int userID) throws Exception{
+
+        return new ResponseEntity<>(boardService.userReply(userID), HttpStatus.OK);
     }
 
     //좋아요 누르기

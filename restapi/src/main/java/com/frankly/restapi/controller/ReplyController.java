@@ -69,9 +69,4 @@ public class ReplyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-        @GetMapping("/user/{userID}")
-        public ResponseEntity<List<ReplyDTO>> userReply(@PathVariable("userID") int userID) throws Exception{
-                return new ResponseEntity<>(replyService.userReply(userID), HttpStatus.OK);
-
-        }
 }
