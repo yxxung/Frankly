@@ -62,9 +62,8 @@ export default {
     getBoardList() {
       console.log(this.$axios);
       axios
-        .get(`/api/replys/user/${this.userStore.userID}`)
+        .get(`/api/boards/replys/user/${this.userStore.userID}`)
         .then((response) => {
-          console.log("boards", response.data);
           this.boards = response.data;
           this.marked = response.data.marked;
         })

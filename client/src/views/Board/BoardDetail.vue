@@ -172,7 +172,10 @@ export default {
     // 게시글 삭제
     deleteBoard() {
       const boardID = this.$route.params.boardID;
-      axios
+      if(this.DetailData.userID !== this.userStore.userID) {
+        alert("글 작성자가 아닙니다.");
+      }else {
+        axios
         .delete(`api/boards/delete/${boardID}`)
         .then((response) => {
           if (response.status === 200) {
@@ -183,15 +186,20 @@ export default {
         .catch(() => {
           console.log("삭제 요청 실패");
         });
+      }
     },
     // 게시글 수정
     updateBoard(boardID) {
-      this.$router.push({
+      if(this.DetailData.userID !== this.userStore.userID) {
+        alert("글 작성자가 아닙니다.");
+      }else {
+        this.$router.push({
         name: "UpdateBoard",
         params: {
           boardID: boardID,
         },
       });
+      }
     },
     //댓글 생성
     createReply(boardID) {

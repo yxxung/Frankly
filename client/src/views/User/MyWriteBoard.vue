@@ -63,7 +63,6 @@ export default {
       axios
         .get(`/api/boards/user/${this.userStore.userID}`)
         .then((response) => {
-          console.log("boards", response.data);
           this.boards = response.data;
           this.marked = response.data.marked;
         })
