@@ -9,9 +9,9 @@ https://www.assembly.go.kr/portal/bbs/B0000059/list.do?pageIndex=1&menuNo=600103
 json에 저장된 정치인 재산 변동 데이터를 DB에 저장.
 
 '''
-from Property import Property
-from PropertyChange import PropertyChange
-from PropertyList import PropertyList
+from PropertyClasses.PropertyExtract.Property import Property
+from PropertyClasses.PropertyExtract.PropertyChange import PropertyChange
+from PropertyClasses.PropertyExtract.PropertyList import PropertyList
 from InformationClass.Politician import Politician
 
 import json
@@ -45,7 +45,7 @@ class PropertyExtract:
                     self.parseProperty(parsedJson)
                     print("propertychange parse")
                     self.parsePropertyChange(parsedJson)
-            print("stub")
+            # print("stub")
 
     def parseProperty(self, parsedJson):
         sectionList = [
@@ -194,7 +194,7 @@ class PropertyExtract:
         con, cur = self.dbConnect()
         propertyListCategory = []
 
-        print("stub")
+        # print("stub")
 
         for politician in parsedJson:
             for change in politician["재산변동"]:
@@ -245,9 +245,9 @@ class PropertyExtract:
             return connection, cursor
 
 
-option = sys.argv[1]
-
-
-if option == '1':
-    pe = PropertyExtract()
-    pe.jsonParse()
+# option = sys.argv[1]
+#
+#
+# if option == '1':
+#     pe = PropertyExtract()
+#     pe.jsonParse()

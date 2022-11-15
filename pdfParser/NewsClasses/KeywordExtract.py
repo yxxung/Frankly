@@ -5,8 +5,8 @@ from InformationClass.Politician import Politician
 from NewsClasses.News import News
 from NewsClasses.NewsKeyword import NewsKeyword
 from NewsClasses.preprocessor import Preprocessor
-from LDAkey_extractor import LDAKeyExtractor
-from textrank import TextRank
+from NewsClasses.LDAkey_extractor import LDAKeyExtractor
+from NewsClasses.textrank import TextRank
 from multiprocessing import freeze_support
 
 from konlpy.tag import Mecab
@@ -135,9 +135,9 @@ class KeywordExtract:
             dbInfo.close()
             return connection, cursor
 
-if __name__ == "__main__":
-
-    freeze_support()
-    key = KeywordExtract()
-
-    key.keywordExtract("2022-10-01")
+# if __name__ == "__main__":
+#
+#     freeze_support()
+#     key = KeywordExtract()
+#
+#     key.keywordExtract("2022-10-01")
