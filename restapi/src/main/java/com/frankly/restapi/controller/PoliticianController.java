@@ -22,36 +22,47 @@ import java.util.List;
 public class PoliticianController {
 
     private final PoliticianService politicianService;
+
     private final BookmarkService bookmarkService;
 
-
+    //국회의원 상세페이지 + 조회수증가
     @GetMapping("/{politicianID}")
     public ResponseEntity<PoliticianDTO> getPoliticianById(@PathVariable("politicianID")int politicianID) throws Exception{
 
-        PoliticianDTO politicianDTO = politicianService.getPoliticianById(politicianID);
+        politicianService.countView(politicianID);
 
-        return new ResponseEntity<>(politicianDTO, HttpStatus.OK);
-
+        return new ResponseEntity<>(politicianService.getPoliticianById(politicianID), HttpStatus.OK);
 
     }
+
+    //정당 내 국회의원
     @GetMapping("/party/{partyID}")
     public ResponseEntity<List<PoliticianDTO>> readParty(@PathVariable("partyID")int partyID) throws Exception{
 
         return new ResponseEntity<>(politicianService.readParty(partyID), HttpStatus.OK);
     }
 
+    //전체 국회의원
     @GetMapping("/all")
     public ResponseEntity<List<PoliticianDTO>>politicianList()throws Exception{
 
         return new ResponseEntity<>(politicianService.politicianList(), HttpStatus.OK);
     }
 
+    //국회의원 검색
     @GetMapping("/search")
     public ResponseEntity<List<PoliticianDTO>>searchPolitician(@RequestParam(value = "searchName", required = true, defaultValue = "") String searchName)throws Exception{
         PageVO pageVO = new PageVO();
 
         pageVO.setSearchName(searchName);
         return new ResponseEntity<>(politicianService.searchPolitician(searchName), HttpStatus.OK);
+    }
+
+    //국회의원 상세 페이지 클릭순
+    @GetMapping("/rank")
+    public ResponseEntity<List<PoliticianDTO>>viewRank()throws Exception{
+
+        return new ResponseEntity<>(politicianService.viewRank(), HttpStatus.OK);
     }
 
     //북마크 누르기
