@@ -20,4 +20,8 @@ public interface PoliticianServiceInterface {
 
     public List<PoliticianDTO> readParty(int partyID) throws Exception;
 
+    public void countView(int politicianID) throws Exception;
+
+    public List<PoliticianDTO> viewRank() throws Exception;
+
 }
