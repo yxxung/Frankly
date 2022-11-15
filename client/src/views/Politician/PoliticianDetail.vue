@@ -10,9 +10,6 @@
           <a class="icon-button-56">
             <img src="@/assets/icon/Bookmark.svg" alt="북마크" />
           </a>
-          <a class="icon-button-56">
-            <img src="@/assets/icon/Other2.svg" alt="더보기" />
-          </a>
         </div>
       </header>
 <!---->
@@ -22,7 +19,7 @@
         </div>
         <div class="politician-detail-region">{{ PoliticianDetailData.regionName }}</div>
         <div class="politician-detail-image">
-          <img :src="'http://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
+          <img :src="'https://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
         </div>
         <div class="politician-detail-name">
           {{ PoliticianDetailData.politicianName }}
@@ -84,6 +81,7 @@
           </div>
         </div>
       </div>
+      <div class="empty-box"></div>
     </div>
     <Navigation />
     </div>

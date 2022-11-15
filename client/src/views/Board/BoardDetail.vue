@@ -172,7 +172,10 @@ export default {
     // 게시글 삭제
     deleteBoard() {
       const boardID = this.$route.params.boardID;
-      axios
+      if(this.DetailData.userID !== this.userStore.userID) {
+        alert("글 작성자가 아닙니다.");
+      }else {
+        axios
         .delete(`api/boards/delete/${boardID}`)
         .then((response) => {
           if (response.status === 200) {
@@ -183,15 +186,20 @@ export default {
         .catch(() => {
           console.log("삭제 요청 실패");
         });
+      }
     },
     // 게시글 수정
     updateBoard(boardID) {
-      this.$router.push({
+      if(this.DetailData.userID !== this.userStore.userID) {
+        alert("글 작성자가 아닙니다.");
+      }else {
+        this.$router.push({
         name: "UpdateBoard",
         params: {
           boardID: boardID,
         },
       });
+      }
     },
     //댓글 생성
     createReply(boardID) {
@@ -201,6 +209,7 @@ export default {
           .post("/api/replys/create", {
             boardID: boardID,
             reply: this.replyInput,
+            userID: this.userStore.userID
           })
           .then((response) => {
             console.log(response);
@@ -336,10 +345,15 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+.comments_info > img {
+  vertical-align: middle;
+}
 .comments__info h6 {
   padding: 0 12px 0 8px;
+  margin: 0;
   font-size: 14px;
   color: #696969;
+  vertical-align: middle;
 }
 .comments__info-left {
   display: flex;

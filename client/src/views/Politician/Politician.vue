@@ -13,20 +13,20 @@
       <h3 v-if="politicianOrder === 2" v-on:click="politicianOrdering" style="cursor:pointer;">정당 순</h3>
       <h3 v-if="politicianOrder === 3" v-on:click="politicianOrdering" style="cursor:pointer;">지역구 순</h3>
     </div>
+
+
     <div class="politician-list-wrap">
-
-
     <ul class="all-politician-list">
       <li
         class="politician"
         v-for="politician in politicians"
         v-bind:key="politician.politicianID"
-        @click="goToPoliticianDetail(politician.politicianID)"
+        @click="goToPoliticianDetail(politician.politicianID), countPoliticianClick(politician.politicianID)"
       >
         <!-- 정치인 리스트 출력 이미지, 이름-->
         <div class="politician-image" v-bind:style="{border : getPoliticianColor(politician)}">
 
-          <img :src="'http://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
+          <img :src="'https://teamfrankly.kr/images/' + politician.politicianID + '.png'" />
         </div>
         <div class="politician-name">{{ politician.politicianName }}</div>
         <div class="politician-region" v-if="politicianOrder === 3">{{ politician.regionName }}</div>
@@ -34,6 +34,7 @@
       </li>
     </ul>
     </div>
+
     <Navigation />
   </div>
 </template>
@@ -55,7 +56,8 @@ export default {
       searchKeyword: "",
       politicians: [],
       border: "3px solid #0d6efd",
-      politicianOrder: 1
+      politicianOrder: 1,
+      clickCount: 0
     };
   },
   mounted() {
@@ -82,6 +84,18 @@ export default {
           politicianID: politicianID,
         },
       });
+    },
+    countPoliticianClick(politicianID) {
+      clickCount += 1;
+      axios
+        .post(`/api/politician/${politicianID}`, {
+          viewCont: clickCount
+        })
+        .then((response) => {
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getPoliticianColor(politician){
       if(politician.partyName === "국민의힘"){
@@ -188,14 +202,16 @@ export default {
 }
 /*전체 국회의원*/
 .all-politician-list {
-  margin: 0 20px 0 20px;
+  margin: 0 auto 0 auto;
   width: 100%;
   max-width: 540px;
   display: table;
+  text-align: center;
   padding: 0;
 }
 .politician {
   display: inline-table;
+  /*align-items: center;*/
   margin-bottom: 20px;
   padding: 0 5%;
 }
@@ -243,7 +259,8 @@ export default {
 
 .politician-list-wrap{
   display: flex;
-  justify-content: center;
+  margin: auto;
+  justify-content: space-evenly;
   align-items: center;
 }
 </style>

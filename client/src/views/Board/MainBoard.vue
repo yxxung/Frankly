@@ -43,8 +43,8 @@
     <div class="community-list">
       <h4>내 기록</h4>
       <ul>
-        <li><a href="#"><img src="@/assets/icon/Document.svg" alt="">내가 쓴 글</a></li>
-        <li><a href="#"><img src="@/assets/icon/Document.svg" alt="">댓글 단 글</a></li>
+        <li><router-link to="/MyWriteBoard"><img src="@/assets/icon/Document.svg" alt="">내가 쓴 글</router-link></li>
+        <li><router-link to="/MyReplyBoard"><img src="@/assets/icon/Document.svg" alt="">댓글 단 글</router-link></li>
       </ul>
     </div>
     <Navigation />

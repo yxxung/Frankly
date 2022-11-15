@@ -24,6 +24,7 @@
         <result column="personalAssistant" property="personalAssistant"/>
         <result column="politicianImageURL" property="politicianImageURL"/>
         <result column="regionName" property="regionName"/>
+        <result column="viewCount" property="viewCount"/>
     </resultMap>
 
     <select id="politicianList" resultMap="politicianResultMap">
@@ -76,5 +77,18 @@
         FROM frankly.Politician
         WHERE partyID = #{partyID}
     </select>
+
+    <update id="countView" parameterType="PoliticianDTO">
+        UPDATE frankly.Politician
+        SET viewCount = viewCount + 1
+        WHERE politicianID = #{politicianID}
+    </update>
+
+    <select id="viewRank" resultMap="politicianResultMap">
+        SELECT *
+        FROM frankly.Politician
+        ORDER BY viewCount DESC
+        LIMIT 4
+</select>
 
 </mapper>

@@ -16,7 +16,7 @@
         @click="goToBoardDetail(board.boardID)"
       >
         <div class="post-list__title">
-          <img src="@/assets/icon/Image.svg" alt="이미지 있음" />
+          <!--<img src="@/assets/icon/Image.svg" alt="이미지 있음" />--->
           <h3>
             {{ board.title }}<span> [{{board.replyCount}}]</span>
           </h3>

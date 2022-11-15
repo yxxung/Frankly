@@ -23,6 +23,7 @@
         </tbody>
       </table>
     </div>
+    <div class="empty-box"></div>
   </div>
 </template>
 

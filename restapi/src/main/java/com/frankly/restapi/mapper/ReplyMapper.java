@@ -8,7 +8,6 @@ import java.util.List;
 @Mapper
 public interface ReplyMapper {
 
-
     public void createReply(ReplyDTO replyDTO) throws Exception;
 
     public List<ReplyDTO> readReply(int boardID) throws Exception;

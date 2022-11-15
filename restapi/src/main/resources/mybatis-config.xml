@@ -18,6 +18,8 @@
         <typeAlias type="com.frankly.restapi.domain.ReplyDTO" alias="ReplyDTO"/>
         <typeAlias type="com.frankly.restapi.domain.NewsDTO" alias="NewsDTO"/>
         <typeAlias type="com.frankly.restapi.domain.NewsKeywordDTO" alias="NewsKeywordDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.LikeDTO" alias="LikeDTO"/>
+        <typeAlias type="com.frankly.restapi.domain.BookmarkDTO" alias="BookmarkDTO"/>
 
     </typeAliases>
 

@@ -22,8 +22,9 @@
       align="center"
       first-number
       last-number
-      class="mt-5 b-pagination-style"
+      class="mt-5"
     ></b-pagination>
+    <div class="empty-box"></div>
   </div>
 </template>
 

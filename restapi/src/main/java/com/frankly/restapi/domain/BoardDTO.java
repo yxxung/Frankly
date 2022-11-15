@@ -38,10 +38,13 @@ public class BoardDTO {
     private int replyCount;
 
 
+    //좋아요 카운트
+    private int likeCount;
+
     @Builder
     public BoardDTO(int boardID, int userID, LocalDateTime boardRegDate,
                     int marked, String title, String content,
-                    String region, int replyID, String reply, LocalDateTime replyRegDate, int replyCount){
+                    String region, int replyID, String reply, LocalDateTime replyRegDate, int replyCount, int likeCount){
         this.boardID = boardID;
         this.userID = userID;
         this.boardRegDate = now();
@@ -54,6 +57,9 @@ public class BoardDTO {
         this.reply = reply;
         this.replyRegDate = replyRegDate;
         this.replyCount = replyCount;
+
+        this.likeCount = likeCount;
+
 
     }
 

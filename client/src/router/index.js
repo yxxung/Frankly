@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import MainBoard from '../views/Board/MainBoard.vue'
 import Politician from '../views/Politician/Politician.vue'
 import Mypage from '../views/User/Mypage.vue'
+import MyReplyBoard from '../views/User/MyReplyBoard.vue'
+import MyWriteBoard from '../views/User/MyWriteBoard.vue'
 import AuthPage from '../views/Auth/AuthPage.vue'
 import Signup from '../views/Auth/Signup.vue'
 import Login from '../views/Auth/Login.vue'
@@ -105,6 +107,18 @@ const routes = [
     name: 'Mypage',
     beforeEnter: onlyAuthUser,
     component: Mypage
+  },
+  {
+    path: '/MyWriteBoard',
+    name: 'MyWriteBoard',
+    beforeEnter: onlyAuthUser,
+    component: MyWriteBoard
+  },
+  {
+    path: '/MyReplyBoard',
+    name: 'MyReplyBoard',
+    beforeEnter: onlyAuthUser,
+    component: MyReplyBoard
   },
   /*board*/
   {
