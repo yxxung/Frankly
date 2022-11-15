@@ -14,3 +14,7 @@ axios.defaults.baseURL = 'https://teamfrankly.kr'
 const app = createApp(App)
 app.config.globalProperties.$axios = axios;
 app.use(store).use(router).use(BootstrapVue3).use(d3).mount('#app');
+
+const token = sessionStorage.getItem("token");
+
+axios.defaults.headers.common["Authorization"] = token ? ('Bearer ' + token) : null;

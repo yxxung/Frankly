@@ -10,6 +10,8 @@ public interface UserServiceInterface {
 
     public UserDTO getUser(int userID) throws Exception;
 
+    public List<UserDTO> getUserByName(String name) throws Exception;
+
     public void updateUser(UserDTO userDTO) throws Exception;
 
     public void deleteUser(int userID) throws Exception;
