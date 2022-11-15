@@ -297,7 +297,7 @@ export default {
   padding: 24px 16px;
 }
 .post-like button {
-  margin-right: 8px;
+  margin-right: 6px;
   background-color: #ffffff;
   width: 28px;
   height: 28px;
@@ -309,13 +309,15 @@ export default {
   object-fit: cover;
 }
 .post-like span {
+  vertical-align: middle;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
-  text-align: right;
+  font-size: 15px;
+  text-align: center;
   letter-spacing: -0.024em;
   color: #646464;
+  margin: auto;
 }
 /*댓글*/
 .comments ul {

@@ -228,7 +228,8 @@ export default {
   position: absolute;
   width: 49px;
   height: 48px;
-  background-image: url("@/assets/icon/assembly.svg");}
+  background-image: url("@/assets/icon/assembly.svg");
+  }
 
 .assembly-image-wrap{
   display: flex;
