@@ -4,15 +4,12 @@
     <!--헤더-->
     <header class="header header__community">
       <h2 class="community-title">커뮤니티</h2>
-      <a class="icon-button-56" href="/notice">
-        <img src="@/assets/icon/Bullhorn.svg" alt="공지사항">
-      </a>
     </header>
 
     <div class="community-list">
       <h4>일반 커뮤니티</h4>
       <ul>
-        <li><router-link to="/HotBoard"><img src="@/assets/icon/Fire.svg" alt="">인기게시글</router-link></li>
+        <li><router-link to="/HotBoard"><img src="@/assets/icon/Fire.svg" style="filter: invert(45%) sepia(59%) saturate(5685%) hue-rotate(340deg) brightness(108%) contrast(103%);" alt="">인기게시글</router-link></li>
         <li><router-link to="/FreeBoard"><img src="@/assets/icon/Document.svg" alt="">자유게시판</router-link></li>
       </ul>
     </div>

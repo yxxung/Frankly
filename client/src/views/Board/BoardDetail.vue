@@ -70,7 +70,10 @@
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-              <h6>익명</h6>
+              <h6 v-if="nameFlag === false">익명</h6>
+              <h6 v-if="changeName(reply.userID)" style="color: #ce8275">
+                {{ this.userStore.userInfo.username }}
+              </h6>
               <span class="comments__info__date">{{
                 elapsedText(reply.replyRegDate)
               }}</span>
@@ -87,10 +90,14 @@
                     <img src="@/assets/icon/Other1.svg" alt="더보기" />
                     <span class="visually-hidden"></span>
                   </template>
-                  <b-dropdown-item @click="updateReply(reply.replyID)"
+                  <b-dropdown-item
+                    @click="updateReply(reply.replyID, reply.userID)"
                     >수정</b-dropdown-item
                   >
-                  <b-dropdown-item @click="deleteReply(reply.replyID)">삭제</b-dropdown-item>
+                  <b-dropdown-item
+                    @click="deleteReply(reply.replyID, reply.userID)"
+                    >삭제</b-dropdown-item
+                  >
                 </b-dropdown>
               </button>
             </div>
@@ -137,15 +144,19 @@ export default {
         userID: "",
         marked: "", //board db의 좋아요
       },
-      replys: [], //댓글 axios get
+      replys: [],
+      //댓글 axios get
       replyInput: "", //댓글 입력
       marked: false, //좋아요
       cntMarked: null, //좋아요 개수
-      edit_show: false,
+      nameFlag: false,
     };
   },
   computed: {
-    ...mapState({userStore: "userStore"}),
+    ...mapState({ userStore: "userStore" }),
+  },
+  mounted() {
+    this.changeName();
   },
   created() {
     const boardID = this.$route.params.boardID;
@@ -160,7 +171,7 @@ export default {
     });
     axios.get(`/api/replys/${boardID}/replyList`).then((response) => {
       this.replys = response.data;
-      console.log(response.data);
+      console.log("replys", this.replys);
     });
     this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
   },
@@ -172,33 +183,33 @@ export default {
     // 게시글 삭제
     deleteBoard() {
       const boardID = this.$route.params.boardID;
-      if(this.DetailData.userID !== this.userStore.userID) {
+      if (this.DetailData.userID !== this.userStore.userID) {
         alert("글 작성자가 아닙니다.");
-      }else {
+      } else {
         axios
-        .delete(`api/boards/delete/${boardID}`)
-        .then((response) => {
-          if (response.status === 200) {
-            alert("게시글이 삭제되었습니다.");
-          }
-          this.$router.go(-1);
-        })
-        .catch(() => {
-          console.log("삭제 요청 실패");
-        });
+          .delete(`api/boards/delete/${boardID}`)
+          .then((response) => {
+            if (response.status === 200) {
+              alert("게시글이 삭제되었습니다.");
+            }
+            this.$router.go(-1);
+          })
+          .catch(() => {
+            console.log("삭제 요청 실패");
+          });
       }
     },
     // 게시글 수정
     updateBoard(boardID) {
-      if(this.DetailData.userID !== this.userStore.userID) {
+      if (this.DetailData.userID !== this.userStore.userID) {
         alert("글 작성자가 아닙니다.");
-      }else {
+      } else {
         this.$router.push({
-        name: "UpdateBoard",
-        params: {
-          boardID: boardID,
-        },
-      });
+          name: "UpdateBoard",
+          params: {
+            boardID: boardID,
+          },
+        });
       }
     },
     //댓글 생성
@@ -209,7 +220,7 @@ export default {
           .post("/api/replys/create", {
             boardID: boardID,
             reply: this.replyInput,
-            userID: this.userStore.userID
+            userID: this.userStore.userID,
           })
           .then((response) => {
             console.log(response);
@@ -221,19 +232,30 @@ export default {
       }
     },
     //댓글 삭제
-    deleteReply(replyID) {
+    deleteReply(replyID, userID) {
       const boardID = this.$route.params.boardID;
-      axios
-        .delete(`/api/replys/${boardID}/${replyID}/delete`)
-        .then((response) => {
-          if (response.status === 200) {
-            alert("댓글이 삭제되었습니다.");
-          }
-          this.$router.go();
-        })
-        .catch(() => {
-          console.log("삭제 요청 실패");
-        });
+      if (userID !== this.userStore.userID) {
+        alert("댓글 작성자가 아닙니다.");
+      } else {
+        axios
+          .delete(`/api/replys/${boardID}/${replyID}/delete`)
+          .then((response) => {
+            if (response.status === 200) {
+              alert("댓글이 삭제되었습니다.");
+            }
+            this.$router.go();
+          })
+          .catch(() => {
+            console.log("삭제 요청 실패");
+          });
+      }
+    },
+    changeName(userID) {
+      if (userID === this.userStore.userID) {
+        this.nameFlag = true;
+      }
+      console.log(this.userStore.userInfo.username);
+      return this.nameFlag
     },
     async changeLike(boardID) {
       //좋아요가 안눌러진 상태에서 좋아요를 누를 때
