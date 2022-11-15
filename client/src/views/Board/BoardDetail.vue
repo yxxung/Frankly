@@ -201,6 +201,7 @@ export default {
           .post("/api/replys/create", {
             boardID: boardID,
             reply: this.replyInput,
+            userID: this.userStore.userID
           })
           .then((response) => {
             console.log(response);
@@ -336,10 +337,15 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+.comments_info > img {
+  vertical-align: middle;
+}
 .comments__info h6 {
   padding: 0 12px 0 8px;
+  margin: 0;
   font-size: 14px;
   color: #696969;
+  vertical-align: middle;
 }
 .comments__info-left {
   display: flex;

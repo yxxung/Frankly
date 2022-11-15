@@ -58,6 +58,7 @@
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   name: "UpdateBoard",
@@ -87,6 +88,9 @@ export default {
       content: "",
       image: "",
     };
+  },
+  computed: {
+    ...mapState({ userStore: "userStore" }),
   },
   beforeCreate() {
     const boardID = this.$route.params.boardID;
@@ -118,6 +122,7 @@ export default {
           title: this.title,
           content: this.content,
           region: this.regionName,
+          userID: this.userStore.userID
         })
         .then((response) => {
           if (response.status === 200) {

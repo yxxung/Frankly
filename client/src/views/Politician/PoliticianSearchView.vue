@@ -56,13 +56,18 @@
         </ul>
       </div>
     </div>
+    <Navigation />
   </div>
 </template>
 <script>
 import axios from "axios";
+import Navigation from "@/components/Navigation";
 
 export default {
   name: "Search",
+  components: {
+    Navigation: Navigation
+  },
   data() {
     return {
       politicianInput: "",
