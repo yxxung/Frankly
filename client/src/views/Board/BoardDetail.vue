@@ -92,10 +92,6 @@
                     <span class="visually-hidden"></span>
                   </template>
                   <b-dropdown-item
-                    @click="updateReply(reply.replyID, reply.userID)"
-                    >수정</b-dropdown-item
-                  >
-                  <b-dropdown-item
                     @click="deleteReply(reply.replyID, reply.userID)"
                     >삭제</b-dropdown-item
                   >
@@ -118,7 +114,7 @@
       <button
         class="enter-comment__submit"
         @click.prevent="
-          createReply(DetailData.boardID), countReply(this.cntReply)
+          createReply(DetailData.boardID)
         "
       >
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
