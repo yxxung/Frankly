@@ -68,6 +68,14 @@
         WHERE userID = #{userID}
     </select>
 
+    <!-- 내가 쓴 댓글의 글 -->
+    <select id="userReply" resultMap="boardResultMap">
+        SELECT *
+        FROM frankly.Board B LEFT JOIN frankly.Reply R
+                                       ON B.boardID = R.boardID
+        WHERE R.userID = #{userID}
+    </select>
+
     <!-- 게시물 총 갯수 -->
     <select id="countBoard" resultType="int">
         SELECT count(boardID) FROM frankly.Board

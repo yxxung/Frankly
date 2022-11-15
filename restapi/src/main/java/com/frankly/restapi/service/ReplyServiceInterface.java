@@ -19,6 +19,4 @@ public interface ReplyServiceInterface {
 
     public void deleteReply(ReplyDTO replyDTO) throws Exception;
 
-    public List<ReplyDTO> userReply(int userID) throws Exception;
-
 }

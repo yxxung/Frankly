@@ -78,9 +78,14 @@ public class BoardService implements BoardServiceInterface {
 //    public List<BoardDTO> pageNumberBoardList(Long startPageNumber) throws Exception {
 //        return null;
 //    }
-
+    @Override
     public List<BoardDTO> userBoard(int userID) throws Exception{
         return boardMapper.userBoard(userID);
+    }
+
+    @Override
+    public List<BoardDTO> userReply(int userID) throws Exception {
+        return boardMapper.userReply(userID);
     }
 
 }
