@@ -32,6 +32,12 @@
 
     </select>
 
+    <select id="getUserByName" resultMap="userResultMap">
+        SELECT * FROM frankly.User
+        WHERE name LIKE concat('%', #{name}, '%')
+
+    </select>
+
     <insert id="createUser" parameterType="UserDTO">
         INSERT INTO frankly.User(email, name, password, district, userAuth)
         VALUES(#{email},
@@ -48,7 +54,8 @@
 
     <update id="updateUser" parameterType="UserDTO">
         UPDATE frankly.User
-        SET password = #{password},
+        SET name = #{name},
+            password = #{password},
             district = #{district},
             sex = #{sex},
             userAuth = #{userAuth},

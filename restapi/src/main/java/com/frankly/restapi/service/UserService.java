@@ -34,6 +34,10 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    public List<UserDTO> getUserByName(String name) throws Exception {
+        return userMapper.getUserByName(name);
+    }
+    @Override
     public void updateUser(UserDTO userDTO) throws Exception {
         userMapper.updateUser(userDTO);
     }

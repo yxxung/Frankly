@@ -132,8 +132,11 @@ export default {
       this.editButtonshow = true
 
       if (!confirm("정말 수정 하시겠습니까?")) {
+        this.editButtonshow = true
         alert("취소(아니오)를 누르셨습니다.");
+        this.editButtonshow = false;
       } else {
+        this.editButtonshow = true
         console.log(boardInfo)
 
         axios.put('/api/boards/'+ boardInfo["boardID"], boardInfo, {
@@ -148,8 +151,10 @@ export default {
                 }
               }
               alert("수정되었습니다.")
+              this.editButtonshow = false;
             }else{
               alert( " 응답 코드" + response.status)
+              this.editButtonshow = false;
 
             }
           })

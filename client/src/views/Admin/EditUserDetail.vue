@@ -39,16 +39,15 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
         <b-card>
           <ul>
             <li v-for="(value, key) in row.item" :key="key">
-              <span v-if="!key.endsWith('ID') && key !== '_showDetails' && key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired'">{{key}}</span> <br>
+              <span v-if="!key.endsWith('ID') && key !== '_showDetails' && key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired'&& key !== 'username'">{{key}}</span> <br>
               <!--                Original Value : {{value}} <br>-->
-              <textarea property="value" v-model="row.item[key]" v-if="!key.endsWith('ID') && key !== '_showDetails' && key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired'" @Change="onChange(key,$event)" >{{value}}</textarea>
+              <textarea property="value" v-model="row.item[key]" v-if="!key.endsWith('ID') && key !== '_showDetails' && key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired' && key !== 'username'" @Change="onChange(key,$event)" >{{value}}</textarea>
               <!--            <b-form-textarea>{{value}}</b-form-textarea>-->
             </li>
 
             <b-overlay :show="editButtonshow">
               <b-row>
                 <b-button
-
                   :aria-hidden="editButtonshow ? 'true' : null"
                   squared variant="outline-danger"
                   v-on:click="doChange(row.item)">수정</b-button >
@@ -98,16 +97,12 @@ export default {
           sortDirection: 'desc'
         },
         {
-          key: 'name',
-          sortable: true
+          key: 'username',
+          sortable: false,
         },
         {
           key: 'email',
           sortable: true,
-        },
-        {
-          key: 'contact',
-          sortable: false,
         },
         {
           key:"district",
@@ -115,10 +110,6 @@ export default {
         },
         {
           key:"sex",
-          sortable: false,
-        },
-        {
-          key:"userAuth",
           sortable: false,
         },
         {
@@ -140,29 +131,41 @@ export default {
     this.totalRows = this.propInfos.length
   },
   methods:{
-    doChange: function(boardInfo) {
+    doChange: function(userInfo) {
       this.editButtonshow = true
+      delete userInfo.authorities;
+      delete userInfo.enabled;
+      delete userInfo.accountNonLocked;
+      delete userInfo.accountNonExpired;
+      delete userInfo.credentialsNonExpired;
+      delete userInfo.username;
+      console.log(userInfo)
+
 
       if (!confirm("정말 수정 하시겠습니까?")) {
+        this.editButtonshow = true
         alert("취소(아니오)를 누르셨습니다.");
+        this.editButtonshow = false;
       } else {
-        console.log(boardInfo)
+        this.editButtonshow = true
+      // && key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired'&& key !== 'username'
 
-        axios.put('/api/users/'+ boardInfo["userID"], boardInfo, {
+        axios.put('/api/users/'+ userInfo["userID"] + '/update', userInfo, {
           headers: { "Content-Type": `application/json`}
         })
           .then(response => {
             if(response.status == 200){
               for(let i = 0; i < this.propInfos.length; i++) {
-                if(this.propInfos[i]["userID"] === boardInfo["userID"])  {
+                if(this.propInfos[i]["userID"] === userInfo["userID"])  {
                   this.propInfos.splice(i, 1);
                   i--;
                 }
               }
               alert("수정되었습니다.")
+              this.editButtonshow = false;
             }else{
               alert( " 응답 코드" + response.status)
-
+              this.editButtonshow = false;
             }
           })
           .catch(e => {
@@ -173,16 +176,16 @@ export default {
 
     },
     //삭제
-    doRemove:  function(boardInfo) {
+    doRemove:  function(userInfo) {
 
       if (!confirm("정말 삭제 하시겠습니까?")) {
         alert("취소(아니오)를 누르셨습니다.");
       } else {
-        axios.delete('/api/users/'+ boardInfo["userID"] )
+        axios.delete('/api/users/'+ userInfo["userID"] + '/delete' )
           .then(response => {
             if(response.status == 200){
               for(let i = 0; i < this.propInfos.length; i++) {
-                if(this.propInfos[i]["boardID"] === boardInfo["boardID"])  {
+                if(this.propInfos[i]["userID"] === userInfo["userID"])  {
                   this.propInfos.splice(i, 1);
                   i--;
                 }
