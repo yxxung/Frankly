@@ -29,14 +29,12 @@
         </div>
       </li>
     </ul>
-    <FloatingButton />
     <Navigation />
   </div>
 </template>
 
 <script>
 import Navigation from "@/components/Navigation.vue";
-import FloatingButton from "@/components/FloatingButton.vue";
 import axios from "axios";
 import dateformat from "@/commons/dateformat.js";
 import { mapState } from "vuex";
@@ -44,7 +42,6 @@ import { mapState } from "vuex";
 export default {
   components: {
     Navigation: Navigation,
-    FloatingButton: FloatingButton,
   },
   data() {
     return {

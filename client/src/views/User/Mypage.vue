@@ -134,8 +134,12 @@
             <h2>관리자 페이지</h2>
             <div class="admin-wrap">
               <div class="admin-container">
-                <div class="admin-statistics" @click="goToEditUser()">회원 관리</div>
-                <div class="admin-statistics" @click="goToEditBoard()">게시글 관리</div>
+                <div class="admin-statistics" @click="goToEditUser()">
+                  회원 관리
+                </div>
+                <div class="admin-statistics" @click="goToEditBoard()">
+                  게시글 관리
+                </div>
               </div>
             </div>
           </div>
@@ -235,8 +239,18 @@ export default {
           console.log("수정 요청 실패");
         });
     },
+    confirmDelete() {
+      if (confirm("정말 탈퇴하시겠습니까?") == true) {
+        //확인
+        document.form.submit();
+      } else {
+        //취소
+        return;
+      }
+    },
     //회원탈퇴
     deleteUser() {
+      if (confirm("정말 탈퇴하시겠습니까?") == true) {
       axios
         .delete(`/api/users/${this.userStore.userID}/delete`)
         .then((response) => {
@@ -258,6 +272,9 @@ export default {
         .catch((error) => {
           console.log("탈퇴 요청 실패", error);
         });
+      } else {
+        return ;
+      }
     },
     //로그아웃
     logoutUser() {
@@ -273,15 +290,11 @@ export default {
       }
     },
     goToEditUser() {
-      this.$router.push(
-        "/EditUser"
-      );
+      this.$router.push("/EditUser");
     },
     goToEditBoard() {
-      this.$router.push(
-        "/EditBoard"
-      );
-    }
+      this.$router.push("/EditBoard");
+    },
   },
 };
 </script>

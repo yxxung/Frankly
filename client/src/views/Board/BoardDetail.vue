@@ -38,7 +38,8 @@
       </div>
       <h3 class="post-header__title">{{ DetailData.title }}</h3>
       <div class="post-header__info">
-        <div class="post-header__writer">익명</div>
+        <div class="post-header__writer" v-if="nameBoardFlag === false">익명</div>
+        <div class="post-header__writer" v-if="changeBoardName(DetailData.userID)">{{ this.userStore.userInfo.username }}</div>
         <div class="post-header__reg-date">
           {{ elapsedText(DetailData.boardRegDate) }}
         </div>
@@ -70,8 +71,8 @@
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-              <h6 v-if="nameFlag === false">익명</h6>
-              <h6 v-if="changeName(reply.userID)" style="color: #ce8275">
+              <h6 v-if="nameReplyFlag === false">익명</h6>
+              <h6 v-if="changeReplyName(reply.userID)" style="color: #4e4e4e">
                 {{ this.userStore.userInfo.username }}
               </h6>
               <span class="comments__info__date">{{
@@ -149,14 +150,15 @@ export default {
       replyInput: "", //댓글 입력
       marked: false, //좋아요
       cntMarked: null, //좋아요 개수
-      nameFlag: false,
+      nameReplyFlag: false,
+      nameBoardFlag: false,
     };
   },
   computed: {
     ...mapState({ userStore: "userStore" }),
   },
   mounted() {
-    this.changeName();
+    this.changeReplyName();
   },
   created() {
     const boardID = this.$route.params.boardID;
@@ -250,12 +252,21 @@ export default {
           });
       }
     },
-    changeName(userID) {
+    //댓글 작성자 보이기
+    changeReplyName(userID) {
       if (userID === this.userStore.userID) {
-        this.nameFlag = true;
+        this.nameReplyFlag = true;
       }
       console.log(this.userStore.userInfo.username);
-      return this.nameFlag
+      return this.nameReplyFlag
+    },
+    //게시글 작성자 보이기
+    changeBoardName(userID) {
+      if (userID === this.userStore.userID) {
+        this.nameBoardFlag = true;
+      }
+      console.log(this.userStore.userInfo.username);
+      return this.nameBoardFlag
     },
     async changeLike(boardID) {
       //좋아요가 안눌러진 상태에서 좋아요를 누를 때
