@@ -39,9 +39,9 @@ https://bootstrap-vue.org/docs/components/table#rubin-kincade
         <b-card>
           <ul>
             <li v-for="(value, key) in row.item" :key="key">
-              <span v-if="!key.endsWith('ID') && key !== '_showDetails' && key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired'&& key !== 'username'">{{key}}</span> <br>
+              <span v-if="!key.endsWith('ID') && key !== '_showDetails' && key !== 'email'&& key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired'&& key !== 'username'">{{key}}</span> <br>
               <!--                Original Value : {{value}} <br>-->
-              <textarea property="value" v-model="row.item[key]" v-if="!key.endsWith('ID') && key !== '_showDetails' && key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired' && key !== 'username'" @Change="onChange(key,$event)" >{{value}}</textarea>
+              <textarea property="value" v-model="row.item[key]" v-if="!key.endsWith('ID') && key !== '_showDetails'&& key !== 'email' && key !== 'password'&& key !== 'authorities'&& key !== 'enabled'&& key !== 'accountNonLocked'&& key !== 'accountNonExpired'&& key !== 'credentialsNonExpired' && key !== 'username'" @Change="onChange(key,$event)" >{{value}}</textarea>
               <!--            <b-form-textarea>{{value}}</b-form-textarea>-->
             </li>
 
