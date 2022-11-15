@@ -23,6 +23,12 @@
         <result column="replyCount" property="replyCount"/>
     </resultMap>
 
+    <resultMap type="LikeDTO" id="likeResultMap">
+        <id column="likeID" property="likeID"/>
+        <result column="userID" property="userID"/>
+        <result column="likeCount" property="likeCount"/>
+    </resultMap>
+
     <insert id="createBoard" parameterType="BoardDTO">
         INSERT INTO frankly.Board(userID, marked, title, content, region, boardRegDate)
         VALUES(#{userID}
@@ -54,6 +60,13 @@
         DELETE FROM frankly.Board
         WHERE boardID = #{boardID}
     </delete>
+
+    <!-- 내가 쓴 게시글 -->
+    <select id="userBoard" resultMap="boardResultMap">
+        SELECT *
+        FROM frankly.Board
+        WHERE userID = #{userID}
+    </select>
 
     <!-- 게시물 총 갯수 -->
     <select id="countBoard" resultType="int">

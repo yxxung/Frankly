@@ -1,10 +1,12 @@
 package com.frankly.restapi.controller;
 
 import com.frankly.restapi.domain.BoardDTO;
+import com.frankly.restapi.domain.LikeDTO;
 import com.frankly.restapi.domain.PageVO;
 import com.frankly.restapi.service.BoardService;
+import com.frankly.restapi.service.BookmarkService;
+import com.frankly.restapi.service.LikeService;
 import com.frankly.restapi.service.ReplyService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,10 @@ public class BoardController {
     private final BoardService boardService;
 
     private final ReplyService replyService;
+
+    private final LikeService likeService;
+
+    private final BookmarkService bookmarkService;
 
     //file 전송시 file과 dto를 나눠서 전송해야 함
     //requestpart로 나눠서 받기,,,나머지 수정 필요
@@ -67,6 +73,7 @@ public class BoardController {
             BoardDTO boardDTO = boardService.readBoard(boardID);
             replyService.readReply(boardID);
             replyService.countReply(boardID);
+            likeService.countLike(boardID);
 
             return new ResponseEntity<>(boardDTO, HttpStatus.OK);
         }catch (Exception e){
@@ -114,4 +121,29 @@ public class BoardController {
 
         return new ResponseEntity<>(boardService.searchBoard(region, searchType, keyword), HttpStatus.OK);
     }
+
+    @GetMapping("/user/{userID}")
+    public ResponseEntity<List<BoardDTO>> userBoard(@PathVariable("userID") int userID) throws Exception{
+
+        return new ResponseEntity<>(boardService.userBoard(userID), HttpStatus.OK);
+    }
+
+    //좋아요 누르기
+    @PostMapping("/create/like")
+    public ResponseEntity<LikeDTO> createLike(@Validated @RequestBody LikeDTO likeDTO) throws Exception {
+
+        likeService.createLike(likeDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+    //좋아요 취소
+    @DeleteMapping("/delete/like")
+    public ResponseEntity<LikeDTO> deleteLike(@Validated @RequestBody LikeDTO likeDTO) throws Exception {
+
+        likeService.deleteLike(likeDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
