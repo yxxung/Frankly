@@ -40,17 +40,25 @@ public class PoliticianService implements PoliticianServiceInterface {
 
     @Override
     public List<PoliticianDTO> politicianList() throws Exception{
-        log.info("getList");
         return politicianMapper.politicianList();
     }
     @Override
     public List<PoliticianDTO> searchPolitician(String searchName) throws Exception {
         return politicianMapper.searchPolitician(searchName);
-
     }
     @Override
     public List<PoliticianDTO> readParty(int partyID) throws Exception {
         return politicianMapper.readParty(partyID);
+    }
+
+    @Override
+    public void countView(int politicianID) throws Exception {
+        politicianMapper.countView(politicianID);
+    }
+
+    @Override
+    public List<PoliticianDTO> viewRank() throws Exception{
+        return politicianMapper.viewRank();
     }
 
 }

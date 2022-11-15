@@ -10,9 +10,6 @@
           <a class="icon-button-56">
             <img src="@/assets/icon/Bookmark.svg" alt="북마크" />
           </a>
-          <a class="icon-button-56">
-            <img src="@/assets/icon/Other2.svg" alt="더보기" />
-          </a>
         </div>
       </header>
 <!---->

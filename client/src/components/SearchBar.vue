@@ -51,7 +51,7 @@ export default {
 }
 .politician-search-form__text-input {
   align-items: center;
-  width: 75%;
+  width: 80%;
   height: 38px;
   left: 16px;
   top: 297px;

@@ -60,5 +60,4 @@ public class ReplyService implements ReplyServiceInterface {
         replyMapper.deleteReply(replyDTO);
     }
 
-
 }

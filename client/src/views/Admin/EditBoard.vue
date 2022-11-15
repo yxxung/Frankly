@@ -1,6 +1,4 @@
 <template>
-  <AdminNav />
-
   <div class="hello">
     <b-card
       header="게시판 관리"

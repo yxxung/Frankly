@@ -1,6 +1,5 @@
 package com.frankly.restapi.domain;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,6 @@ import java.util.Date;
  * 추후 나눌 필요가 있어보임.
  */
 @Data
-@Builder
 @NoArgsConstructor
 public class PoliticianDTO {
     //id
@@ -53,39 +51,11 @@ public class PoliticianDTO {
     private String secretary;
     //비서
     private String personalAssistant;
-
     //사진 주소
-
     private String politicianImageURL;
+    //선거구
     private String regionName;
-
-
-    @Builder
-    public PoliticianDTO(int politicianID, String politicianName, String hanName, String engName, String lunar, Date birthday, int partyID,
-                         String partyName, int regionID, int selectNumber, String selectInfo, String sex, String contact,
-                         String email, String homepage, String aide, String secretary, String personalAssistant, String politicianImageURL,
-                         String regionName) {
-        this.politicianID = politicianID;
-        this.politicianName = politicianName;
-        this.hanName = hanName;
-        this.engName = engName;
-        this.lunar = lunar;
-        this.birthday = birthday;
-        this.partyID = partyID;
-        this.partyName = partyName;
-        this.regionID = regionID;
-        this.selectNumber = selectNumber;
-        this.selectInfo = selectInfo;
-        this.sex = sex;
-        this.contact = contact;
-        this.email = email;
-        this.homepage = homepage;
-        this.aide = aide;
-        this.secretary = secretary;
-        this.personalAssistant = personalAssistant;
-        this.politicianImageURL = politicianImageURL;
-        this.regionName = regionName;
-    }
-    //나머지 Lombok으로 자동생성.
+    //조회수
+    private int viewCount;
 
 }

@@ -24,5 +24,8 @@ public interface BoardServiceInterface {
     public int searchCount(String searchType, String keyword) throws Exception;
         //public List<BoardDTO> pageNumberBoardList(Long pageNumber) throws Exception;
 
+    public List<BoardDTO> userBoard(int userID) throws Exception;
+
+    public List<BoardDTO> userReply(int userID) throws Exception;
 
 }
