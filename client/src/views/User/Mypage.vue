@@ -130,6 +130,16 @@
         </div>
 
         <div class="mypage-detail">
+          <div v-if="adminFlag === true" class="mypage-detail-list">
+            <h2>관리자 페이지</h2>
+            <div class="admin-wrap">
+              <div class="admin-container">
+                <div class="admin-statistics" @click="goToEditUser()">회원 관리</div>
+                <div class="admin-statistics" @click="goToEditBoard()">게시글 관리</div>
+              </div>
+            </div>
+          </div>
+
           <div class="mypage-detail-list">
             <h2>북마크 국회의원</h2>
             <BookmarkPolitician />
@@ -159,12 +169,16 @@ export default {
   data() {
     return {
       modifyFlag: false,
+      adminFlag: false,
       user: {},
     };
   },
   computed: {
     ...mapState({ userStore: "userStore" }),
     //...mapState([ 'userInfo', 'isLogin' ])
+  },
+  mounted() {
+    this.setAdminpage();
   },
   created() {
     axios
@@ -178,6 +192,19 @@ export default {
       });
   },
   methods: {
+    setAdminpage() {
+      //관리자 페이지 isShow
+      let authorities = this.userStore.userInfo.authorities;
+
+      for (let i = 0; i < authorities.length; i++) {
+        if (authorities[i].authority === "ROLE_ADMIN") {
+          this.adminFlag = true;
+        }
+        /*else if(authorities[i].authority === "ROLE_USER") {
+        this.adminFlag = false;
+      }*/
+      }
+    },
     //수정 버튼 클릭 시
     clickModifyBtn() {
       this.modifyFlag = true;
@@ -224,7 +251,7 @@ export default {
             sessionStorage.removeItem("userID");
 
             if (this.$route.path != "/") {
-              this.$router.push({ name: "AuthPage", component: 'AuthPage' });
+              this.$router.push({ name: "AuthPage", component: "AuthPage" });
             }
           }
         })
@@ -245,6 +272,16 @@ export default {
         this.$router.push({ name: "Login" });
       }
     },
+    goToEditUser() {
+      this.$router.push(
+        "/EditUser"
+      );
+    },
+    goToEditBoard() {
+      this.$router.push(
+        "/EditBoard"
+      );
+    }
   },
 };
 </script>
@@ -309,5 +346,34 @@ export default {
   letter-spacing: -0.024em;
 
   color: #383838;
+}
+
+.admin-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.admin-container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 5px auto;
+  width: 100%;
+  max-width: 540px;
+  background: #ffffff;
+}
+
+.admin-statistics {
+  padding: 8px 16px;
+  color: #3c3c3c;
+  border-radius: 8px;
+  border: 1px solid #ebe8e2;
+  margin-right: 8px;
+}
+
+.admin-statistics:hover {
+  cursor: pointer;
+  background-color: #f2eee8;
 }
 </style>

@@ -1,9 +1,7 @@
 <template>
-  <AdminNav />
-
   <div class="hello">
     <b-card
-      header="게시판 관리"
+      header="회원 관리"
       style="max-width: 80rem; margin: auto; margin-top: 10vh"
       class="mb-2"
       border-variant="info"
