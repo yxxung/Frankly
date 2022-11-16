@@ -102,7 +102,6 @@ export default {
           headers: {},
         })
         .then((response) => {
-          console.log("politicians", response.data);
           this.politicians = response.data;
         })
         .catch((error) => {

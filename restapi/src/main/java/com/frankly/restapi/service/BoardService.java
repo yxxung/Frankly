@@ -27,7 +27,7 @@ public class BoardService implements BoardServiceInterface {
     public void updateBoard(BoardDTO boardDTO, int boardID) throws Exception {
 
         BoardDTO targetBoard = boardMapper.readBoard(boardID);
-        if(targetBoard.getAuthor() == (boardDTO.getAuthor())){
+        //if(targetBoard.getAuthor() == (boardDTO.getAuthor())){
             try{
                 boardDTO.setBoardID(boardID);
                 boardMapper.updateBoard(boardDTO);
@@ -36,9 +36,9 @@ public class BoardService implements BoardServiceInterface {
                 e.printStackTrace();
             }
 
-        }else{
-            throw new Exception("author is different - "+targetBoard.getAuthor()+" and "+boardDTO.getAuthor());
-        }
+        //}else{
+        //    throw new Exception("author is different - "+targetBoard.getAuthor()+" and "+boardDTO.getAuthor());
+        //}
 
     }
     @Override

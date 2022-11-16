@@ -58,7 +58,6 @@ export default {
       axios
         .get(`/api/boards/boardlist/충청남도`)
         .then((response) => {
-          console.log("boards", response.data);
           this.boards = response.data;
         })
         .catch((error) => {

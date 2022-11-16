@@ -111,10 +111,6 @@ export default {
     selected() {
       console.log(this.regionName);
     },
-    /*onInputImage() {
-      console.log(this.$refs);
-      this.image = this.$refs.image.files[0];
-    },*/
     onClickUpdate() {
       const boardID = this.$route.params.boardID;
       axios

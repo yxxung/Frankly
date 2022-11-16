@@ -48,7 +48,6 @@ export default {
     const politicianID = this.$route.params.politicianID;
     axios.get(`/api/vote/count/${politicianID}`).then((response) => {
       //시각화//
-      console.log(response.data);
       let voteData = response.data;
 
       let yesTotal = 0; //찬성
@@ -67,7 +66,6 @@ export default {
           absentTotal = voteData[i].voteCount;
         }
       }
-      console.log(yesTotal, noTotal, giveUpTotal, absentTotal);
 
       this.yesTotal = yesTotal
       this.noTotal = noTotal
@@ -76,7 +74,6 @@ export default {
 
       axios.get(`/api/vote/${politicianID}`).then((response) => {
         this.VoteList = response.data
-        console.log(this.VoteList)
       })
     });
   },

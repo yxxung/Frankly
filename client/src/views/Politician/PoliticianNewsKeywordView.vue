@@ -131,12 +131,7 @@ export default {
         }
         this.newsList = resultArray
       }
-
-
-
     }
-
-
   }
 }
 </script>
