@@ -143,7 +143,6 @@ public class BoardController {
         likeService.createLike(likeDTO);
 
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
     //좋아요 취소
     @DeleteMapping("/delete/like")
