@@ -20,6 +20,8 @@ public interface UserMapper {
 
     public UserDTO getUserByEmail(String email) throws Exception;
 
+    public List<UserDTO> getUserByName(String name) throws Exception;
+
     public void createUser(UserDTO userDTO) throws Exception;
 
     public UserDTO readUser(int userID) throws Exception;

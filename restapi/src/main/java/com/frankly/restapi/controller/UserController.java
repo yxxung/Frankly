@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @CrossOrigin(origins = "http://localhost:8080")
 @Slf4j
@@ -28,6 +30,15 @@ public class UserController {
         UserDTO userDTO = userService.getUser(userID);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/{name}/name")
+    public ResponseEntity<List<UserDTO>> getUserByName(@PathVariable("name") String name)
+            throws Exception{
+        log.info("read" + name);
+
+
+        return new ResponseEntity<>(userService.getUserByName(name), HttpStatus.OK);
     }
 
     @PostMapping("/signup")

@@ -435,7 +435,7 @@ class News:
                     continue
         con.close()
 
-if __name__ == "__main__":
-    n = News()
-    n.getNewsFromAPI(targetDate="2022-10-01")
-    n.newsCrawling()
+# if __name__ == "__main__":
+#     n = News()
+#     n.getNewsFromAPI(targetDate="2022-10-01")
+#     n.newsCrawling()
