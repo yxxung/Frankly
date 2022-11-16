@@ -9,6 +9,17 @@
         <result column="likeCount" property="likeCount"/>
     </resultMap>
 
+    <resultMap type="BoardDTO" id="boardResultMap">
+        <id column="boardID" property="boardID"/>
+        <result column="userID" property="userID"/>
+        <result column="boardRegDate" property="boardRegDate"/>
+        <result column="marked" property="marked"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="region" property="region"/>
+    </resultMap>
+
+
     <!-- 좋아요 누르기 -->
     <insert id="createLike" parameterType="LikeDTO">
         INSERT INTO frankly.Like(userID, boardID)
@@ -19,8 +30,9 @@
     <!-- 마이페이지 좋아요 리스트 -->
     <select id="readLike" resultMap="likeResultMap">
         SELECT *
-        FROM frankly.Like
-        WHERE userID = #{userID}
+        FROM frankly.Like L LEFT JOIN frankly.Board B
+                                      ON B.boardID = L.boardID
+        WHERE L.userID = #{userID}
     </select>
 
     <!-- 좋아요 취소 -->

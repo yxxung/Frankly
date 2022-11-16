@@ -9,6 +9,30 @@
         <result column="politicianID" property="politicianID"/>
     </resultMap>
 
+    <resultMap type="PoliticianDTO" id = "politicianResultMap">
+        <id column="politicianID" property="politicianID"/>
+        <result column="politicianName" property="politicianName"/>
+        <result column="hanName" property="hanName"/>
+        <result column="engName" property="engName"/>
+        <result column="lunar" property="lunar"/>
+        <result column="birthday" property="birthday"/>
+        <result column="partyID" property="partyID"/>
+        <result column="partyName" property="partyName"/>
+        <result column="regionID" property="regionID"/>
+        <result column="selectNumber" property="selectNumber"/>
+        <result column="selectInfo" property="selectInfo"/>
+        <result column="sex" property="sex"/>
+        <result column="contact" property="contact"/>
+        <result column="email" property="email"/>
+        <result column="homepage" property="homepage"/>
+        <result column="aide" property="aide"/>
+        <result column="secretary" property="secretary"/>
+        <result column="personalAssistant" property="personalAssistant"/>
+        <result column="politicianImageURL" property="politicianImageURL"/>
+        <result column="regionName" property="regionName"/>
+        <result column="viewCount" property="viewCount"/>
+    </resultMap>
+
     <!-- 북마크하기 -->
     <insert id="createBookmark" parameterType="BookmarkDTO">
         INSERT INTO frankly.Bookmark(userID, politicianID)
@@ -19,12 +43,13 @@
     <!-- 내가 북마크한 국회의원 리스트-->
     <select id="readBookmark" resultMap="bookmarkResultMap">
         SELECT *
-        FROM frankly.Bookmark
+        FROM frankly.Bookmark B LEFT JOIN frankly.Politician P
+                                        ON B.politicianID = P.politicianID
         WHERE userID = #{userID}
     </select>
 
     <!-- 북마크 취소 -->
-    <delete id="deleteLike" parameterType="BookmarkDTO">
+    <delete id="deleteBookmark" parameterType="BookmarkDTO">
         DELETE FROM frankly.Bookmark
         WHERE politicianID = #{politicianID} AND userID = #{userID}
     </delete>
