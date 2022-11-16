@@ -169,7 +169,6 @@ export default {
     });
     axios.get(`/api/replys/${boardID}/replyList`).then((response) => {
       this.replys = response.data;
-      console.log("replys", this.replys);
     });
     this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
   },
@@ -261,7 +260,6 @@ export default {
       if (userID === this.userStore.userID) {
         this.nameBoardFlag = true;
       }
-      console.log(this.userStore.userInfo.username);
       return this.nameBoardFlag
     },
     async changeLike(boardID) {

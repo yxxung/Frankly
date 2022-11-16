@@ -293,6 +293,7 @@ export default {
 
 /*인기검색 국회의원 리스트*/
 .trend-politician-list-wrap{
+  width: 100%;
   display: flex;
   margin: 85px auto 0 auto;
   justify-content: space-between;
