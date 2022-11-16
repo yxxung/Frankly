@@ -8,8 +8,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 import * as d3 from "d3"
 
-axios.defaults.baseURL = 'https://teamfrankly.kr'
-//axios.defaults.baseURL = 'http://localhost:8081'
+//axios.defaults.baseURL = 'https://teamfrankly.kr'
+axios.defaults.baseURL = 'http://localhost:8081'
 //createApp(App).use(store).use(router).mount('#app')
 const app = createApp(App)
 app.config.globalProperties.$axios = axios;

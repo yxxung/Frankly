@@ -27,37 +27,37 @@
         >
       </header>
 
-      <b-modal v-model="modifyFlag" hide-footer title="개인정보 수정">
-        <b-container fluid>
+      <b-modal style="font-family: Noto Sans KR; margin:0 auto" v-model="modifyFlag" hide-footer title="개인정보 수정">
+        <b-container fluid style="margin:0 auto">
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">이름</label>
+              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">이름</label>
             </b-col>
             <b-col sm="10">
               <b-form-textarea
                 id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 disabled
                 v-model="user.name"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">이메일</label>
+              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">이메일</label>
             </b-col>
             <b-col sm="10">
               <b-form-textarea
                 id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 disabled
                 v-model="user.email"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
@@ -78,45 +78,43 @@
           </b-row>-->
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">전화번호</label>
+              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">전화번호</label>
             </b-col>
             <b-col sm="10">
               <b-form-textarea
                 id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 v-model="user.contact"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">지역</label>
+              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">지역</label>
             </b-col>
             <b-col sm="10">
               <b-form-textarea
-                id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 v-model="user.district"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
         </b-container>
         <b-button
+          align="center"
           class="mt-5"
-          size="sm"
           variant="Light"
           @click="CancelModifyBtn"
           >취소</b-button
         >
-        <b-button class="mt-5" size="sm" variant="dark" @click="updateUser"
-          >수정</b-button
-        >
+        <b-button align="center" class="mt-5" variant="dark" @click="updateUser"
+          >수정</b-button>
       </b-modal>
       <div class="mypage">
         <div class="mypage-info">

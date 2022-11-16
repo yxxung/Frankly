@@ -171,6 +171,19 @@ export default {
       this.replys = response.data;
     });
     this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
+
+    //이미 좋아요한 게시물 좋아요 유지
+    axios.get(`/api/likeBookmark/like/${this.userStore.userID}`)
+    .then((response) => {
+      const markedTemp = response.data;
+      console.log(response.data);
+
+      for (const markedList of markedTemp) {
+      if (markedList.boardID === this.DetailData.boardID) {
+        this.marked = true;
+      }
+    }
+    })
   },
   methods: {
     //date format 변환
@@ -252,7 +265,6 @@ export default {
       if (userID === this.userStore.userID) {
         this.nameReplyFlag = true;
       }
-      console.log(this.userStore.userInfo.username);
       return this.nameReplyFlag
     },
     //게시글 작성자 보이기
