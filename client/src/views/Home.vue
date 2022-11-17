@@ -106,7 +106,6 @@ export default {
       axios
         .get("/api/politician/rank")
         .then((response) => {
-          console.log("politicians", response.data);
           this.topPoliticians = response.data;
         })
         .catch((error) => {

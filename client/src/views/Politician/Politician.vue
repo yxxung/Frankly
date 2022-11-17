@@ -89,7 +89,7 @@ export default {
       politicians: [],
       border: "3px solid #0d6efd",
       politicianOrder: 1,
-      clickCount: 0,
+      clickCount: 0
     };
   },
   mounted() {
@@ -120,7 +120,7 @@ export default {
       clickCount += 1;
       axios
         .post(`/api/politician/${politicianID}`, {
-          viewCont: clickCount,
+          viewCount: clickCount,
         })
         .then((response) => {})
         .catch((error) => {

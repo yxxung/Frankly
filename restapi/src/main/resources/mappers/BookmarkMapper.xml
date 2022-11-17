@@ -24,7 +24,7 @@
     </select>
 
     <!-- 북마크 취소 -->
-    <delete id="deleteLike" parameterType="BookmarkDTO">
+    <delete id="deleteBookmark" parameterType="BookmarkDTO">
         DELETE FROM frankly.Bookmark
         WHERE politicianID = #{politicianID} AND userID = #{userID}
     </delete>

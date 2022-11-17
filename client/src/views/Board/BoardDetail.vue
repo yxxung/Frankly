@@ -326,7 +326,7 @@ export default {
       else {
         axios.delete(`/api/boards/delete/like`, {
           userID: this.userStore.userID,
-            boardID: boardID,
+          boardID: boardID,
         })
         .then((response) => {
           if (response.status === 200) {
