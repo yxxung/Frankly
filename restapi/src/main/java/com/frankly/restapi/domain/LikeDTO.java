@@ -28,24 +28,7 @@ public class LikeDTO {
 
     private String region;
 
-
-    private int replyID;
-
-    private String reply;
-
-    private LocalDateTime replyRegDate;
     //count(R.replyID)
     private int replyCount;
 
-    private int replyID;
-
-    private String reply;
-
-    private int userID;
-
-    private LocalDateTime replyRegDate;
-
-    private int boardID;
-
-    private int replyCount;
 }

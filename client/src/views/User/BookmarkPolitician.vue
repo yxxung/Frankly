@@ -1,62 +1,50 @@
 <template>
-  <div class="wrap">
     <div class="bookmark-politician-list-wrap">
       <ul class="bookmark-politician-list">
         <li
-          class="politician"
-          v-for="politician in politicians"
-          v-bind:key="politician.politicianID"
+          class="bookmark-politician"
+          v-for="bookmark in bookmarkPoliticians"
+          v-bind:key="bookmark.bookmarkID"
           @click="
-            goToPoliticianDetail(politician.politicianID),
-              countPoliticianClick(politician.politicianID)
+            goToPoliticianDetail(bookmark.politicianID)
           "
         >
           <!-- 정치인 리스트 출력 이미지, 이름-->
           <div
-            class="politician-image"
-            v-bind:style="{ border: getPoliticianColor(politician) }"
+            class="bookmark-politician-image"
+            v-bind:style="{ border: getPoliticianColor(bookmark) }"
           >
             <img
               :src="
                 'https://teamfrankly.kr/images/' +
-                politician.politicianID +
+                bookmark.politicianID +
                 '.png'
               "
             />
           </div>
-          <div class="bookmark-politician-name">{{ politician.politicianName }}</div>
+          <div class="bookmark-politician-name">{{ bookmark.politicianName }}</div>
         </li>
       </ul>
     </div>
-  </div>
 </template>
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   name: "BookmarkPolitician",
+  props: {
+    bookmarkPoliticians: Object
+  },
   data() {
     return {
-      politicians: []
     };
   },
-  mounted() {
-    this.getPoliticianList();
+  computed: {
+    ...mapState({ userStore: "userStore" }),
   },
   methods: {
-    getPoliticianList() {
-      axios
-        .get("/api/likeBookmark/all", {
-          headers: {},
-        })
-        .then((response) => {
-          this.politicians = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     goToPoliticianDetail(politicianID) {
       this.$router.push({
         name: "PoliticianDetail",
@@ -64,17 +52,6 @@ export default {
           politicianID: politicianID,
         },
       });
-    },
-    countPoliticianClick(politicianID) {
-      clickCount += 1;
-      axios
-        .post(`/api/politician/${politicianID}`, {
-          viewCount: clickCount,
-        })
-        .then((response) => {})
-        .catch((error) => {
-          console.log(error);
-        });
     },
     getPoliticianColor(politician) {
       if (politician.partyName === "국민의힘") {
@@ -97,6 +74,14 @@ export default {
 @import "@/assets/scss/style.scss";
 
 /*전체 국회의원*/
+.bookmark-politician-list-wrap {
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+}
+
 .bookmark-politician-list {
   margin: 0 auto 0 auto;
   width: 100%;
@@ -105,15 +90,15 @@ export default {
   text-align: center;
   padding: 0;
 }
-.politician {
+.bookmark-politician {
   display: inline-table;
   /*align-items: center;*/
   margin-bottom: 20px;
   padding: 0 5%;
 }
-.politician-image {
-  width: 75px;
-  height: 75px;
+.bookmark-politician-image {
+  width: 70px;
+  height: 70px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -124,13 +109,13 @@ export default {
   border-radius: 100%;
 }
 
-.politician-image img {
+.bookmark-politician-image img {
   border-radius: 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.politician-name {
+.bookmark-politician-name {
   margin: 5px auto;
   font-size: 16px;
   font-family: "Noto Sans KR";
@@ -139,24 +124,6 @@ export default {
   color: #000000;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-.politician-region {
-  margin: 5px auto;
-  font-size: 10px;
-  font-family: "Noto Sans KR";
-  font-style: normal;
-  font-weight: 500;
-  color: #000000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bookmark-politician-list-wrap {
-  display: flex;
-  margin: auto;
-  justify-content: space-evenly;
   align-items: center;
 }
 </style>

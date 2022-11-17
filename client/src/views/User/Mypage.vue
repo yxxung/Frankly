@@ -27,11 +27,21 @@
         >
       </header>
 
-      <b-modal style="font-family: Noto Sans KR; margin:0 auto" v-model="modifyFlag" hide-footer title="개인정보 수정">
-        <b-container fluid style="margin:0 auto">
+      <b-modal
+        style="font-family: Noto Sans KR; margin: 0 auto"
+        v-model="modifyFlag"
+        hide-footer
+        title="개인정보 수정"
+      >
+        <b-container fluid style="margin: 0 auto">
           <b-row>
             <b-col sm="2">
-              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">이름</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >이름</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
@@ -47,7 +57,12 @@
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">이메일</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >이메일</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
@@ -78,7 +93,12 @@
           </b-row>-->
           <b-row>
             <b-col sm="2">
-              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">전화번호</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >전화번호</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
@@ -93,7 +113,12 @@
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label style="font-size: 15px" class="mt-2" for="textarea-auto-height">지역</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >지역</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
@@ -114,7 +139,8 @@
           >취소</b-button
         >
         <b-button align="center" class="mt-5" variant="dark" @click="updateUser"
-          >수정</b-button>
+          >수정</b-button
+        >
       </b-modal>
       <div class="mypage">
         <div class="mypage-info">
@@ -144,12 +170,15 @@
 
           <div class="mypage-detail-list">
             <h2>북마크 국회의원</h2>
-            <BookmarkPolitician />
+            <BookmarkPolitician
+              v-bind:bookmarkPoliticians="bookmarkPoliticians"
+            />
           </div>
 
           <div class="mypage-detail-list">
             <h2>좋아요한 글</h2>
-            <LikeBoard />
+            <LikeBoard
+            v-bind:likeBoards="likeBoards"/>
           </div>
         </div>
       </div>
@@ -162,17 +191,23 @@
 import axios from "axios";
 import Navigation from "@/components/Navigation.vue";
 import { mapState } from "vuex";
+import BookmarkPolitician from "@/views/User/BookmarkPolitician.vue"
+import LikeBoard from "@/views/User/LikeBoard.vue"
 
 export default {
   name: "Mypage",
   components: {
     Navigation: Navigation,
+    BookmarkPolitician: BookmarkPolitician,
+    LikeBoard: LikeBoard
   },
   data() {
     return {
       modifyFlag: false,
       adminFlag: false,
       user: {},
+      bookmarkPoliticians: [],
+      likeBoards: []
     };
   },
   computed: {
@@ -188,6 +223,28 @@ export default {
       .then((response) => {
         console.log("users", response.data);
         this.user = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios
+      .get(`/api/likeBookmark/bookmark/${this.userStore.userID}`, {
+        headers: {},
+      })
+      .then((response) => {
+        this.bookmarkPoliticians = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      axios
+      .get(`/api/likeBookmark/like/${this.userStore.userID}`, {
+        headers: {},
+      })
+      .then((response) => {
+        this.likeBoards = response.data;
       })
       .catch((error) => {
         console.log(error);
@@ -249,29 +306,29 @@ export default {
     //회원탈퇴
     deleteUser() {
       if (confirm("정말 탈퇴하시겠습니까?") == true) {
-      axios
-        .delete(`/api/users/${this.userStore.userID}/delete`)
-        .then((response) => {
-          if (response.status === 200) {
-            alert("회원 탈퇴가 완료됐습니다.");
+        axios
+          .delete(`/api/users/${this.userStore.userID}/delete`)
+          .then((response) => {
+            if (response.status === 200) {
+              alert("회원 탈퇴가 완료됐습니다.");
 
-            this.$store.commit("userStore/SET_IS_LOGIN", false);
-            this.$store.commit("userStore/SET_USER_INFO", null);
-            this.$store.commit("userStore/SET_USER_ID", null);
+              this.$store.commit("userStore/SET_IS_LOGIN", false);
+              this.$store.commit("userStore/SET_USER_INFO", null);
+              this.$store.commit("userStore/SET_USER_ID", null);
 
-            sessionStorage.removeItem("token");
-            sessionStorage.removeItem("userID");
+              sessionStorage.removeItem("token");
+              sessionStorage.removeItem("userID");
 
-            if (this.$route.path != "/") {
-              this.$router.push({ name: "AuthPage", component: "AuthPage" });
+              if (this.$route.path != "/") {
+                this.$router.push({ name: "AuthPage", component: "AuthPage" });
+              }
             }
-          }
-        })
-        .catch((error) => {
-          console.log("탈퇴 요청 실패", error);
-        });
+          })
+          .catch((error) => {
+            console.log("탈퇴 요청 실패", error);
+          });
       } else {
-        return ;
+        return;
       }
     },
     //로그아웃
