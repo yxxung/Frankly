@@ -82,7 +82,6 @@ export default {
         axios
           .get(`/api/politician/search?searchName=${politicianInput}`)
           .then((response) => {
-            console.log("searchPoliticians", response.data);
             this.searchPoliticians = response.data;
           })
           .catch((error) => {

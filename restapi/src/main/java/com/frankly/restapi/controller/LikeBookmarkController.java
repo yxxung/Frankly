@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/likeBookmark")
 
 public class LikeBookmarkController {
 

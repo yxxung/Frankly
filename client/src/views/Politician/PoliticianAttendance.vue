@@ -75,7 +75,6 @@ export default {
       //표//
       this.politicianAttendance = response.data;
       let attendanceData = response.data;
-      console.log(attendanceData);
 
       let conferenceAttendanceResultList = [];
       let conferenceSet = new Set();
@@ -116,10 +115,6 @@ export default {
 
 
       this.conferenceAttendanceList = conferenceAttendanceResultList;
-
-      console.log(
-       conferenceAttendanceResultList
-      );
     });
   },
 };

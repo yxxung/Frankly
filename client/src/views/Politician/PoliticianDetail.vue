@@ -7,19 +7,40 @@
           <img src="@/assets/icon/Arrow_left48.svg" alt="뒤로가기" />
         </a>
         <div class="header-right-icon">
-          <a class="icon-button-56">
-            <img src="@/assets/icon/Bookmark.svg" alt="북마크" />
-          </a>
+          <button
+            class="icon-button-56"
+            @click="
+              (bookmark = !bookmark),
+                changeBookmark(PoliticianDetailData.politicianID)
+            "
+          >
+            <img
+              src="@/assets/icon/Bookmark.svg"
+              v-if="bookmark === false"
+            />
+            <img
+              src="@/assets/icon/Bookmark_active.svg"
+              v-if="bookmark === true"
+            />
+          </button>
         </div>
       </header>
-<!---->
+
       <div class="politician-detail-info">
         <div class="assembly-image-wrap">
           <div class="assembly-image" />
         </div>
-        <div class="politician-detail-region">{{ PoliticianDetailData.regionName }}</div>
+        <div class="politician-detail-region">
+          {{ PoliticianDetailData.regionName }}
+        </div>
         <div class="politician-detail-image">
-          <img :src="'https://teamfrankly.kr/images/' + PoliticianDetailData.politicianID + '.png'" />
+          <img
+            :src="
+              'https://teamfrankly.kr/images/' +
+              PoliticianDetailData.politicianID +
+              '.png'
+            "
+          />
         </div>
         <div class="politician-detail-name">
           {{ PoliticianDetailData.politicianName }}
@@ -43,7 +64,7 @@
         </div>
         <div class="assembly-detail">
           <h2>법률안 대표 발의</h2>
-          <h3>{{this.billLawNum}}건</h3>
+          <h3>{{ this.billLawNum }}건</h3>
         </div>
         <div class="assembly-detail">
           <h2>당선 횟수</h2>
@@ -56,7 +77,7 @@
           v-bind:billLawList="billLawList"
           v-bind:billLawNum="billLawNum"
         />
-        </div>
+      </div>
 
       <div class="statics-wrap">
         <div class="link-statistics-container">
@@ -84,7 +105,7 @@
       <div class="empty-box"></div>
     </div>
     <Navigation />
-    </div>
+  </div>
 </template>
 
 <script>
@@ -92,13 +113,17 @@ import axios from "axios";
 import PoliticianDetailInfo from "@/views/Politician/PoliticianDetailInfo.vue";
 import PoliticianBillLaw from "@/views/Politician/PoliticianBillLaw.vue";
 import Navigation from "@/components/Navigation.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "PoliticianDetail",
   components: {
     Navigation,
     PoliticianDetailInfo,
-    PoliticianBillLaw
+    PoliticianBillLaw,
+  },
+  computed: {
+    ...mapState({ userStore: "userStore" }),
   },
   data() {
     return {
@@ -107,7 +132,62 @@ export default {
       attendancePercentage: 0,
       billLawNum: 0,
       billLawList: [],
+      bookmark: false,
     };
+  },
+  beforeCreate() {
+    const politicianID = this.$route.params.politicianID;
+
+    axios.get(`/api/politician/${politicianID}`).then((response) => {
+      this.PoliticianDetailData = response.data;
+    });
+
+    axios.get(`/api/attendance/${politicianID}`).then((response) => {
+      let attendanceList = response.data;
+      let jsonss;
+      let count = 0;
+      for (jsonss of attendanceList) {
+        let total =
+          jsonss["businessTrip"] +
+          jsonss["petitionLeave"] +
+          jsonss["attendance"];
+        if (total === 0) {
+          count++;
+        }
+      }
+      let percentage =
+        ((attendanceList.length - count) / attendanceList.length) * 100;
+      this.attendancePercentage = percentage.toFixed(1);
+      this.attendanceList = attendanceList;
+    });
+
+    axios.get(`/api/billLaw/${politicianID}`).then((response) => {
+      let billLawList = response.data;
+      this.billLawNum = billLawList.length;
+
+      this.billLawList = billLawList;
+    });
+  },/*
+  created() {
+    const politicianID = this.$route.params.politicianID;
+    axios.get(`/api/politician/${politicianID}`).then((response) => {
+      this.bDetailData = response.data;
+    });
+  },*/
+  beforeUpdate() {
+    //이미 북마크한 국회의원 북마크 유지
+    axios
+      .get(`/api/likeBookmark/bookmark/${this.userStore.userID}`)
+      .then((response) => {
+        for (const bookmarkedList of response.data) {
+          if (
+            bookmarkedList.politicianID ===
+            this.PoliticianDetailData.politicianID
+          ) {
+            this.bookmark = true;
+          }
+        }
+      });
   },
   methods: {
     goToNewsKeyword(politicianID) {
@@ -115,7 +195,7 @@ export default {
         name: "PoliticianNewsKeyword",
         params: {
           politicianID: politicianID,
-          politicianName: this.PoliticianDetailData.politicianName
+          politicianName: this.PoliticianDetailData.politicianName,
         },
       });
     },
@@ -134,43 +214,37 @@ export default {
           politicianID: politicianID,
         },
       });
-    }
-  },
-  beforeCreate() {
-    const politicianID = this.$route.params.politicianID;
-    axios.get(`/api/politician/${politicianID}`).then((response) => {
-      this.PoliticianDetailData = response.data;
-
-      console.log(response);
-    });
-    axios.get(`/api/attendance/${politicianID}`).then((response) => {
-      let attendanceList = response.data;
-      let jsonss;
-      let count = 0;
-      for (jsonss of attendanceList) {
-        let total =
-          jsonss["businessTrip"] +
-          jsonss["petitionLeave"] +
-          jsonss["attendance"];
-        if (total === 0) {
-          count++;
-        }
+    },
+    async changeBookmark(politicianID) {
+      if (this.bookmark) {
+        axios
+          .post(`/api/politician/create/bookmark`, {
+            userID: this.userStore.userID,
+            politicianID: politicianID,
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("북마크 성공");
+            } else {
+              console.log("북마크 실패");
+            }
+          });
+      } else {
+        axios
+          .delete(`/api/politician/delete/bookmark`, {
+            userID: this.userStore.userID,
+            politicianID: politicianID,
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("북마크 취소 성공");
+            } else {
+              console.log("북마크 취소 실패");
+            }
+          });
       }
-
-
-        let percentage = ((attendanceList.length - count) / attendanceList.length)*100;
-        this.attendancePercentage = percentage.toFixed(1);
-        this.attendanceList = attendanceList
-
-      });
-      axios.get(`/api/billLaw/${politicianID}`).then((response) => {
-        let billLawList = response.data
-        this.billLawNum = billLawList.length
-
-        this.billLawList = billLawList
-        console.log("billLaw", response.data)
-      });
-  },
+    },
+  }
 };
 </script>
 
@@ -228,9 +302,10 @@ export default {
   position: absolute;
   width: 49px;
   height: 48px;
-  background-image: url("@/assets/icon/assembly.svg");}
+  background-image: url("@/assets/icon/assembly.svg");
+}
 
-.assembly-image-wrap{
+.assembly-image-wrap {
   display: flex;
   justify-content: center;
 }
@@ -313,12 +388,12 @@ export default {
   height: 89px;
   max-width: 540px;
   background: #ffffff;
-  text-align:center;
-  vertical-align:middle;
+  text-align: center;
+  vertical-align: middle;
   padding-bottom: 50px;
 }
 
-.statics-wrap{
+.statics-wrap {
   width: 100%;
   display: flex;
   justify-content: center;

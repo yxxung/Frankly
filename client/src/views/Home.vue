@@ -45,13 +45,13 @@
     <!-- 인기 검색 국회의원 리스트-->
     <div class="trend-top4-politician-title">
       <div class="icon-button"><img src="@/assets/icon/button.svg" /></div>
-      <h2>인기 검색 국회의원 TOP4</h2>
+      <h2>인기 검색 국회의원 TOP3</h2>
     </div>
 
     <div class="trend-politician-list-wrap">
       <ul class="trend-politician-list">
         <li
-          class="politician"
+          class="trend-politician"
           v-for="politician in topPoliticians"
           v-bind:key="politician.politicianID"
           @click="
@@ -59,7 +59,7 @@
         >
           <!-- 정치인 리스트 출력 이미지, 이름-->
           <div
-            class="politician-image"
+            class="trend-politician-image"
             v-bind:style="{ border: getPoliticianColor(politician) }"
           >
             <img
@@ -70,7 +70,7 @@
               "
             />
           </div>
-          <div class="politician-name">{{ politician.politicianName }}</div>
+          <div class="trend-politician-name">{{ politician.politicianName }}</div>
         </li>
       </ul>
     </div>
@@ -106,7 +106,6 @@ export default {
       axios
         .get("/api/politician/rank")
         .then((response) => {
-          console.log("politicians", response.data);
           this.topPoliticians = response.data;
         })
         .catch((error) => {
@@ -264,6 +263,7 @@ export default {
 .trend-top4-politician-title {
   max-width: 540px;
   width: 100%;
+  height: 100%;
   margin: 0 auto;
   top: 40px;
   position: relative;
@@ -292,26 +292,28 @@ export default {
 
 /*인기검색 국회의원 리스트*/
 .trend-politician-list-wrap{
+  width: 100%;
   display: flex;
-  margin: 85px auto;
-  justify-content: space-evenly;
+  margin: 85px auto 0 auto;
+  justify-content: space-between;
   align-items: center;
 }
 .trend-politician-list {
-  margin: 0 auto 0 auto;
   width: 100%;
   max-width: 540px;
   display: table;
+  align-items: center;
   text-align: center;
   padding: 0;
+  margin: 0 auto 0 auto;
 }
-.politician {
+.trend-politician {
   display: inline-table;
   /*align-items: center;*/
   margin-bottom: 20px;
   padding: 0 5%;
 }
-.politician-image {
+.trend-politician-image {
   width: 75px;
   height: 75px;
   overflow: hidden;
@@ -324,13 +326,13 @@ export default {
   border-radius: 100%;
 }
 
-.politician-image img {
+.trend-politician-image img {
   border-radius: 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.politician-name {
+.trend-politician-name {
   margin: 5px auto;
   font-size: 16px;
   font-family: "Noto Sans KR";

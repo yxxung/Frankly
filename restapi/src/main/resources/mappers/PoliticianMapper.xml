@@ -88,7 +88,7 @@
         SELECT *
         FROM frankly.Politician
         ORDER BY viewCount DESC
-        LIMIT 4
+        LIMIT 3
 </select>
 
 </mapper>

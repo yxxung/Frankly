@@ -96,10 +96,6 @@ export default {
     selected() {
       console.log(this.regionName);
     },
-    /*onInputImage() {
-      console.log(this.$refs);
-      this.image = this.$refs.image.files[0];
-    },*/
     onClickSubmit() {
       //입력된 내용이 없을 시
       if (this.title.length <= 0 || this.content.length <= 0) {

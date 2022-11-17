@@ -51,7 +51,7 @@ class openAPI:
 
     def setAPIInfo(self, cursor, APIName):
         result = self.search(cursor, APIName)
-        print("stub")
+        # print("stub")
         if(result != None):
             self._URL = result[1]
             self._secretKey = result[2]

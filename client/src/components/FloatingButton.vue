@@ -27,12 +27,12 @@ export default {
   width: 100%;
   max-width: 540px;
   height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 .floating-button {
+  position: absolute;
+  top: 70vh;
+  left: 75vw;
   line-height: 63px;
   width: 62px;
   height: 62px;

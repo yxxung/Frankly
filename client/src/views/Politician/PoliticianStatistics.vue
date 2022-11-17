@@ -26,16 +26,14 @@ export default {
           count++;
         }
       }
-
       let percentage = ((attendanceList.length - count) / attendanceList.length)*100;
       this.attendancePercentage = percentage;
       this.attendanceList = attendanceList
-      console.log(response.data)
     });
+
     axios.get(`/api/billLaw/${politicianID}`).then((response) => {
       let billLawList = response.data
       this.billLawNum = billLawList.length
-      console.log(response.data)
     });
   }
 }

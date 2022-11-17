@@ -17,9 +17,9 @@ import pymysql
 from InformationClass.ConferenceAttendance import Attendance
 from InformationClass.ConferenceSchedule import ConferenceSchedule
 from InformationClass.openAPI import openAPI
-from Politician import Politician
-from Region import Region
-from Party import Party
+from InformationClass.Politician import Politician
+from InformationClass.Region import Region
+from InformationClass.Party import Party
 from datetime import datetime
 import traceback
 
@@ -63,8 +63,8 @@ class ParserMain:
             traceback.print_exc()
             print("politician insert error")
 
-    def parseAttendancePDF(self):
-        pdfDir = 'E:\work\Frankly\pdfParser\InformationClass\Json'
+    def parseAttendancePDF(self, pdfDir):
+        # pdfDir = 'E:\work\Frankly\pdfParser\InformationClass\Json'
         # pdfDir = 'D:\code\Frankly\pdfParser\InformationClass/attendance'
         fileList = os.listdir(pdfDir)
 
@@ -107,12 +107,12 @@ class ParserMain:
                             # f.write(str3)
                         except Exception as e:
                             print(e)
-        print("stub")
 
     def parseAttendance(self):
         con, cur = self.dbConnect()
         # pdfDir = 'E:\work\Frankly\pdfParser\InformationClass\Json'
         pdfDir = 'D:\code\Frankly\pdfParser\InformationClass/attendance'
+        pdfDir = ''
         fileList = os.listdir(pdfDir)
         for fileName in fileList:
             if(fileName.endswith(".txt")):
@@ -201,11 +201,10 @@ class ParserMain:
                                                      column="142")
                         else:
                             if(ppName[0] == "이수진" or ppName[0] == "김병욱"):
-                                print("stub")
-                            input = [ppName[0], token[1]]
-                            result = pp.selectNameID(cursor= cur,\
-                                            input= input,\
-                                            column= "politicianName")
+                                input = [ppName[0], token[1]]
+                                result = pp.selectNameID(cursor= cur,\
+                                                input= input,\
+                                                column= "politicianName")
 
                         if(len(result) != 0):
                             politicianID = result[0][0]
@@ -292,7 +291,7 @@ class ParserMain:
         for fileName in fileList:
             with open(jsonDir+"/"+fileName, encoding="UTF8") as jsonObject:
                 parsedJson = json.load(jsonObject)
-                print("stub")
+
                 for index in range(len(parsedJson)-1):
                     # log 삽입
 
@@ -332,17 +331,18 @@ class ParserMain:
 
         scheduleJson = json.loads(contents)
         pattern = r'[^0-9]'
-
-        for parsedJson in scheduleJson['nekcaiymatialqlxr'][1]["row"]:
-            schedule = ConferenceSchedule()
-            schedule.generation = re.sub(pattern,'',parsedJson["UNIT_NM"])
-            schedule.conferenceTitle = parsedJson['MEETINGSESSION']
-            schedule.conferenceDate = parsedJson['MEETTING_DATE']
-            schedule.conferenceSession = re.sub(pattern,'',parsedJson['CHA'])
-            schedule.insert(cursor=cur)
-        con.commit()
-        con.close()
-
+        try:
+            for parsedJson in scheduleJson['nekcaiymatialqlxr'][1]["row"]:
+                schedule = ConferenceSchedule()
+                schedule.generation = re.sub(pattern,'',parsedJson["UNIT_NM"])
+                schedule.conferenceTitle = parsedJson['MEETINGSESSION']
+                schedule.conferenceDate = parsedJson['MEETTING_DATE']
+                schedule.conferenceSession = re.sub(pattern,'',parsedJson['CHA'])
+                schedule.insert(cursor=cur)
+            con.commit()
+            con.close()
+        except Exception as e:
+            exit(0)
 
 
 
@@ -440,19 +440,19 @@ class ParserMain:
             return connection, cursor
 
 
-option = sys.argv[1]
-parser = ParserMain()
-
-
-if option == '1':
-
-    parser.parseJsonToPolitician()
-
-elif option == '2':
-    # parser.parseAttendancePDF()
-    parser.parseAttendance()
-
-elif option == '3':
-    parser.getScheduleFromAPI()
+# option = sys.argv[1]
+# parser = ParserMain()
+#
+#
+# if option == '1':
+#
+#     parser.parseJsonToPolitician()
+#
+# elif option == '2':
+#     parser.parseAttendancePDF()
+#     parser.parseAttendance()
+#
+# elif option == '3':
+#     parser.getScheduleFromAPI()
 
 

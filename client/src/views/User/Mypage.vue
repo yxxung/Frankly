@@ -27,37 +27,52 @@
         >
       </header>
 
-      <b-modal v-model="modifyFlag" hide-footer title="개인정보 수정">
-        <b-container fluid>
+      <b-modal
+        style="font-family: Noto Sans KR; margin: 0 auto"
+        v-model="modifyFlag"
+        hide-footer
+        title="개인정보 수정"
+      >
+        <b-container fluid style="margin: 0 auto">
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">이름</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >이름</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
                 id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 disabled
                 v-model="user.name"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">이메일</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >이메일</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
                 id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 disabled
                 v-model="user.email"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
@@ -78,43 +93,52 @@
           </b-row>-->
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">전화번호</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >전화번호</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
                 id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 v-model="user.contact"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
           <b-row>
             <b-col sm="2">
-              <label for="textarea-auto-height">지역</label>
+              <label
+                style="font-size: 15px"
+                class="mt-2"
+                for="textarea-auto-height"
+                >지역</label
+              >
             </b-col>
             <b-col sm="10">
               <b-form-textarea
-                id="textarea-auto-height"
-                class="mt-3"
+                class="mt-2"
                 v-model="user.district"
                 size="sm"
-                rows="3"
-                max-rows="8"
+                rows="1"
+                max-rows="3"
               ></b-form-textarea>
             </b-col>
           </b-row>
         </b-container>
         <b-button
+          align="center"
           class="mt-5"
-          size="sm"
           variant="Light"
           @click="CancelModifyBtn"
           >취소</b-button
         >
-        <b-button class="mt-5" size="sm" variant="dark" @click="updateUser"
+        <b-button align="center" class="mt-5" variant="dark" @click="updateUser"
           >수정</b-button
         >
       </b-modal>
@@ -134,20 +158,27 @@
             <h2>관리자 페이지</h2>
             <div class="admin-wrap">
               <div class="admin-container">
-                <div class="admin-statistics" @click="goToEditUser()">회원 관리</div>
-                <div class="admin-statistics" @click="goToEditBoard()">게시글 관리</div>
+                <div class="admin-statistics" @click="goToEditUser()">
+                  회원 관리
+                </div>
+                <div class="admin-statistics" @click="goToEditBoard()">
+                  게시글 관리
+                </div>
               </div>
             </div>
           </div>
 
           <div class="mypage-detail-list">
             <h2>북마크 국회의원</h2>
-            <BookmarkPolitician />
+            <BookmarkPolitician
+              v-bind:bookmarkPoliticians="bookmarkPoliticians"
+            />
           </div>
 
           <div class="mypage-detail-list">
             <h2>좋아요한 글</h2>
-            <LikeBoard />
+            <LikeBoard
+            v-bind:likeBoards="likeBoards"/>
           </div>
         </div>
       </div>
@@ -160,17 +191,23 @@
 import axios from "axios";
 import Navigation from "@/components/Navigation.vue";
 import { mapState } from "vuex";
+import BookmarkPolitician from "@/views/User/BookmarkPolitician.vue"
+import LikeBoard from "@/views/User/LikeBoard.vue"
 
 export default {
   name: "Mypage",
   components: {
     Navigation: Navigation,
+    BookmarkPolitician: BookmarkPolitician,
+    LikeBoard: LikeBoard
   },
   data() {
     return {
       modifyFlag: false,
       adminFlag: false,
       user: {},
+      bookmarkPoliticians: [],
+      likeBoards: []
     };
   },
   computed: {
@@ -186,6 +223,28 @@ export default {
       .then((response) => {
         console.log("users", response.data);
         this.user = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios
+      .get(`/api/likeBookmark/bookmark/${this.userStore.userID}`, {
+        headers: {},
+      })
+      .then((response) => {
+        this.bookmarkPoliticians = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      axios
+      .get(`/api/likeBookmark/like/${this.userStore.userID}`, {
+        headers: {},
+      })
+      .then((response) => {
+        this.likeBoards = response.data;
       })
       .catch((error) => {
         console.log(error);
@@ -235,29 +294,42 @@ export default {
           console.log("수정 요청 실패");
         });
     },
+    confirmDelete() {
+      if (confirm("정말 탈퇴하시겠습니까?") == true) {
+        //확인
+        document.form.submit();
+      } else {
+        //취소
+        return;
+      }
+    },
     //회원탈퇴
     deleteUser() {
-      axios
-        .delete(`/api/users/${this.userStore.userID}/delete`)
-        .then((response) => {
-          if (response.status === 200) {
-            alert("회원 탈퇴가 완료됐습니다.");
+      if (confirm("정말 탈퇴하시겠습니까?") == true) {
+        axios
+          .delete(`/api/users/${this.userStore.userID}/delete`)
+          .then((response) => {
+            if (response.status === 200) {
+              alert("회원 탈퇴가 완료됐습니다.");
 
-            this.$store.commit("userStore/SET_IS_LOGIN", false);
-            this.$store.commit("userStore/SET_USER_INFO", null);
-            this.$store.commit("userStore/SET_USER_ID", null);
+              this.$store.commit("userStore/SET_IS_LOGIN", false);
+              this.$store.commit("userStore/SET_USER_INFO", null);
+              this.$store.commit("userStore/SET_USER_ID", null);
 
-            sessionStorage.removeItem("token");
-            sessionStorage.removeItem("userID");
+              sessionStorage.removeItem("token");
+              sessionStorage.removeItem("userID");
 
-            if (this.$route.path != "/") {
-              this.$router.push({ name: "AuthPage", component: "AuthPage" });
+              if (this.$route.path != "/") {
+                this.$router.push({ name: "AuthPage", component: "AuthPage" });
+              }
             }
-          }
-        })
-        .catch((error) => {
-          console.log("탈퇴 요청 실패", error);
-        });
+          })
+          .catch((error) => {
+            console.log("탈퇴 요청 실패", error);
+          });
+      } else {
+        return;
+      }
     },
     //로그아웃
     logoutUser() {
@@ -273,15 +345,11 @@ export default {
       }
     },
     goToEditUser() {
-      this.$router.push(
-        "/EditUser"
-      );
+      this.$router.push("/EditUser");
     },
     goToEditBoard() {
-      this.$router.push(
-        "/EditBoard"
-      );
-    }
+      this.$router.push("/EditBoard");
+    },
   },
 };
 </script>

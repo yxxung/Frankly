@@ -38,7 +38,15 @@
       </div>
       <h3 class="post-header__title">{{ DetailData.title }}</h3>
       <div class="post-header__info">
-        <div class="post-header__writer">익명</div>
+        <div class="post-header__writer" v-if="nameBoardFlag === false">
+          익명
+        </div>
+        <div
+          class="post-header__writer"
+          v-if="changeBoardName(DetailData.userID)"
+        >
+          {{ this.userStore.userInfo.username }}
+        </div>
         <div class="post-header__reg-date">
           {{ elapsedText(DetailData.boardRegDate) }}
         </div>
@@ -52,9 +60,9 @@
 
     <!--좋아요-->
     <div class="post-like">
-      <button @click="(marked = !marked), changeLike(DetailData.boardID)">
-        <img src="@/assets/icon/Like.svg" v-if="marked === false" />
-        <img src="@/assets/icon/Like_active.svg" v-if="marked === true" />
+      <button @click="(likedFlag = !likedFlag), changeLike(DetailData.boardID)">
+        <img src="@/assets/icon/Like.svg" v-if="likedFlag === false" />
+        <img src="@/assets/icon/Like_active.svg" v-if="likedFlag === true" />
       </button>
       <span>{{ DetailData.marked }}</span>
     </div>
@@ -70,7 +78,10 @@
           <div class="comments__info">
             <div class="comments__info-left">
               <img src="@/assets/icon/Anonymous_user.svg" alt="익명유저" />
-              <h6>익명</h6>
+              <h6 v-if="nameReplyFlag === false">익명</h6>
+              <h6 v-if="changeReplyName(reply.userID)" style="color: #4e4e4e">
+                {{ this.userStore.userInfo.username }}
+              </h6>
               <span class="comments__info__date">{{
                 elapsedText(reply.replyRegDate)
               }}</span>
@@ -87,10 +98,10 @@
                     <img src="@/assets/icon/Other1.svg" alt="더보기" />
                     <span class="visually-hidden"></span>
                   </template>
-                  <b-dropdown-item @click="updateReply(reply.replyID)"
-                    >수정</b-dropdown-item
+                  <b-dropdown-item
+                    @click="deleteReply(reply.replyID, reply.userID)"
+                    >삭제</b-dropdown-item
                   >
-                  <b-dropdown-item @click="deleteReply(reply.replyID)">삭제</b-dropdown-item>
                 </b-dropdown>
               </button>
             </div>
@@ -109,9 +120,7 @@
       ></textarea>
       <button
         class="enter-comment__submit"
-        @click.prevent="
-          createReply(DetailData.boardID), countReply(this.cntReply)
-        "
+        @click.prevent="createReply(DetailData.boardID)"
       >
         <img src="@/assets/icon/Comment.svg" alt="댓글 전송 버튼" />
       </button>
@@ -137,18 +146,24 @@ export default {
         userID: "",
         marked: "", //board db의 좋아요
       },
-      replys: [], //댓글 axios get
+      replys: [],
+      //댓글 axios get
       replyInput: "", //댓글 입력
-      marked: false, //좋아요
+      likedFlag: false, //좋아요
       cntMarked: null, //좋아요 개수
-      edit_show: false,
+      nameReplyFlag: false,
+      nameBoardFlag: false,
     };
   },
   computed: {
-    ...mapState({userStore: "userStore"}),
+    ...mapState({ userStore: "userStore" }),
+  },
+  mounted() {
+    this.changeReplyName();
   },
   created() {
     const boardID = this.$route.params.boardID;
+
     axios.get(`/api/boards/${boardID}`).then((response) => {
       this.DetailData.boardID = response.data.boardID;
       this.DetailData.title = response.data.title;
@@ -158,11 +173,32 @@ export default {
       this.DetailData.userID = response.data.userID;
       this.DetailData.marked = response.data.marked;
     });
+
     axios.get(`/api/replys/${boardID}/replyList`).then((response) => {
       this.replys = response.data;
-      console.log(response.data);
     });
+
     this.cntMarked = this.DetailData.marked; //좋아요 개수 저장
+  },
+  beforeUpdate() {
+    //이미 좋아요한 게시물 좋아요 유지
+    axios
+      .get(`/api/likeBookmark/like/${this.userStore.userID}`)
+      .then((response) => {
+        for (const likedList of response.data) {
+          if (likedList.boardID === this.DetailData.boardID) {
+            this.likedFlag = true;
+          }
+        }
+      });
+  },
+  watch: {
+    likedFlag: {
+      handler(likedFlag) {
+        likedFlag = true;
+      },
+      immediate: true
+    }
   },
   methods: {
     //date format 변환
@@ -172,33 +208,33 @@ export default {
     // 게시글 삭제
     deleteBoard() {
       const boardID = this.$route.params.boardID;
-      if(this.DetailData.userID !== this.userStore.userID) {
+      if (this.DetailData.userID !== this.userStore.userID) {
         alert("글 작성자가 아닙니다.");
-      }else {
+      } else {
         axios
-        .delete(`api/boards/delete/${boardID}`)
-        .then((response) => {
-          if (response.status === 200) {
-            alert("게시글이 삭제되었습니다.");
-          }
-          this.$router.go(-1);
-        })
-        .catch(() => {
-          console.log("삭제 요청 실패");
-        });
+          .delete(`api/boards/delete/${boardID}`)
+          .then((response) => {
+            if (response.status === 200) {
+              alert("게시글이 삭제되었습니다.");
+            }
+            this.$router.go(-1);
+          })
+          .catch(() => {
+            console.log("삭제 요청 실패");
+          });
       }
     },
     // 게시글 수정
     updateBoard(boardID) {
-      if(this.DetailData.userID !== this.userStore.userID) {
+      if (this.DetailData.userID !== this.userStore.userID) {
         alert("글 작성자가 아닙니다.");
-      }else {
+      } else {
         this.$router.push({
-        name: "UpdateBoard",
-        params: {
-          boardID: boardID,
-        },
-      });
+          name: "UpdateBoard",
+          params: {
+            boardID: boardID,
+          },
+        });
       }
     },
     //댓글 생성
@@ -209,7 +245,7 @@ export default {
           .post("/api/replys/create", {
             boardID: boardID,
             reply: this.replyInput,
-            userID: this.userStore.userID
+            userID: this.userStore.userID,
           })
           .then((response) => {
             console.log(response);
@@ -221,26 +257,89 @@ export default {
       }
     },
     //댓글 삭제
-    deleteReply(replyID) {
+    deleteReply(replyID, userID) {
       const boardID = this.$route.params.boardID;
-      axios
-        .delete(`/api/replys/${boardID}/${replyID}/delete`)
-        .then((response) => {
-          if (response.status === 200) {
-            alert("댓글이 삭제되었습니다.");
-          }
-          this.$router.go();
-        })
-        .catch(() => {
-          console.log("삭제 요청 실패");
-        });
+      if (userID !== this.userStore.userID) {
+        alert("댓글 작성자가 아닙니다.");
+      } else {
+        axios
+          .delete(`/api/replys/${boardID}/${replyID}/delete`)
+          .then((response) => {
+            if (response.status === 200) {
+              alert("댓글이 삭제되었습니다.");
+            }
+            this.$router.go();
+          })
+          .catch(() => {
+            console.log("삭제 요청 실패");
+          });
+      }
+    },
+    //댓글 작성자 보이기
+    changeReplyName(userID) {
+      if (userID === this.userStore.userID) {
+        this.nameReplyFlag = true;
+      }
+      return this.nameReplyFlag;
+    },
+    //게시글 작성자 보이기
+    changeBoardName(userID) {
+      if (userID === this.userStore.userID) {
+        this.nameBoardFlag = true;
+      }
+      return this.nameBoardFlag;
     },
     async changeLike(boardID) {
       //좋아요가 안눌러진 상태에서 좋아요를 누를 때
-      if (this.marked) {
+      if (this.likedFlag) {
+        axios
+          .post(`/api/boards/create/like`, {
+            userID: this.userStore.userID,
+            boardID: boardID,
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("좋아요 성공");
+            } else {
+              console.log("좋아요 실패");
+            }
+          });
+
         // 해당 게시글의 좋아요 개수 1 증가시킨 걸로 수정 (put)
         this.DetailData.marked += 1;
         this.cntMarked = this.DetailData.marked;
+
+        axios
+          .put(`/api/boards/update/${boardID}`, {
+            title: this.DetailData.title,
+            content: this.DetailData.content,
+            marked: this.cntMarked,
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      // 좋아요가 눌러진 상태에서 좋아요를 취소할 때
+      else {
+        axios.delete(`/api/boards/delete/like`, {
+          userID: this.userStore.userID,
+          boardID: boardID,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("좋아요 취소 성공");
+          } else {
+            console.log("좋아요 취소 실패");
+          }
+        });
+
+        // 해당 게시글의 좋아요 개수 1 감소시킨 걸로 수정 (put)
+        this.DetailData.marked -= 1;
+        this.cntMarked = this.DetailData.marked;
+
         axios
           .put(`/api/boards/update/${boardID}`, {
             title: this.DetailData.title,
@@ -297,7 +396,7 @@ export default {
   padding: 24px 16px;
 }
 .post-like button {
-  margin-right: 8px;
+  margin-right: 6px;
   background-color: #ffffff;
   width: 28px;
   height: 28px;
@@ -309,13 +408,15 @@ export default {
   object-fit: cover;
 }
 .post-like span {
+  vertical-align: middle;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
-  text-align: right;
+  font-size: 15px;
+  text-align: center;
   letter-spacing: -0.024em;
   color: #646464;
+  margin: auto;
 }
 /*댓글*/
 .comments ul {

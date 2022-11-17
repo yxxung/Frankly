@@ -70,7 +70,7 @@ class ConferenceSchedule:
             return True
         except pymysql.err.IntegrityError as e:
             code, msg = e.args
-            print("propertyList 중복")
+            print("schedule 중복")
             sql = "SELECT count(conferenceID) from ConferenceSchedule"
             cursor.execute(sql)
             selectcount = cursor.fetchone()

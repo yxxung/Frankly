@@ -55,6 +55,7 @@ export default {
   padding: 20px 15px 0px 15px;
   position: relative;
   background: #ffffff;
+  z-index: 0;
 }
 
 .detail-info-title {
@@ -102,7 +103,7 @@ export default {
   color: #1b1b1b;
 }
 .detail-info-content > a:hover {
-  color: #00B5FF;
+  color: #865935;
 }
 
 .detail-info-wrap h2 {
@@ -131,12 +132,13 @@ export default {
 }
 
 .assembly-image-2 {
-  /*margin: 25px 0 0 100px;*/
+  margin: auto 0 auto 0;
   position: absolute;
   width: 245px;
   height: 238px;
   background-image: url("@/assets/icon/assembly.svg");
   background-size: cover;
+  z-index: -1;
 }
 
 .assembly-image-2-wrap{

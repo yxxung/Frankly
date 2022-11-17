@@ -63,14 +63,15 @@
 
     <!-- 내가 쓴 게시글 -->
     <select id="userBoard" resultMap="boardResultMap">
-        SELECT *
-        FROM frankly.Board
-        WHERE userID = #{userID}
+        SELECT *, count(R.replyID) as replyCount
+        FROM frankly.Board B LEFT JOIN frankly.Reply R
+                                     ON B.boardID = R.boardID
+        WHERE B.userID = #{userID}
     </select>
 
     <!-- 내가 쓴 댓글의 글 -->
     <select id="userReply" resultMap="boardResultMap">
-        SELECT *
+        SELECT *, count(R.replyID) as replyCount
         FROM frankly.Board B LEFT JOIN frankly.Reply R
                                        ON B.boardID = R.boardID
         WHERE R.userID = #{userID}
