@@ -1,0 +1,84 @@
+pipeline{
+        agent any
+
+        environment{
+                SOURCECODE_JENKINS_CREDENTIAL_ID = 'hanpaa'
+        SOURCE_CODE_URL =  'https://github.com/hanpaa/Frankly.git'
+        RELEASE_BRANCH = 'CICDTest'
+        }
+        
+        // parameters {
+        // string(name : 'TEST', defaultValue : '0', description : '')
+        // string(name : 'TEST1', defaultValue : '5', description : '')
+        // string(name : 'TEST2', defaultValue : '10', description : '')
+        // }
+
+        stages {
+                stage('docker login'){
+                        steps{
+                                // echo 'remove all'
+                                // sh 'docker rmi -f \$(docker images -q)'
+                                sh "docker login -u ${params.dockerID} -p ${params.dockerPW}"
+                            }
+
+                    }
+                stage('git clone') {
+                    steps {
+                        git url: "$SOURCE_CODE_URL",
+                            branch: "$RELEASE_BRANCH",
+                            credentialsId: "$SOURCECODE_JENKINS_CREDENTIAL_ID"
+                        sh "ls -al"
+                        sh "cp /home/opsroot/ansible/cicd/backend/application.properties ./restapi/src/main/resources/application.properties"
+                    }
+                }
+
+
+                stage('FrontEnd Build npm'){
+                        steps{
+                                dir('./client'){
+                                        sh 'npm install -f'
+                                        sh 'npm run build -f'
+                                }
+                        }
+                }
+
+                stage('FrontEnd Build Docker image'){
+                        steps{
+                                dir('./client'){
+                                        sh "docker build -t ${params.dockerID}/frankly_frontend ."
+                                }
+                        }
+                }
+                stage('BackEnd Build mvn'){
+                        steps{
+                                dir('./restapi'){
+                                        sh 'mvn clean package'
+                                }
+                        }
+                }
+
+                stage('BackEnd Build Docker image'){
+                        steps{
+                                dir('./restapi'){
+                                        sh "docker build -t ${params.dockerID}/frankly_backend ."
+                                }
+                        }
+                }
+
+                stage('docker image push to repository'){
+                        steps{
+                                sh "docker push ${params.dockerID}/frankly_frontend:latest"
+                                sh "docker push ${params.dockerID}/frankly_backend:latest"
+                        }
+                }
+                
+                stage('docker image deploy with ansible'){
+                        steps{
+                                sh "ansible-playbook Deploy.yaml -e \"dockerID=${params.dockerID} dockerPW=${params.dockerPW}\""
+                        }
+                }
+                
+                
+                
+        }
+}
