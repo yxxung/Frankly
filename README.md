@@ -25,14 +25,14 @@
 
 - 각 지역 별 게시판을 통해 자유로운 정치 이야기를 할 수 있습니다.
 - 게시판 글 읽기, 쓰기, 수정, 삭제 및 댓글 달기, 글 스크랩이 가능합니다.
-<img width="329" src="https://user-images.githubusercontent.com/74893676/226350294-91716b1d-e925-42ba-8c77-3bf88d379158.PNG" />  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351041-320f6ee6-ccba-46bb-8783-38dd0cd9caa4.PNG" />  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351058-048f1edc-fe21-4917-8330-0dfd0eeaea2b.PNG /> <img width="329" src="https://user-images.githubusercontent.com/74893676/226351065-018ad908-4f73-44bd-bc4f-ce071d2b9133.PNG" />
+<img width="329" src="https://user-images.githubusercontent.com/74893676/226350294-91716b1d-e925-42ba-8c77-3bf88d379158.PNG" />  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351041-320f6ee6-ccba-46bb-8783-38dd0cd9caa4.PNG" />  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351058-048f1edc-fe21-4917-8330-0dfd0eeaea2b.PNG /> <img width="329" src="https://userimages.githubusercontent.com/74893676/226351065-018ad908-4f73-44bd-bc4f-ce071d2b9133.PNG" />
 
 
 ### 국회의원 목록
 
 - 대한민국의 정당과 전체 국회의원 목록을 확인할 수 있습니다.
 - 국회의원 목록은 정당별, 가나다, 지역구 순으로 정렬이 가능합니다.
-<img width="329" src="https://user-images.githubusercontent.com/74893676/226351591-17a4c862-2e2b-48b4-80c3-7fecfa5001d4.PNG />  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351642-114a23bd-15bd-4288-9c3c-f413d970569d.PNG />  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351719-c8eca911-fa34-454f-be27-d82a6f056a23.PNG />
+<img width="329" src="https://user-images.githubusercontent.com/74893676/226351591-17a4c862-2e2b-48b4-80c3-7fecfa5001d4.PNG />  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351642-114a23bd-15bd-4288-9c3c-f413d970569d.PNG />  <img width="329" src="https://userimages.githubusercontent.com/74893676/226351719-c8eca911-fa34-454f-be27-d82a6f056a23.PNG />
 
 
 ## 국회의원 상세 정보
