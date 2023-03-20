@@ -13,7 +13,7 @@
 - Back-end: `Java` `Python` `Spring` `MariaDB` `Mybatis`
 - DevOps: `Docker` `OpenVPN server` `Nginx` `Jenkins` `Ansible`
 
-# 💻 주요 기능 및 데모 사진
+## 💻 주요 기능 및 데모 사진
 
 ### 로그인&회원가입
 
