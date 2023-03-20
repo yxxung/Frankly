@@ -9,8 +9,9 @@
 >
 
 ## 🛠️ 기술 스택
-| FrontEnd | BackEnd | DevOps |
-| --- | --- | --- |
+- Front-end: `Vue.js` `Chart.js` `BootStrap`
+- Back-end: `Java` `Python` `Spring` `MariaDB` `Mybatis`
+- DevOps: `Docker` `OpenVPN server` `Nginx` `Jenkins` `Ansible`
 
 # 💻 주요 기능 및 데모 사진
 
