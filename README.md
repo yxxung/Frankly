@@ -66,3 +66,8 @@
 - 관리자일 경우 관리자 페이지가 나타납니다.
 
 <img width="329" src="https://user-images.githubusercontent.com/74893676/226353509-e46a5028-cc95-4f3c-81b7-6e4cc22184af.PNG" /> <img width="329" src="https://user-images.githubusercontent.com/74893676/226353500-8ff11b45-101f-4c2c-a6e5-57f2ce6b1a09.PNG" />
+
+
+# 💻 프로젝트 아키텍처
+****서버, 클라우드 구성을 포괄한 인프라 구조입니다.****
+<img src="https://user-images.githubusercontent.com/74893676/226356345-5ecdd595-c10c-4229-bec9-1cbb07067812.png"/>
