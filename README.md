@@ -25,7 +25,7 @@
 ### 지역 별 커뮤니티
 
 - 각 지역 별 게시판을 통해 자유로운 정치 이야기를 할 수 있습니다.
-- 게시판 글 읽기, 쓰기, 수정, 삭제 및 댓글 달기, 글 스크랩이 가능합니다.
+- 게시판 글 읽기, 쓰기, 수정, 삭제 및 댓글 달기, 좋아요가 가능합니다.
 
 <img width="329" src="https://user-images.githubusercontent.com/74893676/226350294-91716b1d-e925-42ba-8c77-3bf88d379158.PNG"/>  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351041-320f6ee6-ccba-46bb-8783-38dd0cd9caa4.PNG"/>  <img width="329" src="https://user-images.githubusercontent.com/74893676/226351058-048f1edc-fe21-4917-8330-0dfd0eeaea2b.PNG"/> <img width="329" src="https://user-images.githubusercontent.com/74893676/226351065-018ad908-4f73-44bd-bc4f-ce071d2b9133.PNG"/>
 
